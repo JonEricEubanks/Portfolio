@@ -1,33 +1,92 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JonEric Eubanks Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <h1>JonEric Eubanks Portfolio</h1>
+      <h1>JonEric Eubanks Portfolio</h1>
     </header>
 
-    <section id="projects">
+    <main>
+      <section id="projects">
         <h2>My Projects</h2>
         <ul>
-        <li><a href="https://smartbried-gen.vercel.app/">AI API Website</a></li>
+          <li>
+            <a
+              href="https://smartbried-gen.vercel.app/"
+              data-hover-image="Images/Ginsburgs.png"
+              >AI API Website</a
+            >
+          </li>
         </ul>
-    </section>
+      </section>
 
-    <section id="dashboards">
+      <section id="dashboards">
         <h2>My Dashboards</h2>
         <ul>
-            <li><a href="https://app.smartsheet.com/b/publish?EQBCT=5ebba8d399f2445d91bbae50aa977ac1">Smartsheet Neighborhood Improvement Dashboard</a></li>
-            <li><a href="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">Smartsheet Alleyway Dashboard</a></li>
-        
+          <li>
+            <a
+              href="https://app.smartsheet.com/b/publish?EQBCT=5ebba8d399f2445d91bbae50aa977ac1"
+              data-hover-image="Images/Bathtub.jpg"
+              >Smartsheet Neighborhood Improvement Dashboard</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a"
+              data-hover-image="path_to_third_image.png"
+              >Smartsheet Alleyway Dashboard</a
+            >
+          </li>
         </ul>
-    </section>
+      </section>
+    </main>
 
     <footer>
-        <p>Contact me at JonEric11@gmail.com</p>
+      <p>Contact me at JonEric11@gmail.com</p>
     </footer>
-</body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let hoverLinks = document.querySelectorAll("a[data-hover-image]");
+
+        hoverLinks.forEach((link) => {
+          let hoverImageDiv = document.createElement("div");
+          hoverImageDiv.style.position = "absolute";
+          hoverImageDiv.style.backgroundSize = "cover"; // This will make the image fill the div
+          hoverImageDiv.style.backgroundPosition = "center"; // This will center the image
+          hoverImageDiv.style.backgroundRepeat = "no-repeat";
+          hoverImageDiv.style.width = "400px";
+          hoverImageDiv.style.height = "200px";
+          hoverImageDiv.style.borderRadius = "5px";
+          hoverImageDiv.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.1)";
+          hoverImageDiv.style.opacity = "0";
+          hoverImageDiv.style.transition = "opacity 0.3s ease";
+          hoverImageDiv.style.pointerEvents = "none"; // Make sure the div does not interfere with link clicks.
+          link.insertAdjacentElement("afterend", hoverImageDiv);
+
+          link.addEventListener("mouseenter", function (e) {
+            let rect = this.getBoundingClientRect();
+            hoverImageDiv.style.backgroundImage = `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),url(${this.dataset.hoverImage})`;
+            hoverImageDiv.style.opacity = "1";
+            hoverImageDiv.style.left = `${rect.right + 10}px`;
+            hoverImageDiv.style.top = `${
+              rect.top + window.scrollY + rect.height / 2 - 100
+            }px`;
+          });
+
+          link.addEventListener("mouseleave", function () {
+            hoverImageDiv.style.opacity = "0";
+          });
+        });
+      });
+    </script>
+  </body>
 </html>
