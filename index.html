@@ -11,45 +11,271 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+
+
     <header>
-      <h1>JonEric Eubanks Portfolio</h1>
-    </header>
+      <div class="header-container">
+          <div>
+              <h1>JonEric Eubanks' Portfolio</h1>
+          </div>
+         
+          <nav class="navigation"> <!-- Converted div to nav for semantic reasons -->
+              <a href="#dashboards" class="custom-button">Dashboards</a>
+              <a href="#GIS" class="custom-button">GIS Maps</a>
+              <a href="#certifications" class="custom-button">Certifications</a>
+          </nav>
+          
+      </div>
+  </header>
+  
+
 
     <main>
-      <section id="projects">
-        <h2>My Projects</h2>
-        <ul>
-          <li>
-            <a
-              href="https://smartbried-gen.vercel.app/"
-              data-hover-image="Images/Ginsburgs.png"
-              >AI API Website</a
-            >
-          </li>
-        </ul>
-      </section>
-
+      <h2 id="dashboards">Dashboards</h2>
       <section id="dashboards">
-        <h2>My Dashboards</h2>
+        <div class="grid-container">
+          <div class="link-container">
+            <a href="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+              <div class="image-container" style="background-image: url('Images/Erapdash.png');"></div>
+            </a>
+            <p>Power BI Emergency Rental Assistance Dashboard</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+              <div class="image-container" style="background-image: url('Images/ampdash.png');"></div>
+            </a>
+            <p>Smartsheet Alleyway Maintenance Dashboard</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+              <div class="image-container" style="background-image: url('Images/rolldash.png');"></div>
+            </a>
+            <p>Smartsheet Neighborhood Improvement Dashboard</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+              <div class="image-container" style="background-image: url('Images/covdash.png');"></div>
+            </a>
+            <p>Smartsheet Covid19 Dashboard</p>
+          </div>
+        <div class="link-container">
+          <a href="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
+            <div class="image-container" style="background-image: url('Images/prpdash.png');"></div>
+          </a>
+          <p>Power BI Priority Repair Assistance Dashboard</p>
+        </div>
+
+          <div class="link-container">
+            <a href="https://app.smartsheet.com/b/publish?EQBCT=28c36830e8ba4e03a11c65a3c44025e3">
+              <div class="image-container" style="background-image: url('Images/itb.png');"></div>
+            </a>
+            <p>Smartsheet Invitation for Bid (ITB) Dashboard</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+              <div class="image-container" style="background-image: url('Images/erap.png');"></div>
+            </a>
+            <p>Smartsheet Rental Assistance Dashboard</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://app.smartsheet.com/b/form/671488c1c5d7469cb216c7e59cafaf61">
+              <div class="image-container" style="background-image: url('Images/form.png');"></div>
+            </a>
+            <p>Smartsheet Pre Development Application</p>
+          </div>
+         
+        </div>
+      </section>
+      
+      
+      
+
+      <h2 id="GIS">GIS Maps</h2>
+      <section id="GIS">
+        <div class="grid-container">
+          
+          <div class="link-container">
+            <a href="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda">
+              <div class="image-container" style="background-image: url('Images/cost.png');"></div>
+            </a>
+            <p>Forth Worth Housing Equity Insight Analysis</p>
+          </div>
+          
+          <div class="link-container">
+            <a href="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5">
+              <div class="image-container" style="background-image: url('Images/cdbg.png');"></div>
+            </a>
+            <p> Fort Worth CDBG Evolution: Decade Mapped</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://www.arcgis.com/apps/instant/lookup/index.html?appid=296ad5e9c5b340cb81d505330475b035">
+              <div class="image-container" style="background-image: url('Images/tax.png');"></div>
+            </a>
+            <p>Tax Credit Locator: Urban Development Mapping</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41">
+              <div class="image-container" style="background-image: url('Images/d4.png');"></div>
+            </a>
+            <p>District 4: Dynamic Demographics Mapped"</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb">
+              <div class="image-container" style="background-image: url('Images/food.png');"></div>
+            </a>
+            <p>Fort Worth Food Access Mapping Insights</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff">
+              <div class="image-container" style="background-image: url('Images/cares.png');"></div>
+            </a>
+            <p>Fort Worth Cares: Aid Mapping Portfolio</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493">
+              <div class="image-container" style="background-image: url('Images/ally.png');"></div>
+            </a>
+            <p>Alleyway Qualification: Mapping Insights</p>
+          </div>
+
+          <div class="link-container">
+            <a href="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11">
+              <div class="image-container" style="background-image: url('Images/nez.png');"></div>
+            </a>
+            <p>Empower Fort Worth: Neighborhood Incentives</p>
+          </div>
+        
+        </div>
+          <!-- Repeat the pattern for other dashboards -->
+        </div>
+      </section>
+
+
+
+      
+      <div class="content-container">
+      <section id="dashboards">
+      </section>
+
+      <section id="certifications"></section>
+      <h2 id="certifications">Certifications</h2>
+      <div class="certification-container">
+       
         <ul>
           <li>
             <a
-              href="https://app.smartsheet.com/b/publish?EQBCT=5ebba8d399f2445d91bbae50aa977ac1"
-              data-hover-image="Images/Bathtub.jpg"
-              >Smartsheet Neighborhood Improvement Dashboard</a
+              href="https://coursera.org/share/959f9ea4ad9a070fbe08aaa698c7bcc6"
+              data-hover-image="Images/2.png"
+              >Crash Course on Python</a
             >
           </li>
           <li>
             <a
-              href="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a"
-              data-hover-image="path_to_third_image.png"
-              >Smartsheet Alleyway Dashboard</a
+              href="https://coursera.org/share/04f359816d81ce83a4ba9ce7c1b22328"
+              data-hover-image="Images/3.png"
+              >Project Execution: Running the Project</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coursera.org/share/f8e1360a9219a252e0e5bb0567615c25"
+              data-hover-image="Images/4.png"
+              >Foundations of Project Management</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coursera.org/share/3a4d3e7f58e2fb6fcab6d13bc561c9ab"
+              data-hover-image="Images/5.png"
+              >Foundations: Data, Data, Everywhere</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coursera.org/share/f8e1360a9219a252e0e5bb0567615c25"
+              data-hover-image="Images/6.png"
+              >Foundations of Project Management</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coursera.org/share/d36872927d4ea0dfe844dc97732aba92"
+              data-hover-image="Images/1.png"
+              >Project Initiation: Starting a Successful Project</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a487afcdf72906c84e6af/360"
+              data-hover-image="Images/rast.png"
+              >Basics of Raster Data</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fc04/360"
+              data-hover-image="Images/dis.png"
+              >Displaying Raster Data Using ArcGIS</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5566fcdf72906c8578e6/300"
+              data-hover-image="Images/use.png"
+              >Using Raster Data for Site Selection</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5048fcdf72906c8520a9/300"
+              data-hover-image="Images/proc.png"
+              >Processing Raster Data Using ArcGIS</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a54fcfcdf72906c857105/300"
+              data-hover-image="Images/int.png"
+              >Introduction to Surface Modeling Using ArcGIS</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fb6b/300"
+              data-hover-image="Images/lid.png"
+              >Using Lidar Data in ArcGIS</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/6130f011e0aa8c0b7d52174c/300"
+              data-hover-image="Images/go.png"
+              >Going Places with Spatial Data</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a50c1fcdf72906c85296c/300"
+              data-hover-image="Images/org.png"
+              >Organizing Raster Data Using ArcGIS</a
             >
           </li>
         </ul>
-      </section>
+      </div>
+        </section>
+      </div>
     </main>
-
+ <button class="top-button" onclick="topFunction()" id="topBtn">Back to Top</button>
     <footer>
       <p>Contact me at JonEric11@gmail.com</p>
     </footer>
@@ -63,8 +289,8 @@
           hoverImageDiv.style.backgroundSize = "cover"; // This will make the image fill the div
           hoverImageDiv.style.backgroundPosition = "center"; // This will center the image
           hoverImageDiv.style.backgroundRepeat = "no-repeat";
-          hoverImageDiv.style.width = "400px";
-          hoverImageDiv.style.height = "200px";
+          hoverImageDiv.style.width = "500px";
+          hoverImageDiv.style.height = "250px";
           hoverImageDiv.style.borderRadius = "5px";
           hoverImageDiv.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.1)";
           hoverImageDiv.style.opacity = "0";
@@ -74,11 +300,11 @@
 
           link.addEventListener("mouseenter", function (e) {
             let rect = this.getBoundingClientRect();
-            hoverImageDiv.style.backgroundImage = `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),url(${this.dataset.hoverImage})`;
+            hoverImageDiv.style.backgroundImage = `linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.6)),url(${this.dataset.hoverImage})`;
             hoverImageDiv.style.opacity = "1";
-            hoverImageDiv.style.left = `${rect.right + 10}px`;
+            hoverImageDiv.style.left = `${rect.right + 50}px`;
             hoverImageDiv.style.top = `${
-              rect.top + window.scrollY + rect.height / 2 - 100
+              rect.top + window.scrollY + rect.height / 2 - 220
             }px`;
           });
 
@@ -87,6 +313,20 @@
           });
         });
       });
+
+      var topButton = document.getElementById("topBtn");
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                topButton.style.display = "block";
+            } else {
+                topButton.style.display = "none";
+            }
+        }
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
     </script>
   </body>
 </html>
