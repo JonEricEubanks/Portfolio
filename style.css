@@ -1,69 +1,342 @@
-/* === GLOBAL STYLES === */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 1; 
-}
-.box-shadow-style {
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    background: #fff;
-}
-
 body {
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 14px; /* Increased font size for better readability */
     color: #333;
-    line-height: 1.6;
-    background: #f7f7f7;
-    padding: 20px;
+    line-height: 1.5; /* Improved line height */
+    background: #fff;
+    padding: 10px;
+    margin: 0; /* No margin around the body */
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjusted for alignment */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1200px;
+    padding: 200px; /* Increased padding for spacing */
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
 }
 
-a {
-    color: #007BFF;
+
+.custom-button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    background: #4c4c4c;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+    color: #fff; /* White text color */
+    cursor: pointer;
     text-decoration: none;
+    display: inline-block;
 }
 
-a:hover {
-    color: #0056b3;
-    text-decoration: underline;
+.navigation a:hover {
+    color: #fff; /* White hover color for better visibility */
+    background: #25282b; /* Dark background on hover */
+}
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(200px, 1fr)); /* Repeat 4 columns with a minimum width of 200px */
+    gap: 20px; /* Spacing between grid items */
+    max-width: 1200px;
+    margin: 20px auto;
+    align-items: start;
+    justify-content: center;
+  }
+
+    .link-container, .image-container, .custom-button {
+        transition: all 0.3s;
+    }
+    
+    .link-container:hover, .image-container:hover, .custom-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    
+
+
+
+    .link-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2); /* Initial shadow effect */
+      max-width: 210px;
+      margin-bottom: 20px;
+      transition: all 0.3s; /* Ensure smooth transition */
+  }
+  
+  .link-container:hover {
+      transform: translateY(-3px); /* Slight upward shift on hover */
+      box-shadow: 0px 0px 20px rgba(0,0,0,0.3); /* Enhanced shadow effect on hover */
+  }
+  
+      
+      .image-container {
+        width: 200px;
+        height: 100px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 7px;
+        margin-bottom: 10px;
+        transition: all 0.3s; /* Ensure smooth transition */
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2); /* Initial shadow effect */
+    }
+    
+    .image-container:hover {
+        transform: translateY(-3px); /* Slight upward shift on hover */
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.6); /* Enhanced shadow effect on hover */
+    }
+    
+      
+      a {
+        color: #0c0d0e;
+        text-decoration: none;
+      }
+      
+      a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+      
+      .navigation button, .custom-button {
+        padding: 10px;
+        margin: 5px;
+        border: none;
+        background-color: #25282b;
+        color: #fffcfc;
+        cursor: pointer;
+        text-decoration: none; /* For custom-button */
+        display: inline-block; /* For custom-button */
+      }
+
+/* ... Rest of the original CSS ... */
+
+.top-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #6b6969;
+    color: #030303;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
 }
 
-/* === LAYOUT STYLES === */
-header, footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
+.top-button.show {
+    display: block;
 }
 
-header {
-    padding: 20px 0;
-    margin-bottom: 40px;
+@media screen and (max-width: 768px) {
+    h2 {
+        font-size: 22px;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
 }
 
 section {
-    padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    margin-bottom: 40px;
+    padding: 1px;
+    margin-bottom: 1px;
+    
+    
+}
+
+header, footer {
+    text-align: center;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto; 
+  width: 100%;
+  max-width: 1100px;
+  padding: 20px 40px; /* Increase the left and right padding */
+  background: #353740;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.header-container h1 {
+  padding-left: 20px; /* Adjust as needed for the desired indentation */
+}
+
+
+
+header {
+    margin-bottom: 30px;
 }
 
 footer {
     padding: 10px 0;
-    position: fixed;
     bottom: 0;
     width: 100%;
 }
 
-/* === TYPOGRAPHY STYLES === */
 h1, h2 {
     font-weight: 700;
 }
 
-h2, p {
-    margin-bottom: 20px;
+h1{
+  color: #fff;
 }
 
-/* === UTILITY STYLES === */
+h2, p {
+    margin-bottom: 10px;
+}
 
+h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1200px;
+    
+     // align the second row with the first row
+   
+    
+}
+
+li {
+    margin-bottom: 5px; /* Adjust as needed */
+    font: 1em sans-serif;
+    font-weight: 500;
+    
+}
+
+.certification-container {
+  display: grid; /* Set container to grid */
+  grid-template-columns: repeat(2, minmax(200px, 1fr)); /* 2 columns */
+  gap: 20px; /* Equal spacing between columns and rows */
+  padding: 30px;
+  width: 100%;
+  max-width: 1160px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  transition: all 0.3s;
+}
+
+.certification-container ul {
+  display: contents; /* Inherit grid properties */
+  padding: 0;
+  list-style: none;
+}
+
+.certification-container li {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0; /* Remove extra bottom margin */
+  padding: 10px 20px;
+  text-align: left;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.03);
+  transition: all 0.3s;
+}
+
+.certification-container li:hover {
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1200px;
+    padding: 10px;
+}
+
+.headshot img {
+    width: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    padding: 5px;
+}
+
+.divider {
+    width: 1px;
+    background-color: #000;
+    height: 60px;
+    margin: 0 20px;
+    
+}
+
+.navigation button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    background-color: #25282b;
+    color: #fff;
+    cursor: pointer;
+}
+
+.top-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: #fff; /* White background */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1); /* Optional shadow effect */
+    border: none;
+    cursor: pointer;
+}
+
+.custom-button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    background: #4c4c4c; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1); /* Optional shadow effect */
+    cursor: pointer;
+    text-decoration: none; /* This will remove the underline typically applied to anchor links */
+    display: inline-block; /* This allows you to apply padding and other block styles to an inline element */
+  }
+  
+  .tooltip {
+    position: absolute;
+    backgroundSize: cover;
+    backgroundPosition: center;
+    backgroundRepeat: no-repeat;
+    width: 500px;
+    height: 250px;
+    borderRadius: 5px;
+    boxShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointerEvents: "none";
+    z-index: 10; /* Make sure the tooltip is above other elements */
+  }
+  
+  .tooltip.show {
+    opacity: 1;
+  }
+  
