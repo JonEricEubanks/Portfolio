@@ -8,38 +8,49 @@ body {
     margin: 0; /* No margin around the body */
   }
 
+  body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    background: #fff;
+    padding: 10px;
+    margin: 0;
+  }
+  
   .header-container {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Adjusted for alignment */
+    justify-content: space-between;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    max-width: 1200px;
-    padding: 200px; /* Increased padding for spacing */
-    background: #fff;
+    max-width: 1100px;
+    padding: 20px 40px;
+    background: #353740;
     border-radius: 15px;
-    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-}
-
-
-.custom-button {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-button {
     padding: 10px;
     margin: 5px;
     border: none;
-    background: #4c4c4c;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-    color: #fff; /* White text color */
+    background-color: #25282b;
+    color: #fffcfc;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-}
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navigation a:hover {
+    color: #fff;
+    background: #25282b;
+  }
 
-.navigation a:hover {
-    color: #fff; /* White hover color for better visibility */
-    background: #25282b; /* Dark background on hover */
-}
+  
   .grid-container {
     display: grid;
     grid-template-columns: repeat(4, minmax(200px, 1fr)); /* Repeat 4 columns with a minimum width of 200px */
@@ -70,11 +81,12 @@ body {
       padding: 20px;
       background: #fff;
       border-radius: 15px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.2); /* Initial shadow effect */
-      max-width: 210px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      max-width: 90%; /* Adjust the maximum width as needed */
       margin-bottom: 20px;
-      transition: all 0.3s; /* Ensure smooth transition */
-  }
+      transition: all 0.3s;
+    }
+    
   
   .link-container:hover {
       transform: translateY(-3px); /* Slight upward shift on hover */
@@ -82,16 +94,16 @@ body {
   }
   
       
-      .image-container {
-        width: 200px;
-        height: 100px;
-        background-size: cover;
-        background-position: center;
-        border-radius: 7px;
-        margin-bottom: 10px;
-        transition: all 0.3s; /* Ensure smooth transition */
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.2); /* Initial shadow effect */
-    }
+  .image-container {
+    width: 200px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    background-size: cover;
+    background-position: center;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
     
     .image-container:hover {
         transform: translateY(-3px); /* Slight upward shift on hover */
