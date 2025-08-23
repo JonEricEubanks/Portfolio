@@ -188,6 +188,37 @@ body {
   border-color: var(--primary-color);
 }
 
+/* Make entire link container clickable */
+.link-container.modal-trigger {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Add a subtle active state for touch feedback */
+.link-container.modal-trigger:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-md);
+}
+
+/* Optional: Add a clearer visual indication that the whole card is clickable */
+.link-container.modal-trigger::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(100, 116, 139, 0.5)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 15l-5-5 5-5'/%3E%3C/svg%3E");
+  background-size: contain;
+  transform: rotate(-45deg);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.link-container.modal-trigger:hover::after {
+  opacity: 1;
+}
+
 .image-container {
   width: 100%;
   height: 160px; /* Fixed height for consistent image display */
@@ -765,12 +796,12 @@ section {
   border: 1px solid var(--gray-200);
 }
 
-/* Modern Modal Buttons */
+/* Updated Modal Buttons - Single button centered */
 .modal-buttons {
   display: flex;
-  gap: var(--space-4);
   justify-content: center;
   margin-top: var(--space-6);
+  width: 100%;
 }
 
 .modal-btn {
@@ -788,6 +819,7 @@ section {
   background: var(--gradient-primary);
   color: var(--white);
   box-shadow: var(--shadow-md);
+  min-width: 180px; /* Set a minimum width for better appearance */
 }
 
 .modal-btn::before {
@@ -933,4 +965,280 @@ section {
     font-size: 13px;
   }
 }
+
+/* Mobile-friendly header & hamburger */
+.nav-toggle {
+  display: none; /* default hidden on desktop */
+  background: transparent;
+  border: none;
+  padding: 8px;
+  margin-left: 8px;
+  cursor: pointer;
+  align-self: center;
+}
+.nav-toggle .hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  position: relative;
+  transition: transform 0.18s ease;
+}
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.18s ease, top 0.18s ease, opacity 0.18s ease;
+}
+.nav-toggle .hamburger::before { top: -6px; }
+.nav-toggle .hamburger::after  { top: 6px; }
+
+/* Improved Mobile-friendly header & hamburger */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 130; /* Higher than the nav */
+}
+
+/* Hamburger icon with animation */
+.nav-toggle .hamburger {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.3s ease, top 0.3s ease;
+}
+
+.nav-toggle .hamburger::before { top: -8px; }
+.nav-toggle .hamburger::after { top: 8px; }
+
+/* X animation when menu is open */
+.nav-toggle.active .hamburger {
+  background: transparent; /* Hide the middle line */
+}
+
+.nav-toggle.active .hamburger::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.nav-toggle.active .hamburger::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Override conflicting styles for mobile nav */
+@media screen and (max-width: 768px) {
+  /* Show hamburger */
+  .nav-toggle {
+    display: block;
+  }
   
+  /* Ensure header stays above other content */
+  .header-container {
+    height: auto;
+    min-height: 56px;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 100;
+  }
+  
+  /* Navigation styling */
+  .navigation.open {
+    display: flex !important; /* Important to override any other display styles */
+  }
+  
+  /* Fixed positioning for the dropdown */
+  #primary-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(53, 55, 64, 0.98);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 12px 12px;
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 90;
+  }
+  
+  /* Full width buttons for better mobile tap targets */
+  #primary-nav .custom-button {
+    width: 100%;
+    text-align: center;
+    padding: 12px 15px;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.2s ease;
+  }
+  
+  #primary-nav .custom-button:hover,
+  #primary-nav .custom-button:active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: none;
+  }
+  
+  /* Smooth animation for menu appearance */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #primary-nav.open {
+    animation: fadeInDown 0.3s ease forwards;
+  }
+}
+
+/* mobile specific layout */
+@media screen and (max-width: 768px) {
+  /* show hamburger */
+  .nav-toggle { display: block; }
+
+  /* make header compact */
+  .header-container {
+    padding: 12px;
+    gap: 8px;
+    align-items: center;
+    position: relative;
+  }
+  .header-container h1 { font-size: 1.05rem; margin: 0; color: var(--white); }
+
+  /* hide the nav by default on mobile; open by adding .open */
+  #primary-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 12px;
+    left: 12px;
+    background: linear-gradient(180deg, rgba(53,55,64,0.98), rgba(45,47,52,0.98));
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    gap: 8px;
+    z-index: 120;
+  }
+  #primary-nav.open { display: flex; animation: navIn 160ms ease-out; }
+
+  /* nav buttons become full-width stacked items */
+  #primary-nav .custom-button {
+    width: 100%;
+    background: transparent;
+    color: var(--white);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: none;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  @keyframes navIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* reduce heavy hover transforms on mobile */
+  .link-container, .image-container, .custom-button {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .link-container:hover, .image-container:hover, .custom-button:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* Modal description styling */
+.modal-description {
+  display: none; /* Hide the old description style */
+}
+
+/* Adjust for smaller screens */
+@media screen and (max-width: 768px) {
+  .modal-description {
+    font-size: 14px;
+    padding: var(--space-3);
+    margin: var(--space-3) 0;
+  }
+}
+
+/* Styled caption box for slideshows */
+.modal-caption {
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+  border-left: 4px solid var(--primary-color);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  max-width: 800px;
+  width: 100%;
+}
+
+.caption-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--gray-800);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.caption-title .emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.caption-content {
+  color: var(--gray-700);
+  line-height: 1.6;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Responsive adjustments for captions */
+@media screen and (max-width: 768px) {
+  .modal-caption {
+    padding: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  
+  .caption-title {
+    font-size: 16px;
+  }
+  
+  .caption-content {
+    font-size: 14px;
+  }
+}
+
+/* ...existing mobile styles... */
+
