@@ -13,7 +13,13 @@
       <div>
         <h1>JonEric Eubanks' Portfolio</h1>
       </div>
-      <nav class="navigation">
+
+      <!-- mobile nav toggle -->
+      <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation">
+        <span class="hamburger" aria-hidden="true"></span>
+      </button>
+
+      <nav id="primary-nav" class="navigation">
         <a href="#lowcode" class="custom-button">Low Code Developer</a>
         <a href="#dashboards" class="custom-button">Dashboards</a>
         <a href="#GIS" class="custom-button">GIS Maps</a>
@@ -27,89 +33,96 @@
       <h2 id="lowcode">Low Code Developer</h2>
       <section id="lowcode">
         <div class="grid-container">
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/block1.png');"
-                 data-modal-title="Brookfield Block Party Request Process"
-                 data-modal-image="Images/block1.png"
-                 data-modal-slideshow="Images/block.png,Images/block1.png,Images/block2.png,Images/block3.png"
-                 data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Brookfield Block Party Request Process"
+               data-modal-image="Images/block1.png"
+               data-modal-slideshow="Images/block.png,Images/block1.png,Images/block2.png,Images/block3.png"
+               data-modal-descriptions="Displays the end-to-end Power Automate flow built to handle resident block party requests. It automates staff notifications, event creation, and requester updates.||Automated email template sent to staff with request details, ensuring every department is informed in real-time.||Clean, branded email that confirms request submission and provides clear next steps for the resident.||Automatically adds approved block party requests to the municipal calendar with location and address details, streamlining scheduling and transparency."
+               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+            <div class="image-container" 
+                 style="background-image: url('Images/block1.png');">
             </div>
             <p>Brookfield Block Party Request Process</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/crm.png');"
-                 data-modal-title="VBG & VNB Power Bi Dashboard Demos"
-                 data-modal-image="Images/crm.png"
-                 data-modal-slideshow="Images/crm.png,Images/crm1.png,Images/demo.png,Images/demo1.png,Images/demo2.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+          <div class="link-container modal-trigger" 
+               data-modal-title="VBG & VNB Power Bi Dashboard Demos"
+               data-modal-image="Images/crm.png"
+               data-modal-slideshow="Images/crm.png,Images/crm1.png,Images/demo.png,Images/demo1.png,Images/demo2.png"
+               data-modal-descriptions="CRM Dashboard Overview: Demonstrates how New World data can be transformed into a CRM-style Power BI dashboard. Provides insights into service performance, customer requests, and satisfaction trends to help the Village improve operations.||CRM Dashboard by Person: Detailed view breaking down municipal service requests by residents, showing workload distribution, resolution times, and satisfaction ratings to optimize resource allocation.||Crime Analysis Dashboard: Showcases a Police Crime Analysis dashboard prototype built in Power BI. Highlights trends in crime volume, location hotspots, and offense types, enabling data-driven decisions for public safety.||Time Tracking Dashboard: A performance dashboard demo built in Power BI to visualize employee activity, task hours, and efficiency. Designed to help managers track workloads, identify trends, and improve workforce planning.||Reconstruction Project Dashboard: Proof-of-concept combining Power BI with Power Apps for change order tracking and reconstruction project oversight. Enables contractors, costs, and project milestones to be monitored in real-time."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+            <div class="image-container" 
+                 style="background-image: url('Images/crm.png');">
             </div>
             <p>VBG & VNB Power Bi Dashboard Demos</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/p25.png');"
-                 data-modal-title="Buffalo Grove Project 25 Dashboard"
-                 data-modal-image="Images/p25.png"
-                 data-modal-slideshow="Images/p25.png,Images/p251.png,Images/p252.png,Images/p253.png,Images/p254.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Buffalo Grove Project 25 Dashboard"
+               data-modal-image="Images/p25.png"
+               data-modal-slideshow="Images/p25.png,Images/p251.png,Images/p252.png,Images/p253.png,Images/p254.png"
+               data-modal-descriptions="📊 Executive Summary Dashboard: High-level project view for the Village Board showing budget, contingency, pay requests, and % completion. Designed for leadership updates with simplified visuals and key performance indicators.||📑 Change Order Tracking: Tracks the lifecycle of change orders from submission through approval. Provides visibility into budget adjustments, contingency usage, and contractor impacts in one centralized view.||💰 Pay Requests Dashboard: Monitors contractor pay requests, amounts approved, and balances used. Ensures Dane and the project team can quickly confirm payment status and alignment with the overall budget.||🧾 Pay Applications Dashboard: Breaks down active pay applications by contractor, budget category, and timeline. Offers a clear view into how construction costs are being distributed and managed.||🔍 Custom Popout Drill-Down: Interactive custom popout built in Power BI to provide contractor-level insights. Demonstrates advanced data modeling and visualization expertise to deliver detailed, on-demand budget tracking."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+            <div class="image-container" 
+                 style="background-image: url('Images/p25.png');">
             </div>
             <p>Buffalo Grove Project 25 Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/h20.png');"
-                 data-modal-title="Glencoe Water Service Record Inventory App"
-                 data-modal-image="Images/h20.png"
-                 data-modal-slideshow="Images/h20.png,Images/h201.png,Images/h203.png,Images/h202.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Glencoe Water Service Record Inventory App"
+               data-modal-image="Images/h20.png"
+               data-modal-slideshow="Images/h20.png,Images/h201.png,Images/h203.png,Images/h202.png"
+               data-modal-descriptions="💧 Water Service Records Power App: Custom Power App built on top of legacy FileMaker data to centralize and modernize water service record tracking. Provides a searchable interface, edit/delete tools, and record details for staff.||📧 Automated Staff Notifications: Power Automate flow sends branded email alerts when water service records are added or updated. Ensures staff are notified in real-time without manual follow-up.||📤 Export & Reporting Flow: Automated export process allowing staff to download either all water service records or selected subsets. Power Automate creates CSV files and download for easy reporting.||📲 Mobile-Responsive Design: App built with responsive layouts to support mobile devices. Enables field staff to view, edit, and confirm service records directly on their phones."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+            <div class="image-container" 
+                 style="background-image: url('Images/h20.png');">
             </div>
             <p>Glencoe Water Service Record Inventory App</p>
           </div>
-        <div class="link-container">
-          <div class="image-container modal-trigger" 
-               style="background-image: url('Images/servicedesk.png');"
+
+          <div class="link-container modal-trigger" 
                data-modal-title="Demo MGP Service Desk Ticket App"
                data-modal-image="Images/servicedesk.png"
                data-modal-slideshow="Images/servicedesk.png,Images/servicedesk2.png,Images/servicedesk1.png"
+               data-modal-descriptions="🖥️ Service Desk App Home: The first demo app created to showcase Spark's capabilities. Provides a modern home screen for creating, tracking, and managing service desk tickets in a centralized system.||📋 Ticket Tracking Table: Detailed view of assigned tickets and categories within the app. Highlights how the app tracks priorities, statuses, and attachments across multiple clients.||📊 Service Desk Power BI Dashboard: Connected Power BI dashboard for the Service Desk App. Demonstrates cross-platform functionality by visualizing ticket trends, resolution rates, and workload analysis."
                data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
+            <div class="image-container" 
+                 style="background-image: url('Images/servicedesk.png');">
+            </div>
+            <p>Demo MGP Service Desk Ticket App</p>
           </div>
-          <p>Demo MGP Service Desk Ticket App</p>
-        </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/share.png');"
-                 data-modal-title="Sharepoint Intranet Design Development"
-                 data-modal-image="Images/share.png"
-                 data-modal-slideshow="Images/share.png,Images/share1.png,Images/share2.png"
-                 data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Sharepoint Intranet Design Development"
+               data-modal-image="Images/share.png"
+               data-modal-slideshow="Images/share.png,Images/share1.png,Images/share2.png,Images/share3.png"
+               data-modal-descriptions="🏠 Village Hub Site: Developed a centralized SharePoint hub site to connect departments, resources, and staff communications. Provides easy navigation to department-specific intranet sites.||📑 Employee Benefits Site: Built a modern intranet site for HR resources, including benefits guides, policies, and staff contacts. Simplifies employee access to critical documents and support.||📘 Employee Policies Site: Created a comprehensive policies portal for the Village of Lincolnshire. Includes employee handbook, conduct standards, safety policies, and resource directories.||🎨 Teams Integration & Branding: Customized the Microsoft Teams Connections app with village logos and brand identity. Ensured a consistent intranet experience across SharePoint and Teams."
+               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+            <div class="image-container" 
+                 style="background-image: url('Images/share.png');">
             </div>
             <p>Sharepoint Intranet Design Development</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/agent.png');"
-                 data-modal-title="(LISA) Land Info Service Agent on GIS Data"
-                 data-modal-image="Images/agent.png"
-                 data-modal-slideshow="Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+          <div class="link-container modal-trigger" 
+               data-modal-title="(LISA) Land Info Service Agent on GIS Data"
+               data-modal-image="Images/agent.png"
+               data-modal-slideshow="Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+            <div class="image-container" 
+                 style="background-image: url('Images/agent.png');">
             </div>
             <p>(LISA) Land Info Service Agent on GIS Data</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/ELM.png');"
-                 data-modal-title="Microsofts Best in Automation ELM App"
-                 data-modal-image="Images/ELM.png"
-                 data-modal-slideshow="Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0"
-                 data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Microsofts Best in Automation ELM App"
+               data-modal-image="Images/ELM.png"
+               data-modal-slideshow="Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0"
+               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+            <div class="image-container" 
+                 style="background-image: url('Images/ELM.png');">
             </div>
             <p>Microsofts Best in Automation ELM App</p>
           </div>
@@ -122,81 +135,82 @@
       <h2 id="dashboards">Dashboards</h2>
       <section id="dashboards">
         <div class="grid-container">
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/Erapdash.png');"
-                 data-modal-title="Power BI Emergency Rental Assistance Dashboard"
-                 data-modal-image="Images/Erapdash.png"
-                 data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Power BI Emergency Rental Assistance Dashboard"
+               data-modal-image="Images/Erapdash.png"
+               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+            <div class="image-container" 
+                 style="background-image: url('Images/Erapdash.png');">
             </div>
             <p>Power BI Emergency Rental Assistance Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/ampdash.png');"
-                 data-modal-title="Smartsheet Alleyway Maintenance Dashboard"
-                 data-modal-image="Images/ampdash.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet Alleyway Maintenance Dashboard"
+               data-modal-image="Images/ampdash.png"
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+            <div class="image-container" 
+                 style="background-image: url('Images/ampdash.png');">
             </div>
             <p>Smartsheet Alleyway Maintenance Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/rolldash.png');"
-                 data-modal-title="Smartsheet Neighborhood Improvement Dashboard"
-                 data-modal-image="Images/rolldash.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet Neighborhood Improvement Dashboard"
+               data-modal-image="Images/rolldash.png"
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+            <div class="image-container" 
+                 style="background-image: url('Images/rolldash.png');">
             </div>
             <p>Smartsheet Neighborhood Improvement Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/covdash.png');"
-                 data-modal-title="Smartsheet First Responder Covid19 Dashboard"
-                 data-modal-image="Images/covdash.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet First Responder Covid19 Dashboard"
+               data-modal-image="Images/covdash.png"
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+            <div class="image-container" 
+                 style="background-image: url('Images/covdash.png');">
             </div>
             <p>Smartsheet First Responder Covid19 Dashboard</p>
           </div>
-        <div class="link-container">
-          <div class="image-container modal-trigger" 
-               style="background-image: url('Images/prpdash.png');"
+
+          <div class="link-container modal-trigger" 
                data-modal-title="Power BI Priority Repair Assistance Dashboard"
                data-modal-image="Images/prpdash.png"
                data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
+            <div class="image-container" 
+                 style="background-image: url('Images/prpdash.png');">
+            </div>
+            <p>Power BI Priority Repair Assistance Dashboard</p>
           </div>
-          <p>Power BI Priority Repair Assistance Dashboard</p>
-        </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/side.png');"
-                 data-modal-title="Public Engagement Report for District 11"
-                 data-modal-image="Images/side.png"
-                 data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Public Engagement Report for District 11"
+               data-modal-image="Images/side.png"
+               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+            <div class="image-container" 
+                 style="background-image: url('Images/side.png');">
             </div>
             <p>Public Engagement Report for District 11</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/erap.png');"
-                 data-modal-title="Smartsheet Rental Assistance Dashboard"
-                 data-modal-image="Images/erap.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet Rental Assistance Dashboard"
+               data-modal-image="Images/erap.png"
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+            <div class="image-container" 
+                 style="background-image: url('Images/erap.png');">
             </div>
             <p>Smartsheet Rental Assistance Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/Dis 6.png');"
-                 data-modal-title="Stop Six: Transformation Newsletter"
-                 data-modal-image="Images/Dis 6.png"
-                 data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Stop Six: Transformation Newsletter"
+               data-modal-image="Images/Dis 6.png"
+               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+            <div class="image-container" 
+                 style="background-image: url('Images/Dis 6.png');">
             </div>
             <p>Stop Six: Transformation Newsletter</p>
           </div>
@@ -211,82 +225,82 @@
       <section id="GIS">
         <div class="grid-container">
           
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/cost.png');"
-                 data-modal-title="Fort Worth Housing Equity Insight Analysis"
-                 data-modal-image="Images/cost.png"
-                 data-modal-link="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth Housing Equity Insight Analysis"
+               data-modal-image="Images/cost.png"
+               data-modal-link="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda">
+            <div class="image-container" 
+                 style="background-image: url('Images/cost.png');">
             </div>
             <p>Fort Worth Housing Equity Insight Analysis</p>
           </div>
           
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/cdbg.png');"
-                 data-modal-title="Fort Worth CDBG Evolution: Decade Mapped"
-                 data-modal-image="Images/cdbg.png"
-                 data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth CDBG Evolution: Decade Mapped"
+               data-modal-image="Images/cdbg.png"
+               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5">
+            <div class="image-container" 
+                 style="background-image: url('Images/cdbg.png');">
             </div>
             <p> Fort Worth CDBG Evolution: Decade Mapped</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/d10.png');"
-                 data-modal-title="Marine Area Sidewalk Condition & Average Daily Traffic Count"
-                 data-modal-image="Images/d10.png"
-                 data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=21139a408d2c408f9a58a5e0a9447d4d">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Marine Area Sidewalk Condition & Average Daily Traffic Count"
+               data-modal-image="Images/d10.png"
+               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=21139a408d2c408f9a58a5e0a9447d4d">
+            <div class="image-container" 
+                 style="background-image: url('Images/d10.png');">
             </div>
             <p>Marine Area Sidewalk Condition & Average Daily Traffic Count</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/d4.png');"
-                 data-modal-title="District 4: Dynamic Demographics Mapped"
-                 data-modal-image="Images/d4.png"
-                 data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41">
+          <div class="link-container modal-trigger" 
+               data-modal-title="District 4: Dynamic Demographics Mapped"
+               data-modal-image="Images/d4.png"
+               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41">
+            <div class="image-container" 
+                 style="background-image: url('Images/d4.png');">
             </div>
             <p>District 4: Dynamic Demographics Mapped"</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/food.png');"
-                 data-modal-title="Fort Worth Food Access Mapping Insights"
-                 data-modal-image="Images/food.png"
-                 data-modal-link="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth Food Access Mapping Insights"
+               data-modal-image="Images/food.png"
+               data-modal-link="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb">
+            <div class="image-container" 
+                 style="background-image: url('Images/food.png');">
             </div>
             <p>Fort Worth Food Access Mapping Insights</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/cares.png');"
-                 data-modal-title="Fort Worth Cares: Aid Mapping Portfolio"
-                 data-modal-image="Images/cares.png"
-                 data-modal-link="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth Cares: Aid Mapping Portfolio"
+               data-modal-image="Images/cares.png"
+               data-modal-link="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff">
+            <div class="image-container" 
+                 style="background-image: url('Images/cares.png');">
             </div>
             <p>Fort Worth Cares: Aid Mapping Portfolio</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/ally.png');"
-                 data-modal-title="Alleyway Qualification: Mapping Insights"
-                 data-modal-image="Images/ally.png"
-                 data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Alleyway Qualification: Mapping Insights"
+               data-modal-image="Images/ally.png"
+               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493">
+            <div class="image-container" 
+                 style="background-image: url('Images/ally.png');">
             </div>
             <p>Alleyway Qualification: Mapping Insights</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/nez.png');"
-                 data-modal-title="Empower Fort Worth: Neighborhood Incentives"
-                 data-modal-image="Images/nez.png"
-                 data-modal-link="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Empower Fort Worth: Neighborhood Incentives"
+               data-modal-image="Images/nez.png"
+               data-modal-link="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11">
+            <div class="image-container" 
+                 style="background-image: url('Images/nez.png');">
             </div>
             <p>Empower Fort Worth: Neighborhood Incentives</p>
           </div>
@@ -308,6 +322,22 @@
       <div class="certification-container">
        
         <ul>
+          <li>
+            <div class="certification-item modal-trigger"
+                 data-modal-title="Microsoft 365 Certified: Fundamentals"
+                 data-modal-image="Images/ms900.png"
+                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/F9B37924E55CFF7A?sharingId=A81001FBB40B8274">
+              Microsoft 365 Certified: Fundamentals
+            </div>
+          </li>
+          <li>
+            <div class="certification-item modal-trigger"
+                 data-modal-title="Microsoft Certified: Power Platform Fundamentals"
+                 data-modal-image="Images/ms9001.png"
+                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/1985EFEF69A71E1C?sharingId=A81001FBB40B8274">
+              Microsoft Certified: Power Platform Fundamentals
+            </div>
+          </li>
           <li>
             <div class="certification-item modal-trigger"
                  data-modal-title="Microsoft Transcript"
@@ -458,9 +488,13 @@
             <button id="next-slide" class="slide-btn">&gt;</button>
           </div>
         </div>
+        <div id="modal-caption" class="modal-caption" style="display: none;">
+          <div class="caption-title"><span class="emoji">⚙️</span> <span id="caption-title-text">Flow Overview</span></div>
+          <p id="caption-content" class="caption-content">Detailed description goes here</p>
+        </div>
+        <p id="modal-description" class="modal-description" style="display: none;"></p>
         <div class="modal-buttons">
           <button id="modal-view-btn" class="modal-btn">View Project</button>
-          <button id="modal-close-btn" class="modal-btn secondary">Close</button>
         </div>
       </div>
     </div>
@@ -470,23 +504,255 @@
     </footer>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // Mobile navigation toggle
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.getElementById('primary-nav');
+        
+        if(toggle && nav) {
+          function setOpen(open) {
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            nav.classList.toggle('open', open);
+            toggle.classList.toggle('active', open); // Add active class for hamburger animation
+            document.body.style.overflow = open ? 'hidden' : '';
+          }
+
+          toggle.addEventListener('click', () => {
+            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            setOpen(!isOpen);
+          });
+
+          // Close nav when any nav link is clicked
+          nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+
+          // Reset on resize
+          window.addEventListener('resize', () => {
+            if(window.innerWidth > 768) setOpen(false);
+          });
+        }
+
         // Modal functionality
         const modal = document.getElementById('imageModal');
         const modalTitle = document.getElementById('modal-title');
         const modalImage = document.getElementById('modal-image');
         const modalVideo = document.getElementById('modal-video');
         const modalViewBtn = document.getElementById('modal-view-btn');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
         const closeModal = document.querySelector('.close-modal');
         const modalOverlay = document.querySelector('.modal-overlay');
         const slideshowControls = document.getElementById('slideshow-controls');
         const prevSlideBtn = document.getElementById('prev-slide');
         const nextSlideBtn = document.getElementById('next-slide');
         const slideCounter = document.getElementById('slide-counter');
+        const modalDescription = document.getElementById('modal-description'); 
+        const modalCaption = document.getElementById('modal-caption');
+        const captionTitleText = document.getElementById('caption-title-text');
+        const captionEmoji = document.querySelector('.emoji');
+        const captionContent = document.getElementById('caption-content');
 
         let currentLink = '';
         let slideshowItems = [];
+        let slideshowDescriptions = [];
         let currentSlideIndex = 0;
+
+        function processCaptionData(descriptions, slideshow) {
+          // First identify which slideshow we're dealing with
+          const slideshowPath = slideshow ? slideshow.split(',')[0] : '';
+          
+          return descriptions.map((desc, index) => {
+            // Default values
+            let emoji = "ℹ️";
+            let title = "Overview";
+            let content = desc;
+            
+            // Handle special slideshows based on first image name
+            if (slideshowPath.includes('block')) {
+              // Brookfield Block Party Process
+              switch(index) {
+                case 0:
+                  title = "Flow Architecture Overview";
+                  emoji = "⚙️";
+                  break;
+                case 1:
+                  title = "Staff Notification System";
+                  emoji = "📧";
+                  break;
+                case 2:
+                  title = "Resident Confirmation Email";
+                  emoji = "✅";
+                  break;
+                case 3:
+                  title = "Automated Calendar Integration";
+                  emoji = "📅";
+                  break;
+              }
+            } else if (slideshowPath.includes('h20')) {
+              // Water Service Record slides
+              switch(index) {
+                case 0:
+                  title = "Water Service Records Power App";
+                  emoji = "💧";
+                  break;
+                case 1:
+                  title = "Automated Staff Notifications";
+                  emoji = "📧";
+                  break;
+                case 2:
+                  title = "Export & Reporting Flow";
+                  emoji = "📤";
+                  break;
+                case 3:
+                  title = "Mobile-Responsive Design";
+                  emoji = "📲";
+                  break;
+              }
+            } else if (slideshowPath.includes('servicedesk')) {
+              // Service Desk Ticket App slides
+              switch(index) {
+                case 0:
+                  title = "Service Desk App Home";
+                  emoji = "🖥️";
+                  break;
+                case 1:
+                  title = "Ticket Tracking Table";
+                  emoji = "📋";
+                  break;
+                case 2:
+                  title = "Service Desk Power BI Dashboard";
+                  emoji = "📊";
+                  break;
+              }
+            } else if (slideshowPath.includes('share')) {
+              // SharePoint Intranet Design Development
+              switch(index) {
+                case 0:
+                  title = "Village Hub Site";
+                  emoji = "🏠";
+                  break;
+                case 1:
+                  title = "Employee Benefits Site";
+                  emoji = "📑";
+                  break;
+                case 2:
+                  title = "Employee Policies Site";
+                  emoji = "📘";
+                  break;
+                case 3:
+                  title = "Teams Integration & Branding";
+                  emoji = "🎨";
+                  break;
+              }
+            } else if (slideshowPath.includes('agent')) {
+              // LISA Land Info Service Agent
+              switch(index) {
+                case 0:
+                  title = "AI Assistant Interface";
+                  emoji = "🤖";
+                  break;
+                case 1:
+                  title = "GIS Data Integration";
+                  emoji = "🗺️";
+                  break;
+                case 2:
+                  title = "Automated Response System";
+                  emoji = "💬";
+                  break;
+                case 3:
+                  title = "Land Records Dashboard";
+                  emoji = "📊";
+                  break;
+                case 4:
+                  title = "Mobile Access Platform";
+                  emoji = "📱";
+                  break;
+              }
+            } else if (slideshowPath.includes('ELM')) {
+              // Microsoft's Best in Automation ELM App
+              switch(index) {
+                case 0:
+                  title = "ELM App Dashboard";
+                  emoji = "📊";
+                  break;
+                case 1:
+                  title = "Process Automation Interface";
+                  emoji = "⚙️";
+                  break;
+                case 2:
+                  title = "Video Demonstration";
+                  emoji = "🎬";
+                  break;
+              }
+            } else if (slideshowPath.includes('crm') || slideshowPath.includes('demo')) {
+              // VBG & VNB Power BI Dashboards
+              switch(index) {
+                case 0:
+                  title = "CRM Dashboard Overview";
+                  emoji = "📊";
+                  break;
+                case 1:
+                  title = "CRM Dashboard by Person";
+                  emoji = "👨‍👩‍👧‍👦";
+                  break;
+                case 2:
+                  title = "Crime Analysis Dashboard";
+                  emoji = "🔍";
+                  break;
+                case 3:
+                  title = "Time Tracking Dashboard";
+                  emoji = "⏱️";
+                  break;
+                case 4:
+                  title = "Reconstruction Project Dashboard";
+                  emoji = "🏗️";
+                  break;
+              }
+            } else if (slideshowPath.includes('p25')) {
+              // Project 25 Dashboard
+              switch(index) {
+                case 0:
+                  title = "Executive Summary Dashboard";
+                  emoji = "📊";
+                  break;
+                case 1:
+                  title = "Change Order Tracking";
+                  emoji = "📑";
+                  break;
+                case 2:
+                  title = "Pay Requests Dashboard";
+                  emoji = "💰";
+                  break;
+                case 3:
+                  title = "Pay Applications Dashboard";
+                  emoji = "🧾";
+                  break;
+                case 4:
+                  title = "Custom Popout Drill-Down";
+                  emoji = "🔍";
+                  break;
+              }
+            }
+            
+            // Extract emoji if it's at the beginning of the description
+            const emojiMatch = desc.match(/^([\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}])\s+(.*?):/u);
+            if (emojiMatch) {
+              // Only override emoji if we haven't already set it in the switch statements
+              if (emoji === "ℹ️") {
+                emoji = emojiMatch[1];
+              }
+              // Remove emoji and title prefix from content
+              content = desc.replace(/^[\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\s+.*?:\s*/u, '');
+            }
+            
+            // Remove any remaining title duplication from content (after the colon)
+            if (content.includes(':')) {
+              content = content.split(':').slice(1).join(':').trim();
+            }
+            
+            return {
+              emoji: emoji,
+              title: title,
+              content: content
+            };
+          });
+        }
 
         // Slideshow functions
         function showSlide(index) {
@@ -504,12 +770,24 @@
             modalVideo.src = currentItem.substring(6); // Remove 'video:' prefix
             modalVideo.style.display = 'block';
             modalImage.style.display = 'none';
+            modalCaption.style.display = 'none'; // Hide caption for videos
           } else {
             // Show image, hide video
             modalImage.src = currentItem;
             modalImage.style.display = 'block';
             modalVideo.style.display = 'none';
             modalVideo.src = ''; // Clear video source to stop playback
+            
+            // Display caption if available
+            if (slideshowDescriptions && slideshowDescriptions[currentSlideIndex]) {
+              const captionData = slideshowDescriptions[currentSlideIndex];
+              captionEmoji.textContent = captionData.emoji;
+              captionTitleText.textContent = captionData.title;
+              captionContent.textContent = captionData.content;
+              modalCaption.style.display = 'block';
+            } else {
+              modalCaption.style.display = 'none';
+            }
           }
           
           slideCounter.textContent = `${currentSlideIndex + 1} / ${slideshowItems.length}`;
@@ -545,6 +823,7 @@
             const imageSrc = this.getAttribute('data-modal-image');
             const link = this.getAttribute('data-modal-link');
             const slideshow = this.getAttribute('data-modal-slideshow');
+            const descriptions = this.getAttribute('data-modal-descriptions');
             
             modalTitle.textContent = title;
             currentLink = link;
@@ -553,16 +832,38 @@
             if (slideshow) {
               slideshowItems = slideshow.split(',');
               currentSlideIndex = 0;
+              
+              // Process descriptions if available - pass slideshow for context
+              if (descriptions) {
+                const descArray = descriptions.split('||');
+                slideshowDescriptions = processCaptionData(descArray, slideshow);
+              } else {
+                slideshowDescriptions = [];
+              }
+              
               showSlide(0);
               slideshowControls.style.display = 'flex';
             } else {
               slideshowItems = [];
+              slideshowDescriptions = [];
               modalImage.src = imageSrc;
               modalImage.alt = title;
               modalImage.style.display = 'block';
               modalVideo.style.display = 'none';
               modalVideo.src = '';
               slideshowControls.style.display = 'none';
+              
+              // Display single image description if available
+              const singleDescription = this.getAttribute('data-modal-description');
+              if (singleDescription) {
+                const captionData = processCaptionData([singleDescription])[0];
+                captionEmoji.textContent = captionData.emoji;
+                captionTitleText.textContent = captionData.title;
+                captionContent.textContent = captionData.content;
+                modalCaption.style.display = 'block';
+              } else {
+                modalCaption.style.display = 'none';
+              }
             }
             
             // Check if this is a certification item and show/hide button accordingly
@@ -592,7 +893,6 @@
         }
 
         closeModal.addEventListener('click', closeModalFunction);
-        modalCloseBtn.addEventListener('click', closeModalFunction);
         modalOverlay.addEventListener('click', closeModalFunction);
 
         // View project button
@@ -618,8 +918,8 @@
               topButton.style.display = "block";
           } else {
               topButton.style.display = "none";
-          }
-      }
+
+          }      }
       function topFunction() {
           document.body.scrollTop = 0;
           document.documentElement.scrollTop = 0;
@@ -627,3 +927,4 @@
     </script>
   </body>
 </html>
+``` 
