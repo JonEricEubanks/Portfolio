@@ -1,930 +1,1244 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JonEric Eubanks Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <div class="header-container">
-      <div>
-        <h1>JonEric Eubanks' Portfolio</h1>
-      </div>
+/* Modern CSS Reset and Typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-      <!-- mobile nav toggle -->
-      <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation">
-        <span class="hamburger" aria-hidden="true"></span>
-      </button>
+:root {
+  /* Modern Color Palette - Sophisticated Blue Theme */
+  --primary-color: #3B82F6;
+  --primary-dark: #1E40AF;
+  --primary-light: #60A5FA;
+  --secondary-color: #64748b;
+  --accent-color: #6366F1;
+  --success-color: #10b981;
+  --gradient-primary: linear-gradient(135deg, #3B82F6, #1E40AF);
+  --gradient-accent: linear-gradient(135deg, #3B82F6, #6366F1);
+  --gradient-rainbow: linear-gradient(90deg, #3B82F6, #6366F1, #60A5FA);
+  
+  /* Neutrals */
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+}
 
-      <nav id="primary-nav" class="navigation">
-        <a href="#lowcode" class="custom-button">Low Code Developer</a>
-        <a href="#dashboards" class="custom-button">Dashboards</a>
-        <a href="#GIS" class="custom-button">GIS Maps</a>
-        <a href="#certifications" class="custom-button">Certifications</a>
-      </nav>
-    </div>
-  </header>
+* {
+  box-sizing: border-box;
+}
 
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--gray-800);
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+  margin: 0;
+  padding: var(--space-4);
+  min-height: 100vh;
+}
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto var(--space-6);
+    max-width: 1200px;
+    padding: var(--space-4) var(--space-6);
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    height: 64px;
+  }
+  
+  .header-container:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+  }
+  
+  .custom-button {
+    padding: var(--space-2) var(--space-4);
+    margin: var(--space-1);
+    border: none;
+    background: var(--gradient-primary);
+    color: var(--white);
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .custom-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: var(--gradient-accent);
+  }
+  
+  .custom-button:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .navigation a:hover {
+    color: var(--white);
+    background: var(--gradient-primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
 
-    <main>
-      <h2 id="lowcode">Low Code Developer</h2>
-      <section id="lowcode">
-        <div class="grid-container">
-          <div class="link-container modal-trigger" 
-               data-modal-title="Brookfield Block Party Request Process"
-               data-modal-image="Images/block1.png"
-               data-modal-slideshow="Images/block.png,Images/block1.png,Images/block2.png,Images/block3.png"
-               data-modal-descriptions="Displays the end-to-end Power Automate flow built to handle resident block party requests. It automates staff notifications, event creation, and requester updates.||Automated email template sent to staff with request details, ensuring every department is informed in real-time.||Clean, branded email that confirms request submission and provides clear next steps for the resident.||Automatically adds approved block party requests to the municipal calendar with location and address details, streamlining scheduling and transparency."
-               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
-            <div class="image-container" 
-                 style="background-image: url('Images/block1.png');">
-            </div>
-            <p>Brookfield Block Party Request Process</p>
-          </div>
+  
+/* Modern Grid Container - Fixed 2 rows x 4 columns */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-4);
+  align-items: stretch;
+  justify-content: center;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="VBG & VNB Power Bi Dashboard Demos"
-               data-modal-image="Images/crm.png"
-               data-modal-slideshow="Images/crm.png,Images/crm1.png,Images/demo.png,Images/demo1.png,Images/demo2.png"
-               data-modal-descriptions="CRM Dashboard Overview: Demonstrates how New World data can be transformed into a CRM-style Power BI dashboard. Provides insights into service performance, customer requests, and satisfaction trends to help the Village improve operations.||CRM Dashboard by Person: Detailed view breaking down municipal service requests by residents, showing workload distribution, resolution times, and satisfaction ratings to optimize resource allocation.||Crime Analysis Dashboard: Showcases a Police Crime Analysis dashboard prototype built in Power BI. Highlights trends in crime volume, location hotspots, and offense types, enabling data-driven decisions for public safety.||Time Tracking Dashboard: A performance dashboard demo built in Power BI to visualize employee activity, task hours, and efficiency. Designed to help managers track workloads, identify trends, and improve workforce planning.||Reconstruction Project Dashboard: Proof-of-concept combining Power BI with Power Apps for change order tracking and reconstruction project oversight. Enables contractors, costs, and project milestones to be monitored in real-time."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
-            <div class="image-container" 
-                 style="background-image: url('Images/crm.png');">
-            </div>
-            <p>VBG & VNB Power Bi Dashboard Demos</p>
-          </div>
+/* Enhanced Portfolio Cards */
+.link-container, .image-container, .custom-button {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Buffalo Grove Project 25 Dashboard"
-               data-modal-image="Images/p25.png"
-               data-modal-slideshow="Images/p25.png,Images/p251.png,Images/p252.png,Images/p253.png,Images/p254.png"
-               data-modal-descriptions="📊 Executive Summary Dashboard: High-level project view for the Village Board showing budget, contingency, pay requests, and % completion. Designed for leadership updates with simplified visuals and key performance indicators.||📑 Change Order Tracking: Tracks the lifecycle of change orders from submission through approval. Provides visibility into budget adjustments, contingency usage, and contractor impacts in one centralized view.||💰 Pay Requests Dashboard: Monitors contractor pay requests, amounts approved, and balances used. Ensures Dane and the project team can quickly confirm payment status and alignment with the overall budget.||🧾 Pay Applications Dashboard: Breaks down active pay applications by contractor, budget category, and timeline. Offers a clear view into how construction costs are being distributed and managed.||🔍 Custom Popout Drill-Down: Interactive custom popout built in Power BI to provide contractor-level insights. Demonstrates advanced data modeling and visualization expertise to deliver detailed, on-demand budget tracking."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
-            <div class="image-container" 
-                 style="background-image: url('Images/p25.png');">
-            </div>
-            <p>Buffalo Grove Project 25 Dashboard</p>
-          </div>
+.link-container:hover, .image-container:hover, .custom-button:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Glencoe Water Service Record Inventory App"
-               data-modal-image="Images/h20.png"
-               data-modal-slideshow="Images/h20.png,Images/h201.png,Images/h203.png,Images/h202.png"
-               data-modal-descriptions="💧 Water Service Records Power App: Custom Power App built on top of legacy FileMaker data to centralize and modernize water service record tracking. Provides a searchable interface, edit/delete tools, and record details for staff.||📧 Automated Staff Notifications: Power Automate flow sends branded email alerts when water service records are added or updated. Ensures staff are notified in real-time without manual follow-up.||📤 Export & Reporting Flow: Automated export process allowing staff to download either all water service records or selected subsets. Power Automate creates CSV files and download for easy reporting.||📲 Mobile-Responsive Design: App built with responsive layouts to support mobile devices. Enables field staff to view, edit, and confirm service records directly on their phones."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
-            <div class="image-container" 
-                 style="background-image: url('Images/h20.png');">
-            </div>
-            <p>Glencoe Water Service Record Inventory App</p>
-          </div>
+.link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-6);
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-200);
+  margin-bottom: var(--space-6);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  height: 280px; /* Fixed height for uniform containers */
+  min-height: 280px;
+  justify-content: space-between; /* Distribute content evenly */
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Demo MGP Service Desk Ticket App"
-               data-modal-image="Images/servicedesk.png"
-               data-modal-slideshow="Images/servicedesk.png,Images/servicedesk2.png,Images/servicedesk1.png"
-               data-modal-descriptions="🖥️ Service Desk App Home: The first demo app created to showcase Spark's capabilities. Provides a modern home screen for creating, tracking, and managing service desk tickets in a centralized system.||📋 Ticket Tracking Table: Detailed view of assigned tickets and categories within the app. Highlights how the app tracks priorities, statuses, and attachments across multiple clients.||📊 Service Desk Power BI Dashboard: Connected Power BI dashboard for the Service Desk App. Demonstrates cross-platform functionality by visualizing ticket trends, resolution rates, and workload analysis."
-               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
-            <div class="image-container" 
-                 style="background-image: url('Images/servicedesk.png');">
-            </div>
-            <p>Demo MGP Service Desk Ticket App</p>
-          </div>
+.link-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.6s ease;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Sharepoint Intranet Design Development"
-               data-modal-image="Images/share.png"
-               data-modal-slideshow="Images/share.png,Images/share1.png,Images/share2.png,Images/share3.png"
-               data-modal-descriptions="🏠 Village Hub Site: Developed a centralized SharePoint hub site to connect departments, resources, and staff communications. Provides easy navigation to department-specific intranet sites.||📑 Employee Benefits Site: Built a modern intranet site for HR resources, including benefits guides, policies, and staff contacts. Simplifies employee access to critical documents and support.||📘 Employee Policies Site: Created a comprehensive policies portal for the Village of Lincolnshire. Includes employee handbook, conduct standards, safety policies, and resource directories.||🎨 Teams Integration & Branding: Customized the Microsoft Teams Connections app with village logos and brand identity. Ensured a consistent intranet experience across SharePoint and Teams."
-               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
-            <div class="image-container" 
-                 style="background-image: url('Images/share.png');">
-            </div>
-            <p>Sharepoint Intranet Design Development</p>
-          </div>
+.link-container:hover::before {
+  left: 100%;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="(LISA) Land Info Service Agent on GIS Data"
-               data-modal-image="Images/agent.png"
-               data-modal-slideshow="Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
-            <div class="image-container" 
-                 style="background-image: url('Images/agent.png');">
-            </div>
-            <p>(LISA) Land Info Service Agent on GIS Data</p>
-          </div>
+.link-container:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-color);
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Microsofts Best in Automation ELM App"
-               data-modal-image="Images/ELM.png"
-               data-modal-slideshow="Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0"
-               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
-            <div class="image-container" 
-                 style="background-image: url('Images/ELM.png');">
-            </div>
-            <p>Microsofts Best in Automation ELM App</p>
-          </div>
-        </div>
-      </section>
-      
-      
-      
+/* Make entire link container clickable */
+.link-container.modal-trigger {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
 
-      <h2 id="dashboards">Dashboards</h2>
-      <section id="dashboards">
-        <div class="grid-container">
-          <div class="link-container modal-trigger" 
-               data-modal-title="Power BI Emergency Rental Assistance Dashboard"
-               data-modal-image="Images/Erapdash.png"
-               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
-            <div class="image-container" 
-                 style="background-image: url('Images/Erapdash.png');">
-            </div>
-            <p>Power BI Emergency Rental Assistance Dashboard</p>
-          </div>
+/* Add a subtle active state for touch feedback */
+.link-container.modal-trigger:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-md);
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Smartsheet Alleyway Maintenance Dashboard"
-               data-modal-image="Images/ampdash.png"
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
-            <div class="image-container" 
-                 style="background-image: url('Images/ampdash.png');">
-            </div>
-            <p>Smartsheet Alleyway Maintenance Dashboard</p>
-          </div>
+/* Optional: Add a clearer visual indication that the whole card is clickable */
+.link-container.modal-trigger::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(100, 116, 139, 0.5)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 15l-5-5 5-5'/%3E%3C/svg%3E");
+  background-size: contain;
+  transform: rotate(-45deg);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Smartsheet Neighborhood Improvement Dashboard"
-               data-modal-image="Images/rolldash.png"
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
-            <div class="image-container" 
-                 style="background-image: url('Images/rolldash.png');">
-            </div>
-            <p>Smartsheet Neighborhood Improvement Dashboard</p>
-          </div>
+.link-container.modal-trigger:hover::after {
+  opacity: 1;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Smartsheet First Responder Covid19 Dashboard"
-               data-modal-image="Images/covdash.png"
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
-            <div class="image-container" 
-                 style="background-image: url('Images/covdash.png');">
-            </div>
-            <p>Smartsheet First Responder Covid19 Dashboard</p>
-          </div>
+.image-container {
+  width: 100%;
+  height: 160px; /* Fixed height for consistent image display */
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0; /* Prevent image from shrinking */
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Power BI Priority Repair Assistance Dashboard"
-               data-modal-image="Images/prpdash.png"
-               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
-            <div class="image-container" 
-                 style="background-image: url('Images/prpdash.png');">
-            </div>
-            <p>Power BI Priority Repair Assistance Dashboard</p>
-          </div>
+/* Text content in portfolio cards */
+.link-container p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-700);
+  line-height: 1.4;
+  text-align: center;
+  padding: 0 var(--space-2);
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Public Engagement Report for District 11"
-               data-modal-image="Images/side.png"
-               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
-            <div class="image-container" 
-                 style="background-image: url('Images/side.png');">
-            </div>
-            <p>Public Engagement Report for District 11</p>
-          </div>
+.image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Smartsheet Rental Assistance Dashboard"
-               data-modal-image="Images/erap.png"
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
-            <div class="image-container" 
-                 style="background-image: url('Images/erap.png');">
-            </div>
-            <p>Smartsheet Rental Assistance Dashboard</p>
-          </div>
+.image-container:hover::after {
+  opacity: 1;
+}
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="Stop Six: Transformation Newsletter"
-               data-modal-image="Images/Dis 6.png"
-               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
-            <div class="image-container" 
-                 style="background-image: url('Images/Dis 6.png');">
-            </div>
-            <p>Stop Six: Transformation Newsletter</p>
-          </div>
-         
-        </div>
-      </section>
-      
-      
-      
-
-      <h2 id="GIS">GIS Maps</h2>
-      <section id="GIS">
-        <div class="grid-container">
-          
-          <div class="link-container modal-trigger" 
-               data-modal-title="Fort Worth Housing Equity Insight Analysis"
-               data-modal-image="Images/cost.png"
-               data-modal-link="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda">
-            <div class="image-container" 
-                 style="background-image: url('Images/cost.png');">
-            </div>
-            <p>Fort Worth Housing Equity Insight Analysis</p>
-          </div>
-          
-          <div class="link-container modal-trigger" 
-               data-modal-title="Fort Worth CDBG Evolution: Decade Mapped"
-               data-modal-image="Images/cdbg.png"
-               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5">
-            <div class="image-container" 
-                 style="background-image: url('Images/cdbg.png');">
-            </div>
-            <p> Fort Worth CDBG Evolution: Decade Mapped</p>
-          </div>
-
-          <div class="link-container modal-trigger" 
-               data-modal-title="Marine Area Sidewalk Condition & Average Daily Traffic Count"
-               data-modal-image="Images/d10.png"
-               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=21139a408d2c408f9a58a5e0a9447d4d">
-            <div class="image-container" 
-                 style="background-image: url('Images/d10.png');">
-            </div>
-            <p>Marine Area Sidewalk Condition & Average Daily Traffic Count</p>
-          </div>
-
-          <div class="link-container modal-trigger" 
-               data-modal-title="District 4: Dynamic Demographics Mapped"
-               data-modal-image="Images/d4.png"
-               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41">
-            <div class="image-container" 
-                 style="background-image: url('Images/d4.png');">
-            </div>
-            <p>District 4: Dynamic Demographics Mapped"</p>
-          </div>
-
-          <div class="link-container modal-trigger" 
-               data-modal-title="Fort Worth Food Access Mapping Insights"
-               data-modal-image="Images/food.png"
-               data-modal-link="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb">
-            <div class="image-container" 
-                 style="background-image: url('Images/food.png');">
-            </div>
-            <p>Fort Worth Food Access Mapping Insights</p>
-          </div>
-
-          <div class="link-container modal-trigger" 
-               data-modal-title="Fort Worth Cares: Aid Mapping Portfolio"
-               data-modal-image="Images/cares.png"
-               data-modal-link="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff">
-            <div class="image-container" 
-                 style="background-image: url('Images/cares.png');">
-            </div>
-            <p>Fort Worth Cares: Aid Mapping Portfolio</p>
-          </div>
-
-          <div class="link-container modal-trigger" 
-               data-modal-title="Alleyway Qualification: Mapping Insights"
-               data-modal-image="Images/ally.png"
-               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493">
-            <div class="image-container" 
-                 style="background-image: url('Images/ally.png');">
-            </div>
-            <p>Alleyway Qualification: Mapping Insights</p>
-          </div>
-
-          <div class="link-container modal-trigger" 
-               data-modal-title="Empower Fort Worth: Neighborhood Incentives"
-               data-modal-image="Images/nez.png"
-               data-modal-link="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11">
-            <div class="image-container" 
-                 style="background-image: url('Images/nez.png');">
-            </div>
-            <p>Empower Fort Worth: Neighborhood Incentives</p>
-          </div>
-        
-        </div>
-          <!-- Repeat the pattern for other dashboards -->
-        </div>
-      </section>
-
-
-
-      
-      <div class="content-container">
-      <section id="dashboards">
-      </section>
-
-      <section id="certifications"></section>
-      <h2 id="certifications">Certifications</h2>
-      <div class="certification-container">
-       
-        <ul>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft 365 Certified: Fundamentals"
-                 data-modal-image="Images/ms900.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/F9B37924E55CFF7A?sharingId=A81001FBB40B8274">
-              Microsoft 365 Certified: Fundamentals
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft Certified: Power Platform Fundamentals"
-                 data-modal-image="Images/ms9001.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/1985EFEF69A71E1C?sharingId=A81001FBB40B8274">
-              Microsoft Certified: Power Platform Fundamentals
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft Transcript"
-                 data-modal-image="Images/tran.png"
-                 data-modal-link="https://learn.microsoft.com/en-us/users/jonericeubanks/transcript/76yr8te21jqj0mj">
-              Microsoft Transcript
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Crash Course on Python"
-                 data-modal-image="Images/2.png"
-                 data-modal-link="https://coursera.org/share/959f9ea4ad9a070fbe08aaa698c7bcc6">
-              Crash Course on Python
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Agile Project Management"
-                 data-modal-image="Images/7.png"
-                 data-modal-link="https://coursera.org/share/ab23d04652aa03a60a73e2fc741de08a">
-              Agile Project Management
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Project Execution: Running the Project"
-                 data-modal-image="Images/3.png"
-                 data-modal-link="https://coursera.org/share/ab23d04652aa03a60a73e2fc741de08a">
-              Project Execution: Running the Project
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Foundations of Project Management"
-                 data-modal-image="Images/4.png"
-                 data-modal-link="https://coursera.org/share/f8e1360a9219a252e0e5bb0567615c25">
-              Foundations of Project Management
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Foundations: Data, Data, Everywhere"
-                 data-modal-image="Images/5.png"
-                 data-modal-link="https://coursera.org/share/3a4d3e7f58e2fb6fcab6d13bc561c9ab">
-              Foundations: Data, Data, Everywhere
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Prepare Data for Exploration"
-                 data-modal-image="Images/6.png"
-                 data-modal-link="https://coursera.org/share/8993175083f3e0055df3bcb9aa9e8056">
-              Prepare Data for Exploration
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Project Initiation: Starting a Successful Project"
-                 data-modal-image="Images/1.png"
-                 data-modal-link="https://coursera.org/share/d36872927d4ea0dfe844dc97732aba92">
-              Project Initiation: Starting a Successful Project
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Basics of Raster Data"
-                 data-modal-image="Images/rast.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a487afcdf72906c84e6af/360">
-              Basics of Raster Data
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Displaying Raster Data Using ArcGIS"
-                 data-modal-image="Images/dis.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fc04/360">
-              Displaying Raster Data Using ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Using Raster Data for Site Selection"
-                 data-modal-image="Images/use.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5566fcdf72906c8578e6/300">
-              Using Raster Data for Site Selection
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Processing Raster Data Using ArcGIS"
-                 data-modal-image="Images/proc.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5048fcdf72906c8520a9/300">
-              Processing Raster Data Using ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Introduction to Surface Modeling Using ArcGIS"
-                 data-modal-image="Images/int.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a54fcfcdf72906c857105/300">
-              Introduction to Surface Modeling Using ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Using Lidar Data in ArcGIS"
-                 data-modal-image="Images/lid.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fb6b/300">
-              Using Lidar Data in ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Going Places with Spatial Data"
-                 data-modal-image="Images/go.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/6130f011e0aa8c0b7d52174c/300">
-              Going Places with Spatial Data
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Organizing Raster Data Using ArcGIS"
-                 data-modal-image="Images/org.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a50c1fcdf72906c85296c/300">
-              Organizing Raster Data Using ArcGIS
-            </div>
-          </li>
-        </ul>
-      </div>
-        </section>
-      </div>
-    </main>
- <button class="top-button" onclick="topFunction()" id="topBtn">Back to Top</button>
+.image-container:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
     
-    <!-- Modal Structure -->
-    <div id="imageModal" class="modal">
-      <div class="modal-overlay"></div>
-      <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h3 id="modal-title"></h3>
-        <div class="modal-image-container">
-          <img id="modal-image" src="" alt="" style="display: block;">
-          <iframe id="modal-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display: none; width: 100%; height: 400px;"></iframe>
-          <div id="slideshow-controls" class="slideshow-controls" style="display: none;">
-            <button id="prev-slide" class="slide-btn">&lt;</button>
-            <span id="slide-counter">1 / 3</span>
-            <button id="next-slide" class="slide-btn">&gt;</button>
-          </div>
-        </div>
-        <div id="modal-caption" class="modal-caption" style="display: none;">
-          <div class="caption-title"><span class="emoji">⚙️</span> <span id="caption-title-text">Flow Overview</span></div>
-          <p id="caption-content" class="caption-content">Detailed description goes here</p>
-        </div>
-        <p id="modal-description" class="modal-description" style="display: none;"></p>
-        <div class="modal-buttons">
-          <button id="modal-view-btn" class="modal-btn">View Project</button>
-        </div>
-      </div>
-    </div>
-    
-    <footer>
-      <p>Contact me at JonEric11@gmail.com</p>
-    </footer>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Mobile navigation toggle
-        const toggle = document.querySelector('.nav-toggle');
-        const nav = document.getElementById('primary-nav');
-        
-        if(toggle && nav) {
-          function setOpen(open) {
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-            nav.classList.toggle('open', open);
-            toggle.classList.toggle('active', open); // Add active class for hamburger animation
-            document.body.style.overflow = open ? 'hidden' : '';
-          }
-
-          toggle.addEventListener('click', () => {
-            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-            setOpen(!isOpen);
-          });
-
-          // Close nav when any nav link is clicked
-          nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
-
-          // Reset on resize
-          window.addEventListener('resize', () => {
-            if(window.innerWidth > 768) setOpen(false);
-          });
-        }
-
-        // Modal functionality
-        const modal = document.getElementById('imageModal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalImage = document.getElementById('modal-image');
-        const modalVideo = document.getElementById('modal-video');
-        const modalViewBtn = document.getElementById('modal-view-btn');
-        const closeModal = document.querySelector('.close-modal');
-        const modalOverlay = document.querySelector('.modal-overlay');
-        const slideshowControls = document.getElementById('slideshow-controls');
-        const prevSlideBtn = document.getElementById('prev-slide');
-        const nextSlideBtn = document.getElementById('next-slide');
-        const slideCounter = document.getElementById('slide-counter');
-        const modalDescription = document.getElementById('modal-description'); 
-        const modalCaption = document.getElementById('modal-caption');
-        const captionTitleText = document.getElementById('caption-title-text');
-        const captionEmoji = document.querySelector('.emoji');
-        const captionContent = document.getElementById('caption-content');
-
-        let currentLink = '';
-        let slideshowItems = [];
-        let slideshowDescriptions = [];
-        let currentSlideIndex = 0;
-
-        function processCaptionData(descriptions, slideshow) {
-          // First identify which slideshow we're dealing with
-          const slideshowPath = slideshow ? slideshow.split(',')[0] : '';
-          
-          return descriptions.map((desc, index) => {
-            // Default values
-            let emoji = "ℹ️";
-            let title = "Overview";
-            let content = desc;
-            
-            // Handle special slideshows based on first image name
-            if (slideshowPath.includes('block')) {
-              // Brookfield Block Party Process
-              switch(index) {
-                case 0:
-                  title = "Flow Architecture Overview";
-                  emoji = "⚙️";
-                  break;
-                case 1:
-                  title = "Staff Notification System";
-                  emoji = "📧";
-                  break;
-                case 2:
-                  title = "Resident Confirmation Email";
-                  emoji = "✅";
-                  break;
-                case 3:
-                  title = "Automated Calendar Integration";
-                  emoji = "📅";
-                  break;
-              }
-            } else if (slideshowPath.includes('h20')) {
-              // Water Service Record slides
-              switch(index) {
-                case 0:
-                  title = "Water Service Records Power App";
-                  emoji = "💧";
-                  break;
-                case 1:
-                  title = "Automated Staff Notifications";
-                  emoji = "📧";
-                  break;
-                case 2:
-                  title = "Export & Reporting Flow";
-                  emoji = "📤";
-                  break;
-                case 3:
-                  title = "Mobile-Responsive Design";
-                  emoji = "📲";
-                  break;
-              }
-            } else if (slideshowPath.includes('servicedesk')) {
-              // Service Desk Ticket App slides
-              switch(index) {
-                case 0:
-                  title = "Service Desk App Home";
-                  emoji = "🖥️";
-                  break;
-                case 1:
-                  title = "Ticket Tracking Table";
-                  emoji = "📋";
-                  break;
-                case 2:
-                  title = "Service Desk Power BI Dashboard";
-                  emoji = "📊";
-                  break;
-              }
-            } else if (slideshowPath.includes('share')) {
-              // SharePoint Intranet Design Development
-              switch(index) {
-                case 0:
-                  title = "Village Hub Site";
-                  emoji = "🏠";
-                  break;
-                case 1:
-                  title = "Employee Benefits Site";
-                  emoji = "📑";
-                  break;
-                case 2:
-                  title = "Employee Policies Site";
-                  emoji = "📘";
-                  break;
-                case 3:
-                  title = "Teams Integration & Branding";
-                  emoji = "🎨";
-                  break;
-              }
-            } else if (slideshowPath.includes('agent')) {
-              // LISA Land Info Service Agent
-              switch(index) {
-                case 0:
-                  title = "AI Assistant Interface";
-                  emoji = "🤖";
-                  break;
-                case 1:
-                  title = "GIS Data Integration";
-                  emoji = "🗺️";
-                  break;
-                case 2:
-                  title = "Automated Response System";
-                  emoji = "💬";
-                  break;
-                case 3:
-                  title = "Land Records Dashboard";
-                  emoji = "📊";
-                  break;
-                case 4:
-                  title = "Mobile Access Platform";
-                  emoji = "📱";
-                  break;
-              }
-            } else if (slideshowPath.includes('ELM')) {
-              // Microsoft's Best in Automation ELM App
-              switch(index) {
-                case 0:
-                  title = "ELM App Dashboard";
-                  emoji = "📊";
-                  break;
-                case 1:
-                  title = "Process Automation Interface";
-                  emoji = "⚙️";
-                  break;
-                case 2:
-                  title = "Video Demonstration";
-                  emoji = "🎬";
-                  break;
-              }
-            } else if (slideshowPath.includes('crm') || slideshowPath.includes('demo')) {
-              // VBG & VNB Power BI Dashboards
-              switch(index) {
-                case 0:
-                  title = "CRM Dashboard Overview";
-                  emoji = "📊";
-                  break;
-                case 1:
-                  title = "CRM Dashboard by Person";
-                  emoji = "👨‍👩‍👧‍👦";
-                  break;
-                case 2:
-                  title = "Crime Analysis Dashboard";
-                  emoji = "🔍";
-                  break;
-                case 3:
-                  title = "Time Tracking Dashboard";
-                  emoji = "⏱️";
-                  break;
-                case 4:
-                  title = "Reconstruction Project Dashboard";
-                  emoji = "🏗️";
-                  break;
-              }
-            } else if (slideshowPath.includes('p25')) {
-              // Project 25 Dashboard
-              switch(index) {
-                case 0:
-                  title = "Executive Summary Dashboard";
-                  emoji = "📊";
-                  break;
-                case 1:
-                  title = "Change Order Tracking";
-                  emoji = "📑";
-                  break;
-                case 2:
-                  title = "Pay Requests Dashboard";
-                  emoji = "💰";
-                  break;
-                case 3:
-                  title = "Pay Applications Dashboard";
-                  emoji = "🧾";
-                  break;
-                case 4:
-                  title = "Custom Popout Drill-Down";
-                  emoji = "🔍";
-                  break;
-              }
-            }
-            
-            // Extract emoji if it's at the beginning of the description
-            const emojiMatch = desc.match(/^([\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}])\s+(.*?):/u);
-            if (emojiMatch) {
-              // Only override emoji if we haven't already set it in the switch statements
-              if (emoji === "ℹ️") {
-                emoji = emojiMatch[1];
-              }
-              // Remove emoji and title prefix from content
-              content = desc.replace(/^[\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\s+.*?:\s*/u, '');
-            }
-            
-            // Remove any remaining title duplication from content (after the colon)
-            if (content.includes(':')) {
-              content = content.split(':').slice(1).join(':').trim();
-            }
-            
-            return {
-              emoji: emoji,
-              title: title,
-              content: content
-            };
-          });
-        }
-
-        // Slideshow functions
-        function showSlide(index) {
-          if (slideshowItems.length === 0) return;
-          
-          currentSlideIndex = index;
-          if (currentSlideIndex >= slideshowItems.length) currentSlideIndex = 0;
-          if (currentSlideIndex < 0) currentSlideIndex = slideshowItems.length - 1;
-          
-          const currentItem = slideshowItems[currentSlideIndex];
-          
-          // Check if current item is a video
-          if (currentItem.startsWith('video:')) {
-            // Show video, hide image
-            modalVideo.src = currentItem.substring(6); // Remove 'video:' prefix
-            modalVideo.style.display = 'block';
-            modalImage.style.display = 'none';
-            modalCaption.style.display = 'none'; // Hide caption for videos
-          } else {
-            // Show image, hide video
-            modalImage.src = currentItem;
-            modalImage.style.display = 'block';
-            modalVideo.style.display = 'none';
-            modalVideo.src = ''; // Clear video source to stop playback
-            
-            // Display caption if available
-            if (slideshowDescriptions && slideshowDescriptions[currentSlideIndex]) {
-              const captionData = slideshowDescriptions[currentSlideIndex];
-              captionEmoji.textContent = captionData.emoji;
-              captionTitleText.textContent = captionData.title;
-              captionContent.textContent = captionData.content;
-              modalCaption.style.display = 'block';
-            } else {
-              modalCaption.style.display = 'none';
-            }
-          }
-          
-          slideCounter.textContent = `${currentSlideIndex + 1} / ${slideshowItems.length}`;
-        }
-
-        function nextSlide() {
-          showSlide(currentSlideIndex + 1);
-        }
-
-        function prevSlide() {
-          showSlide(currentSlideIndex - 1);
-        }
-
-        // Event listeners for slideshow
-        nextSlideBtn.addEventListener('click', nextSlide);
-        prevSlideBtn.addEventListener('click', prevSlide);
-
-        // Keyboard navigation for slideshow
-        document.addEventListener('keydown', function(e) {
-          if (modal.style.display === 'flex' && slideshowItems.length > 0) {
-            if (e.key === 'ArrowRight') {
-              nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-              prevSlide();
-            }
-          }
-        });
-
-        // Open modal when clicking on modal-trigger elements
-        document.querySelectorAll('.modal-trigger').forEach(trigger => {
-          trigger.addEventListener('click', function() {
-            const title = this.getAttribute('data-modal-title');
-            const imageSrc = this.getAttribute('data-modal-image');
-            const link = this.getAttribute('data-modal-link');
-            const slideshow = this.getAttribute('data-modal-slideshow');
-            const descriptions = this.getAttribute('data-modal-descriptions');
-            
-            modalTitle.textContent = title;
-            currentLink = link;
-            
-            // Check if this has slideshow data
-            if (slideshow) {
-              slideshowItems = slideshow.split(',');
-              currentSlideIndex = 0;
-              
-              // Process descriptions if available - pass slideshow for context
-              if (descriptions) {
-                const descArray = descriptions.split('||');
-                slideshowDescriptions = processCaptionData(descArray, slideshow);
-              } else {
-                slideshowDescriptions = [];
-              }
-              
-              showSlide(0);
-              slideshowControls.style.display = 'flex';
-            } else {
-              slideshowItems = [];
-              slideshowDescriptions = [];
-              modalImage.src = imageSrc;
-              modalImage.alt = title;
-              modalImage.style.display = 'block';
-              modalVideo.style.display = 'none';
-              modalVideo.src = '';
-              slideshowControls.style.display = 'none';
-              
-              // Display single image description if available
-              const singleDescription = this.getAttribute('data-modal-description');
-              if (singleDescription) {
-                const captionData = processCaptionData([singleDescription])[0];
-                captionEmoji.textContent = captionData.emoji;
-                captionTitleText.textContent = captionData.title;
-                captionContent.textContent = captionData.content;
-                modalCaption.style.display = 'block';
-              } else {
-                modalCaption.style.display = 'none';
-              }
-            }
-            
-            // Check if this is a certification item and show/hide button accordingly
-            if (this.classList.contains('certification-item')) {
-              modalViewBtn.textContent = 'View Certificate';
-              modalViewBtn.style.display = 'inline-block';
-            } else {
-              // Hide the view button for dashboards and GIS maps since they require authentication
-              modalViewBtn.style.display = 'none';
-            }
-            
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-          });
-        });
-
-        // Close modal functions
-        function closeModalFunction() {
-          modal.style.display = 'none';
-          document.body.style.overflow = 'auto'; // Restore scrolling
-          slideshowItems = [];
-          slideshowControls.style.display = 'none';
-          // Clear video source to stop playback
-          modalVideo.src = '';
-          modalVideo.style.display = 'none';
-          modalImage.style.display = 'block';
-        }
-
-        closeModal.addEventListener('click', closeModalFunction);
-        modalOverlay.addEventListener('click', closeModalFunction);
-
-        // View project button
-        modalViewBtn.addEventListener('click', function() {
-          if (currentLink) {
-            window.open(currentLink, '_blank');
-          }
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
-          if (e.key === 'Escape' && modal.style.display === 'flex') {
-            closeModalFunction();
-          }
-        });
-      });
-
-      // Back to top functionality
-      var topButton = document.getElementById("topBtn");
-      window.onscroll = function() {scrollFunction()};
-      function scrollFunction() {
-          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-              topButton.style.display = "block";
-          } else {
-              topButton.style.display = "none";
-
-          }      }
-      function topFunction() {
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
+      
+      a {
+        color: #0c0d0e;
+        text-decoration: none;
       }
-    </script>
-  </body>
-</html>
-``` 
+      
+      a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+      
+      .navigation button, .custom-button {
+        padding: 10px;
+        margin: 5px;
+        border: none;
+        background-color: #25282b;
+        color: #fffcfc;
+        cursor: pointer;
+        text-decoration: none; /* For custom-button */
+        display: inline-block; /* For custom-button */
+      }
+
+/* ... Rest of the original CSS ... */
+
+.top-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #6b6969;
+    color: #030303;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.top-button.show {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    h2 {
+        font-size: 22px;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
+
+section {
+    padding: 1px;
+    margin-bottom: 1px;
+    
+    
+}
+
+header, footer {
+    text-align: center;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto; 
+  width: 100%;
+  max-width: 1100px;
+  padding: 20px 40px; /* Increase the left and right padding */
+  background: #353740;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.header-container h1 {
+  padding-left: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+
+
+header {
+    margin-bottom: 30px;
+}
+
+footer {
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Modern Typography */
+h1, h2, h3 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--space-4) 0;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  color: var(--white);
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--white), var(--gray-200));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin: var(--space-8) auto var(--space-6);
+  text-align: center;
+  max-width: 1200px;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: 2px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: var(--gray-700);
+}
+
+p {
+  margin-bottom: var(--space-4);
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+
+li {
+  margin-bottom: var(--space-2);
+  font-weight: 500;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+
+/* Modern Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Apply animations to elements */
+.header-container {
+  animation: fadeInScale 0.6s ease-out;
+}
+
+.link-container {
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.link-container:nth-child(1) { animation-delay: 0.1s; }
+.link-container:nth-child(2) { animation-delay: 0.2s; }
+.link-container:nth-child(3) { animation-delay: 0.3s; }
+.link-container:nth-child(4) { animation-delay: 0.4s; }
+.link-container:nth-child(5) { animation-delay: 0.5s; }
+.link-container:nth-child(6) { animation-delay: 0.6s; }
+.link-container:nth-child(7) { animation-delay: 0.7s; }
+.link-container:nth-child(8) { animation-delay: 0.8s; }
+
+h2 {
+  animation: slideInRight 0.8s ease-out;
+}
+section {
+  margin: var(--space-12) auto;
+  max-width: 1200px;
+  padding: 0 var(--space-4);
+}
+
+.certification-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  padding: var(--space-8);
+  width: 100%;
+  max-width: 1200px;
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--gray-200);
+  margin: var(--space-8) auto;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.certification-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-rainbow);
+}
+
+.certification-container:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.certification-container ul {
+  display: contents; /* Inherit grid properties */
+  padding: 0;
+  list-style: none;
+}
+
+.certification-container li {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0; /* Remove extra bottom margin */
+  padding: 10px 20px;
+  text-align: left;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.03);
+  transition: all 0.3s;
+}
+
+.certification-container li:hover {
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.certification-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.certification-item:hover {
+  color: #0056b3;
+  background: rgba(0, 86, 179, 0.05);
+}
+
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1200px;
+    padding: 10px;
+}
+
+.headshot img {
+    width: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    padding: 5px;
+}
+
+.divider {
+    width: 1px;
+    background-color: #000;
+    height: 60px;
+    margin: 0 20px;
+    
+}
+
+.navigation button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    background-color: #25282b;
+    color: #fff;
+    cursor: pointer;
+}
+
+.top-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: #fff; /* White background */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1); /* Optional shadow effect */
+    border: none;
+    cursor: pointer;
+}
+
+.custom-button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    background: #4c4c4c; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1); /* Optional shadow effect */
+    cursor: pointer;
+    text-decoration: none; /* This will remove the underline typically applied to anchor links */
+    display: inline-block; /* This allows you to apply padding and other block styles to an inline element */
+  }
+  
+  .tooltip {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 500px;
+    height: 250px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10; /* Make sure the tooltip is above other elements */
+  }
+  
+  .tooltip.show {
+    opacity: 1;
+  }
+
+/* Modern Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.modal-content {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  max-width: 95%;
+  max-height: 95%;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--gray-200);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: #333;
+}
+
+#modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+  max-width: 500px;
+}
+
+#modal-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 25px;
+  object-fit: contain;
+}
+
+#modal-video {
+  width: 100%;
+  max-width: 800px;
+  height: 450px;
+  max-height: 450px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 25px;
+}
+
+.modal-image-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Modern Slideshow Controls */
+.slideshow-controls {
+  display: none;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.slide-btn {
+  background: var(--gradient-primary);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.slide-btn:hover::before {
+  left: 100%;
+}
+
+.slide-btn:hover {
+  background: var(--gradient-accent);
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+#slide-counter {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+  padding: var(--space-2) var(--space-4);
+  background: var(--gray-100);
+  border-radius: var(--radius-lg);
+  min-width: 60px;
+  text-align: center;
+  border: 1px solid var(--gray-200);
+}
+
+/* Updated Modal Buttons - Single button centered */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
+  width: 100%;
+}
+
+.modal-btn {
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-primary);
+  color: var(--white);
+  box-shadow: var(--shadow-md);
+  min-width: 180px; /* Set a minimum width for better appearance */
+}
+
+.modal-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.modal-btn:hover::before {
+  left: 100%;
+}
+
+.modal-btn:hover {
+  background: var(--gradient-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-btn.secondary {
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-300);
+}
+
+.modal-btn.secondary:hover {
+  background: var(--gray-200);
+  border-color: var(--gray-400);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Modern Section Styling */
+section {
+  margin: var(--space-12) auto;
+  max-width: 1200px;
+  padding: 0 var(--space-4);
+}
+
+/* Make image containers clickable cursor */
+.modal-trigger {
+  cursor: pointer;
+}
+
+/* Modern Responsive Design */
+@media screen and (max-width: 768px) {
+  .header-container {
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    height: 56px;
+  }
+  
+  .header-container h1 {
+    font-size: 1.5rem;
+  }
+  
+  .custom-button {
+    padding: var(--space-1) var(--space-3);
+    font-size: 12px;
+  }
+  
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: var(--space-4);
+    padding: 0 var(--space-2);
+  }
+  
+  .link-container {
+    height: 240px;
+    padding: var(--space-4);
+  }
+  
+  .image-container {
+    height: 120px;
+  }
+  
+  .modal-content {
+    padding: var(--space-6);
+    max-width: 98%;
+  }
+  
+  #modal-title {
+    font-size: 1.5rem;
+  }
+  
+  #modal-image {
+    max-height: 250px;
+  }
+  
+  #modal-video {
+    width: 100%;
+    height: 200px;
+    max-height: 200px;
+  }
+  
+  .modal-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .modal-btn {
+    width: 100%;
+  }
+  
+  .slide-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(8, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .link-container {
+    height: 220px;
+    padding: var(--space-3);
+  }
+  
+  .image-container {
+    height: 100px;
+  }
+  
+  .link-container p {
+    font-size: 13px;
+  }
+}
+
+/* Mobile-friendly header & hamburger */
+.nav-toggle {
+  display: none; /* default hidden on desktop */
+  background: transparent;
+  border: none;
+  padding: 8px;
+  margin-left: 8px;
+  cursor: pointer;
+  align-self: center;
+}
+.nav-toggle .hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  position: relative;
+  transition: transform 0.18s ease;
+}
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.18s ease, top 0.18s ease, opacity 0.18s ease;
+}
+.nav-toggle .hamburger::before { top: -6px; }
+.nav-toggle .hamburger::after  { top: 6px; }
+
+/* Improved Mobile-friendly header & hamburger */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 130; /* Higher than the nav */
+}
+
+/* Hamburger icon with animation */
+.nav-toggle .hamburger {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.3s ease, top 0.3s ease;
+}
+
+.nav-toggle .hamburger::before { top: -8px; }
+.nav-toggle .hamburger::after { top: 8px; }
+
+/* X animation when menu is open */
+.nav-toggle.active .hamburger {
+  background: transparent; /* Hide the middle line */
+}
+
+.nav-toggle.active .hamburger::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.nav-toggle.active .hamburger::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Override conflicting styles for mobile nav */
+@media screen and (max-width: 768px) {
+  /* Show hamburger */
+  .nav-toggle {
+    display: block;
+  }
+  
+  /* Ensure header stays above other content */
+  .header-container {
+    height: auto;
+    min-height: 56px;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 100;
+  }
+  
+  /* Navigation styling */
+  .navigation.open {
+    display: flex !important; /* Important to override any other display styles */
+  }
+  
+  /* Fixed positioning for the dropdown */
+  #primary-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(53, 55, 64, 0.98);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 12px 12px;
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 90;
+  }
+  
+  /* Full width buttons for better mobile tap targets */
+  #primary-nav .custom-button {
+    width: 100%;
+    text-align: center;
+    padding: 12px 15px;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.2s ease;
+  }
+  
+  #primary-nav .custom-button:hover,
+  #primary-nav .custom-button:active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: none;
+  }
+  
+  /* Smooth animation for menu appearance */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #primary-nav.open {
+    animation: fadeInDown 0.3s ease forwards;
+  }
+}
+
+/* mobile specific layout */
+@media screen and (max-width: 768px) {
+  /* show hamburger */
+  .nav-toggle { display: block; }
+
+  /* make header compact */
+  .header-container {
+    padding: 12px;
+    gap: 8px;
+    align-items: center;
+    position: relative;
+  }
+  .header-container h1 { font-size: 1.05rem; margin: 0; color: var(--white); }
+
+  /* hide the nav by default on mobile; open by adding .open */
+  #primary-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 12px;
+    left: 12px;
+    background: linear-gradient(180deg, rgba(53,55,64,0.98), rgba(45,47,52,0.98));
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    gap: 8px;
+    z-index: 120;
+  }
+  #primary-nav.open { display: flex; animation: navIn 160ms ease-out; }
+
+  /* nav buttons become full-width stacked items */
+  #primary-nav .custom-button {
+    width: 100%;
+    background: transparent;
+    color: var(--white);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: none;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  @keyframes navIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* reduce heavy hover transforms on mobile */
+  .link-container, .image-container, .custom-button {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .link-container:hover, .image-container:hover, .custom-button:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* Modal description styling */
+.modal-description {
+  display: none; /* Hide the old description style */
+}
+
+/* Adjust for smaller screens */
+@media screen and (max-width: 768px) {
+  .modal-description {
+    font-size: 14px;
+    padding: var(--space-3);
+    margin: var(--space-3) 0;
+  }
+}
+
+/* Styled caption box for slideshows */
+.modal-caption {
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+  border-left: 4px solid var(--primary-color);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  max-width: 800px;
+  width: 100%;
+}
+
+.caption-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--gray-800);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.caption-title .emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.caption-content {
+  color: var(--gray-700);
+  line-height: 1.6;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Responsive adjustments for captions */
+@media screen and (max-width: 768px) {
+  .modal-caption {
+    padding: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  
+  .caption-title {
+    font-size: 16px;
+  }
+  
+  .caption-content {
+    font-size: 14px;
+  }
+}
+
+/* ...existing mobile styles... */
+
