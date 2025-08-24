@@ -71,9 +71,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Project spotlight data mapping - EXACT matches to data-modal-title values
     const projectData = {
       "Brookfield Block Party Request Process": { 
-        icon: "⚙️", 
-        value: "90", 
-        title: "Requests Processed", 
+        icon: "⏱️", 
+        value: "55", 
+        title: "Hours Saved Annually", 
         suffix: "+"
       },
       "VBG & VNB Power Bi Dashboard Demos": { 
