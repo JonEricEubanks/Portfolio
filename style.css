@@ -1237,7 +1237,7 @@ section {
   font-weight: 700;
   font-size: 18px;
   color: var(--gray-800);
-  margin-bottom: var(--space-2);
+  margin: 0 0 var(--space-2) 0;
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -1345,6 +1345,8 @@ body.dashboard-mode {
   transform: translateY(-20px);
   opacity: 0;
   transition: transform 0.5s ease, opacity 0.5s ease;
+  text-align: center;     /* center align */
+  position: relative;  
 }
 
 .dashboard-mode .career-metrics {
@@ -1555,18 +1557,48 @@ body.dashboard-mode {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 120, 212, 0.9);
-  padding: 8px;
-  color: white;
+
+  background: linear-gradient(
+    to top,
+    rgba(10, 15, 25, 0.9),   /* darker navy/black */
+    rgba(10, 15, 25, 0.65)   /* keep some transparency */
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  padding: 12px 16px;
   display: flex;
+  flex-direction: column; /* stack "value row" above title */
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  text-align: center;
+  gap: 4px;
+
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   opacity: 0;
   transform: translateY(100%);
   transition: transform 0.3s ease, opacity 0.3s ease;
+  border-top: 1px solid rgba(255,255,255,0.08); /* subtle edge */
 }
+
+/* Wrap emoji + value into one row */
+.kpi-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #50e6ff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Keep title softer */
+.kpi-title {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+
 
 .dashboard-mode .kpi-indicator {
   opacity: 0; /* Start hidden even in dashboard mode */
@@ -1955,11 +1987,72 @@ body.dashboard-mode {
   -webkit-text-fill-color: transparent;
 }
 
-/* Responsive adjustments for metrics highlights */
-@media screen and (max-width: 768px) {
-  .metrics-highlights-container {
-    flex-direction: column;
-    gap: 1rem;
-  }
+/* Impact Metrics Categories */
+.metric-category {
+  color: var(--dashboard-secondary);
+  font-size: 1.2rem;
+  margin: 1.5rem 0 1rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
+/* Enhanced Impact Metrics Highlights Container */
+.impact-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+/* Category-specific grid styling */
+.funds-grid .metric-card {
+  border-left: 3px solid rgba(0, 183, 195, 0.7);
+}
+
+.time-grid .metric-card {
+  border-left: 3px solid rgba(80, 230, 255, 0.7);
+}
+
+.efficiency-grid .metric-card {
+  border-left: 3px solid rgba(80, 230, 255, 0.7);
+}
+
+/* Highlight variations for different metric types */
+.metric-highlight.funds {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(0, 183, 195, 0.3));
+}
+
+.metric-highlight.time {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+}
+
+.metric-highlight.efficiency {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+  border: 1px solid rgba(32, 60, 201, 0.3);
+}
+
+.metric-highlight.efficiency .metric-value {
+  background: linear-gradient(135deg, #ffffff, #20b0c9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Efficiency metric card styling */
+.efficiency .metric-value {
+  color: rgba(80, 230, 255, 0.9);
+}
+
+/* Responsive adjustments for impact highlights */
+@media screen and (max-width: 768px) {
+  .impact-highlights {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .metric-category {
+    font-size: 1rem;
+  }
+}
