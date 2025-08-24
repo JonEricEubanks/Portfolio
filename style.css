@@ -1582,52 +1582,28 @@ body.dashboard-mode {
   box-shadow: 0 -2px 12px rgba(0,0,0,0.45);
 }
 
-/* Wrap emoji + value into one row */
-.kpi-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #50e6ff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+/* Mobile-specific KPI indicator animations */
+@media screen and (max-width: 768px) {
+  .dashboard-mode .kpi-indicator {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+  
+  /* Make sure hover state doesn't interfere with the observer-based animation on mobile */
+  .dashboard-mode .link-container:hover .kpi-indicator {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
 
-/* Keep title softer */
-.kpi-title {
-  font-weight: 700; 
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.9);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+/* Re-enable hover effect for desktop */
+@media screen and (min-width: 769px) {
+  .dashboard-mode .link-container:hover .kpi-indicator {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-
-
-.dashboard-mode .kpi-indicator {
-  opacity: 0; /* Start hidden even in dashboard mode */
-}
-
-.dashboard-mode .link-container:hover .kpi-indicator {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.kpi-icon {
-  font-size: 1.2rem;
-}
-
-.kpi-value {
-  font-weight: 700;
-  font-size: 1.2rem;
-}
-
-.kpi-title {
-  font-size: 0.8rem;
-  opacity: 0.9;
-  font-weight: 700; 
-}
-
-/* Dashboard Visualizations */
+/* Dashboard visualizations */
 .dashboard-viz {
   position: absolute;
   top: 0;
@@ -2028,6 +2004,38 @@ body.dashboard-mode {
   background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(0, 183, 195, 0.3));
 }
 
+.metric-highlight.time {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+}
+
+.metric-highlight.efficiency {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+  border: 1px solid rgba(32, 60, 201, 0.3);
+}
+
+.metric-highlight.efficiency .metric-value {
+  background: linear-gradient(135deg, #ffffff, #20b0c9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Efficiency metric card styling */
+.efficiency .metric-value {
+  color: rgba(80, 230, 255, 0.9);
+}
+
+/* Responsive adjustments for impact highlights */
+@media screen and (max-width: 768px) {
+  .impact-highlights {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .metric-category {
+    font-size: 1rem;
+  }
+}
 .metric-highlight.time {
   background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
 }
