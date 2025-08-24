@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const dashboardBackground = document.getElementById('dashboard-background');
   const dataParticles = document.querySelector('.data-particles');
   
+  // Intersection Observer for mobile KPI indicators
+  let cardObserver;
+  
   // Toggle dashboard mode
   dashboardToggle.addEventListener('click', function() {
     // Toggle dashboard mode class
@@ -58,6 +61,61 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create background data particles
     createDataParticles();
+    
+    // Initialize intersection observer for mobile
+    initMobileKpiObserver();
+  }
+  
+  // Initialize the intersection observer for mobile KPI indicators
+  function initMobileKpiObserver() {
+    // Disconnect any existing observer
+    if (cardObserver) {
+      cardObserver.disconnect();
+    }
+    
+    // Only set up the observer if we're in dashboard mode and on a smaller screen
+    if (body.classList.contains('dashboard-mode') && window.innerWidth <= 768) {
+      cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            const kpiIndicator = card.querySelector('.kpi-indicator');
+            
+            if (kpiIndicator) {
+              // Show KPI indicator
+              kpiIndicator.style.opacity = '1';
+              kpiIndicator.style.transform = 'translateY(0)';
+              
+              // Animate value
+              const kpiValue = kpiIndicator.querySelector('.kpi-value');
+              const targetValue = card.getAttribute('data-kpi-value');
+              const prefix = card.getAttribute('data-kpi-prefix') || '';
+              const suffix = card.getAttribute('data-kpi-suffix') || '';
+              
+              if (kpiValue && targetValue) {
+                animateKpiValue(kpiValue, targetValue, prefix, suffix);
+              }
+              
+              // Hide after 2 seconds
+              setTimeout(() => {
+                if (kpiIndicator) {
+                  kpiIndicator.style.opacity = '0';
+                  kpiIndicator.style.transform = 'translateY(100%)';
+                }
+              }, 2000);
+            }
+          }
+        });
+      }, {
+        threshold: 0.7, // Trigger when 70% of card is visible
+        rootMargin: '-10% 0px' // Slightly reduce the effective viewport
+      });
+      
+      // Observe all portfolio cards
+      portfolioCards.forEach(card => {
+        cardObserver.observe(card);
+      });
+    }
   }
   
   // Add missing KPI indicators to cards based on title matching
@@ -301,6 +359,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Clear data particles
     dataParticles.innerHTML = '';
+    
+    // Disconnect observer
+    if (cardObserver) {
+      cardObserver.disconnect();
+      cardObserver = null;
+    }
   }
   
   // Animate counter elements with support for decimal values
@@ -573,4 +637,11 @@ document.addEventListener('DOMContentLoaded', function() {
       document.head.appendChild(styleSheet);
     }
   }
+  
+  // Update observer on window resize
+  window.addEventListener('resize', () => {
+    if (body.classList.contains('dashboard-mode')) {
+      initMobileKpiObserver();
+    }
+  });
 });
