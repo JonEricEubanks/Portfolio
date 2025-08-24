@@ -1928,3 +1928,38 @@ body.dashboard-mode {
   }
 }
 
+/* Time savings metrics styling */
+.time-savings .metric-value {
+  color: var(--dashboard-secondary);
+}
+
+/* Highlights container for multiple totals */
+.metrics-highlights-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.metrics-highlights-container .metric-highlight {
+  flex: 1;
+}
+
+.metric-highlight.time {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(100, 100, 255, 0.3));
+}
+
+.metric-highlight.time .metric-value {
+  background: linear-gradient(135deg, #ffffff, #50e6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Responsive adjustments for metrics highlights */
+@media screen and (max-width: 768px) {
+  .metrics-highlights-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
