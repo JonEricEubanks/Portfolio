@@ -40,11 +40,253 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create data visualization for each card
     portfolioCards.forEach(card => {
-      createCardVisualization(card);
+      // Add missing KPI indicators for cards that don't have them
+      addMissingKpiIndicators(card);
+      
+      // Animate KPIs immediately on load
+      const kpiIndicator = card.querySelector('.kpi-indicator');
+      if (kpiIndicator) {
+        const kpiValue = kpiIndicator.querySelector('.kpi-value');
+        const targetValue = card.getAttribute('data-kpi-value');
+        const prefix = card.getAttribute('data-kpi-prefix') || '';
+        const suffix = card.getAttribute('data-kpi-suffix') || '';
+        if (kpiValue && targetValue) {
+          animateKpiValue(kpiValue, targetValue, prefix, suffix);
+        }
+      }
     });
     
     // Create background data particles
     createDataParticles();
+  }
+  
+  // Add missing KPI indicators to cards based on title matching
+  function addMissingKpiIndicators(card) {
+    // Skip cards that already have KPI indicators
+    if (card.querySelector('.kpi-indicator')) return;
+    
+    const cardTitle = card.getAttribute('data-modal-title');
+    if (!cardTitle) return;
+    
+    // Project spotlight data mapping - EXACT matches to data-modal-title values
+    const projectData = {
+      "Brookfield Block Party Request Process": { 
+        icon: "⚙️", 
+        value: "90", 
+        title: "Requests Processed", 
+        suffix: "+"
+      },
+      "VBG & VNB Power Bi Dashboard Demos": { 
+        icon: "📊", 
+        value: "237", 
+        title: "Service Insights Generated" 
+      },
+      "Buffalo Grove Project 25 Dashboard": { 
+        icon: "💰", 
+        value: "7.2", 
+        title: "Construction Project Oversight",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Glencoe Water Service Record Inventory App": { 
+        icon: "💧", 
+        value: "3,200", 
+        title: "Water Service Records Managed",
+        suffix: "+"
+      },
+      "Demo MGP Service Desk Ticket App": { 
+        icon: "🖥️", 
+        value: "20", 
+        title: "Tickets Tracked Across Categories",
+        suffix: "+"
+      },
+      "Sharepoint Intranet Design Development": { 
+        icon: "🏠", 
+        value: "5", 
+        title: "Community Sites Centralized",
+        suffix: "+"
+      },
+      "(LISA) Land Info Service Agent on GIS Data": { 
+        icon: "🤖", 
+        value: "3,600", 
+        title: "Property Queries Automated via AI",
+        suffix: "+"
+      },
+      "Microsofts Best in Automation ELM App": { 
+        icon: "🏆", 
+        value: "6", 
+        title: "Municipal Communities Implemented" 
+      },
+      "Power BI Emergency Rental Assistance Dashboard": { 
+        icon: "💵", 
+        value: "53", 
+        title: "in Rental Aid Tracked",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Power BI Priority Repair Assistance Dashboard": { 
+        icon: "🛠️", 
+        value: "12", 
+        title: "in Home Repairs Oversight",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Smartsheet Neighborhood Improvement Dashboard": { 
+        icon: "🌆", 
+        value: "13.9", 
+        title: "Community Investments Tracked",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Stop Six: Transformation Newsletter": { 
+        icon: "📰", 
+        value: "49", 
+        title: "in Neighborhood Improvements Highlighted",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Fort Worth Cares: Aid Mapping Portfolio": { 
+        icon: "📍", 
+        value: "68", 
+        title: "Federal Relief Visualized",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Public Engagement Report for District 11": {
+        icon: "📍",
+        value: "10",
+        title: "Engagement Events Mapped & Analyzed",
+        suffix: "+"
+      },
+      "Smartsheet Rental Assistance Dashboard": {
+        icon: "💰",
+        value: "25,000",
+        title: "Applications Processed",
+        suffix: "+"
+      },
+      "Smartsheet Alleyway Maintenance Dashboard": {
+        icon: "🛣️",
+        value: "132",
+        title: "Miles of Alleyways Maintained"
+      },
+      "Smartsheet First Responder Covid19 Dashboard": {
+        icon: "🚑",
+        value: "3,265",
+        title: "Testing Submissions Tracked"
+      },
+      // --- GIS INSIGHTS BANNERS ---
+  "Fort Worth Housing Equity Insight Analysis": {
+    icon: "🏘️",
+    value: "100,000",
+    title: "Households Impacted by Housing Costs",
+    suffix: "+"
+  },
+  "Fort Worth CDBG Evolution: Decade Mapped": {
+    icon: "🗺️",
+    value: "10",
+    title: "Years of Change Visualized",
+    suffix: "+"
+  },
+  "Marine Area Sidewalk Condition & Average Daily Traffic Count": {
+    icon: "🚶",
+    value: "50",
+    title: "Sidewalk Segments Evaluated",
+    suffix: "+"
+  },
+  "District 4: Dynamic Demographics Mapped": {
+    icon: "👥",
+    value: "25",
+    title: "Demographic Layers Analyzed",
+    suffix: "+"
+  },
+  "Fort Worth Food Access Mapping Insights": {
+    icon: "🍎",
+    value: "40",
+    title: "Meal Sites & Food Deserts Mapped",
+    suffix: "+"
+  },
+  "Alleyway Qualification: Mapping Insights": {
+    icon: "🛣️",
+    value: "132",
+    title: "Miles of Alleyways Qualified"
+  },
+  "Empower Fort Worth: Neighborhood Incentives": {
+    icon: "📈",
+    value: "8",
+    title: "Empowerment Zones Mapped",
+    suffix: "+"
+  }
+    };
+    
+    // Use exact match instead of substring matching
+    const matchedProject = projectData[cardTitle];
+    
+    if (matchedProject) {
+      // Create and append KPI indicator
+      const kpiIndicator = document.createElement('div');
+      kpiIndicator.className = 'kpi-indicator';
+      
+      const prefix = matchedProject.prefix || '';
+      const suffix = matchedProject.suffix || '';
+      
+      kpiIndicator.innerHTML = `
+        <span class="kpi-icon">${matchedProject.icon}</span>
+        <span class="kpi-value">${prefix}0${suffix}</span>
+        <span class="kpi-title">${matchedProject.title}</span>
+      `;
+      
+      card.appendChild(kpiIndicator);
+      
+      // Set data attributes for animation
+      card.setAttribute('data-kpi-title', matchedProject.title);
+      card.setAttribute('data-kpi-value', matchedProject.value.replace(/,/g, ''));
+      card.setAttribute('data-kpi-icon', matchedProject.icon);
+      card.setAttribute('data-kpi-prefix', prefix);
+      card.setAttribute('data-kpi-suffix', suffix);
+      
+      // Add event listeners for animation
+      const kpiValue = kpiIndicator.querySelector('.kpi-value');
+      card.addEventListener('mouseenter', () => {
+        animateKpiValue(kpiValue, matchedProject.value, prefix, suffix);
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        kpiValue.textContent = `${prefix}0${suffix}`;
+      });
+    }
+  }
+  
+  // Enhanced KPI value animation with support for commas and prefixes/suffixes
+  function animateKpiValue(element, targetValue, prefix = '', suffix = '') {
+    // Handle values with commas (like 3,200)
+    const rawValue = targetValue.toString().replace(/,/g, '');
+    const target = parseFloat(rawValue);
+    let current = 0;
+    const increment = target / 50; // Adjust for animation speed
+    
+    const updateValue = () => {
+      if (current < target) {
+        current = Math.min(current + increment, target);
+        
+        // Format number with commas if original had commas
+        let formattedValue = current;
+        if (targetValue.includes(',')) {
+          formattedValue = Math.round(current).toLocaleString();
+        } else if (target % 1 !== 0) {
+          // Handle decimal values
+          formattedValue = current.toFixed(1);
+        } else {
+          formattedValue = Math.round(current).toString();
+        }
+        
+        element.textContent = `${prefix}${formattedValue}${suffix}`;
+        requestAnimationFrame(updateValue);
+      } else {
+        element.textContent = `${prefix}${targetValue}${suffix}`;
+      }
+    };
+    
+    updateValue();
   }
   
   // Reset to normal mode
@@ -85,68 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
       
       updateCount();
     });
-  }
-  
-  // Create visualization for a card
-  function createCardVisualization(card) {
-    const svg = card.querySelector('.viz-svg');
-    if (!svg) return;
-    
-    // Clear any existing visualization
-    svg.innerHTML = '';
-    
-    // Get random visualization type
-    const vizType = Math.floor(Math.random() * 4);
-    
-    switch(vizType) {
-      case 0:
-        createBarChart(svg);
-        break;
-      case 1:
-        createLineChart(svg);
-        break;
-      case 2:
-        createCircleViz(svg);
-        break;
-      case 3:
-        createPieChart(svg);
-        break;
-    }
-    
-    // Add KPI counter animation
-    const kpiIndicator = card.querySelector('.kpi-indicator');
-    if (kpiIndicator) {
-      const kpiValue = kpiIndicator.querySelector('.kpi-value');
-      const kpiDataValue = card.getAttribute('data-kpi-value');
-      
-      if (kpiValue && kpiDataValue) {
-        card.addEventListener('mouseenter', () => {
-          animateKpiValue(kpiValue, parseInt(kpiDataValue));
-        });
-        
-        card.addEventListener('mouseleave', () => {
-          kpiValue.textContent = '0';
-        });
-      }
-    }
-  }
-  
-  // Animate KPI value
-  function animateKpiValue(element, target) {
-    let current = 0;
-    const increment = target / 50; // Adjust for animation speed
-    
-    const updateValue = () => {
-      if (current < target) {
-        current = Math.min(current + increment, target);
-        element.textContent = Math.round(current).toLocaleString();
-        requestAnimationFrame(updateValue);
-      } else {
-        element.textContent = target.toLocaleString();
-      }
-    };
-    
-    updateValue();
   }
   
   // Create bar chart visualization
@@ -238,42 +418,6 @@ document.addEventListener('DOMContentLoaded', function() {
       circle.appendChild(animateOpacity);
       svg.appendChild(circle);
     });
-  }
-  
-  // Create circle visualization
-  function createCircleViz(svg) {
-    const numCircles = 8 + Math.floor(Math.random() * 5);
-    
-    for (let i = 0; i < numCircles; i++) {
-      const x = 20 + Math.random() * 60;
-      const y = 20 + Math.random() * 60;
-      const r = 3 + Math.random() * 8;
-      
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('cx', x);
-      circle.setAttribute('cy', y);
-      circle.setAttribute('r', r);
-      circle.setAttribute('fill', `rgba(${Math.random() * 100 + 100}, ${Math.random() * 100 + 100}, 255, ${0.4 + Math.random() * 0.4})`);
-      
-      // Animation
-      const animateR = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-      animateR.setAttribute('attributeName', 'r');
-      animateR.setAttribute('from', '0');
-      animateR.setAttribute('to', r);
-      animateR.setAttribute('dur', '1s');
-      animateR.setAttribute('fill', 'freeze');
-      
-      const animateOpacity = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-      animateOpacity.setAttribute('attributeName', 'opacity');
-      animateOpacity.setAttribute('from', '0');
-      animateOpacity.setAttribute('to', '1');
-      animateOpacity.setAttribute('dur', '0.8s');
-      animateOpacity.setAttribute('fill', 'freeze');
-      
-      circle.appendChild(animateR);
-      circle.appendChild(animateOpacity);
-      svg.appendChild(circle);
-    }
   }
   
   // Create pie chart visualization
