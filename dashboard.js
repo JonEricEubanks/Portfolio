@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
       "Stop Six: Transformation Newsletter": { 
         icon: "📰", 
         value: "49", 
-        title: "in Neighborhood Improvements Highlighted",
+        title: "in Neighborhood Improvements",
         prefix: "$",
         suffix: "M"
       },
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
       "Public Engagement Report for District 11": {
         icon: "📍",
         value: "10",
-        title: "Engagement Events Mapped & Analyzed",
+        title: "Events Mapped & Analyzed",
         suffix: "+"
       },
       "Smartsheet Rental Assistance Dashboard": {
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
   "Fort Worth Housing Equity Insight Analysis": {
     icon: "🏘️",
     value: "100,000",
-    title: "Households Impacted by Housing Costs",
+    title: "Cost Burdened Households",
     suffix: "+"
   },
   "Fort Worth CDBG Evolution: Decade Mapped": {
@@ -230,10 +230,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const suffix = matchedProject.suffix || '';
       
       kpiIndicator.innerHTML = `
-        <span class="kpi-icon">${matchedProject.icon}</span>
-        <span class="kpi-value">${prefix}0${suffix}</span>
-        <span class="kpi-title">${matchedProject.title}</span>
-      `;
+  <div class="kpi-row">
+    <span class="kpi-icon">${matchedProject.icon}</span>
+    <span class="kpi-value">${prefix}0${suffix}</span>
+  </div>
+  <span class="kpi-title">${matchedProject.title}</span>
+`;
+
       
       card.appendChild(kpiIndicator);
       
