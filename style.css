@@ -47,6 +47,22 @@
   --space-8: 2rem;
   --space-12: 3rem;
   --space-16: 4rem;
+
+  /* Add dashboard theme colors */
+  --dashboard-primary: #0078d4;
+  --dashboard-secondary: #50e6ff;
+  --dashboard-accent: #0099bc;
+  --dashboard-dark: #005a9e;
+  --dashboard-text: #ffffff;
+  --dashboard-bg: #1a1a1a;
+  --dashboard-grid: rgba(255, 255, 255, 0.07);
+  --dashboard-card-bg: rgba(0, 120, 212, 0.15);
+  --dashboard-gradient: linear-gradient(135deg, #0078d4, #00b7c3);
+  
+  /* Animation speeds */
+  --animation-slow: 1.5s;
+  --animation-medium: 0.8s;
+  --animation-fast: 0.4s;
 }
 
 * {
@@ -69,17 +85,32 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 auto var(--space-6);
+    padding: 12px 20px;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    gap: 15px;
+    margin-left: auto;
+    margin-right: auto; 
+    width: 100%;
     max-width: 1200px;
-    padding: var(--space-4) var(--space-6);
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--gray-200);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    height: 64px;
+    background: #353740;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+  }
+  
+  .header-container h1 {
+    font-size: 1.35rem;
+    white-space: nowrap; /* Prevent title from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    padding: 0;
+    min-width: 0; /* Allow flex item to shrink below content size */
+    flex: 1;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--gray-200));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   
   .header-container:hover {
@@ -186,6 +217,37 @@ body {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-xl);
   border-color: var(--primary-color);
+}
+
+/* Make entire link container clickable */
+.link-container.modal-trigger {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Add a subtle active state for touch feedback */
+.link-container.modal-trigger:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-md);
+}
+
+/* Optional: Add a clearer visual indication that the whole card is clickable */
+.link-container.modal-trigger::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(100, 116, 139, 0.5)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 15l-5-5 5-5'/%3E%3C/svg%3E");
+  background-size: contain;
+  transform: rotate(-45deg);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.link-container.modal-trigger:hover::after {
+  opacity: 1;
 }
 
 .image-container {
@@ -629,9 +691,9 @@ section {
   position: relative;
   background: var(--white);
   border-radius: var(--radius-xl);
-  padding: var(--space-8);
-  max-width: 95%;
-  max-height: 95%;
+  padding: var(--space-6);
+  max-width: 90%;
+  max-height: 85vh;
   box-shadow: var(--shadow-xl);
   border: 1px solid var(--gray-200);
   z-index: 1001;
@@ -640,6 +702,7 @@ section {
   align-items: center;
   text-align: center;
   animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
 }
 
 @keyframes modalFadeIn {
@@ -680,21 +743,21 @@ section {
 
 #modal-image {
   max-width: 100%;
-  max-height: 400px;
+  max-height: 250px;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   object-fit: contain;
 }
 
 #modal-video {
   width: 100%;
   max-width: 800px;
-  height: 450px;
-  max-height: 450px;
+  height: 250px;
+  max-height: 300px;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .modal-image-container {
@@ -765,12 +828,12 @@ section {
   border: 1px solid var(--gray-200);
 }
 
-/* Modern Modal Buttons */
+/* Updated Modal Buttons - Single button centered */
 .modal-buttons {
   display: flex;
-  gap: var(--space-4);
   justify-content: center;
   margin-top: var(--space-6);
+  width: 100%;
 }
 
 .modal-btn {
@@ -788,6 +851,7 @@ section {
   background: var(--gradient-primary);
   color: var(--white);
   box-shadow: var(--shadow-md);
+  min-width: 180px; /* Set a minimum width for better appearance */
 }
 
 .modal-btn::before {
@@ -933,4 +997,1075 @@ section {
     font-size: 13px;
   }
 }
+
+/* Mobile-friendly header & hamburger */
+.nav-toggle {
+  display: none; /* default hidden on desktop */
+  background: transparent;
+  border: none;
+  padding: 8px;
+  margin-left: 8px;
+  cursor: pointer;
+  align-self: center;
+}
+.nav-toggle .hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  position: relative;
+  transition: transform 0.18s ease;
+}
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.18s ease, top 0.18s ease, opacity 0.18s ease;
+}
+.nav-toggle .hamburger::before { top: -6px; }
+.nav-toggle .hamburger::after  { top: 6px; }
+
+/* Improved Mobile-friendly header & hamburger */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 130; /* Higher than the nav */
+}
+
+/* Hamburger icon with animation */
+.nav-toggle .hamburger {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.3s ease, top 0.3s ease;
+}
+
+.nav-toggle .hamburger::before { top: -8px; }
+.nav-toggle .hamburger::after { top: 8px; }
+
+/* X animation when menu is open */
+.nav-toggle.active .hamburger {
+  background: transparent; /* Hide the middle line */
+}
+
+.nav-toggle.active .hamburger::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.nav-toggle.active .hamburger::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Override conflicting styles for mobile nav */
+@media screen and (max-width: 768px) {
+  /* Show hamburger */
+  .nav-toggle {
+    display: block;
+  }
   
+  /* Ensure header stays above other content */
+  .header-container {
+    height: auto;
+    min-height: 56px;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 100;
+  }
+  
+  /* Navigation styling */
+  .navigation.open {
+    display: flex !important; /* Important to override any other display styles */
+  }
+  
+  /* Fixed positioning for the dropdown */
+  #primary-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(53, 55, 64, 0.98);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 12px 12px;
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 90;
+  }
+  
+  /* Full width buttons for better mobile tap targets */
+  #primary-nav .custom-button {
+    width: 100%;
+    text-align: center;
+    padding: 12px 15px;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.2s ease;
+  }
+  
+  #primary-nav .custom-button:hover,
+  #primary-nav .custom-button:active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: none;
+  }
+  
+  /* Smooth animation for menu appearance */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #primary-nav.open {
+    animation: fadeInDown 0.3s ease forwards;
+  }
+}
+
+/* mobile specific layout */
+@media screen and (max-width: 768px) {
+  /* show hamburger */
+  .nav-toggle { display: block; }
+
+  /* make header compact */
+  .header-container {
+    padding: 12px;
+    gap: 8px;
+    align-items: center;
+    position: relative;
+  }
+  .header-container h1 { font-size: 1.05rem; margin: 0; color: var(--white); }
+
+  /* hide the nav by default on mobile; open by adding .open */
+  #primary-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 12px;
+    left: 12px;
+    background: linear-gradient(180deg, rgba(53,55,64,0.98), rgba(45,47,52,0.98));
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    gap: 8px;
+    z-index: 120;
+  }
+  #primary-nav.open { display: flex; animation: navIn 160ms ease-out; }
+
+  /* nav buttons become full-width stacked items */
+  #primary-nav .custom-button {
+    width: 100%;
+    background: transparent;
+    color: var(--white);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: none;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  @keyframes navIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* reduce heavy hover transforms on mobile */
+  .link-container, .image-container, .custom-button {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .link-container:hover, .image-container:hover, .custom-button:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* Modal description styling */
+.modal-description {
+  display: none; /* Hide the old description style */
+}
+
+/* Adjust for smaller screens */
+@media screen and (max-width: 768px) {
+  .modal-description {
+    font-size: 14px;
+    padding: var(--space-3);
+    margin: var(--space-3) 0;
+  }
+}
+
+/* Styled caption box for slideshows */
+.modal-caption {
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+  border-left: 4px solid var(--primary-color);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  max-width: 800px;
+  width: 100%;
+}
+
+.caption-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--gray-800);
+  margin: 0 0 var(--space-2) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.caption-title .emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.caption-content {
+  color: var(--gray-700);
+  line-height: 1.6;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Responsive adjustments for captions */
+@media screen and (max-width: 768px) {
+  .modal-caption {
+    padding: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  
+  .caption-title {
+    font-size: 16px;
+  }
+  
+  .caption-content {
+    font-size: 14px;
+  }
+}
+
+/* ...existing mobile styles... */
+
+/* Dashboard Mode Styles */
+.dashboard-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 15px;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.dashboard-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.dashboard-toggle:hover::before {
+  left: 100%;
+}
+
+.dashboard-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--primary-dark), var(--accent-color));
+}
+
+.toggle-icon {
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+/* Active Dashboard Mode */
+.dashboard-toggle.active {
+  background: linear-gradient(135deg, var(--dashboard-primary), var(--dashboard-accent));
+  box-shadow: 0 0 15px rgba(0, 183, 195, 0.5);
+}
+
+body.dashboard-mode {
+  background: var(--dashboard-bg);
+  color: var(--dashboard-text);
+  transition: background 0.5s ease;
+}
+
+/* Career Metrics Panel */
+.career-metrics {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  background: var(--dashboard-card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: none;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  text-align: center;     /* center align */
+  position: relative;  
+}
+
+.dashboard-mode .career-metrics {
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.metric-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--dashboard-secondary);
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Enhanced Career Metrics Panel */
+.career-metrics h3 {
+  color: var(--dashboard-secondary);
+  margin: 2rem 0 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.impact-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.metric-highlight {
+  background: rgba(0, 120, 212, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  margin: 2rem 0;
+  border: 1px solid rgba(80, 230, 255, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metric-highlight:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  background: rgba(0, 120, 212, 0.25);
+}
+
+.metric-highlight .metric-value {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--dashboard-secondary), #ffffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0.5rem 0;
+}
+
+.metric-highlight .metric-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.metric-highlight.total {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(0, 183, 195, 0.3));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.metric-highlight.total .metric-value {
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, #ffffff, var(--dashboard-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.financial .metric-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--dashboard-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.financial .metric-value {
+  font-size: 1.8rem;
+}
+
+/* Responsive adjustments for financial metrics */
+@media screen and (max-width: 1200px) {
+  .impact-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .metric-highlight .metric-value {
+    font-size: 2.5rem;
+  }
+  
+  .metric-highlight.total .metric-value {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .metrics-grid, .impact-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .metric-highlight {
+    padding: 1rem;
+  }
+}
+
+/* Dashboard Background */
+.dashboard-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dashboard-mode .dashboard-background {
+  opacity: 1;
+}
+
+.grid-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, var(--dashboard-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--dashboard-grid) 1px, transparent 1px);
+  animation: gridMove 30s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+.data-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* KPI Indicators */
+.kpi-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(10, 15, 25, 0.9),   /* darker navy/black */
+    rgba(10, 15, 25, 0.65)   /* keep some transparency */
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column; /* stack "value row" above title */
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border-top: 1px solid rgba(255,255,255,0.08); /* subtle edge */
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.45);
+}
+
+/* Mobile-specific KPI indicator animations */
+@media screen and (max-width: 768px) {
+  .dashboard-mode .kpi-indicator {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+  
+  /* Make sure hover state doesn't interfere with the observer-based animation on mobile */
+  .dashboard-mode .link-container:hover .kpi-indicator {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+/* Re-enable hover effect for desktop */
+@media screen and (min-width: 769px) {
+  .dashboard-mode .link-container:hover .kpi-indicator {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dashboard visualizations */
+.dashboard-viz {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 5;
+}
+
+.dashboard-mode .dashboard-viz {
+  opacity: 1;
+}
+
+.viz-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Dashboard mode adjustments for existing elements */
+.dashboard-mode h2 {
+  color: var(--dashboard-secondary);
+}
+
+.dashboard-mode h2::after {
+  background: linear-gradient(135deg, var(--dashboard-primary), var(--dashboard-accent));
+}
+
+.dashboard-mode .link-container {
+  background: var(--dashboard-card-bg);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-mode .link-container p {
+  color: var(--dashboard-text);
+}
+
+.dashboard-mode .header-container {
+  background: rgba(26, 26, 26, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-mode .custom-button {
+  background: linear-gradient(135deg, var(--dashboard-primary), var(--dashboard-dark));
+}
+
+.dashboard-mode .custom-button:hover {
+  background: linear-gradient(135deg, var(--dashboard-primary), var(--dashboard-accent));
+}
+
+/* Responsive adjustments for dashboard mode */
+@media screen and (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dashboard-toggle {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .toggle-text {
+    display: none;
+  }
+  
+  .toggle-icon {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Updated Header Styles */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto; 
+  width: 100%;
+  max-width: 1200px;
+  padding: 15px 25px;
+  background: #353740;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.header-container h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--white), var(--gray-200));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Enhanced Dashboard Toggle */
+.dashboard-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-dark));
+  color: var(--white);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 15px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  order: 2;
+}
+
+.dashboard-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.dashboard-toggle:hover::before {
+  left: 100%;
+}
+
+.dashboard-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.7);
+}
+
+.toggle-icon {
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+/* Navigation updates */
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 2;
+  order: 3;
+}
+
+.navigation .custom-button {
+  padding: 8px 16px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 14px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  text-align: center;
+}
+
+.navigation .custom-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile navigation updates */
+@media screen and (max-width: 768px) {
+  .header-container {
+    padding: 12px 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .header-container h1 {
+    font-size: 1.3rem;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .dashboard-toggle {
+    order: 2;
+    margin: 0;
+    margin-right: 10px;
+    padding: 6px 12px;
+  }
+  
+  .nav-toggle {
+    display: block;
+    order: 3;
+  }
+  
+  #primary-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: #353740;
+    padding: 15px;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    order: 4;
+    width: 100%;
+    z-index: 100;
+  }
+  
+  #primary-nav.open {
+    display: flex;
+    animation: navIn 0.3s ease-out;
+  }
+  
+  #primary-nav .custom-button {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+  }
+  
+  @keyframes navIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Header Refinements */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  gap: 15px;
+}
+
+.header-container h1 {
+  font-size: 1.35rem;
+  white-space: nowrap; /* Prevent title from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+  min-width: 0; /* Allow flex item to shrink below content size */
+  flex: 1;
+}
+
+/* Improved Dashboard Toggle Button */
+.dashboard-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  background: #4F46E5;
+  border-radius: 30px;
+  color: white;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 10px rgba(79, 70, 229, 0.4);
+}
+
+.dashboard-toggle:hover {
+  background: #4338CA;
+  transform: translateY(-1px);
+  box-shadow: 0 0 15px rgba(79, 70, 229, 0.6);
+}
+
+.toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Make nav links more compact */
+.navigation .custom-button {
+  padding: 6px 12px;
+  margin: 0 3px;
+  font-size: 13px;
+}
+
+/* Mobile refinements */
+@media screen and (max-width: 768px) {
+  .header-container {
+    padding: 10px 15px;
+  }
+  
+  .header-container h1 {
+    font-size: 1.2rem;
+    max-width: 65%; /* Limit title width on mobile */
+  }
+  
+  .dashboard-toggle {
+    padding: 6px 8px;
+    margin-left: auto; /* Push to right side */
+    margin-right: 10px;
+  }
+  
+  .toggle-text {
+    display: none; /* Hide text on smallest screens */
+  }
+  
+  .toggle-icon {
+    margin-right: 0; /* Remove margin when text is hidden */
+  }
+}
+
+/* Time savings metrics styling */
+.time-savings .metric-value {
+  color: var(--dashboard-secondary);
+}
+
+/* Highlights container for multiple totals */
+.metrics-highlights-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.metrics-highlights-container .metric-highlight {
+  flex: 1;
+}
+
+.metric-highlight.time {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(100, 100, 255, 0.3));
+}
+
+.metric-highlight.time .metric-value {
+  background: linear-gradient(135deg, #ffffff, #50e6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Impact Metrics Categories */
+.metric-category {
+  color: var(--dashboard-secondary);
+  font-size: 1.2rem;
+  margin: 1.5rem 0 1rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Enhanced Impact Metrics Highlights Container */
+.impact-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+/* Category-specific grid styling */
+.funds-grid .metric-card {
+  border-left: 3px solid rgba(0, 183, 195, 0.7);
+}
+
+.time-grid .metric-card {
+  border-left: 3px solid rgba(80, 230, 255, 0.7);
+}
+
+.efficiency-grid .metric-card {
+  border-left: 3px solid rgba(80, 230, 255, 0.7);
+}
+
+/* Highlight variations for different metric types */
+.metric-highlight.funds {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(0, 183, 195, 0.3));
+}
+
+.metric-highlight.time {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+}
+
+.metric-highlight.efficiency {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+  border: 1px solid rgba(32, 60, 201, 0.3);
+}
+
+.metric-highlight.efficiency .metric-value {
+  background: linear-gradient(135deg, #ffffff, #20b0c9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Efficiency metric card styling */
+.efficiency .metric-value {
+  color: rgba(80, 230, 255, 0.9);
+}
+
+/* Responsive adjustments for impact highlights */
+@media screen and (max-width: 768px) {
+  .impact-highlights {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .metric-category {
+    font-size: 1rem;
+  }
+}
+.metric-highlight.time {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+}
+
+.metric-highlight.efficiency {
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.3), rgba(80, 230, 255, 0.3));
+  border: 1px solid rgba(32, 60, 201, 0.3);
+}
+
+.metric-highlight.efficiency .metric-value {
+  background: linear-gradient(135deg, #ffffff, #20b0c9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Efficiency metric card styling */
+.efficiency .metric-value {
+  color: rgba(80, 230, 255, 0.9);
+}
+
+/* Responsive adjustments for impact highlights */
+@media screen and (max-width: 768px) {
+  .impact-highlights {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .metric-category {
+    font-size: 1rem;
+  }
+}

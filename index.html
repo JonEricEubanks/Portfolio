@@ -6,110 +6,288 @@
   <title>JonEric Eubanks Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="chat-styles.css">
 </head>
 <body>
   <header>
     <div class="header-container">
-      <div>
-        <h1>JonEric Eubanks' Portfolio</h1>
-      </div>
-      <nav class="navigation">
+      <h1>JonEric Eubanks' Portfolio</h1>
+
+      <!-- Dashboard Mode Toggle - positioned between title and nav -->
+      <button id="dashboard-toggle" class="dashboard-toggle" aria-label="Toggle dashboard mode">
+        <span class="toggle-icon">⚡</span>
+        <span class="toggle-text">Spotlight</span>
+      </button>
+
+      <!-- mobile nav toggle -->
+      <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation">
+        <span class="hamburger" aria-hidden="true"></span>
+      </button>
+
+      <nav id="primary-nav" class="navigation">
         <a href="#lowcode" class="custom-button">Low Code Developer</a>
         <a href="#dashboards" class="custom-button">Dashboards</a>
         <a href="#GIS" class="custom-button">GIS Maps</a>
         <a href="#certifications" class="custom-button">Certifications</a>
+        <button onclick="toggleChat()" class="custom-button chat-toggle-btn">💬 Ask AI About Me</button>
       </nav>
     </div>
   </header>
 
 
     <main>
+      <!-- Career Metrics Panel (hidden by default) -->
+      <section id="career-metrics" class="career-metrics">
+        <h2>Career Metrics</h2>
+        <div class="metrics-grid">
+          <!-- Microsoft Learn Metrics -->
+          <div class="metric-card">
+            <div class="metric-icon">⚡</div>
+            <div class="metric-value"><span class="counter" data-target="126775">0</span> XP</div>
+            <div class="metric-label">🔹 Consistent Microsoft Learn progress through structured training</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">🏅</div>
+            <div class="metric-value"><span class="counter" data-target="100">0</span> Badges</div>
+            <div class="metric-label">🔹 Recognized skills in Power BI, Power Apps, Copilot, and SharePoint</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">📘</div>
+            <div class="metric-value"><span class="counter" data-target="86">0</span> Modules</div>
+            <div class="metric-label">🔹 Hands-on learning in automation, dashboards, and AI</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">⏱️</div>
+            <div class="metric-value"><span class="counter" data-target="85">0</span>+ Hours</div>
+            <div class="metric-label">🔹 Professional training in PMP, GIS, and Microsoft Learn</div>
+          </div>
+        </div>
+        
+        <!-- Training Hours Metric -->
+        <div class="metric-highlight">
+          <div class="metric-icon">🎓</div>
+          <div class="metric-value"><span class="counter" data-target="20">0</span> Certifications</div>
+          <div class="metric-label">🔹 Power Platform, Project Management, and Data Analysis</div>
+        </div>
+        
+        <!-- Impact Metrics - Financial Impact -->
+        <h2>Impact Metrics</h2>
+        
+        <!-- NEW: Impact Metrics Totals at the Top -->
+        <div class="metrics-highlights-container impact-highlights">
+          <!-- Total Funds Metric -->
+          <div class="metric-highlight total funds">
+            <div class="metric-icon">💰</div>
+            <div class="metric-value">$<span class="counter" data-target="195.9">0</span>M+</div>
+            <div class="metric-label">Total Funds Tracked</div>
+          </div>
+          
+          <!-- Total Time Saving Metric -->
+          <div class="metric-highlight total time">
+            <div class="metric-icon">⏱️</div>
+            <div class="metric-value"><span class="counter" data-target="585">0</span>+ hrs</div>
+            <div class="metric-label">Total Time Saved Annually</div>
+          </div>
+          
+          <!-- NEW: Total Efficiency Metric -->
+          <div class="metric-highlight total efficiency">
+            <div class="metric-icon">📈</div>
+            <div class="metric-value"><span class="counter" data-target="95">0</span>%</div>
+            <div class="metric-label">Overall Process Improvement</div>
+          </div>
+        </div>
+        
+        <!-- NEW: Funds Tracked Category -->
+        <h4 class="metric-category">Funds Tracked 💰</h4>
+        <div class="metrics-grid impact-grid funds-grid">
+          <div class="metric-card financial">
+            <div class="metric-title">Emergency Rental Assistance</div>
+            <div class="metric-value">$<span class="counter" data-target="53">0</span>M</div>
+            <div class="metric-label">Power BI Dashboard</div>
+          </div>
+          <div class="metric-card financial">
+            <div class="metric-title">Priority Repair Program</div>
+            <div class="metric-value">$<span class="counter" data-target="12">0</span>M</div>
+            <div class="metric-label">Power BI Dashboard</div>
+          </div>
+          <div class="metric-card financial">
+            <div class="metric-title">Neighborhood Improvement</div>
+            <div class="metric-value">$<span class="counter" data-target="13.9">0</span>M</div>
+            <div class="metric-label">Smartsheet Dashboard</div>
+          </div>
+          <div class="metric-card financial">
+            <div class="metric-title">Stop Six Transformation</div>
+            <div class="metric-value">$<span class="counter" data-target="49">0</span>M</div>
+            <div class="metric-label">Newsletter + Dashboard</div>
+          </div>
+          <div class="metric-card financial">
+            <div class="metric-title">ARPA/CARES Aid Allocation</div>
+            <div class="metric-value">$<span class="counter" data-target="68">0</span>M</div>
+            <div class="metric-label">ArcGIS StoryMap Dashboard</div>
+          </div>
+        </div>
+          
+        <!-- NEW: Time Saved Category -->
+        <h4 class="metric-category">Time Saved ⏱️</h4>
+        <div class="metrics-grid impact-grid time-grid">
+          <div class="metric-card financial time-savings">
+            <div class="metric-title">Block Party Process</div>
+            <div class="metric-value"><span class="counter" data-target="55">0</span> hrs</div>
+            <div class="metric-label">Automated Staff Workflows</div>
+          </div>
+          <div class="metric-card financial time-savings">
+            <div class="metric-title">Water Service App</div>
+            <div class="metric-value"><span class="counter" data-target="60">0</span> hrs</div>
+            <div class="metric-label">vs. Manual FileMaker</div>
+          </div>
+          <div class="metric-card financial time-savings">
+            <div class="metric-title">Project 25 Dashboard</div>
+            <div class="metric-value"><span class="counter" data-target="70">0</span> hrs</div>
+            <div class="metric-label">vs. Manual Excel</div>
+          </div>
+          <div class="metric-card financial time-savings">
+            <div class="metric-title">ELM App</div>
+            <div class="metric-value"><span class="counter" data-target="400">0</span> hrs</div>
+            <div class="metric-label">20 Hires @ 20hrs Each</div>
+          </div>
+        </div>
+        
+        <!-- NEW: Efficiency Category -->
+        <h4 class="metric-category">Efficiency 📈</h4>
+        <div class="metrics-grid impact-grid efficiency-grid">
+          <div class="metric-card financial efficiency">
+            <div class="metric-title">Overall Efficiency</div>
+            <div class="metric-value"><span class="counter" data-target="95">0</span>%</div>
+            <div class="metric-label">Time Reduction</div>
+          </div>
+          <div class="metric-card financial efficiency">
+            <div class="metric-title">Manual Tasks Eliminated</div>
+            <div class="metric-value"><span class="counter" data-target="200">0</span>+</div>
+            <div class="metric-label">Across All Projects</div>
+          </div>
+          <div class="metric-card financial efficiency">
+            <div class="metric-title">Return on Investment</div>
+            <div class="metric-value"><span class="counter" data-target="423">0</span>%</div>
+            <div class="metric-label">Implementation ROI</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Add data-kpi attributes to relevant portfolio cards -->
       <h2 id="lowcode">Low Code Developer</h2>
       <section id="lowcode">
         <div class="grid-container">
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/block1.png');"
-                 data-modal-title="Brookfield Block Party Request Process"
-                 data-modal-image="Images/block1.png"
-                 data-modal-slideshow="Images/block.png,Images/block1.png,Images/block2.png,Images/block3.png"
-                 data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+          <!-- Update first card with KPI data -->
+          <div class="link-container modal-trigger" 
+              data-modal-title="Brookfield Block Party Request Process"
+              data-modal-image="Images/block1.png"
+              data-modal-slideshow="Images/block.png,Images/block1.png,Images/block2.png,Images/block3.png"
+              data-modal-descriptions="Displays the end-to-end Power Automate flow built to handle resident block party requests. It automates staff notifications, event creation, and requester updates.||Automated email template sent to staff with request details, ensuring every department is informed in realtime.||Clean, branded email that confirms request submission and provides clear next steps for the resident.||Automatically adds approved block party requests to the municipal calendar with location and address details, streamlining scheduling and transparency."
+              data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b"
+              data-kpi-title="Requests Processed" 
+              data-kpi-value="90"
+              data-kpi-icon="📝">
+            <div class="image-container" style="background-image: url('Images/block1.png');">
+              <!-- Add SVG container for dashboard visualizations -->
+              <div class="dashboard-viz">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="viz-svg"></svg>
+              </div>
             </div>
             <p>Brookfield Block Party Request Process</p>
+            <!-- KPI indicator that appears in dashboard mode -->
+            
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/crm.png');"
-                 data-modal-title="VBG & VNB Power Bi Dashboard Demos"
-                 data-modal-image="Images/crm.png"
-                 data-modal-slideshow="Images/crm.png,Images/crm1.png,Images/demo.png,Images/demo1.png,Images/demo2.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+          <!-- Continue with other cards, adding data-kpi attributes to relevant ones -->
+          <div class="link-container modal-trigger" 
+               data-modal-title="VBG & VNB Power Bi Dashboard Demos"
+               data-modal-image="Images/crm.png"
+               data-modal-slideshow="Images/crm.png,Images/crm1.png,Images/demo.png,Images/demo1.png,Images/demo2.png"
+               data-modal-descriptions="Demonstrates how New World data can be transformed into a CRM style Power BI dashboard. Provides insights into service performance, customer requests, and satisfaction trends to help the Village improve operations.||Detailed view breaking down municipal service requests by residents, showing workload distribution, resolution times, and satisfaction ratings to optimize resource allocation.||Showcases a Police Crime Analysis dashboard prototype built in Power BI. Highlights trends in crime volume, location hotspots, and offense types, enabling data driven decisions for public safety.||A performance dashboard demo built in Power BI to visualize employee activity, task hours, and efficiency. Designed to help managers track workloads, identify trends, and improve workforce planning.||Proof of concept combining Power BI with Power Apps for change order tracking and reconstruction project oversight. Enables contractors, costs, and project milestones to be monitored in realtime."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a"
+               data-kpi-title="Insights Generated" 
+               data-kpi-value="237"
+               data-kpi-icon="💡">
+            <div class="image-container" style="background-image: url('Images/crm.png');">
+              <div class="dashboard-viz">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="viz-svg"></svg>
+              </div>
             </div>
             <p>VBG & VNB Power Bi Dashboard Demos</p>
+            
           </div>
-
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/p25.png');"
-                 data-modal-title="Buffalo Grove Project 25 Dashboard"
-                 data-modal-image="Images/p25.png"
-                 data-modal-slideshow="Images/p25.png,Images/p251.png,Images/p252.png,Images/p253.png,Images/p254.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+          
+          <!-- ... Add similar KPI attributes to other relevant cards ... -->
+          
+          <!-- Continue with remaining cards -->
+          <div class="link-container modal-trigger" 
+               data-modal-title="Buffalo Grove Project 25 Dashboard"
+               data-modal-image="Images/p25.png"
+               data-modal-slideshow="Images/p25.png,Images/p251.png,Images/p252.png,Images/p253.png,Images/p254.png"
+               data-modal-descriptions="📊 Executive Summary Dashboard: High level project view for the Village Board showing budget, contingency, pay requests, and % completion. Designed for leadership updates with simplified visuals and key performance indicators.||📑 Change Order Tracking: Tracks the lifecycle of change orders from submission through approval. Provides visibility into budget adjustments, contingency usage, and contractor impacts in one centralized view.||💰 Pay Requests Dashboard: Monitors contractor pay requests, amounts approved, and balances used. Ensures Dane and the project team can quickly confirm payment status and alignment with the overall budget.||🧾 Pay Applications Dashboard: Breaks down active pay applications by contractor, budget category, and timeline. Offers a clear view into how construction costs are being distributed and managed.||🔍 Custom Popout Drill Down: Interactive custom popout built in Power BI to provide contractor level insights. Demonstrates advanced data modeling and visualization expertise to deliver detailed, ondemand budget tracking."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+            <div class="image-container" 
+                 style="background-image: url('Images/p25.png');">
             </div>
             <p>Buffalo Grove Project 25 Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/h20.png');"
-                 data-modal-title="Glencoe Water Service Record Inventory App"
-                 data-modal-image="Images/h20.png"
-                 data-modal-slideshow="Images/h20.png,Images/h201.png,Images/h203.png,Images/h202.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Glencoe Water Service Record Inventory App"
+               data-modal-image="Images/h20.png"
+               data-modal-slideshow="Images/h20.png,Images/h201.png,Images/h203.png,Images/h202.png"
+               data-modal-descriptions="💧 Water Service Records Power App: Custom Power App built on top of legacy FileMaker data to centralize and modernize water service record tracking. Provides a searchable interface, edit/delete tools, and record details for staff.||📧 Automated Staff Notifications: Power Automate flow sends branded email alerts when water service records are added or updated. Ensures staff are notified in realtime without manual followup.||📤 Export & Reporting Flow: Automated export process allowing staff to download either all water service records or selected subsets. Power Automate creates CSV files and download for easy reporting.||📲 Mobile Responsive Design: App built with responsive layouts to support mobile devices. Enables field staff to view, edit, and confirm service records directly on their phones."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+            <div class="image-container" 
+                 style="background-image: url('Images/h20.png');">
             </div>
             <p>Glencoe Water Service Record Inventory App</p>
           </div>
-        <div class="link-container">
-          <div class="image-container modal-trigger" 
-               style="background-image: url('Images/servicedesk.png');"
+
+          <div class="link-container modal-trigger" 
                data-modal-title="Demo MGP Service Desk Ticket App"
                data-modal-image="Images/servicedesk.png"
                data-modal-slideshow="Images/servicedesk.png,Images/servicedesk2.png,Images/servicedesk1.png"
+               data-modal-descriptions="🖥️ Service Desk App Home: The first demo app created to showcase Spark's capabilities. Provides a modern home screen for creating, tracking, and managing service desk tickets in a centralized system.||📋 Ticket Tracking Table: Detailed view of assigned tickets and categories within the app. Highlights how the app tracks priorities, statuses, and attachments across multiple clients.||📊 Service Desk Power BI Dashboard: Connected Power BI dashboard for the Service Desk App. Demonstrates cross platform functionality by visualizing ticket trends, resolution rates, and workload analysis."
                data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
+            <div class="image-container" 
+                 style="background-image: url('Images/servicedesk.png');">
+            </div>
+            <p>Demo MGP Service Desk Ticket App</p>
           </div>
-          <p>Demo MGP Service Desk Ticket App</p>
-        </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/share.png');"
-                 data-modal-title="Sharepoint Intranet Design Development"
-                 data-modal-image="Images/share.png"
-                 data-modal-slideshow="Images/share.png,Images/share1.png,Images/share2.png"
-                 data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Sharepoint Intranet Design Development"
+               data-modal-image="Images/share.png"
+               data-modal-slideshow="Images/share.png,Images/share1.png,Images/share2.png,Images/share3.png"
+               data-modal-descriptions="🏠 Village Hub Site: Developed a centralized SharePoint hub site to connect departments, resources, and staff communications. Provides easy navigation to department specific intranet sites.||📑 Employee Benefits Site: Built a modern intranet site for HR resources, including benefits guides, policies, and staff contacts. Simplifies employee access to critical documents and support.||📘 Employee Policies Site: Created a comprehensive policies portal for the Village of Lincolnshire. Includes employee handbook, conduct standards, safety policies, and resource directories.||🎨 Teams Integration & Branding: Customized the Microsoft Teams Connections app with village logos and brand identity. Ensured a consistent intranet experience across SharePoint and Teams."
+               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+            <div class="image-container" 
+                 style="background-image: url('Images/share.png');">
             </div>
             <p>Sharepoint Intranet Design Development</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/agent.png');"
-                 data-modal-title="(LISA) Land Info Service Agent on GIS Data"
-                 data-modal-image="Images/agent.png"
-                 data-modal-slideshow="Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+          <div class="link-container modal-trigger" 
+               data-modal-title="(LISA) Land Info Service Agent on GIS Data"
+               data-modal-image="Images/agent.png"
+               data-modal-slideshow="Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
+               data-modal-descriptions="🗂️ Azure AI Search Indexing: Displays the underlying Azure AI Search index connected to municipal GIS and SQL data. Shows semantic search, enrichment, and vector search powering the assistant's accuracy.||⚙️ Azure Portal Integration: Illustrates the Azure setup for the agent, including search service quotas, skillsets, and indexing pipelines. Emphasizes the technical foundation of how municipal data is connected securely.||Highlights how the agent was designed and orchestrated in Copilot Studio. Demonstrates structuring intents, knowledge sources, and orchestration logic for municipal use cases.||Showcases the LISA agent embedded directly in Microsoft Teams with a clean, branded UI. Residents and staff can query property details, zoning, utilities, and services in natural language.||✨ Results in Action: Demonstrates real output from the agent providing zoning, property ownership, and service information for a given address delivering instant, actionable insights to residents and staff."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+            <div class="image-container" 
+                 style="background-image: url('Images/agent.png');">
             </div>
             <p>(LISA) Land Info Service Agent on GIS Data</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/ELM.png');"
-                 data-modal-title="Microsofts Best in Automation ELM App"
-                 data-modal-image="Images/ELM.png"
-                 data-modal-slideshow="Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0"
-                 data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Microsofts Best in Automation ELM App"
+               data-modal-image="Images/ELM.png"
+               data-modal-slideshow="Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0?autoplay=1"
+               data-modal-descriptions="📊 New Hire & Task Overview: Provides a live look at the Employment Lifecycle Management (ELM) app interface. Shows realtime tracking of onboarding/offboarding tasks, dynamic progress charts, supervisor assignments, and department level task automation.||🏆 Recognized by Microsoft: Highlights Microsoft's official case study featuring the ELM app as a showcase of Power Platform and intelligent automation. Demonstrates impact in unifying workflows across HR, IT, and managers while reducing manual effort.||🎬 Video Walkthrough: Demo video covers task automation with Power Automate, AI-enhanced email notifications, role-based access in SharePoint, and Copilot driven task commands showing why it won Best in Automation."
+               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+            <div class="image-container" 
+                 style="background-image: url('Images/ELM.png');">
             </div>
             <p>Microsofts Best in Automation ELM App</p>
           </div>
@@ -122,81 +300,90 @@
       <h2 id="dashboards">Dashboards</h2>
       <section id="dashboards">
         <div class="grid-container">
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/Erapdash.png');"
-                 data-modal-title="Power BI Emergency Rental Assistance Dashboard"
-                 data-modal-image="Images/Erapdash.png"
-                 data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Power BI Emergency Rental Assistance Dashboard"
+               data-modal-image="Images/Erapdash.png"
+               data-modal-description="📊 Power BI Emergency Rental Assistance Dashboard: Designed for the City of Fort Worth, this Power BI dashboard tracked $53M in federal rental assistance across all council districts. It consolidated applicant demographics, program status, and fund distribution into one visual hub enabling leadership to monitor equity, ensure transparency, and make data backed policy decisions in real time."
+               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+            <div class="image-container" 
+                 style="background-image: url('Images/Erapdash.png');">
             </div>
             <p>Power BI Emergency Rental Assistance Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/ampdash.png');"
-                 data-modal-title="Smartsheet Alleyway Maintenance Dashboard"
-                 data-modal-image="Images/ampdash.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet Alleyway Maintenance Dashboard"
+               data-modal-image="Images/ampdash.png"
+               data-modal-description="🏘️ Smartsheet Alleyway Maintenance Dashboard: Built a Smartsheet program dashboard that centralized 132 miles of alleyway maintenance data in Fort Worth. It automated complaint intake, visualized top issues like illegal dumping and drainage, and tracked resolution progress reducing backlog and improving accountability in high crime, low income neighborhoods."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+            <div class="image-container" 
+                 style="background-image: url('Images/ampdash.png');">
             </div>
             <p>Smartsheet Alleyway Maintenance Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/rolldash.png');"
-                 data-modal-title="Smartsheet Neighborhood Improvement Dashboard"
-                 data-modal-image="Images/rolldash.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet Neighborhood Improvement Dashboard"
+               data-modal-image="Images/rolldash.png"
+               data-modal-description="🌆 Smartsheet Neighborhood Improvement Dashboard: Created a Smartsheet rollup to track $13.9M in neighborhood improvement investments over 541 days. Delivered executive visibility into project milestones, task status (167 completed, 16 in progress), and budget rollups, empowering decision makers to keep complex projects on track and demonstrate measurable community impact."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+            <div class="image-container" 
+                 style="background-image: url('Images/rolldash.png');">
             </div>
             <p>Smartsheet Neighborhood Improvement Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/covdash.png');"
-                 data-modal-title="Smartsheet First Responder Covid19 Dashboard"
-                 data-modal-image="Images/covdash.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet First Responder Covid19 Dashboard"
+               data-modal-image="Images/covdash.png"
+               data-modal-description="🚑 Smartsheet First Responder Covid-19 Dashboard: Developed a rapid response Covid-19 dashboard during the pandemic to support Fort Worth's police, fire, and MedStar responders. Tracked 3,265 testing submissions across counties, with real time symptom breakdowns, ensuring fast, life saving visibility for city leadership and public safety teams."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+            <div class="image-container" 
+                 style="background-image: url('Images/covdash.png');">
             </div>
             <p>Smartsheet First Responder Covid19 Dashboard</p>
           </div>
-        <div class="link-container">
-          <div class="image-container modal-trigger" 
-               style="background-image: url('Images/prpdash.png');"
+
+          <div class="link-container modal-trigger" 
                data-modal-title="Power BI Priority Repair Assistance Dashboard"
                data-modal-image="Images/prpdash.png"
+               data-modal-description="🛠️ Power BI Priority Repair Assistance Dashboard: Engineered a Power BI dashboard for Fort Worth's Priority Repair Program, overseeing 3,199 applications with $12M in district level allocations. Visualized applicant demographics, race/ethnicity, and funding breakdowns transforming scattered spreadsheets into a transparent, executive ready reporting tool."
                data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
+            <div class="image-container" 
+                 style="background-image: url('Images/prpdash.png');">
+            </div>
+            <p>Power BI Priority Repair Assistance Dashboard</p>
           </div>
-          <p>Power BI Priority Repair Assistance Dashboard</p>
-        </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/side.png');"
-                 data-modal-title="Public Engagement Report for District 11"
-                 data-modal-image="Images/side.png"
-                 data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Public Engagement Report for District 11"
+               data-modal-image="Images/side.png"
+               data-modal-description="📍 Public Engagement Report for District 11: Produced a GIS-driven public engagement report for District 11, mapping participation across Fort Worth's newest council district. Delivered insights on accessibility, representation, and event planning that directly informed citywide equity initiatives and engagement strategies."
+               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+            <div class="image-container" 
+                 style="background-image: url('Images/side.png');">
             </div>
             <p>Public Engagement Report for District 11</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/erap.png');"
-                 data-modal-title="Smartsheet Rental Assistance Dashboard"
-                 data-modal-image="Images/erap.png"
-                 data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Smartsheet Rental Assistance Dashboard"
+               data-modal-image="Images/erap.png"
+               data-modal-description="💰 Smartsheet Rental Assistance Dashboard: Smartsheet dashboard tracking 25K+ ERAP applications, showing paid vs. denied by agency, average payment times, and daily/weekly trends. Delivered real-time transparency into Fort Worth's multi-million-dollar rental aid program."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+            <div class="image-container" 
+                 style="background-image: url('Images/erap.png');">
             </div>
             <p>Smartsheet Rental Assistance Dashboard</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/Dis 6.png');"
-                 data-modal-title="Stop Six: Transformation Newsletter"
-                 data-modal-image="Images/Dis 6.png"
-                 data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Stop Six: Transformation Newsletter"
+               data-modal-image="Images/Dis 6.png"
+               data-modal-description="📰 Stop Six Transformation Newsletter: I authored and designed a professional newsletter showcasing the $49M Stop Six Neighborhood Improvement initiative. Highlighted council leadership, major infrastructure investments, and community transformation serving as a polished communication tool for residents and stakeholders."
+               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+            <div class="image-container" 
+                 style="background-image: url('Images/Dis 6.png');">
             </div>
             <p>Stop Six: Transformation Newsletter</p>
           </div>
@@ -211,82 +398,90 @@
       <section id="GIS">
         <div class="grid-container">
           
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/cost.png');"
-                 data-modal-title="Fort Worth Housing Equity Insight Analysis"
-                 data-modal-image="Images/cost.png"
-                 data-modal-link="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth Housing Equity Insight Analysis"
+               data-modal-image="Images/cost.png"
+               data-modal-description="🏘️ Fort Worth Housing Equity Insight Analysis: A GIS driven map highlighting disparities in housing equity across Fort Worth neighborhoods, shaded by coverage of affordable housing or program investment. Supports equity driven allocation for CDBG and HOME funds. According to city data, themes like fair housing violations and housing cost burden are critical concerns, with over 100,000 households spending more than 30% of income on housing."
+               data-modal-link="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda">
+            <div class="image-container" 
+                 style="background-image: url('Images/cost.png');">
             </div>
             <p>Fort Worth Housing Equity Insight Analysis</p>
           </div>
           
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/cdbg.png');"
-                 data-modal-title="Fort Worth CDBG Evolution: Decade Mapped"
-                 data-modal-image="Images/cdbg.png"
-                 data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth CDBG Evolution: Decade Mapped"
+               data-modal-image="Images/cdbg.png"
+               data-modal-description="📊 Fort Worth CDBG Evolution: Decade Mapped: Interactive side by side map showing how Community Development Block Grant (CDBG) eligible areas have changed over time. Visualizes shifts in investment zones across the city to inform strategic neighborhood revitalization."
+               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5">
+            <div class="image-container" 
+                 style="background-image: url('Images/cdbg.png');">
             </div>
             <p> Fort Worth CDBG Evolution: Decade Mapped</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/d10.png');"
-                 data-modal-title="Marine Area Sidewalk Condition & Average Daily Traffic Count"
-                 data-modal-image="Images/d10.png"
-                 data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=21139a408d2c408f9a58a5e0a9447d4d">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Marine Area Sidewalk Condition & Average Daily Traffic Count"
+               data-modal-image="Images/d10.png"
+               data-modal-description="🚶 Marine Area Sidewalk Condition & Traffic Count: Dual panel map showing sidewalk condition (poor to good) aligned with pedestrian traffic volumes in Fort Worth's Marine Area. This empowers infrastructure teams to prioritize repairs in high modality zones for safer, data driven maintenance decisions."
+               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=21139a408d2c408f9a58a5e0a9447d4d">
+            <div class="image-container" 
+                 style="background-image: url('Images/d10.png');">
             </div>
             <p>Marine Area Sidewalk Condition & Average Daily Traffic Count</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/d4.png');"
-                 data-modal-title="District 4: Dynamic Demographics Mapped"
-                 data-modal-image="Images/d4.png"
-                 data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41">
+          <div class="link-container modal-trigger" 
+               data-modal-title="District 4: Dynamic Demographics Mapped"
+               data-modal-image="Images/d4.png"
+               data-modal-description="👥 District 4: Dynamic Demographics Mapped: Census block level demographic distribution visualized across Council District 4. Gives planners intuitive insights into population density and variation among demographic groups, foundational for equitable outreach and service delivery."
+               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41">
+            <div class="image-container" 
+                 style="background-image: url('Images/d4.png');">
             </div>
             <p>District 4: Dynamic Demographics Mapped"</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/food.png');"
-                 data-modal-title="Fort Worth Food Access Mapping Insights"
-                 data-modal-image="Images/food.png"
-                 data-modal-link="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth Food Access Mapping Insights"
+               data-modal-image="Images/food.png"
+               data-modal-description="🍎 Fort Worth Food Access Mapping Insights: A split-view map overlaying food desert areas with locations of emergency meal sites. Highlights gaps in food access and the distribution of aid, allowing public health stakeholders to target interventions where they are needed most."
+               data-modal-link="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb">
+            <div class="image-container" 
+                 style="background-image: url('Images/food.png');">
             </div>
             <p>Fort Worth Food Access Mapping Insights</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/cares.png');"
-                 data-modal-title="Fort Worth Cares: Aid Mapping Portfolio"
-                 data-modal-image="Images/cares.png"
-                 data-modal-link="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Fort Worth Cares: Aid Mapping Portfolio"
+               data-modal-image="Images/cares.png"
+               data-modal-description="💰 Fort Worth Cares: Aid Mapping Portfolio: ArcGIS StoryMap showcasing a comprehensive visual narrative of local COVID-19 relief fund allocations. Grounded in real Fort Worth federal allocations, this tool allows the public and leadership to explore where over $68 million in ARPA funds were directed."
+               data-modal-link="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff">
+            <div class="image-container" 
+                 style="background-image: url('Images/cares.png');">
             </div>
             <p>Fort Worth Cares: Aid Mapping Portfolio</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/ally.png');"
-                 data-modal-title="Alleyway Qualification: Mapping Insights"
-                 data-modal-image="Images/ally.png"
-                 data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Alleyway Qualification: Mapping Insights"
+               data-modal-image="Images/ally.png"
+               data-modal-description="🛣️ Alleyway Qualification: Mapping Insights: Spatial map showing which neighborhoods fall inside and outside the municipal alleyway maintenance program. Enables city staff to clearly visualize service eligibility zones and identify underserved communities."
+               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493">
+            <div class="image-container" 
+                 style="background-image: url('Images/ally.png');">
             </div>
             <p>Alleyway Qualification: Mapping Insights</p>
           </div>
 
-          <div class="link-container">
-            <div class="image-container modal-trigger" 
-                 style="background-image: url('Images/nez.png');"
-                 data-modal-title="Empower Fort Worth: Neighborhood Incentives"
-                 data-modal-image="Images/nez.png"
-                 data-modal-link="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Empower Fort Worth: Neighborhood Incentives"
+               data-modal-image="Images/nez.png"
+               data-modal-description="📈 Empower Fort Worth: Neighborhood Incentives: Interactive map identifying Neighborhood Empowerment Zones (NEZs) where local stakeholders can access business or development incentives. Supports strategic investments and outreach in underserved areas."
+               data-modal-link="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11">
+            <div class="image-container" 
+                 style="background-image: url('Images/nez.png');">
             </div>
             <p>Empower Fort Worth: Neighborhood Incentives</p>
           </div>
@@ -308,6 +503,22 @@
       <div class="certification-container">
        
         <ul>
+          <li>
+            <div class="certification-item modal-trigger"
+                 data-modal-title="Microsoft 365 Certified: Fundamentals"
+                 data-modal-image="Images/ms900.png"
+                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/F9B37924E55CFF7A?sharingId=A81001FBB40B8274">
+              Microsoft 365 Certified: Fundamentals
+            </div>
+          </li>
+          <li>
+            <div class="certification-item modal-trigger"
+                 data-modal-title="Microsoft Certified: Power Platform Fundamentals"
+                 data-modal-image="Images/ms9001.png"
+                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/1985EFEF69A71E1C?sharingId=A81001FBB40B8274">
+              Microsoft Certified: Power Platform Fundamentals
+            </div>
+          </li>
           <li>
             <div class="certification-item modal-trigger"
                  data-modal-title="Microsoft Transcript"
@@ -441,6 +652,87 @@
         </section>
       </div>
     </main>
+
+    <!-- Chat Sidebar -->
+    <div class="chat-container" id="chat-sidebar">
+      <div class="chat-header">
+        <div class="ai-avatar">🤖</div>
+        <div class="chat-info">
+          <h3>JonEric's AI Assistant</h3>
+          <p>Ask me anything about JonEric's experience, projects, or skills!</p>
+        </div>
+        <button class="chat-close-btn" id="chat-close-btn" onclick="toggleChat()">
+          <span>✕</span>
+        </button>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="message ai-message">
+          <div class="message-avatar">🤖</div>
+          <div class="message-content">
+            <p>
+              Hello! I'm JonEric's AI assistant. I can answer questions about
+              his experience with Power Platform, dashboards, GIS mapping, and
+              his various projects. What would you like to know?
+            </p>
+          </div>
+          <div class="message-time">Just now</div>
+        </div>
+      </div>
+
+      <div class="suggested-questions" id="suggested-questions">
+        <div class="suggestions-header" onclick="toggleSuggestions()">
+          <p>Try asking:</p>
+          <button class="collapse-button" id="collapse-button">
+            <span class="collapse-icon">⌄</span>
+          </button>
+        </div>
+        <div class="suggestion-chips" id="suggestion-chips">
+          <button
+            class="suggestion-chip"
+            onclick="sendSuggestion('What projects has JonEric worked on?')"
+          >
+            What projects has JonEric worked on?
+          </button>
+          <button
+            class="suggestion-chip"
+            onclick="sendSuggestion('Tell me about his Power Platform experience')"
+          >
+            Tell me about his Power Platform experience
+          </button>
+          <button
+            class="suggestion-chip"
+            onclick="sendSuggestion('What dashboards has he built?')"
+          >
+            What dashboards has he built?
+          </button>
+          <button
+            class="suggestion-chip"
+            onclick="sendSuggestion('What are his certifications?')"
+          >
+            What are his certifications?
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-input-container">
+        <div class="chat-input-wrapper">
+          <input
+            type="text"
+            id="chat-input"
+            placeholder="Ask me anything about JonEric..."
+            maxlength="500"
+          />
+          <button id="send-button" onclick="sendMessage()">
+            <span class="send-icon">➤</span>
+          </button>
+        </div>
+        <div class="input-footer">
+          <small>Powered by OpenAI • Press Enter to send</small>
+        </div>
+      </div>
+    </div>
+
  <button class="top-button" onclick="topFunction()" id="topBtn">Back to Top</button>
     
     <!-- Modal Structure -->
@@ -458,9 +750,13 @@
             <button id="next-slide" class="slide-btn">&gt;</button>
           </div>
         </div>
+        <div id="modal-caption" class="modal-caption" style="display: none;">
+          <div class="caption-title"><span class="emoji">⚙️</span> <span id="caption-title-text">Flow Overview</span></div>
+          <p id="caption-content" class="caption-content">Detailed description goes here</p>
+        </div>
+        <p id="modal-description" class="modal-description" style="display: none;"></p>
         <div class="modal-buttons">
           <button id="modal-view-btn" class="modal-btn">View Project</button>
-          <button id="modal-close-btn" class="modal-btn secondary">Close</button>
         </div>
       </div>
     </div>
@@ -470,23 +766,262 @@
     </footer>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // Mobile navigation toggle
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.getElementById('primary-nav');
+        
+        if(toggle && nav) {
+          function setOpen(open) {
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            nav.classList.toggle('open', open);
+            toggle.classList.toggle('active', open); // Add active class for hamburger animation
+            document.body.style.overflow = open ? 'hidden' : '';
+          }
+
+          toggle.addEventListener('click', () => {
+            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            setOpen(!isOpen);
+          });
+
+          // Close nav when any nav link is clicked
+          nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+
+          // Reset on resize
+          window.addEventListener('resize', () => {
+            if(window.innerWidth > 768) setOpen(false);
+          });
+        }
+
         // Modal functionality
         const modal = document.getElementById('imageModal');
         const modalTitle = document.getElementById('modal-title');
         const modalImage = document.getElementById('modal-image');
         const modalVideo = document.getElementById('modal-video');
         const modalViewBtn = document.getElementById('modal-view-btn');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
         const closeModal = document.querySelector('.close-modal');
         const modalOverlay = document.querySelector('.modal-overlay');
         const slideshowControls = document.getElementById('slideshow-controls');
         const prevSlideBtn = document.getElementById('prev-slide');
         const nextSlideBtn = document.getElementById('next-slide');
         const slideCounter = document.getElementById('slide-counter');
+        const modalDescription = document.getElementById('modal-description'); 
+        const modalCaption = document.getElementById('modal-caption');
+        const captionTitleText = document.getElementById('caption-title-text');
+        const captionEmoji = document.querySelector('.emoji');
+        const captionContent = document.getElementById('caption-content');
 
         let currentLink = '';
         let slideshowItems = [];
+        let slideshowDescriptions = [];
         let currentSlideIndex = 0;
+
+        function processCaptionData(descriptions, slideshow) {
+          // First identify which slideshow we're dealing with
+          const slideshowPath = slideshow ? slideshow.split(',')[0] : '';
+          
+          return descriptions.map((desc, index) => {
+            // Default values
+            let emoji = "ℹ️";
+            let title = "Overview";
+            let content = desc;
+            
+            // Handle special slideshows based on first image name
+            if (slideshowPath.includes('block')) {
+              // Brookfield Block Party Process
+              switch(index) {
+                case 0:
+                  title = "Flow Architecture Overview";
+                  emoji = "⚙️";
+                  break;
+                case 1:
+                  title = "Staff Notification System";
+                  emoji = "📧";
+                  break;
+                case 2:
+                  title = "Resident Confirmation Email";
+                  emoji = "✅";
+                  break;
+                case 3:
+                  title = "Automated Calendar Integration";
+                  emoji = "📅";
+                  break;
+              }
+            } else if (slideshowPath.includes('h20')) {
+              // Water Service Record slides
+              switch(index) {
+                case 0:
+                  title = "Water Service Records App";
+                  emoji = "💧";
+                  break;
+                case 1:
+                  title = "Automated Staff Notifications";
+                  emoji = "📧";
+                  break;
+                case 2:
+                  title = "Export & Reporting Flow";
+                  emoji = "📤";
+                  break;
+                case 3:
+                  title = "Mobile Responsive Design";
+                  emoji = "📲";
+                  break;
+              }
+            } else if (slideshowPath.includes('p25')) {
+              // Buffalo Grove Project 25 Dashboard
+              switch(index) {
+                case 0:
+                  title = "Executive Summary Dashboard";
+                  emoji = "📊";
+                  break;
+                case 1:
+                  title = "Change Order Tracking";
+                  emoji = "📑";
+                  break;
+                case 2:
+                  title = "Pay Requests Dashboard";
+                  emoji = "💰";
+                  break;
+                case 3:
+                  title = "Pay Applications Dashboard";
+                  emoji = "🧾";
+                  break;
+                case 4:
+                  title = "Custom Popout Drill Down";
+                  emoji = "🔍";
+                  break;
+              }
+            } else if (slideshowPath.includes('agent')) {
+              // LISA Agent slides
+              switch(index) {
+                case 0:
+                  title = "Azure AI Search Indexing";
+                  emoji = "🗂️";
+                  break;
+                case 1:
+                  title = "Azure Portal Integration";
+                  emoji = "⚙️";
+                  break;
+                case 2:
+                  title = "Agent Building in Copilot Studio";
+                  emoji = "🧩";
+                  break;
+                case 3:
+                  title = "Agent UI in Teams";
+                  emoji = "🤖";
+                  break;
+                case 4:
+                  title = "Results in Action";
+                  emoji = "✨";
+                  break;
+              }
+            } else if (slideshowPath.includes('ELM')) {
+              // ELM App
+              switch(index) {
+                case 0:
+                  title = "New Hire & Task Overview";
+                  emoji = "📊";
+                  break;
+                case 1:
+                  title = "Recognized by Microsoft";
+                  emoji = "🏆";
+                  break;
+                case 2:
+                  title = "Video Walkthrough";
+                  emoji = "🎬";
+                  break;
+              }
+            } else if (slideshowPath.includes('share')) {
+              // Sharepoint Intranet Design
+              switch(index) {
+                case 0:
+                  title = "Village Hub Site";
+                  emoji = "🏠";
+                  break;
+                case 1:
+                  title = "Employee Benefits Site";
+                  emoji = "📑";
+                  break;
+                case 2:
+                  title = "Employee Policies Site";
+                  emoji = "📘";
+                  break;
+                case 3:
+                  title = "Teams Integration & Branding";
+                  emoji = "🎨";
+                  break;
+              }
+            } else if (slideshowPath.includes('servicedesk')) {
+              // Service Desk App
+              switch(index) {
+                case 0:
+                  title = "Service Desk App Home";
+                  emoji = "🖥️";
+                  break;
+                case 1:
+                  title = "Ticket Tracking Table";
+                  emoji = "📋";
+                  break;
+                case 2:
+                  title = "Service Desk Power BI Dashboard";
+                  emoji = "📊";
+                  break;
+              }
+            } else if (slideshowPath.includes('crm')) {
+              // VBG & VNB Dashboards
+              switch(index) {
+                case 0:
+                  title = "CRM Dashboard Overview";
+                  emoji = "📊";
+                  break;
+                case 1:
+                  title = "CRM Dashboard by Person";
+                  emoji = "👤";
+                  break;
+                case 2:
+                  title = "Crime Analysis Dashboard";
+                  emoji = "🔍";
+                  break;
+                case 3:
+                  title = "Time Tracking Dashboard";
+                  emoji = "⏱️";
+                  break;
+                case 4:
+                  title = "Reconstruction Project Dashboard";
+                  emoji = "🏗️";
+                  break;
+              }
+            }
+            
+            // Extract emoji and title for single descriptions (for dashboard items)
+            // Handle the case where we have a format like "📊 Power BI Emergency Rental Assistance Dashboard: description..."
+            if (desc.match(/^[\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u)) {
+              // Extract the emoji (first character)
+              const emojiMatch = desc.match(/^([\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}])/u);
+              if (emojiMatch) {
+                emoji = emojiMatch[1];
+              }
+              
+              // Extract title and content (everything before and after the first colon)
+              
+              // Extract title and content (everything before and after the first colon)
+              const colonIndex = desc.indexOf(':');
+              if (colonIndex > -1) {
+                // Title is everything between emoji and colon, minus the emoji
+                const fullTitleWithEmoji = desc.substring(0, colonIndex).trim();
+                title = fullTitleWithEmoji.replace(/^[\u{1F300}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u, '').trim();
+                
+                // Content is everything after the colon
+                content = desc.substring(colonIndex + 1).trim();
+              }
+            }
+            
+            return {
+              emoji: emoji,
+              title: title,
+              content: content
+            };
+          });
+        }
 
         // Slideshow functions
         function showSlide(index) {
@@ -498,19 +1033,61 @@
           
           const currentItem = slideshowItems[currentSlideIndex];
           
-          // Check if current item is a video
-          if (currentItem.startsWith('video:')) {
-            // Show video, hide image
-            modalVideo.src = currentItem.substring(6); // Remove 'video:' prefix
-            modalVideo.style.display = 'block';
-            modalImage.style.display = 'none';
+          // Display caption if available (for both images and videos)
+          if (slideshowDescriptions && slideshowDescriptions[currentSlideIndex]) {
+            const captionData = slideshowDescriptions[currentSlideIndex];
+            captionEmoji.textContent = captionData.emoji;
+            captionTitleText.textContent = captionData.title;
+            captionContent.textContent = captionData.content;
+            modalCaption.style.display = 'block';
           } else {
-            // Show image, hide video
-            modalImage.src = currentItem;
-            modalImage.style.display = 'block';
-            modalVideo.style.display = 'none';
-            modalVideo.src = ''; // Clear video source to stop playback
+            modalCaption.style.display = 'none';
           }
+          
+          // Check if current item is a video
+if (currentItem.startsWith('video:')) {
+  // Show video, hide image
+  modalVideo.src = currentItem.substring(6); // strip "video:" prefix
+  modalVideo.style.display = 'block';
+  modalImage.style.display = 'none';
+
+  // Video sizing (single source of truth)
+  modalVideo.style.width = '100%';
+  modalVideo.style.minWidth = '100%';
+  modalVideo.style.height = '400px';
+  modalVideo.style.maxWidth = '900px';
+
+  // Adjust container for video
+  document.querySelector('.modal-image-container').style.width = '100%';
+  document.querySelector('.modal-content').style.maxWidth = '900px';
+
+  // Add spacing below video if caption is shown
+  if (modalCaption.style.display === 'block') {
+    modalCaption.style.marginTop = '20px';
+  } else {
+    modalCaption.style.marginTop = '0';
+  }
+
+  // Add YouTube params to keep it clean
+  if (modalVideo.src.includes('youtube.com')) {
+    if (!modalVideo.src.includes('autoplay=')) {
+      modalVideo.src += (modalVideo.src.includes('?') ? '&' : '?') + 'autoplay=1&rel=0&modestbranding=1';
+    }
+  }
+} else {
+  // Show image, hide video
+  modalImage.src = currentItem;
+  modalImage.style.display = 'block';
+  modalVideo.style.display = 'none';
+  modalVideo.src = ''; // stop playback
+
+  // Reset caption margin for images
+  modalCaption.style.marginTop = '0';
+
+  // Reset modal width for image slides
+  document.querySelector('.modal-content').style.maxWidth = '95%';
+}
+
           
           slideCounter.textContent = `${currentSlideIndex + 1} / ${slideshowItems.length}`;
         }
@@ -545,6 +1122,7 @@
             const imageSrc = this.getAttribute('data-modal-image');
             const link = this.getAttribute('data-modal-link');
             const slideshow = this.getAttribute('data-modal-slideshow');
+            const descriptions = this.getAttribute('data-modal-descriptions');
             
             modalTitle.textContent = title;
             currentLink = link;
@@ -553,16 +1131,38 @@
             if (slideshow) {
               slideshowItems = slideshow.split(',');
               currentSlideIndex = 0;
+              
+              // Process descriptions if available - pass slideshow for context
+              if (descriptions) {
+                const descArray = descriptions.split('||');
+                slideshowDescriptions = processCaptionData(descArray, slideshow);
+              } else {
+                slideshowDescriptions = [];
+              }
+              
               showSlide(0);
               slideshowControls.style.display = 'flex';
             } else {
               slideshowItems = [];
+              slideshowDescriptions = [];
               modalImage.src = imageSrc;
               modalImage.alt = title;
               modalImage.style.display = 'block';
               modalVideo.style.display = 'none';
               modalVideo.src = '';
               slideshowControls.style.display = 'none';
+              
+              // Display single image description if available
+              const singleDescription = this.getAttribute('data-modal-description');
+              if (singleDescription) {
+                const captionData = processCaptionData([singleDescription])[0];
+                captionEmoji.textContent = captionData.emoji;
+                captionTitleText.textContent = captionData.title;
+                captionContent.textContent = captionData.content;
+                modalCaption.style.display = 'block';
+              } else {
+                modalCaption.style.display = 'none';
+              }
             }
             
             // Check if this is a certification item and show/hide button accordingly
@@ -592,7 +1192,6 @@
         }
 
         closeModal.addEventListener('click', closeModalFunction);
-        modalCloseBtn.addEventListener('click', closeModalFunction);
         modalOverlay.addEventListener('click', closeModalFunction);
 
         // View project button
@@ -618,12 +1217,21 @@
               topButton.style.display = "block";
           } else {
               topButton.style.display = "none";
-          }
-      }
+
+          }      }
       function topFunction() {
           document.body.scrollTop = 0;
           document.documentElement.scrollTop = 0;
       }
     </script>
+    <!-- Add dashboard.js script before the closing body tag -->
+    <script src="dashboard.js"></script>
+    <!-- Add chat functionality -->
+    <script src="chat.js"></script>
+    <!-- Add dashboard grid background (hidden by default) -->
+    <div id="dashboard-background" class="dashboard-background">
+      <div class="grid-lines"></div>
+      <div class="data-particles"></div>
+    </div>
   </body>
 </html>

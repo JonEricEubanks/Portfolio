@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat with JonEric's AI Assistant</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="chat-styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <h1>Chat with JonEric's AI Assistant</h1>
+        <nav class="navigation">
+          <a href="index.html" class="custom-button">← Back to Portfolio</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="chat-container">
+        <div class="chat-header">
+          <div class="ai-avatar">🤖</div>
+          <div class="chat-info">
+            <h3>JonEric's AI Assistant</h3>
+            <p>
+              Ask me anything about JonEric's experience, projects, or skills!
+            </p>
+          </div>
+          <div class="chat-status" id="chat-status">
+            <span class="status-indicator online"></span>
+            <span>Online</span>
+          </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+          <div class="message ai-message">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+              <p>
+                Hello! I'm JonEric's AI assistant. I can answer questions about
+                his experience with Power Platform, dashboards, GIS mapping, and
+                his various projects. What would you like to know?
+              </p>
+            </div>
+            <div class="message-time">Just now</div>
+          </div>
+        </div>
+
+        <div class="suggested-questions" id="suggested-questions">
+          <div class="suggestions-header" onclick="toggleSuggestions()">
+            <p>Try asking:</p>
+            <button class="collapse-button" id="collapse-button">
+              <span class="collapse-icon">⌄</span>
+            </button>
+          </div>
+          <div class="suggestion-chips" id="suggestion-chips">
+            <button
+              class="suggestion-chip"
+              onclick="sendSuggestion('What projects has JonEric worked on?')"
+            >
+              What projects has JonEric worked on?
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendSuggestion('Tell me about his Power Platform experience')"
+            >
+              Tell me about his Power Platform experience
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendSuggestion('What dashboards has he built?')"
+            >
+              What dashboards has he built?
+            </button>
+            <button
+              class="suggestion-chip"
+              onclick="sendSuggestion('What are his certifications?')"
+            >
+              What are his certifications?
+            </button>
+          </div>
+        </div>
+
+        <div class="chat-input-container">
+          <div class="chat-input-wrapper">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Ask me anything about JonEric..."
+              maxlength="500"
+            />
+            <button id="send-button" onclick="sendMessage()">
+              <span class="send-icon">➤</span>
+            </button>
+          </div>
+          <div class="input-footer">
+            <small>Powered by OpenAI • Press Enter to send</small>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="chat.js"></script>
+  </body>
+</html>
