@@ -644,4 +644,8 @@ document.addEventListener('DOMContentLoaded', function() {
       initMobileKpiObserver();
     }
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 62abc8683fbdb064dfa68b2beca2f0d2eb323332
