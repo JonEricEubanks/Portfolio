@@ -14,11 +14,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const dashboardBackground = document.getElementById('dashboard-background');
   const dataParticles = document.querySelector('.data-particles');
   
+  // Check if essential elements exist
+  if (!dashboardToggle) {
+    console.error('Dashboard toggle button not found!');
+    return;
+  }
+  
+  console.log('Dashboard elements loaded successfully');
+  
   // Intersection Observer for mobile KPI indicators
   let cardObserver;
   
   // Toggle dashboard mode
   dashboardToggle.addEventListener('click', function() {
+    console.log('Dashboard toggle clicked!');
+    
     // Toggle dashboard mode class
     body.classList.toggle('dashboard-mode');
     dashboardToggle.classList.toggle('active');
@@ -644,8 +654,4 @@ document.addEventListener('DOMContentLoaded', function() {
       initMobileKpiObserver();
     }
   });
-<<<<<<< HEAD
-});
-=======
-});
->>>>>>> 62abc8683fbdb064dfa68b2beca2f0d2eb323332
+});959
