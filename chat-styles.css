@@ -787,3 +787,24 @@
         font-size: 0.9rem;
     }
 }
+
+/* Dashboard Mode Compatibility - Just color adjustments */
+body.dashboard-mode .chat-container {
+    background: rgba(255, 255, 255, 0.98); /* Slightly more opaque on dark background */
+}
+
+body.dashboard-mode .chat-messages {
+    color: #333; /* Ensure text is readable on white background over dark dashboard */
+}
+
+body.dashboard-mode .message-content {
+    color: #333 !important; /* Force dark text on dashboard mode */
+}
+
+body.dashboard-mode .user-message .message-content {
+    color: white !important; /* Keep user messages white */
+}
+
+body.dashboard-mode .ai-message .message-content {
+    color: #333 !important; /* AI messages dark for readability */
+}
