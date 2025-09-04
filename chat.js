@@ -221,7 +221,7 @@ Always format responses with:
         }
 
         const data = await response.json();
-        return data.response;
+        return data.reply;
     }
 
     addMessage(content, sender, isError = false) {
@@ -231,8 +231,11 @@ Always format responses with:
         const avatar = sender === 'ai' ? '🤖' : '👤';
         const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         
+        // Ensure content is a string and handle undefined/null cases
+        const safeContent = content || 'Sorry, I encountered an error. Please try again later.';
+        
         // Process content for basic markdown-like formatting
-        let processedContent = content
+        let processedContent = safeContent
             // Convert **text** to <strong>text</strong>
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             // Convert bullet points (• or *) to proper list items

@@ -1,10 +1,6 @@
 // Vercel serverless function for AI chat
 import { OpenAI } from 'openai';
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
-
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -20,6 +16,16 @@ export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
+
+    // Check if API key is configured
+    if (!process.env.OPENAI_API_KEY) {
+        console.error('OPENAI_API_KEY environment variable is not set');
+        return res.status(500).json({ error: 'OpenAI API key not configured' });
+    }
+
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+    });
 
     try {
         const { message, context } = req.body;
