@@ -623,17 +623,52 @@
     
     .chat-header {
         padding: 1rem;
-        background: rgba(255, 255, 255, 0.98);
+        background: linear-gradient(135deg, #0078d4, #106ebe, #005a9e);
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        position: relative;
+        z-index: 1002;
+    }
+    
+    .chat-close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        margin-left: auto;
+        z-index: 1003;
+    }
+    
+    .chat-close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .chat-info h3 {
+        color: white !important;
+        font-size: 1.1rem;
+    }
+    
+    .chat-info p {
+        color: rgba(255, 255, 255, 0.9) !important;
     }
     
     .ai-avatar {
         width: 40px;
         height: 40px;
         font-size: 2rem;
-    }
-    
-    .chat-info h3 {
-        font-size: 1.1rem;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .suggestions-header {
