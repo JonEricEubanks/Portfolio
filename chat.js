@@ -156,7 +156,7 @@ Q: Why trust his work?
 • Dashboards guiding policy + budgets
 • Apps streamlining onboarding, licensing, and service delivery
 • AI copilots scaling local government capabilities
-• Recognized by Microsoft, trusted by municipalities, and backed by measurable impact
+• Recognized by Microsoft, trusted by municipalities, and backed by measurable impact`;
     }
 
     async sendMessage() {
