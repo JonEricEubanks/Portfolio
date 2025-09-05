@@ -4,98 +4,146 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat with JonEric's AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="chat-styles.css" />
   </head>
-  <body>
-    <header>
-      <div class="header-container">
-        <h1>Chat with JonEric's AI Assistant</h1>
+  <body class="chat-body">
+    <!-- Animated background -->
+    <div class="animated-bg">
+      <div class="bg-orb orb-1"></div>
+      <div class="bg-orb orb-2"></div>
+      <div class="bg-orb orb-3"></div>
+    </div>
+
+    <header class="chat-header-main">
+      <div class="header-container glass-morphism">
+        <div class="header-left">
+          <div class="ai-badge">
+            <span class="ai-icon">🤖</span>
+            <span class="pulse-ring"></span>
+          </div>
+          <div class="header-text">
+            <h1 class="gradient-title">Chat with JonEric's AI Assistant</h1>
+            <p class="header-subtitle">
+              Ask me anything about projects, skills, or experience
+            </p>
+          </div>
+        </div>
         <nav class="navigation">
-          <a href="index.html" class="custom-button">← Back to Portfolio</a>
+          <a href="index.html" class="back-button">
+            <span class="back-icon">←</span>
+            <span>Back to Portfolio</span>
+          </a>
         </nav>
       </div>
     </header>
 
-    <main>
-      <div class="chat-container">
+    <main class="chat-main">
+      <div class="chat-container glass-morphism">
         <div class="chat-header">
-          <div class="ai-avatar">🤖</div>
+          <div class="ai-avatar floating">
+            <span class="avatar-emoji">🤖</span>
+            <div class="avatar-glow"></div>
+          </div>
           <div class="chat-info">
-            <h3>JonEric's AI Assistant</h3>
-            <p>
+            <h3 class="assistant-name">JonEric's AI Assistant</h3>
+            <p class="assistant-desc">
               Ask me anything about JonEric's experience, projects, or skills!
             </p>
           </div>
           <div class="chat-status" id="chat-status">
-            <span class="status-indicator online"></span>
-            <span>Online</span>
+            <span class="status-indicator online pulsing"></span>
+            <span class="status-text">Online</span>
           </div>
         </div>
 
         <div class="chat-messages" id="chat-messages">
-          <div class="message ai-message">
-            <div class="message-avatar">🤖</div>
-            <div class="message-content">
+          <div class="message ai-message animate-in">
+            <div class="message-avatar">
+              <span class="avatar-emoji">🤖</span>
+            </div>
+            <div class="message-content glass-card">
               <p>
                 Hello! I'm JonEric's AI assistant. I can answer questions about
-                his experience with Power Platform, dashboards, GIS mapping, and
-                his various projects. What would you like to know?
+                his experience with
+                <span class="highlight">Power Platform</span>,
+                <span class="highlight">dashboards</span>,
+                <span class="highlight">GIS mapping</span>, and his various
+                projects. <br /><br />What would you like to know?
               </p>
             </div>
             <div class="message-time">Just now</div>
           </div>
         </div>
 
-        <div class="suggested-questions" id="suggested-questions">
+        <div class="suggested-questions glass-card" id="suggested-questions">
           <div class="suggestions-header" onclick="toggleSuggestions()">
-            <p>Try asking:</p>
-            <button class="collapse-button" id="collapse-button">
+            <p class="suggestions-title">💡 Try asking:</p>
+            <button class="collapse-button modern" id="collapse-button">
               <span class="collapse-icon">⌄</span>
             </button>
           </div>
           <div class="suggestion-chips" id="suggestion-chips">
             <button
-              class="suggestion-chip"
+              class="suggestion-chip modern-chip"
               onclick="sendSuggestion('What projects has JonEric worked on?')"
             >
+              <span class="chip-icon">🚀</span>
               What projects has JonEric worked on?
             </button>
             <button
-              class="suggestion-chip"
+              class="suggestion-chip modern-chip"
               onclick="sendSuggestion('Tell me about his Power Platform experience')"
             >
+              <span class="chip-icon">⚡</span>
               Tell me about his Power Platform experience
             </button>
             <button
-              class="suggestion-chip"
+              class="suggestion-chip modern-chip"
               onclick="sendSuggestion('What dashboards has he built?')"
             >
+              <span class="chip-icon">📊</span>
               What dashboards has he built?
             </button>
             <button
-              class="suggestion-chip"
+              class="suggestion-chip modern-chip"
               onclick="sendSuggestion('What are his certifications?')"
             >
+              <span class="chip-icon">🎓</span>
               What are his certifications?
             </button>
           </div>
         </div>
 
-        <div class="chat-input-container">
-          <div class="chat-input-wrapper">
+        <div class="chat-input-container glass-card">
+          <div class="chat-input-wrapper modern-input">
             <input
               type="text"
               id="chat-input"
               placeholder="Ask me anything about JonEric..."
               maxlength="500"
+              class="modern-input-field"
             />
-            <button id="send-button" onclick="sendMessage()">
+            <button
+              id="send-button"
+              onclick="sendMessage()"
+              class="send-button modern-send"
+            >
               <span class="send-icon">➤</span>
+              <div class="button-ripple"></div>
             </button>
           </div>
           <div class="input-footer">
-            <small>Powered by OpenAI • Press Enter to send</small>
+            <small class="footer-text">
+              <span class="powered-by">Powered by OpenAI</span> •
+              <span class="tip">Press Enter to send</span>
+            </small>
           </div>
         </div>
       </div>

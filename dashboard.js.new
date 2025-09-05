@@ -4,9 +4,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize navigation functionality
-  initNavigation();
-  
   // Elements
   const dashboardToggle = document.getElementById('dashboard-toggle');
   const body = document.body;
@@ -25,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log('Dashboard elements loaded successfully');
   
-  // Clean variables - no observers needed
-  let cardObserver = null;
+  // Intersection Observer for mobile KPI indicators
+  let cardObserver;
   
   // Toggle dashboard mode
   dashboardToggle.addEventListener('click', function() {
@@ -37,28 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
     dashboardToggle.classList.toggle('active');
     
     // Toggle between "Spotlight" and "Normal" text
-    const toggleText = dashboardToggle.querySelector('.btn-text');
+    const toggleText = dashboardToggle.querySelector('.toggle-text');
     if (body.classList.contains('dashboard-mode')) {
       toggleText.textContent = 'Normal';
       initDashboardMode();
     } else {
       toggleText.textContent = 'Spotlight';
-      
-      // Immediately hide any visible KPI indicators
-      document.querySelectorAll('.kpi-indicator').forEach(indicator => {
-        indicator.style.opacity = '0';
-        indicator.style.transform = 'translateY(100%)';
-      });
-      
       resetNormalMode();
-      
-      // Add KPI indicators for normal mode too (if not already present)
-      portfolioCards.forEach(card => {
-        addKpiIndicator(card);
-      });
-      
-      // Initialize mobile KPI observer for normal mode too
-      initMobileKpiObserver();
     }
   });
   
@@ -69,161 +51,324 @@ document.addEventListener('DOMContentLoaded', function() {
       animateCounters();
     }, 300);
     
-    // Add KPI indicators to cards that have data attributes
+    // Create data visualization for each card
     portfolioCards.forEach(card => {
-      addKpiIndicator(card);
+      // Add missing KPI indicators for cards that don't have them
+      addMissingKpiIndicators(card);
+      
+      // Animate KPIs immediately on load
+      const kpiIndicator = card.querySelector('.kpi-indicator');
+      if (kpiIndicator) {
+        const kpiValue = kpiIndicator.querySelector('.kpi-value');
+        const targetValue = card.getAttribute('data-kpi-value');
+        const prefix = card.getAttribute('data-kpi-prefix') || '';
+        const suffix = card.getAttribute('data-kpi-suffix') || '';
+        if (kpiValue && targetValue) {
+          animateKpiValue(kpiValue, targetValue, prefix, suffix);
+        }
+        
+        // Add event listeners for animation (desktop only)
+        if (window.innerWidth >= 769) {
+          card.addEventListener('mouseenter', () => {
+            // Show this indicator
+            kpiIndicator.style.opacity = '1';
+            kpiIndicator.style.transform = 'translateY(0)';
+            
+            // Animate the value
+            animateKpiValue(kpiValue, targetValue, prefix, suffix);
+          });
+          
+          card.addEventListener('mouseleave', () => {
+            // Hide this indicator
+            kpiIndicator.style.opacity = '0';
+            kpiIndicator.style.transform = 'translateY(100%)';
+            
+            // Reset value
+            kpiValue.textContent = `${prefix}0${suffix}`;
+          });
+        }
+      }
     });
     
     // Create background data particles
     createDataParticles();
     
-    // Initialize mobile KPI observer
+    // Initialize intersection observer for mobile
     initMobileKpiObserver();
   }
   
-  // No initialization needed - CSS handles everything just like normal mode
+  // Initialize the intersection observer for mobile KPI indicators
   function initMobileKpiObserver() {
-    // Only initialize mobile KPI observer on mobile devices
-    if (window.innerWidth <= 768) {
-      setupMobileKpiObserver();
+    // Disconnect any existing observer
+    if (cardObserver) {
+      cardObserver.disconnect();
+    }
+    
+    // Only set up the observer if we're in dashboard mode and on a smaller screen
+    if (body.classList.contains('dashboard-mode') && window.innerWidth <= 768) {
+      cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            const kpiIndicator = card.querySelector('.kpi-indicator');
+            
+            if (kpiIndicator) {
+              // Show KPI indicator
+              kpiIndicator.style.opacity = '1';
+              kpiIndicator.style.transform = 'translateY(0)';
+              
+              // Animate value
+              const kpiValue = kpiIndicator.querySelector('.kpi-value');
+              const targetValue = card.getAttribute('data-kpi-value');
+              const prefix = card.getAttribute('data-kpi-prefix') || '';
+              const suffix = card.getAttribute('data-kpi-suffix') || '';
+              
+              if (kpiValue && targetValue) {
+                animateKpiValue(kpiValue, targetValue, prefix, suffix);
+              }
+              
+              // Hide after 3 seconds
+              setTimeout(() => {
+                if (kpiIndicator) {
+                  kpiIndicator.style.opacity = '0';
+                  kpiIndicator.style.transform = 'translateY(100%)';
+                }
+              }, 3000);
+            }
+          }
+        });
+      }, {
+        threshold: 0.7, // Trigger when 70% of card is visible
+        rootMargin: '-10% 0px' // Slightly reduce the effective viewport
+      });
+      
+      // Observe all portfolio cards
+      portfolioCards.forEach(card => {
+        cardObserver.observe(card);
+      });
     }
   }
   
-  // Set up intersection observer for mobile KPI auto-show
-  function setupMobileKpiObserver() {
-    const options = {
-      root: null,
-      rootMargin: '-40% 0px -40% 0px', // Card needs to be centered in viewport
-      threshold: 0.5
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const card = entry.target;
-        const kpiIndicator = card.querySelector('.kpi-indicator');
-        
-        if (entry.isIntersecting && kpiIndicator) {
-          // Show KPI for 3 seconds when card is centered
-          kpiIndicator.classList.add('mobile-auto-show');
-          
-          // Remove the class after 3 seconds
-          setTimeout(() => {
-            kpiIndicator.classList.remove('mobile-auto-show');
-          }, 3000);
-        }
-      });
-    }, options);
-    
-    // Observe all cards with KPI data
-    portfolioCards.forEach(card => {
-      if (card.hasAttribute('data-kpi-icon')) {
-        observer.observe(card);
-      }
-    });
-  }
-  
-  // Add KPI indicator to a card based on its data attributes
-  function addKpiIndicator(card) {
-    // Skip if card already has a KPI indicator
+  // Add missing KPI indicators to cards based on title matching
+  function addMissingKpiIndicators(card) {
+    // Skip cards that already have KPI indicators
     if (card.querySelector('.kpi-indicator')) return;
     
-    // Get KPI data from data attributes
-    const icon = card.getAttribute('data-kpi-icon');
-    const value = card.getAttribute('data-kpi-value');
-    const title = card.getAttribute('data-kpi-title');
-    const prefix = card.getAttribute('data-kpi-prefix') || '';
-    const suffix = card.getAttribute('data-kpi-suffix') || '';
+    const cardTitle = card.getAttribute('data-modal-title');
+    if (!cardTitle) return;
     
-    // Only create KPI if we have the required data
-    if (!icon || !value || !title) return;
+    // Project spotlight data mapping - EXACT matches to data-modal-title values
+    const projectData = {
+      "Brookfield Block Party Request Process": { 
+        icon: "⏱️", 
+        value: "55", 
+        title: "Hours Saved Annually", 
+        suffix: "+"
+      },
+      "VBG & VNB Power Bi Dashboard Demos": { 
+        icon: "📊", 
+        value: "237", 
+        title: "Service Insights Generated" 
+      },
+      "Buffalo Grove Project 25 Dashboard": { 
+        icon: "💰", 
+        value: "7.2", 
+        title: "Construction Project Oversight",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Glencoe Water Service Record Inventory App": { 
+        icon: "💧", 
+        value: "3,200", 
+        title: "Water Service Records Managed",
+        suffix: "+"
+      },
+      "Demo MGP Service Desk Ticket App": { 
+        icon: "🖥️", 
+        value: "20", 
+        title: "Tickets Tracked Across Categories",
+        suffix: "+"
+      },
+      "Sharepoint Intranet Design Development": { 
+        icon: "🏠", 
+        value: "5", 
+        title: "Community Sites Centralized",
+        suffix: "+"
+      },
+      "(LISA) Land Info Service Agent on GIS Data": { 
+        icon: "🤖", 
+        value: "3,600", 
+        title: "Property Queries Automated via AI",
+        suffix: "+"
+      },
+      "Microsofts Best in Automation ELM App": { 
+        icon: "🏆", 
+        value: "6", 
+        title: "Municipal Communities Implemented" 
+      },
+      "Power BI Emergency Rental Assistance Dashboard": { 
+        icon: "💵", 
+        value: "53", 
+        title: "in Rental Aid Tracked",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Power BI Priority Repair Assistance Dashboard": { 
+        icon: "🛠️", 
+        value: "12", 
+        title: "in Home Repairs Oversight",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Smartsheet Neighborhood Improvement Dashboard": { 
+        icon: "🌆", 
+        value: "13.9", 
+        title: "Community Investments Tracked",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Stop Six: Transformation Newsletter": { 
+        icon: "📰", 
+        value: "49", 
+        title: "in Neighborhood Improvements",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Fort Worth Cares: Aid Mapping Portfolio": { 
+        icon: "📍", 
+        value: "68", 
+        title: "Federal Relief Visualized",
+        prefix: "$",
+        suffix: "M"
+      },
+      "Public Engagement Report for District 11": {
+        icon: "📍",
+        value: "10",
+        title: "Events Mapped & Analyzed",
+        suffix: "+"
+      },
+      "Smartsheet Rental Assistance Dashboard": {
+        icon: "💰",
+        value: "25,000",
+        title: "Applications Processed",
+        suffix: "+"
+      },
+      "Smartsheet Alleyway Maintenance Dashboard": {
+        icon: "🛣️",
+        value: "132",
+        title: "Miles of Alleyways Maintained"
+      },
+      "Smartsheet First Responder Covid19 Dashboard": {
+        icon: "🚑",
+        value: "3,265",
+        title: "Testing Submissions Tracked"
+      },
+      // --- GIS INSIGHTS BANNERS ---
+  "Fort Worth Housing Equity Insight Analysis": {
+    icon: "🏘️",
+    value: "100,000",
+    title: "Cost Burdened Households",
+    suffix: "+"
+  },
+  "Fort Worth CDBG Evolution: Decade Mapped": {
+    icon: "🗺️",
+    value: "10",
+    title: "Years of Change Visualized",
+    suffix: "+"
+  },
+  "Marine Area Sidewalk Condition & Average Daily Traffic Count": {
+    icon: "🚶",
+    value: "50",
+    title: "Sidewalk Segments Evaluated",
+    suffix: "+"
+  },
+  "District 4: Dynamic Demographics Mapped": {
+    icon: "👥",
+    value: "25",
+    title: "Demographic Layers Analyzed",
+    suffix: "+"
+  },
+  "Fort Worth Food Access Mapping Insights": {
+    icon: "🍎",
+    value: "40",
+    title: "Meal Sites & Food Deserts Mapped",
+    suffix: "+"
+  },
+  "Alleyway Qualification: Mapping Insights": {
+    icon: "🛣️",
+    value: "132",
+    title: "Miles of Alleyways Qualified"
+  },
+  "Empower Fort Worth: Neighborhood Incentives": {
+    icon: "📈",
+    value: "8",
+    title: "Empowerment Zones Mapped",
+    suffix: "+"
+  }
+    };
     
-    // Create KPI indicator element
-    const kpiIndicator = document.createElement('div');
-    kpiIndicator.className = 'kpi-indicator';
+    // Use exact match instead of substring matching
+    const matchedProject = projectData[cardTitle];
     
-    // Parse the numeric value for animation
-    const numericValue = parseFloat(value.replace(/[^\d.]/g, ''));
+    if (matchedProject) {
+      // Create and append KPI indicator
+      const kpiIndicator = document.createElement('div');
+      kpiIndicator.className = 'kpi-indicator';
+      
+      const prefix = matchedProject.prefix || '';
+      const suffix = matchedProject.suffix || '';
+      
+      kpiIndicator.innerHTML = `
+  <div class="kpi-row">
+    <span class="kpi-icon">${matchedProject.icon}</span>
+    <span class="kpi-value">${prefix}0${suffix}</span>
+  </div>
+  <span class="kpi-title">${matchedProject.title}</span>
+`;
+
+      
+      card.appendChild(kpiIndicator);
+      
+      // Set data attributes for animation
+      card.setAttribute('data-kpi-title', matchedProject.title);
+      card.setAttribute('data-kpi-value', matchedProject.value.replace(/,/g, ''));
+      card.setAttribute('data-kpi-icon', matchedProject.icon);
+      card.setAttribute('data-kpi-prefix', prefix);
+      card.setAttribute('data-kpi-suffix', suffix);
+    }
+  }
+  
+  // Enhanced KPI value animation with support for commas and prefixes/suffixes
+  function animateKpiValue(element, targetValue, prefix = '', suffix = '') {
+    // Handle values with commas (like 3,200)
+    const rawValue = targetValue.toString().replace(/,/g, '');
+    const target = parseFloat(rawValue);
+    let current = 0;
+    const increment = target / 50; // Adjust for animation speed
     
-    kpiIndicator.innerHTML = `
-      <div class="kpi-row">
-        <span class="kpi-icon">${icon}</span>
-        <span class="kpi-value" data-target="${numericValue}" data-prefix="${prefix}" data-suffix="${suffix}">0</span>
-      </div>
-      <span class="kpi-title">${title}</span>
-    `;
-    
-    // Add to card
-    card.appendChild(kpiIndicator);
-    
-    // Set up counter animation triggers
-    const kpiValueSpan = kpiIndicator.querySelector('.kpi-value');
-    let animationTriggered = false;
-    
-    // Function to trigger counter animation
-    const triggerAnimation = () => {
-      if (!animationTriggered) {
-        animationTriggered = true;
-        animateKpiCounter(kpiValueSpan, numericValue, prefix, suffix);
+    const updateValue = () => {
+      if (current < target) {
+        current = Math.min(current + increment, target);
         
-        // Reset after animation completes
-        setTimeout(() => {
-          animationTriggered = false;
-        }, 2000);
+        // Format number with commas if original had commas
+        let formattedValue = current;
+        if (targetValue.includes(',')) {
+          formattedValue = Math.round(current).toLocaleString();
+        } else if (target % 1 !== 0) {
+          // Handle decimal values
+          formattedValue = current.toFixed(1);
+        } else {
+          formattedValue = Math.round(current).toString();
+        }
+        
+        element.textContent = `${prefix}${formattedValue}${suffix}`;
+        requestAnimationFrame(updateValue);
+      } else {
+        element.textContent = `${prefix}${targetValue}${suffix}`;
       }
     };
     
-    // Add hover event listeners for desktop
-    card.addEventListener('mouseenter', triggerAnimation);
-    
-    // Add intersection observer for mobile auto-show
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && window.innerWidth <= 768) {
-          triggerAnimation();
-        }
-      });
-    }, {
-      root: null,
-      rootMargin: '-40% 0px -40% 0px',
-      threshold: 0.5
-    });
-    
-    observer.observe(card);
-  }
-  
-  // Animate KPI counter from 0 to target value
-  function animateKpiCounter(element, target, prefix = '', suffix = '') {
-    const duration = 1500; // 1.5 seconds
-    const startTime = performance.now();
-    const startValue = 0;
-    
-    function updateCounter(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Use easeOutQuart easing for smooth deceleration
-      const easeProgress = 1 - Math.pow(1 - progress, 4);
-      const currentValue = startValue + (target - startValue) * easeProgress;
-      
-      // Format the number based on target value
-      let displayValue;
-      if (target >= 1000) {
-        displayValue = Math.round(currentValue).toLocaleString();
-      } else if (target % 1 !== 0) {
-        // Handle decimal values
-        displayValue = currentValue.toFixed(1);
-      } else {
-        displayValue = Math.round(currentValue);
-      }
-      
-      element.textContent = `${prefix}${displayValue}${suffix}`;
-      
-      if (progress < 1) {
-        requestAnimationFrame(updateCounter);
-      }
-    }
-    
-    requestAnimationFrame(updateCounter);
+    updateValue();
   }
   
   // Reset to normal mode
@@ -234,14 +379,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Clear data particles
-    if (dataParticles) {
-      dataParticles.innerHTML = '';
-    }
+    dataParticles.innerHTML = '';
     
-    // Remove all KPI indicators
-    document.querySelectorAll('.kpi-indicator').forEach(indicator => {
-      indicator.remove();
-    });
+    // Disconnect observer
+    if (cardObserver) {
+      cardObserver.disconnect();
+      cardObserver = null;
+    }
   }
   
   // Animate counter elements with support for decimal values
@@ -521,87 +665,4 @@ document.addEventListener('DOMContentLoaded', function() {
       initMobileKpiObserver();
     }
   });
-  
-  // Initialize KPIs and mobile observer for normal mode on page load
-  portfolioCards.forEach(card => {
-    addKpiIndicator(card);
-  });
-  initMobileKpiObserver();
 });
-
-/**
- * Navigation functionality for header pills
- */
-function initNavigation() {
-  const navPills = document.querySelectorAll('.nav-pill');
-  const portfolioCards = document.querySelectorAll('.link-container');
-  
-  navPills.forEach(pill => {
-    pill.addEventListener('click', function() {
-      // Remove active class from all pills
-      navPills.forEach(p => p.classList.remove('active'));
-      
-      // Add active class to clicked pill
-      this.classList.add('active');
-      
-      // Get filter value
-      const filter = this.dataset.filter;
-      
-      // Filter cards
-      filterPortfolioCards(filter, portfolioCards);
-    });
-  });
-}
-
-/**
- * Filter portfolio cards based on category
- */
-function filterPortfolioCards(filter, cards) {
-  cards.forEach(card => {
-    // Get card category from data attributes or content
-    const cardCategories = getCardCategories(card);
-    
-    if (filter === 'all' || cardCategories.includes(filter)) {
-      card.style.display = 'block';
-      card.style.opacity = '1';
-      card.style.transform = 'scale(1)';
-    } else {
-      card.style.opacity = '0.3';
-      card.style.transform = 'scale(0.95)';
-    }
-  });
-}
-
-/**
- * Determine card categories based on content
- */
-function getCardCategories(card) {
-  const categories = [];
-  const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-  const description = card.querySelector('p')?.textContent.toLowerCase() || '';
-  const content = (title + ' ' + description).toLowerCase();
-  
-  // Categorize based on content keywords
-  if (content.includes('dashboard') || content.includes('chart') || content.includes('metric') || 
-      content.includes('report') || content.includes('data') || content.includes('analytics')) {
-    categories.push('dashboards');
-  }
-  
-  if (content.includes('gis') || content.includes('map') || content.includes('spatial') || 
-      content.includes('geographic') || content.includes('location')) {
-    categories.push('gis');
-  }
-  
-  if (content.includes('certification') || content.includes('certified') || content.includes('exam') ||
-      content.includes('credential') || content.includes('course')) {
-    categories.push('certifications');
-  }
-  
-  // Everything else is low code development
-  if (categories.length === 0 || content.includes('app') || content.includes('form') || 
-      content.includes('automation') || content.includes('workflow') || content.includes('power')) {
-    categories.push('all'); // Low code falls under main category
-  }
-  
-  return categories;
-}

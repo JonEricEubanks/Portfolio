@@ -4,46 +4,133 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JonEric Eubanks Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="chat-styles.css">
 </head>
-<body>
-  <header>
-    <div class="header-container">
-      <h1>JonEric Eubanks' Portfolio</h1>
+<body class="modern-portfolio">
+  <!-- Animated background -->
+  <div class="animated-bg">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+  </div>
 
-      <!-- Dashboard Mode Toggle - positioned between title and nav -->
-      <button id="dashboard-toggle" class="dashboard-toggle" aria-label="Toggle dashboard mode">
-        <span class="toggle-icon">⚡</span>
-        <span class="toggle-text">Spotlight</span>
-      </button>
+  <header class="modern-header">
+    <div class="header-container glass-morphism">
+      <div class="header-brand">
+        <h1 class="portfolio-title">
+          <span class="name-gradient">JonEric Eubanks</span>
+        </h1>
+        <p class="portfolio-subtitle">Low-code developer • Dashboards • GIS • Automation</p>
+      </div>
 
-      <!-- mobile nav toggle -->
-      <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation">
-        <span class="hamburger" aria-hidden="true"></span>
-      </button>
+      <div class="header-actions">
+        <!-- Dashboard Mode Toggle -->
+        <button id="dashboard-toggle" class="action-btn spotlight-btn" aria-label="Toggle spotlight mode">
+          <span class="btn-icon">⚡</span>
+          <span class="btn-text">Spotlight</span>
+        </button>
 
-      <nav id="primary-nav" class="navigation">
-        <a href="#lowcode" class="custom-button">Low Code Developer</a>
-        <a href="#dashboards" class="custom-button">Dashboards</a>
-        <a href="#GIS" class="custom-button">GIS Maps</a>
-        <a href="#certifications" class="custom-button">Certifications</a>
-        <button onclick="toggleChat()" class="custom-button chat-toggle-btn">💬 Ask AI About Me</button>
+        <!-- Chat toggle -->
+        <button onclick="toggleChat()" class="action-btn chat-btn" aria-label="Open AI chat">
+          <span class="btn-icon">💬</span>
+          <span class="btn-text">Ask AI</span>
+        </button>
+
+        <!-- mobile nav toggle -->
+        <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation">
+          <span class="hamburger"></span>
+        </button>
+      </div>
+
+      <nav id="primary-nav" class="navigation modern-nav">
+        <a href="#lowcode" class="nav-link modern-nav-item">
+          <span class="nav-icon">🚀</span>
+          <span>Low Code Developer</span>
+        </a>
+        <a href="#dashboards" class="nav-link modern-nav-item">
+          <span class="nav-icon">📊</span>
+          <span>Dashboards</span>
+        </a>
+        <a href="#GIS" class="nav-link modern-nav-item">
+          <span class="nav-icon">🗺️</span>
+          <span>GIS Maps</span>
+        </a>
+        <a href="#certifications" class="nav-link modern-nav-item">
+          <span class="nav-icon">🎓</span>
+          <span>Certifications</span>
+        </a>
       </nav>
     </div>
   </header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-text">✨ Building the future with low-code</span>
+        </div>
+        <h2 class="hero-title">
+          Crafting <span class="gradient-text">data-driven solutions</span> 
+          <br>& modern citizen services
+        </h2>
+        <p class="hero-description">
+          I build Power Platform apps, Power BI dashboards, and GIS visualizations 
+          that save time, surface insights, and deliver measurable impact for organizations.
+        </p>
+        <div class="hero-cta">
+          <a href="#lowcode" class="cta-button primary">
+            <span>Explore Projects</span>
+            <span class="cta-icon">→</span>
+          </a>
+          <button onclick="toggleChat()" class="cta-button secondary">
+            <span>Ask the AI</span>
+            <span class="cta-icon">🤖</span>
+          </button>
+        </div>
+        
+        <!-- Impact metrics -->
+        <div class="hero-metrics">
+          <div class="metric-item">
+            <div class="metric-value">$195M+</div>
+            <div class="metric-label">Government Funds Tracked</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-value">585+</div>
+            <div class="metric-label">Process Hours Saved Annually</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-value">95%</div>
+            <div class="metric-label">Data Processing Efficiency</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="visual-container">
+          <img src="Images/ELM.png" alt="ELM Application Preview" class="hero-image floating">
+          <div class="image-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <main>
+    <main class="modern-main">
       <!-- Career Metrics Panel (hidden by default) -->
-      <section id="career-metrics" class="career-metrics">
-        <h2>Career Metrics</h2>
-        <div class="metrics-grid">
+      <section id="career-metrics" class="career-metrics glass-morphism">
+        <div class="metrics-header">
+          <h2 class="section-title gradient-text">Career Metrics</h2>
+          <div class="metrics-subtitle">Measurable impact and continuous learning</div>
+        </div>
+        <div class="metrics-grid modern-grid">
           <!-- Microsoft Learn Metrics -->
           <div class="metric-card">
             <div class="metric-icon">⚡</div>
-            <div class="metric-value"><span class="counter" data-target="126775">0</span> XP</div>
+            <div class="metric-value"><span class="counter" data-target="126775">0</span> M365 XP</div>
             <div class="metric-label">🔹 Consistent Microsoft Learn progress through structured training</div>
           </div>
           <div class="metric-card">
@@ -58,7 +145,7 @@
           </div>
           <div class="metric-card">
             <div class="metric-icon">⏱️</div>
-            <div class="metric-value"><span class="counter" data-target="85">0</span>+ Hours</div>
+            <div class="metric-value"><span class="counter" data-target="85">0</span>+ Credit Hours</div>
             <div class="metric-label">🔹 Professional training in PMP, GIS, and Microsoft Learn</div>
           </div>
         </div>
@@ -143,7 +230,7 @@
           <div class="metric-card financial time-savings">
             <div class="metric-title">Project 25 Dashboard</div>
             <div class="metric-value"><span class="counter" data-target="70">0</span> hrs</div>
-            <div class="metric-label">vs. Manual Excel</div>
+            <div class="metric-label">vs. Manual Excel Updates</div>
           </div>
           <div class="metric-card financial time-savings">
             <div class="metric-title">ELM App</div>
@@ -156,9 +243,9 @@
         <h4 class="metric-category">Efficiency 📈</h4>
         <div class="metrics-grid impact-grid efficiency-grid">
           <div class="metric-card financial efficiency">
-            <div class="metric-title">Overall Efficiency</div>
+            <div class="metric-title">Overall Process Efficiency</div>
             <div class="metric-value"><span class="counter" data-target="95">0</span>%</div>
-            <div class="metric-label">Time Reduction</div>
+            <div class="metric-label">Time Reduction Saved</div>
           </div>
           <div class="metric-card financial efficiency">
             <div class="metric-title">Manual Tasks Eliminated</div>
@@ -166,27 +253,31 @@
             <div class="metric-label">Across All Projects</div>
           </div>
           <div class="metric-card financial efficiency">
-            <div class="metric-title">Return on Investment</div>
+            <div class="metric-title">(ROI) Return on Investment</div>
             <div class="metric-value"><span class="counter" data-target="423">0</span>%</div>
             <div class="metric-label">Implementation ROI</div>
           </div>
         </div>
       </section>
 
-      <!-- Add data-kpi attributes to relevant portfolio cards -->
-      <h2 id="lowcode">Low Code Developer</h2>
-      <section id="lowcode">
-        <div class="grid-container">
-          <!-- Update first card with KPI data -->
+      <!-- Low Code Developer Section -->
+      <section id="lowcode" class="portfolio-section">
+        <div class="section-header">
+          <div class="section-icon">🚀</div>
+          <h2 class="section-title gradient-text">Low Code Developer</h2>
+          <p class="section-description">Building powerful applications with minimal code</p>
+        </div>
+        <div class="grid-container modern-portfolio-grid">
           <div class="link-container modal-trigger" 
               data-modal-title="Brookfield Block Party Request Process"
               data-modal-image="Images/block1.png"
               data-modal-slideshow="Images/block.png,Images/block1.png,Images/block2.png,Images/block3.png"
               data-modal-descriptions="Displays the end-to-end Power Automate flow built to handle resident block party requests. It automates staff notifications, event creation, and requester updates.||Automated email template sent to staff with request details, ensuring every department is informed in realtime.||Clean, branded email that confirms request submission and provides clear next steps for the resident.||Automatically adds approved block party requests to the municipal calendar with location and address details, streamlining scheduling and transparency."
               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b"
-              data-kpi-title="Requests Processed" 
-              data-kpi-value="90"
-              data-kpi-icon="📝">
+              data-kpi-icon="⏱️"
+              data-kpi-value="55"
+              data-kpi-title="Hours Saved Annually"
+              data-kpi-suffix="+">
             <div class="image-container" style="background-image: url('Images/block1.png');">
               <!-- Add SVG container for dashboard visualizations -->
               <div class="dashboard-viz">
@@ -194,30 +285,25 @@
               </div>
             </div>
             <p>Brookfield Block Party Request Process</p>
-            <!-- KPI indicator that appears in dashboard mode -->
-            
           </div>
 
-          <!-- Continue with other cards, adding data-kpi attributes to relevant ones -->
+          <!-- Continue with other cards -->
           <div class="link-container modal-trigger" 
                data-modal-title="VBG & VNB Power Bi Dashboard Demos"
                data-modal-image="Images/crm.png"
                data-modal-slideshow="Images/crm.png,Images/crm1.png,Images/demo.png,Images/demo1.png,Images/demo2.png"
                data-modal-descriptions="Demonstrates how New World data can be transformed into a CRM style Power BI dashboard. Provides insights into service performance, customer requests, and satisfaction trends to help the Village improve operations.||Detailed view breaking down municipal service requests by residents, showing workload distribution, resolution times, and satisfaction ratings to optimize resource allocation.||Showcases a Police Crime Analysis dashboard prototype built in Power BI. Highlights trends in crime volume, location hotspots, and offense types, enabling data driven decisions for public safety.||A performance dashboard demo built in Power BI to visualize employee activity, task hours, and efficiency. Designed to help managers track workloads, identify trends, and improve workforce planning.||Proof of concept combining Power BI with Power Apps for change order tracking and reconstruction project oversight. Enables contractors, costs, and project milestones to be monitored in realtime."
                data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a"
-               data-kpi-title="Insights Generated" 
+               data-kpi-icon="📊"
                data-kpi-value="237"
-               data-kpi-icon="💡">
+               data-kpi-title="Service Insights Generated">
             <div class="image-container" style="background-image: url('Images/crm.png');">
               <div class="dashboard-viz">
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="viz-svg"></svg>
               </div>
             </div>
             <p>VBG & VNB Power Bi Dashboard Demos</p>
-            
           </div>
-          
-          <!-- ... Add similar KPI attributes to other relevant cards ... -->
           
           <!-- Continue with remaining cards -->
           <div class="link-container modal-trigger" 
@@ -225,7 +311,11 @@
                data-modal-image="Images/p25.png"
                data-modal-slideshow="Images/p25.png,Images/p251.png,Images/p252.png,Images/p253.png,Images/p254.png"
                data-modal-descriptions="📊 Executive Summary Dashboard: High level project view for the Village Board showing budget, contingency, pay requests, and % completion. Designed for leadership updates with simplified visuals and key performance indicators.||📑 Change Order Tracking: Tracks the lifecycle of change orders from submission through approval. Provides visibility into budget adjustments, contingency usage, and contractor impacts in one centralized view.||💰 Pay Requests Dashboard: Monitors contractor pay requests, amounts approved, and balances used. Ensures Dane and the project team can quickly confirm payment status and alignment with the overall budget.||🧾 Pay Applications Dashboard: Breaks down active pay applications by contractor, budget category, and timeline. Offers a clear view into how construction costs are being distributed and managed.||🔍 Custom Popout Drill Down: Interactive custom popout built in Power BI to provide contractor level insights. Demonstrates advanced data modeling and visualization expertise to deliver detailed, ondemand budget tracking."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb"
+               data-kpi-icon="⏱️"
+               data-kpi-value="70"
+               data-kpi-title="Hours Saved vs Excel Updates"
+               data-kpi-suffix="+">
             <div class="image-container" 
                  style="background-image: url('Images/p25.png');">
             </div>
@@ -237,7 +327,11 @@
                data-modal-image="Images/h20.png"
                data-modal-slideshow="Images/h20.png,Images/h201.png,Images/h203.png,Images/h202.png"
                data-modal-descriptions="💧 Water Service Records Power App: Custom Power App built on top of legacy FileMaker data to centralize and modernize water service record tracking. Provides a searchable interface, edit/delete tools, and record details for staff.||📧 Automated Staff Notifications: Power Automate flow sends branded email alerts when water service records are added or updated. Ensures staff are notified in realtime without manual followup.||📤 Export & Reporting Flow: Automated export process allowing staff to download either all water service records or selected subsets. Power Automate creates CSV files and download for easy reporting.||📲 Mobile Responsive Design: App built with responsive layouts to support mobile devices. Enables field staff to view, edit, and confirm service records directly on their phones."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8"
+               data-kpi-icon="⏱️"
+               data-kpi-value="60"
+               data-kpi-title="Hours Saved vs FileMaker"
+               data-kpi-suffix="+">
             <div class="image-container" 
                  style="background-image: url('Images/h20.png');">
             </div>
@@ -249,7 +343,11 @@
                data-modal-image="Images/servicedesk.png"
                data-modal-slideshow="Images/servicedesk.png,Images/servicedesk2.png,Images/servicedesk1.png"
                data-modal-descriptions="🖥️ Service Desk App Home: The first demo app created to showcase Spark's capabilities. Provides a modern home screen for creating, tracking, and managing service desk tickets in a centralized system.||📋 Ticket Tracking Table: Detailed view of assigned tickets and categories within the app. Highlights how the app tracks priorities, statuses, and attachments across multiple clients.||📊 Service Desk Power BI Dashboard: Connected Power BI dashboard for the Service Desk App. Demonstrates cross platform functionality by visualizing ticket trends, resolution rates, and workload analysis."
-               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
+               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9"
+               data-kpi-icon="🎫"
+               data-kpi-value="95"
+               data-kpi-title="Resolution Rate"
+               data-kpi-suffix="%">
             <div class="image-container" 
                  style="background-image: url('Images/servicedesk.png');">
             </div>
@@ -261,7 +359,11 @@
                data-modal-image="Images/share.png"
                data-modal-slideshow="Images/share.png,Images/share1.png,Images/share2.png,Images/share3.png"
                data-modal-descriptions="🏠 Village Hub Site: Developed a centralized SharePoint hub site to connect departments, resources, and staff communications. Provides easy navigation to department specific intranet sites.||📑 Employee Benefits Site: Built a modern intranet site for HR resources, including benefits guides, policies, and staff contacts. Simplifies employee access to critical documents and support.||📘 Employee Policies Site: Created a comprehensive policies portal for the Village of Lincolnshire. Includes employee handbook, conduct standards, safety policies, and resource directories.||🎨 Teams Integration & Branding: Customized the Microsoft Teams Connections app with village logos and brand identity. Ensured a consistent intranet experience across SharePoint and Teams."
-               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+               data-modal-link="https://reports.mysidewalk.com/31f773b2e8"
+               data-kpi-icon="👥"
+               data-kpi-value="150"
+               data-kpi-title="Staff Users Connected"
+               data-kpi-suffix="+">
             <div class="image-container" 
                  style="background-image: url('Images/share.png');">
             </div>
@@ -273,7 +375,11 @@
                data-modal-image="Images/agent.png"
                data-modal-slideshow="Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
                data-modal-descriptions="🗂️ Azure AI Search Indexing: Displays the underlying Azure AI Search index connected to municipal GIS and SQL data. Shows semantic search, enrichment, and vector search powering the assistant's accuracy.||⚙️ Azure Portal Integration: Illustrates the Azure setup for the agent, including search service quotas, skillsets, and indexing pipelines. Emphasizes the technical foundation of how municipal data is connected securely.||Highlights how the agent was designed and orchestrated in Copilot Studio. Demonstrates structuring intents, knowledge sources, and orchestration logic for municipal use cases.||Showcases the LISA agent embedded directly in Microsoft Teams with a clean, branded UI. Residents and staff can query property details, zoning, utilities, and services in natural language.||✨ Results in Action: Demonstrates real output from the agent providing zoning, property ownership, and service information for a given address delivering instant, actionable insights to residents and staff."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71"
+               data-kpi-icon="🤖"
+               data-kpi-value="3600"
+               data-kpi-title="Property Records Indexed"
+               data-kpi-suffix="+">
             <div class="image-container" 
                  style="background-image: url('Images/agent.png');">
             </div>
@@ -285,7 +391,11 @@
                data-modal-image="Images/ELM.png"
                data-modal-slideshow="Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0?autoplay=1"
                data-modal-descriptions="📊 New Hire & Task Overview: Provides a live look at the Employment Lifecycle Management (ELM) app interface. Shows realtime tracking of onboarding/offboarding tasks, dynamic progress charts, supervisor assignments, and department level task automation.||🏆 Recognized by Microsoft: Highlights Microsoft's official case study featuring the ELM app as a showcase of Power Platform and intelligent automation. Demonstrates impact in unifying workflows across HR, IT, and managers while reducing manual effort.||🎬 Video Walkthrough: Demo video covers task automation with Power Automate, AI-enhanced email notifications, role-based access in SharePoint, and Copilot driven task commands showing why it won Best in Automation."
-               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1"
+               data-kpi-icon="⏱️"
+               data-kpi-value="400"
+               data-kpi-title="Hours Saved on Hiring"
+               data-kpi-suffix="+">
             <div class="image-container" 
                  style="background-image: url('Images/ELM.png');">
             </div>
@@ -298,13 +408,19 @@
       
 
       <h2 id="dashboards">Dashboards</h2>
+      <p class="section-description">Empowering strategy with insight</p>
       <section id="dashboards">
         <div class="grid-container">
           <div class="link-container modal-trigger" 
                data-modal-title="Power BI Emergency Rental Assistance Dashboard"
                data-modal-image="Images/Erapdash.png"
                data-modal-description="📊 Power BI Emergency Rental Assistance Dashboard: Designed for the City of Fort Worth, this Power BI dashboard tracked $53M in federal rental assistance across all council districts. It consolidated applicant demographics, program status, and fund distribution into one visual hub enabling leadership to monitor equity, ensure transparency, and make data backed policy decisions in real time."
-               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b">
+               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiYzE1MDIxZGMtNDdkZC00M2E5LThkYjgtZWNhZjlmZDIyYWMxIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9&pageName=ReportSectionf1e7efd07accbb92769b"
+               data-kpi-icon="💰"
+               data-kpi-value="53"
+               data-kpi-title="Million Tracked"
+               data-kpi-prefix="$"
+               data-kpi-suffix="M">
             <div class="image-container" 
                  style="background-image: url('Images/Erapdash.png');">
             </div>
@@ -315,7 +431,11 @@
                data-modal-title="Smartsheet Alleyway Maintenance Dashboard"
                data-modal-image="Images/ampdash.png"
                data-modal-description="🏘️ Smartsheet Alleyway Maintenance Dashboard: Built a Smartsheet program dashboard that centralized 132 miles of alleyway maintenance data in Fort Worth. It automated complaint intake, visualized top issues like illegal dumping and drainage, and tracked resolution progress reducing backlog and improving accountability in high crime, low income neighborhoods."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a">
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=87c9a05c2e8349639f40a74ae437f48a"
+               data-kpi-icon="🛣️"
+               data-kpi-value="132"
+               data-kpi-title="Miles of Alleyways"
+               data-kpi-suffix=" mi">
             <div class="image-container" 
                  style="background-image: url('Images/ampdash.png');">
             </div>
@@ -326,7 +446,12 @@
                data-modal-title="Smartsheet Neighborhood Improvement Dashboard"
                data-modal-image="Images/rolldash.png"
                data-modal-description="🌆 Smartsheet Neighborhood Improvement Dashboard: Created a Smartsheet rollup to track $13.9M in neighborhood improvement investments over 541 days. Delivered executive visibility into project milestones, task status (167 completed, 16 in progress), and budget rollups, empowering decision makers to keep complex projects on track and demonstrate measurable community impact."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb">
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb"
+               data-kpi-icon="💰"
+               data-kpi-value="13.9"
+               data-kpi-title="Million Investment"
+               data-kpi-prefix="$"
+               data-kpi-suffix="M">
             <div class="image-container" 
                  style="background-image: url('Images/rolldash.png');">
             </div>
@@ -337,7 +462,11 @@
                data-modal-title="Smartsheet First Responder Covid19 Dashboard"
                data-modal-image="Images/covdash.png"
                data-modal-description="🚑 Smartsheet First Responder Covid-19 Dashboard: Developed a rapid response Covid-19 dashboard during the pandemic to support Fort Worth's police, fire, and MedStar responders. Tracked 3,265 testing submissions across counties, with real time symptom breakdowns, ensuring fast, life saving visibility for city leadership and public safety teams."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8">
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=a61b8da26e2a4ec98b15bed28529bda8"
+               data-kpi-icon="🧪"
+               data-kpi-value="3265"
+               data-kpi-title="Testing Submissions"
+               data-kpi-suffix=" tests">
             <div class="image-container" 
                  style="background-image: url('Images/covdash.png');">
             </div>
@@ -348,7 +477,12 @@
                data-modal-title="Power BI Priority Repair Assistance Dashboard"
                data-modal-image="Images/prpdash.png"
                data-modal-description="🛠️ Power BI Priority Repair Assistance Dashboard: Engineered a Power BI dashboard for Fort Worth's Priority Repair Program, overseeing 3,199 applications with $12M in district level allocations. Visualized applicant demographics, race/ethnicity, and funding breakdowns transforming scattered spreadsheets into a transparent, executive ready reporting tool."
-               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9">
+               data-modal-link="https://app.powerbigov.us/view?r=eyJrIjoiNjgyZWJiODUtMWNiMy00NjYzLWJhNmUtZWMxOTcyZmFmN2IzIiwidCI6IjE3YmUwNGQ0LTBjNzctNGNhNy05YjFiLTI3NWFmZTZjMDcwYiJ9"
+               data-kpi-icon="💰"
+               data-kpi-value="12"
+               data-kpi-title="Million in Repairs"
+               data-kpi-prefix="$"
+               data-kpi-suffix="M">
             <div class="image-container" 
                  style="background-image: url('Images/prpdash.png');">
             </div>
@@ -359,7 +493,11 @@
                data-modal-title="Public Engagement Report for District 11"
                data-modal-image="Images/side.png"
                data-modal-description="📍 Public Engagement Report for District 11: Produced a GIS-driven public engagement report for District 11, mapping participation across Fort Worth's newest council district. Delivered insights on accessibility, representation, and event planning that directly informed citywide equity initiatives and engagement strategies."
-               data-modal-link="https://reports.mysidewalk.com/31f773b2e8">
+               data-modal-link="https://reports.mysidewalk.com/31f773b2e8"
+               data-kpi-icon="🗺️"
+               data-kpi-value="89"
+               data-kpi-title="Engagement Events Mapped"
+               data-kpi-suffix=" events">
             <div class="image-container" 
                  style="background-image: url('Images/side.png');">
             </div>
@@ -370,7 +508,11 @@
                data-modal-title="Smartsheet Rental Assistance Dashboard"
                data-modal-image="Images/erap.png"
                data-modal-description="💰 Smartsheet Rental Assistance Dashboard: Smartsheet dashboard tracking 25K+ ERAP applications, showing paid vs. denied by agency, average payment times, and daily/weekly trends. Delivered real-time transparency into Fort Worth's multi-million-dollar rental aid program."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71">
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71"
+               data-kpi-icon="📋"
+               data-kpi-value="25000"
+               data-kpi-title="Applications Tracked"
+               data-kpi-suffix="+ apps">
             <div class="image-container" 
                  style="background-image: url('Images/erap.png');">
             </div>
@@ -381,7 +523,12 @@
                data-modal-title="Stop Six: Transformation Newsletter"
                data-modal-image="Images/Dis 6.png"
                data-modal-description="📰 Stop Six Transformation Newsletter: I authored and designed a professional newsletter showcasing the $49M Stop Six Neighborhood Improvement initiative. Highlighted council leadership, major infrastructure investments, and community transformation serving as a polished communication tool for residents and stakeholders."
-               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1">
+               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1"
+               data-kpi-icon="💰"
+               data-kpi-value="49"
+               data-kpi-title="Million Initiative"
+               data-kpi-prefix="$"
+               data-kpi-suffix="M">
             <div class="image-container" 
                  style="background-image: url('Images/Dis 6.png');">
             </div>
@@ -395,6 +542,7 @@
       
 
       <h2 id="GIS">GIS Maps</h2>
+      <p class="section-description">Mapping insights into action</p>
       <section id="GIS">
         <div class="grid-container">
           
@@ -402,7 +550,11 @@
                data-modal-title="Fort Worth Housing Equity Insight Analysis"
                data-modal-image="Images/cost.png"
                data-modal-description="🏘️ Fort Worth Housing Equity Insight Analysis: A GIS driven map highlighting disparities in housing equity across Fort Worth neighborhoods, shaded by coverage of affordable housing or program investment. Supports equity driven allocation for CDBG and HOME funds. According to city data, themes like fair housing violations and housing cost burden are critical concerns, with over 100,000 households spending more than 30% of income on housing."
-               data-modal-link="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda">
+               data-modal-link="https://storymaps.arcgis.com/stories/cf96bef8d8ae4853a3510ecf0251deda"
+               data-kpi-icon="🏠"
+               data-kpi-value="100000"
+               data-kpi-title="Households Analyzed"
+               data-kpi-suffix="+ homes">
             <div class="image-container" 
                  style="background-image: url('Images/cost.png');">
             </div>
@@ -413,7 +565,11 @@
                data-modal-title="Fort Worth CDBG Evolution: Decade Mapped"
                data-modal-image="Images/cdbg.png"
                data-modal-description="📊 Fort Worth CDBG Evolution: Decade Mapped: Interactive side by side map showing how Community Development Block Grant (CDBG) eligible areas have changed over time. Visualizes shifts in investment zones across the city to inform strategic neighborhood revitalization."
-               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5">
+               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=65ba8eddf430442898efec2fde1c9ba5"
+               data-kpi-icon="📊"
+               data-kpi-value="10"
+               data-kpi-title="Years of Data Mapped"
+               data-kpi-suffix=" years">
             <div class="image-container" 
                  style="background-image: url('Images/cdbg.png');">
             </div>
@@ -424,7 +580,11 @@
                data-modal-title="Marine Area Sidewalk Condition & Average Daily Traffic Count"
                data-modal-image="Images/d10.png"
                data-modal-description="🚶 Marine Area Sidewalk Condition & Traffic Count: Dual panel map showing sidewalk condition (poor to good) aligned with pedestrian traffic volumes in Fort Worth's Marine Area. This empowers infrastructure teams to prioritize repairs in high modality zones for safer, data driven maintenance decisions."
-               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=21139a408d2c408f9a58a5e0a9447d4d">
+               data-modal-link="https://www.arcgis.com/apps/Compare/index.html?appid=21139a408d2c408f9a58a5e0a9447d4d"
+               data-kpi-icon="🚶"
+               data-kpi-value="2.5"
+               data-kpi-title="Miles of Sidewalks"
+               data-kpi-suffix=" mi">
             <div class="image-container" 
                  style="background-image: url('Images/d10.png');">
             </div>
@@ -435,7 +595,11 @@
                data-modal-title="District 4: Dynamic Demographics Mapped"
                data-modal-image="Images/d4.png"
                data-modal-description="👥 District 4: Dynamic Demographics Mapped: Census block level demographic distribution visualized across Council District 4. Gives planners intuitive insights into population density and variation among demographic groups, foundational for equitable outreach and service delivery."
-               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41">
+               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=d45888cb8a2c49158b966082afc37b41"
+               data-kpi-icon="👥"
+               data-kpi-value="45000"
+               data-kpi-title="Residents Mapped"
+               data-kpi-suffix="+ people">
             <div class="image-container" 
                  style="background-image: url('Images/d4.png');">
             </div>
@@ -446,7 +610,11 @@
                data-modal-title="Fort Worth Food Access Mapping Insights"
                data-modal-image="Images/food.png"
                data-modal-description="🍎 Fort Worth Food Access Mapping Insights: A split-view map overlaying food desert areas with locations of emergency meal sites. Highlights gaps in food access and the distribution of aid, allowing public health stakeholders to target interventions where they are needed most."
-               data-modal-link="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb">
+               data-modal-link="https://www.arcgis.com/apps/StorytellingSwipe/index.html?appid=e146d964d3c447dcaf1b687abc81b6fb"
+               data-kpi-icon="🍎"
+               data-kpi-value="78"
+               data-kpi-title="Food Desert Areas"
+               data-kpi-suffix=" zones">
             <div class="image-container" 
                  style="background-image: url('Images/food.png');">
             </div>
@@ -457,7 +625,12 @@
                data-modal-title="Fort Worth Cares: Aid Mapping Portfolio"
                data-modal-image="Images/cares.png"
                data-modal-description="💰 Fort Worth Cares: Aid Mapping Portfolio: ArcGIS StoryMap showcasing a comprehensive visual narrative of local COVID-19 relief fund allocations. Grounded in real Fort Worth federal allocations, this tool allows the public and leadership to explore where over $68 million in ARPA funds were directed."
-               data-modal-link="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff">
+               data-modal-link="https://storymaps.arcgis.com/stories/e7fbf7ad1bfa4025935208122d83beff"
+               data-kpi-icon="💰"
+               data-kpi-value="68"
+               data-kpi-title="Million ARPA Funds"
+               data-kpi-prefix="$"
+               data-kpi-suffix="M">
             <div class="image-container" 
                  style="background-image: url('Images/cares.png');">
             </div>
@@ -468,7 +641,11 @@
                data-modal-title="Alleyway Qualification: Mapping Insights"
                data-modal-image="Images/ally.png"
                data-modal-description="🛣️ Alleyway Qualification: Mapping Insights: Spatial map showing which neighborhoods fall inside and outside the municipal alleyway maintenance program. Enables city staff to clearly visualize service eligibility zones and identify underserved communities."
-               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493">
+               data-modal-link="https://www.arcgis.com/apps/View/index.html?appid=6a4bc62a04b94f1da0bd82978a1a4506&extent=-97.5600,32.6408,-97.0326,32.8493"
+               data-kpi-icon="🏘️"
+               data-kpi-value="250"
+               data-kpi-title="Neighborhoods Mapped"
+               data-kpi-suffix="+ zones">
             <div class="image-container" 
                  style="background-image: url('Images/ally.png');">
             </div>
@@ -479,7 +656,11 @@
                data-modal-title="Empower Fort Worth: Neighborhood Incentives"
                data-modal-image="Images/nez.png"
                data-modal-description="📈 Empower Fort Worth: Neighborhood Incentives: Interactive map identifying Neighborhood Empowerment Zones (NEZs) where local stakeholders can access business or development incentives. Supports strategic investments and outreach in underserved areas."
-               data-modal-link="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11">
+               data-modal-link="https://www.arcgis.com/apps/instant/lookup/index.html?appid=fe3f7fd0394b4a5095108502aa9d2d5f&center=-97.3372%3B32.7345&level=11"
+               data-kpi-icon="📈"
+               data-kpi-value="15"
+               data-kpi-title="Empowerment Zones"
+               data-kpi-suffix=" NEZs">
             <div class="image-container" 
                  style="background-image: url('Images/nez.png');">
             </div>

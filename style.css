@@ -1,17 +1,17 @@
 /* Modern CSS Reset and Typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Modern Color Palette - Sophisticated Blue Theme */
-  --primary-color: #3B82F6;
-  --primary-dark: #1E40AF;
-  --primary-light: #60A5FA;
+  /* Modern Color Palette - Dark Teal/Cyan Theme */
+  --primary-color: #0F766E;
+  --primary-dark: #134E4A;
+  --primary-light: #0891B2;
   --secondary-color: #64748b;
-  --accent-color: #6366F1;
+  --accent-color: #0D9488;
   --success-color: #10b981;
-  --gradient-primary: linear-gradient(135deg, #3B82F6, #1E40AF);
-  --gradient-accent: linear-gradient(135deg, #3B82F6, #6366F1);
-  --gradient-rainbow: linear-gradient(90deg, #3B82F6, #6366F1, #60A5FA);
+  --gradient-primary: linear-gradient(135deg, #0F766E, #134E4A);
+  --gradient-accent: linear-gradient(135deg, #0F766E, #0D9488);
+  --gradient-rainbow: linear-gradient(90deg, #0F766E, #0D9488, #0891B2);
   
   /* Neutrals */
   --white: #ffffff;
@@ -37,6 +37,7 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
   
   /* Spacing */
   --space-1: 0.25rem;
@@ -48,16 +49,16 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
-  /* Add dashboard theme colors */
-  --dashboard-primary: #0078d4;
-  --dashboard-secondary: #50e6ff;
-  --dashboard-accent: #0099bc;
-  --dashboard-dark: #005a9e;
+  /* Dashboard theme colors */
+  --dashboard-primary: #0F766E;
+  --dashboard-secondary: #0891B2;
+  --dashboard-accent: #0D9488;
+  --dashboard-dark: #134E4A;
   --dashboard-text: #ffffff;
   --dashboard-bg: #1a1a1a;
   --dashboard-grid: rgba(255, 255, 255, 0.07);
-  --dashboard-card-bg: rgba(0, 120, 212, 0.15);
-  --dashboard-gradient: linear-gradient(135deg, #0078d4, #00b7c3);
+  --dashboard-card-bg: rgba(15, 118, 110, 0.15);
+  --dashboard-gradient: linear-gradient(135deg, #0F766E, #0D9488);
   
   /* Animation speeds */
   --animation-slow: 1.5s;
@@ -65,11 +66,14 @@
   --animation-fast: 0.4s;
 }
 
+/* Modern Fluent 2 Base Styles */
+
 * {
   box-sizing: border-box;
 }
 
-body {
+/* Modern Fluent 2 Base Styles */
+.modern-portfolio {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -77,46 +81,1118 @@ body {
   color: var(--gray-800);
   background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
   margin: 0;
-  padding: var(--space-4);
+  padding: 0;
   min-height: 100vh;
+  overflow-x: hidden;
 }
+
+.chat-body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #f1f5f9 100%);
+  overflow-x: hidden;
+}
+
+/* Animated Background */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  animation: float 20s infinite ease-in-out;
+}
+
+.orb-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--gradient-primary);
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-accent);
+  top: 60%;
+  right: 10%;
+  animation-delay: -7s;
+}
+
+.orb-3 {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, var(--primary-light), var(--accent-color));
+  top: 10%;
+  right: 30%;
+  animation-delay: -14s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateX(0px) scale(1); }
+  25% { transform: translateY(-30px) translateX(20px) scale(1.1); }
+  50% { transform: translateY(-60px) translateX(-20px) scale(0.9); }
+  75% { transform: translateY(-30px) translateX(30px) scale(1.05); }
+}
+
+/* Glass Morphism */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Gradient Text - Enhanced for better visibility */
+.gradient-text {
+  background: var(--gradient-accent) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-weight: 700 !important;
+}
+
+.gradient-title {
+  background: var(--gradient-accent) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-weight: 800 !important;
+  font-size: 2rem !important;
+  margin: 0 !important;
+}
+
+.name-gradient {
+  background: var(--gradient-accent) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-weight: 800 !important;
+}
+
+/* Modern Header - Ultra Slim Design */
+.modern-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: var(--space-1) var(--space-4);
+  background: transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Modern Main Container */
+.modern-main {
+  padding: 0 var(--space-4);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+}
+
+.header-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.portfolio-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.name-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.portfolio-subtitle {
+  color: var(--gray-500);
+  font-size: 0.75rem;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Ultra Minimal Action Buttons - More Noticeable with Gradients */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.action-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon {
+  font-size: 1em;
+}
+
+.btn-text {
+  font-weight: 600;
+}
+
+.spotlight-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.spotlight-btn:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+}
+
+.chat-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+.chat-btn:hover {
+  background: linear-gradient(135deg, #e081e9 0%, #e3455a 100%);
+  box-shadow: 0 8px 30px rgba(245, 87, 108, 0.6);
+}
+
+/* Mobile Navigation Toggle */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.hamburger {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--gray-600);
+  border-radius: 1px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background: var(--gray-600);
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+.hamburger::before { top: -5px; }
+.hamburger::after { top: 5px; }
+
+/* Responsive Design - Ultra Slim */
+@media (max-width: 968px) {
+  .nav-toggle {
+    display: block;
+  }
   
   .header-container {
-    display: flex;
+    padding: var(--space-1) var(--space-3);
+  }
+  
+  .portfolio-title {
+    font-size: 1.1rem;
+  }
+  
+  .portfolio-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .action-btn .btn-text {
+    display: none;
+  }
+  
+  .action-btn {
+    padding: var(--space-1);
+    min-width: 28px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .modern-header {
+    padding: var(--space-1) var(--space-2);
+  }
+  
+  .header-container {
+    padding: var(--space-1) var(--space-2);
+    gap: var(--space-1);
+  }
+  
+  .portfolio-title {
+    font-size: 1rem;
+  }
+  
+  .portfolio-subtitle {
+    font-size: 0.65rem;
+  }
+  
+  .header-actions {
+    gap: var(--space-1);
+  }
+}
+
+/* Enhanced glass morphism effect - subtle */
+.header-container:hover {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Modern Navigation */
+.modern-nav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.modern-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  text-decoration: none;
+  color: var(--gray-700);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+}
+
+.modern-nav-item:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.nav-icon {
+  font-size: 1.1em;
+}
+
+/* Modern Portfolio Body Override */
+body.modern-portfolio {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--gray-800);
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%) !important;
+  margin: 0;
+  padding: 0 !important;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: var(--space-16) var(--space-4);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.hero-content {
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-xl);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  margin-bottom: var(--space-6);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 var(--space-6) 0;
+  color: var(--gray-900);
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: var(--space-8);
+}
+
+.hero-cta {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-button.primary {
+  background: var(--gradient-primary);
+  color: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+
+.cta-button.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(59, 130, 246, 0.3);
+}
+
+.cta-button.secondary {
+  background: var(--white);
+  color: var(--gray-700);
+  border: 2px solid var(--gray-200);
+}
+
+.cta-button.secondary:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.metric-item {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(15, 118, 110, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: 
+    0 4px 20px rgba(15, 118, 110, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.metric-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(15, 118, 110, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a202c; /* Dark navy for better readability */
+  margin-bottom: var(--space-1);
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: #2d3748 !important;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Enhanced visibility for dashboard mode */
+body.dashboard-mode .hero-metrics .metric-item {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+}
+
+body.dashboard-mode .hero-metrics .metric-item:hover {
+  background: rgba(0, 0, 0, 0.9) !important;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+}
+
+body.dashboard-mode .hero-metrics .metric-value {
+  color: var(--dashboard-accent) !important;
+}
+
+body.dashboard-mode .hero-metrics .metric-label {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.visual-container {
+  position: relative;
+  animation: fadeInRight 1s ease-out 0.3s both;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+}
+
+.hero-image.floating {
+  animation: heroFloat 6s infinite ease-in-out;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.image-glow {
+  position: absolute;
+  inset: -20px;
+  background: var(--gradient-accent);
+  border-radius: var(--radius-2xl);
+  filter: blur(30px);
+  opacity: 0.3;
+  z-index: -1;
+  animation: pulseGlow 4s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.05); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Section Headers */
+.portfolio-section {
+  padding: var(--space-16) var(--space-4);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.section-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+  opacity: 0.8;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: var(--gray-600);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Chat Styling */
+.chat-header-main {
+  padding: var(--space-6) var(--space-4);
+}
+
+.header-text {
+  flex: 1;
+}
+
+.header-subtitle {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  margin: 0.5rem 0 0 0;
+}
+
+.ai-badge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-accent);
+  border-radius: 50%;
+  margin-right: var(--space-4);
+}
+
+.ai-icon {
+  font-size: 1.8rem;
+  z-index: 2;
+}
+
+.pulse-ring {
+  position: absolute;
+  inset: -8px;
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: pulseRing 2s infinite ease-out;
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--white);
+  color: var(--gray-700);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: var(--gray-50);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.chat-main {
+  padding: var(--space-6);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chat-container {
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
+.chat-header {
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ai-avatar.floating {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: avatarFloat 3s infinite ease-in-out;
+}
+
+@keyframes avatarFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.avatar-emoji {
+  font-size: 1.5rem;
+  z-index: 2;
+}
+
+.avatar-glow {
+  position: absolute;
+  inset: -4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: avatarGlow 2s infinite ease-in-out;
+}
+
+@keyframes avatarGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.assistant-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.assistant-desc {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.status-indicator.pulsing {
+  animation: statusPulse 2s infinite ease-in-out;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+.chat-messages {
+  padding: var(--space-6);
+  min-height: 300px;
+  background: linear-gradient(180deg, #fafbfc 0%, #ffffff 100%);
+}
+
+.message.animate-in {
+  animation: messageSlideIn 0.5s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.highlight {
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.suggested-questions {
+  padding: var(--space-4);
+  border-top: 1px solid var(--gray-200);
+}
+
+.suggestions-title {
+  font-weight: 600;
+  color: var(--gray-700);
+  margin: 0;
+}
+
+.modern-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: var(--accent-color);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  margin: var(--space-2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.modern-chip:hover {
+  background: rgba(99, 102, 241, 0.15);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.chip-icon {
+  font-size: 1.1em;
+}
+
+.chat-input-container {
+  padding: var(--space-4);
+  border-top: 1px solid var(--gray-200);
+}
+
+.modern-input {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.modern-input-field {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: var(--white);
+}
+
+.modern-input-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.modern-send {
+  position: relative;
+  background: var(--gradient-accent);
+  color: var(--white);
+  border: none;
+  padding: var(--space-3);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.modern-send:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+
+.button-ripple {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.modern-send:active .button-ripple {
+  transform: scale(1);
+}
+
+.footer-text {
+  color: var(--gray-500);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: var(--space-3);
+}
+
+.powered-by {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    text-align: center;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-metrics {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+  
+  .metric-item {
+    padding: var(--space-4);
+    margin: 0 auto;
+    max-width: 280px;
+  }
+  
+  .modern-nav {
+    display: none;
+  }
+  
+  .header-actions {
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+  
+  .chat-main {
+    padding: var(--space-4);
+  }
+  
+  .hero-section {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .hero-image {
+    max-width: 300px;
+  }
+
+  /* Mobile header improvements */
+  .modern-header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .header-container {
+    flex-direction: column;
+    gap: var(--space-3);
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    gap: 15px;
-    margin-left: auto;
-    margin-right: auto; 
+    text-align: center;
+  }
+
+  .portfolio-title {
+    font-size: 1.5rem;
+  }
+
+  .portfolio-subtitle {
+    font-size: 0.8rem;
+    margin-top: var(--space-1);
+  }
+
+  .header-actions {
     width: 100%;
-    max-width: 1200px;
-    background: #353740;
-    border-radius: 15px;
-    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .modern-button {
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.8rem;
+    min-width: auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
   }
   
-  .header-container h1 {
-    font-size: 1.35rem;
-    white-space: nowrap; /* Prevent title from wrapping */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 0;
-    padding: 0;
-    min-width: 0; /* Allow flex item to shrink below content size */
-    flex: 1;
-    color: var(--white);
-    background: linear-gradient(135deg, var(--white), var(--gray-200));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .hero-description {
+    font-size: 1rem;
   }
   
-  .header-container:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-1px);
+  .hero-metrics {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
   }
+  
+  .metric-value {
+    font-size: 1.75rem;
+  }
+  
+  .metric-label {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .cta-button {
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.9rem;
+  }
+  
+  .hero-image {
+    max-width: 250px;
+  }
+
+  /* Very small screen adjustments */
+  .portfolio-title {
+    font-size: 1.3rem;
+  }
+
+  .portfolio-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .modern-button {
+    padding: var(--space-2);
+    font-size: 0.7rem;
+  }
+
+  .toggle-text, .chat-text {
+    display: none;
+  }
+
+  .toggle-icon, .chat-emoji {
+    font-size: 1.2rem;
+  }
+}
+  
+/* Modern Header Override - Fix conflicting styles */
+.modern-portfolio .header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-2xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.85) !important;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s ease;
+}
+
+.modern-portfolio .header-container h1,
+.modern-portfolio .portfolio-title {
+  font-size: 1.75rem !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+  color: var(--gray-900) !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+}
+
+/* Fix old header styles that conflict */
+.modern-portfolio .header-container:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+/* Override old button styles for modern navigation */
+.modern-portfolio .modern-button,
+.modern-portfolio .ai-button,
+.modern-portfolio .chat-toggle-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) !important;
+  border: none !important;
+  border-radius: var(--radius-lg) !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-primary) !important;
+  color: var(--white) !important;
+  box-shadow: var(--shadow-md) !important;
+  margin: var(--space-1) !important;
+}
+
+.modern-portfolio .ai-button {
+  background: var(--gradient-accent) !important;
+  animation: glow 2s infinite alternate;
+}
+
+.modern-portfolio .modern-button:hover,
+.modern-portfolio .ai-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
   
   .custom-button {
     padding: var(--space-2) var(--space-4);
@@ -160,7 +1236,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: var(--space-6);
+  gap: var(--space-8); /* Increased gap between grid items */
   max-width: 1200px;
   margin: var(--space-8) auto;
   padding: 0 var(--space-4);
@@ -268,8 +1344,8 @@ body {
 .link-container p {
   margin: 0;
   font-size: 14px;
-  font-weight: 500;
-  color: var(--gray-700);
+  font-weight: 600;
+  color: var(--gray-800) !important;
   line-height: 1.4;
   text-align: center;
   padding: 0 var(--space-2);
@@ -437,7 +1513,8 @@ h2::after {
 
 h3 {
   font-size: 1.5rem;
-  color: var(--gray-700);
+  color: var(--gray-800);
+  font-weight: 600;
 }
 
 p {
@@ -1340,6 +2417,7 @@ body.dashboard-mode {
   background: var(--dashboard-card-bg);
   border-radius: var(--radius-lg);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: none;
@@ -1391,8 +2469,14 @@ body.dashboard-mode {
 
 .metric-label {
   font-size: 0.9rem;
-  
-  color: rgba(255, 255, 255, 0.7);
+  color: #ffffff !important;
+  font-weight: 700;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Enhanced Career Metrics Panel */
@@ -1434,10 +2518,7 @@ body.dashboard-mode {
 .metric-highlight .metric-value {
   font-size: 3rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--dashboard-secondary), #ffffff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #1a202c; /* Dark navy for better readability */
   margin: 0.5rem 0;
 }
 
@@ -1453,10 +2534,8 @@ body.dashboard-mode {
 
 .metric-highlight.total .metric-value {
   font-size: 3.5rem;
-  background: linear-gradient(135deg, #ffffff, var(--dashboard-secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #1a202c; /* Dark navy for better readability */
+  font-weight: 800;
 }
 
 .financial .metric-title {
@@ -1553,24 +2632,33 @@ body.dashboard-mode {
   bottom: 0;
 }
 
-/* KPI Indicators */
+/* KPI Indicators - Only visible in dashboard mode */
 .kpi-indicator {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000; /* Very high z-index to ensure it's above everything else */
+  display: none; /* Hidden by default, only shown in dashboard mode */
 
   background: linear-gradient(
     to top,
-    rgba(10, 15, 25, 0.9),   /* darker navy/black */
-    rgba(10, 15, 25, 0.65)   /* keep some transparency */
+    rgba(0, 0, 0, 0.95),     /* Almost black background for maximum contrast */
+    rgba(0, 0, 0, 0.85)      /* Slightly transparent for visibility */
   );
-  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  
+  border-top: 1px solid rgba(100, 200, 255, 0.3); /* Add a subtle border for definition */
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);   /* Strong shadow to help it stand out */
 
   padding: 14px 18px;
   display: flex;
   flex-direction: column; /* stack "value row" above title */
+  pointer-events: none; /* Prevent capturing clicks from parent */
   align-items: center;
   text-align: center;
   gap: 6px;
@@ -1587,21 +2675,151 @@ body.dashboard-mode {
 @media screen and (max-width: 768px) {
   .dashboard-mode .kpi-indicator {
     transition: transform 0.4s ease, opacity 0.4s ease;
-  }
-  
-  /* Make sure hover state doesn't interfere with the observer-based animation on mobile */
-  .dashboard-mode .link-container:hover .kpi-indicator {
     opacity: 0;
     transform: translateY(100%);
   }
 }
 
-/* Re-enable hover effect for desktop */
+/* Default state - KPI indicators are only visible in dashboard mode */
+.dashboard-mode .kpi-indicator {
+  display: block; /* Make visible in dashboard mode */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 -2px 15px rgba(0, 120, 255, 0.25);
+  pointer-events: none; /* Prevent capturing mouse events */
+}
+
+/* Pure CSS Hover for KPI indicators - EXACTLY like normal mode hover behavior */
+.dashboard-mode .link-container:hover .kpi-indicator {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+
+/* Ensure no JavaScript can override this behavior */
+.dashboard-mode .link-container .kpi-indicator {
+  pointer-events: none !important;
+}
+
+/* Hide KPI indicators when not in dashboard mode */
+body:not(.dashboard-mode) .kpi-indicator {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Prevent KPI indicators from interfering with slideshow selection */
+.modal-content .kpi-indicator,
+.mySlides .kpi-indicator {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Both mobile and desktop now use Intersection Observer to show KPIs */
 @media screen and (min-width: 769px) {
-  .dashboard-mode .link-container:hover .kpi-indicator {
+  /* KPI indicators appear when cards are centered in the viewport */
+  .dashboard-mode .kpi-indicator {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none; /* Ensure indicators don't interfere with hover events */
+    z-index: 50; /* Ensure it appears above other elements */
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Mobile animation for temporary display */
+@keyframes tempShow {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grid layout spacing adjustments */
+/* Desktop view - use same spacing as normal mode */
+@media screen and (min-width: 769px) {
+  .dashboard-mode .grid-container {
+    gap: var(--space-8); /* Same as normal mode: 2rem */
+  }
+}
+
+/* Mobile styles - use same spacing as normal mode */
+@media screen and (max-width: 768px) {
+  /* Use same spacing as normal mode */
+  .dashboard-mode .grid-container {
+    gap: var(--space-8); /* Same as normal mode: 2rem */
+  }
+  
+  /* Ensure cards have consistent spacing like normal mode */
+  .dashboard-mode .link-container {
+    margin-bottom: var(--space-6); /* Same as normal mode */
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+  }
+  
+  .dashboard-mode .kpi-indicator.temp-visible {
+    animation: tempShow 3s forwards;
+  }
+}
+
+/* KPI Indicator Elements */
+.kpi-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.kpi-icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(100, 200, 255, 0.7);
+}
+
+.kpi-title {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.dashboard-mode .kpi-value {
+  background: linear-gradient(45deg, #ffffff, #88ccff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
 }
 
 /* Dashboard visualizations */
@@ -1638,6 +2856,112 @@ body.dashboard-mode {
   background: var(--dashboard-card-bg);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden !important; /* Contain hover effects within bounds */
+}
+
+.dashboard-mode .link-container:hover {
+  border-color: var(--primary-color); /* Same as normal mode */
+  /* Ensure hover stays within exact bounds */
+  transform: translateY(-8px) scale(1.02); /* Same as normal mode */
+  box-shadow: var(--shadow-xl); /* Same as normal mode */
+}
+
+/* Disable the highlight sweep effect in dashboard mode to prevent extended hover areas */
+.dashboard-mode .link-container::before {
+  display: none; /* Remove highlight effect that extends hover area */
+}
+
+/* Also disable the clickable indicator to avoid any hover area extension */
+.dashboard-mode .link-container.modal-trigger::after {
+  display: none; /* Remove any additional hover indicators */
+}
+
+/* KPI Indicators - Clean implementation for dashboard mode */
+.kpi-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.7)
+  );
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  
+  padding: 12px 16px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  display: none; /* Hidden by default */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  
+  pointer-events: none; /* Don't interfere with hover detection */
+  z-index: 10;
+}
+
+/* Show KPI indicators only in dashboard mode */
+.dashboard-mode .kpi-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+/* Clean hover effect for KPI indicators in dashboard mode */
+.dashboard-mode .link-container:hover .kpi-indicator {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* KPI content styling */
+.kpi-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.kpi-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.kpi-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #50e6ff;
+  text-shadow: 0 0 8px rgba(80, 230, 255, 0.5);
+  line-height: 1;
+}
+
+.kpi-title {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Hide KPI indicators when not in dashboard mode */
+body:not(.dashboard-mode) .kpi-indicator {
+  display: none !important;
+}
+
+/* Override any conflicting styles */
+.dashboard-mode .link-container .image-container {
+  overflow: hidden !important; /* Keep effects contained */
+  position: relative;
+}
+
+/* Fix for nested elements potentially causing z-index issues */
+.dashboard-mode .link-container * {
+  z-index: auto;
 }
 
 .dashboard-mode .link-container p {
@@ -1943,7 +3267,7 @@ body.dashboard-mode {
 
 /* Time savings metrics styling */
 .time-savings .metric-value {
-  color: var(--dashboard-secondary);
+  color: #1a202c; /* Dark navy for better readability */
 }
 
 /* Highlights container for multiple totals */
@@ -2067,5 +3391,63 @@ body.dashboard-mode {
   
   .metric-category {
     font-size: 1rem;
+  }
+}
+
+/* Override all metric values with darker gradients for better readability */
+.metric-value {
+  color: #1a202c !important; /* Dark navy base for simple values */
+}
+
+.metric-highlight .metric-value {
+  background: linear-gradient(135deg, #1a202c, #2d3748) !important; /* Dark navy to darker gray */
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.metric-highlight.total .metric-value {
+  background: linear-gradient(135deg, #1a202c, #134e4a) !important; /* Dark navy to dark teal */
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.metric-highlight.efficiency .metric-value {
+  background: linear-gradient(135deg, #1a202c, #0f766e) !important; /* Dark navy to darker teal */
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.time-savings .metric-value {
+  background: linear-gradient(135deg, #1a202c, #2563eb) !important; /* Dark navy to darker blue */
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Mobile KPI auto-show functionality */
+@media (max-width: 768px) {
+  .kpi-indicator.mobile-auto-show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(-10px) !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  /* Ensure KPIs are hidden by default on mobile */
+  .kpi-indicator {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+  }
+  
+  /* Still allow hover on mobile for user interaction */
+  .link-container:hover .kpi-indicator {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-10px);
   }
 }
