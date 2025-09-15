@@ -136,7 +136,17 @@
       
       <div class="hero-visual">
         <div class="visual-container">
-          <img src="Images/ELM.png" alt="ELM Application Preview" class="hero-image floating">
+          <div class="elm-transition-container">
+            <img src="Images/ELM.png" alt="ELM Application Preview" class="hero-image floating elm-image active" id="elm-image-1">
+            <img src="Images/ELM1.png" alt="ELM Application Preview" class="hero-image floating elm-image" id="elm-image-2">
+          </div>
+          <div class="elm-title-container">
+            <div class="elm-title-badge">
+              <span class="award-icon">🏆</span>
+              <span class="elm-title-text">Award-Winning ELM App</span>
+            </div>
+            <p class="elm-subtitle">Microsoft Best in Automation Winner</p>
+          </div>
           <div class="image-glow"></div>
         </div>
       </div>
@@ -1778,6 +1788,57 @@
           if (e.key === 'Escape' && modal.style.display === 'flex') {
             closeModalFunction();
           }
+        });
+      });
+
+      // ELM Image Transition Effect - Enhanced
+      document.addEventListener('DOMContentLoaded', function() {
+        const elmImages = document.querySelectorAll('.elm-image');
+        const container = document.querySelector('.elm-transition-container');
+        let currentImageIndex = 0;
+        let isTransitioning = false;
+        
+        function switchELMImage() {
+          if (isTransitioning || elmImages.length <= 1) return;
+          
+          isTransitioning = true;
+          
+          // Add a subtle glow effect during transition
+          container.style.boxShadow = '0 25px 80px rgba(15, 118, 110, 0.2), 0 10px 30px rgba(0, 0, 0, 0.1)';
+          
+          // Fade out current image
+          elmImages[currentImageIndex].classList.remove('active');
+          
+          // Wait for fade out, then switch to next image
+          setTimeout(() => {
+            currentImageIndex = (currentImageIndex + 1) % elmImages.length;
+            elmImages[currentImageIndex].classList.add('active');
+            
+            // Reset container glow after transition
+            setTimeout(() => {
+              container.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.08)';
+              isTransitioning = false;
+            }, 1000);
+          }, 1000); // Half of the CSS transition duration
+        }
+        
+        // Start the transition cycle (every 5 seconds for better viewing)
+        if (elmImages.length > 1) {
+          // First transition after 3 seconds
+          setTimeout(() => {
+            switchELMImage();
+            // Then continue every 5 seconds
+            setInterval(switchELMImage, 5000);
+          }, 3000);
+        }
+        
+        // Pause transitions when user hovers over the container
+        container.addEventListener('mouseenter', () => {
+          container.style.animationPlayState = 'paused';
+        });
+        
+        container.addEventListener('mouseleave', () => {
+          container.style.animationPlayState = 'running';
         });
       });
 

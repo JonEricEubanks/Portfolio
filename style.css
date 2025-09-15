@@ -528,7 +528,7 @@ body.modern-portfolio {
 
 .hero-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.3fr; /* Slightly reduce from 1.5fr to 1.3fr */
   gap: var(--space-16);
   align-items: center;
 }
@@ -1092,7 +1092,7 @@ body.dashboard-mode .author-info span {
 
 .hero-image {
   width: 100%;
-  max-width: 500px;
+  max-width: 900px; /* Increased from 750px to match elm-transition-container */
   height: auto;
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-xl);
@@ -1102,9 +1102,186 @@ body.dashboard-mode .author-info span {
   animation: heroFloat 6s infinite ease-in-out;
 }
 
+/* ELM Transition Container */
+.elm-transition-container {
+  position: relative;
+  width: 100%;
+  max-width: none; /* Remove max-width constraint to let it grow */
+  min-width: 700px; /* Reduced from 900px to 700px for better balance */
+  /* Set explicit height to prevent overlap */
+  aspect-ratio: 16/9; /* Changed from 16/10 to give more height */
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.elm-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.05) translateY(10px);
+  filter: blur(2px);
+}
+
+.elm-image.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+}
+
+/* Enhanced floating animation for ELM images */
+.elm-image.floating {
+  animation: heroFloat 8s infinite ease-in-out;
+}
+
+/* Improved floating animation */
 @keyframes heroFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%, 100% { 
+    transform: translateY(0) scale(1) rotateY(0deg);
+    filter: blur(0);
+  }
+  25% { 
+    transform: translateY(-8px) scale(1.02) rotateY(1deg);
+    filter: blur(0);
+  }
+  50% { 
+    transform: translateY(-15px) scale(1.03) rotateY(0deg);
+    filter: blur(0);
+  }
+  75% { 
+    transform: translateY(-8px) scale(1.02) rotateY(-1deg);
+    filter: blur(0);
+  }
+}
+
+/* ELM Title Container - Fluent Design */
+.elm-title-container {
+  margin-top: var(--space-6);
+  text-align: center;
+  animation: fadeInUp 1s ease-out 1s both;
+}
+
+.elm-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5)); /* More transparent */
+  backdrop-filter: blur(15px); /* Slightly less blur for more transparency */
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(15, 118, 110, 0.15); /* More transparent border */
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  box-shadow: 
+    0 8px 32px rgba(15, 118, 110, 0.1), /* More transparent shadow */
+    0 0 0 1px rgba(255, 255, 255, 0.4) inset; /* More transparent inset */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.elm-title-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.05), rgba(72, 209, 204, 0.03));
+  z-index: -1;
+}
+
+.elm-title-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(15, 118, 110, 0.15), /* More transparent hover shadow */
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset; /* More transparent hover inset */
+}
+
+.award-icon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 2px 4px rgba(255, 193, 7, 0.3));
+  animation: awardPulse 2s infinite ease-in-out;
+}
+
+@keyframes awardPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.elm-title-text {
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+}
+
+.elm-subtitle {
+  margin: var(--space-2) 0 0 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-600);
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments for ELM section */
+@media (max-width: 768px) {
+  .elm-transition-container {
+    min-width: 600px; /* Use min-width for tablets */
+    max-width: 600px; /* But cap it for smaller screens */
+    aspect-ratio: 16/9;
+  }
+  
+  .elm-title-badge {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-1);
+  }
+  
+  .award-icon {
+    font-size: 1rem;
+  }
+  
+  .elm-title-text {
+    font-size: 0.9rem;
+  }
+  
+  .elm-subtitle {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .elm-transition-container {
+    min-width: 420px; /* Use min-width for mobile */
+    max-width: 420px; /* But cap it for very small screens */
+  }
+  
+  .elm-title-container {
+    margin-top: var(--space-4);
+  }
+}
+
+/* Enhanced floating animation with smoother transitions */
+@keyframes heroFloat {
+  0%, 100% { 
+    transform: translateY(0px) scale(1); 
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+  }
+  50% { 
+    transform: translateY(-15px) scale(1.01); 
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+  }
 }
 
 .image-glow {
@@ -1460,6 +1637,23 @@ body.dashboard-mode .author-info span {
     margin-top: var(--space-6);
   }
   
+  .elm-title-container {
+    margin-top: var(--space-4);
+  }
+  
+  .elm-title-badge {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-1);
+  }
+  
+  .elm-title-text {
+    font-size: 0.9rem;
+  }
+  
+  .elm-subtitle {
+    font-size: 0.8rem;
+  }
+  
   .metric-item {
     padding: var(--space-4);
     margin: 0 auto;
@@ -1484,7 +1678,7 @@ body.dashboard-mode .author-info span {
   }
 
   .hero-image {
-    max-width: 300px;
+    max-width: 600px; /* Increased from 520px to match responsive elm-transition-container */
   }
 
   /* Mobile header improvements */
@@ -1552,7 +1746,7 @@ body.dashboard-mode .author-info span {
   }
   
   .hero-image {
-    max-width: 250px;
+    max-width: 420px; /* Increased from 380px to match responsive elm-transition-container */
   }
 
   /* Very small screen adjustments */
