@@ -143,7 +143,7 @@
           <div class="elm-title-container">
             <div class="elm-title-badge">
               <span class="award-icon">🏆</span>
-              <span class="elm-title-text">Award-Winning ELM App</span>
+              <span class="elm-title-text">Award Winning ELM App</span>
             </div>
             <p class="elm-subtitle">Microsoft Best in Automation Winner</p>
           </div>
@@ -344,7 +344,7 @@
                data-modal-title="Buffalo Grove Project 25 Dashboard"
                data-modal-image="Images/p25.png"
                data-modal-slideshow="executive-summary-p25,Images/p25.png,Images/p251.png,Images/p252.png,Images/p253.png,Images/p254.png"
-               data-modal-descriptions="Provided centralized oversight of a $7.2M capital project, enabling faster budget approvals, tracking change orders, and giving trustees on-demand progress reporting.||📊 Executive Summary Dashboard: High level project view for the Village Board showing budget, contingency, pay requests, and % completion. Designed for leadership updates with simplified visuals and key performance indicators.||📑 Change Order Tracking: Tracks the lifecycle of change orders from submission through approval. Provides visibility into budget adjustments, contingency usage, and contractor impacts in one centralized view.||💰 Pay Requests Dashboard: Monitors contractor pay requests, amounts approved, and balances used. Ensures Dane and the project team can quickly confirm payment status and alignment with the overall budget.||🧾 Pay Applications Dashboard: Breaks down active pay applications by contractor, budget category, and timeline. Offers a clear view into how construction costs are being distributed and managed.||🔍 Custom Popout Drill Down: Interactive custom popout built in Power BI to provide contractor level insights. Demonstrates advanced data modeling and visualization expertise to deliver detailed, ondemand budget tracking."
+               data-modal-descriptions="Provided centralized oversight of a $7.2M capital project, enabling faster budget approvals, tracking change orders, and giving trustees on-demand progress reporting.||📊 Board Summary Dashboard: High level project view for the Village Board showing budget, contingency, pay requests, and % completion. Designed for leadership updates with simplified visuals and key performance indicators.||📑 Change Order Tracking: Tracks the lifecycle of change orders from submission through approval. Provides visibility into budget adjustments, contingency usage, and contractor impacts in one centralized view.||💰 Pay Requests Dashboard: Monitors contractor pay requests, amounts approved, and balances used. Ensures Dane and the project team can quickly confirm payment status and alignment with the overall budget.||Breaks down active pay applications by contractor, budget category, and timeline. Offers a clear view into how construction costs are being distributed and managed.||🔍 Custom Popout Drill Down: Interactive custom popout built in Power BI to provide contractor level insights. Demonstrates advanced data modeling and visualization expertise to deliver detailed, ondemand budget tracking."
                data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=0e4061311e144b5193baf79f0c1e9abb"
                data-kpi-icon="⏱️"
                data-kpi-value="70"
@@ -1073,7 +1073,7 @@
           return descriptions.map((desc, index) => {
             // Default values
             let emoji = "ℹ️";
-            let title = "Overview";
+            let title = "Power BI with Power Apps";
             let content = desc;
             
             // Handle Executive Summary slides (always first slide with index 0)
@@ -1086,6 +1086,11 @@
             
             // Handle special slideshows (shift index by 1 since executive summary is now first)
             const actualIndex = slideshowPath.startsWith('executive-summary') ? index - 1 : index;
+            
+            // Skip processing if actualIndex is negative (this prevents the break)
+            if (actualIndex < 0) {
+              return { emoji, title, content };
+            }
             
             // Handle special slideshows based on first image name
             if (slideshowPath.includes('block')) {
@@ -1230,7 +1235,7 @@
               }
             } else if (slideshowPath.includes('crm')) {
               // VBG & VNB Dashboards
-              switch(index) {
+              switch(actualIndex) {
                 case 0:
                   title = "CRM Dashboard Overview";
                   emoji = "📊";
@@ -1248,9 +1253,9 @@
                   emoji = "⏱️";
                   break;
                 case 4:
-                  title = "Reconstruction Project Dashboard";
+                  title = "Power BI with Power Apps";
                   emoji = "🏗️";
-                  break;
+                  break; 
               }
             }
             
