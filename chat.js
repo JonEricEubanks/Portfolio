@@ -236,6 +236,29 @@ Response Strategy:
             return intent;
         }
         
+        // Specific question analysis for better categorization
+        if (lowMessage.includes('cons') || lowMessage.includes('disadvantage') || lowMessage.includes('weakness')) {
+            intent.type = 'challenges';
+            intent.confidence = 0.9;
+            return intent;
+        }
+        
+        // Dashboard-specific queries
+        if (lowMessage.includes('dashboard') || lowMessage.includes('power bi') || lowMessage.includes('visualization')) {
+            intent.type = 'dashboards';
+            intent.confidence = 0.9;
+            intent.context.projectType = 'dashboard';
+            return intent;
+        }
+        
+        // Power Platform specific queries
+        if (lowMessage.includes('power platform') || (lowMessage.includes('power') && (lowMessage.includes('apps') || lowMessage.includes('automate')))) {
+            intent.type = 'power_platform';
+            intent.confidence = 0.9;
+            intent.context.skillArea = 'microsoft';
+            return intent;
+        }
+        
         // Project-related queries with specific detection
         const projectKeywords = ['project', 'work', 'built', 'app', 'application', 'solution', 'system'];
         const projectMatches = projectKeywords.filter(keyword => lowMessage.includes(keyword));
@@ -248,8 +271,6 @@ Response Strategy:
             if (lowMessage.includes('elm') || lowMessage.includes('employment')) {
                 intent.context.specificProject = 'elm';
                 intent.confidence = 0.9;
-            } else if (lowMessage.includes('dashboard') || lowMessage.includes('power bi')) {
-                intent.context.projectType = 'dashboard';
             } else if (lowMessage.includes('gis') || lowMessage.includes('map') || lowMessage.includes('spatial')) {
                 intent.context.projectType = 'gis';
             } else if (lowMessage.includes('ai') || lowMessage.includes('copilot') || lowMessage.includes('agent')) {
@@ -266,9 +287,7 @@ Response Strategy:
             intent.keywords = skillMatches;
             
             // Detect specific skill areas
-            if (lowMessage.includes('power') || lowMessage.includes('microsoft')) {
-                intent.context.skillArea = 'microsoft';
-            } else if (lowMessage.includes('gis') || lowMessage.includes('arcgis')) {
+            if (lowMessage.includes('gis') || lowMessage.includes('arcgis')) {
                 intent.context.skillArea = 'gis';
             } else if (lowMessage.includes('data') || lowMessage.includes('analytics')) {
                 intent.context.skillArea = 'data';
@@ -327,6 +346,19 @@ Response Strategy:
             return this.getVariedResponse('greeting');
         }
         
+        // Handle specific question types with dedicated responses
+        if (intent.type === 'challenges') {
+            return this.getChallengesResponse();
+        }
+        
+        if (intent.type === 'dashboards') {
+            return this.getDashboardResponse();
+        }
+        
+        if (intent.type === 'power_platform') {
+            return this.getPowerPlatformResponse();
+        }
+        
         if (intent.type === 'projects') {
             // Check for specific project context
             if (intent.context.specificProject === 'elm') {
@@ -376,6 +408,36 @@ Response Strategy:
         }
         
         return null; // Fall back to AI API
+    }
+
+    getChallengesResponse() {
+        const responses = [
+            "💡 **JonEric's honest self-assessment:**\n\n\"Restless curiosity\" - I move fast with new tools and technologies, sometimes too fast! \n\n🚀 **But here's the flip side:**\n• That drive transforms experiments into full-scale solutions\n• It keeps me ahead of technology trends\n• It delivers cutting-edge results for clients\n\n⚡ This 'weakness' has led to the Microsoft Award and $73M+ in tracked funds!",
+            
+            "🎯 **The challenge that drives results:**\n\nJonEric's eagerness to explore new technology can sometimes outpace documentation. But this trait has:\n\n✅ Led to innovative solutions like AI copilots\n✅ Earned Microsoft recognition\n✅ Delivered measurable municipal impact\n\n💼 In government work, this forward-thinking approach is actually a huge asset!"
+        ];
+        
+        return this.selectUnusedResponse('challenges_responses', responses);
+    }
+
+    getDashboardResponse() {
+        const responses = [
+            "📊 **JonEric's dashboard portfolio is impressive!**\n\n**Featured Dashboards:**\n• **Project 25 Dashboard** → $7.2M construction oversight\n• **Rental Aid Dashboard** → $53M community aid tracking  \n• **Municipal KPI Dashboards** → Real-time city metrics\n• **Budget Tracking** → Live fund allocation monitoring\n\n⚡ These aren't just charts - they're decision-making tools that guide million-dollar municipal investments!",
+            
+            "🎯 **Power BI expertise that delivers government results:**\n\n**Dashboard Categories:**\n• **Financial Oversight** → Budget tracking and aid distribution\n• **Project Management** → Construction change orders and timelines\n• **Performance Metrics** → Service delivery and efficiency KPIs\n• **Compliance Reporting** → Automated government reporting\n\n📈 Each dashboard provides actionable insights for better municipal decision-making!"
+        ];
+        
+        return this.selectUnusedResponse('dashboard_responses', responses);
+    }
+
+    getPowerPlatformResponse() {
+        const responses = [
+            "⚡ **JonEric's Power Platform mastery is comprehensive!**\n\n**Platform Expertise:**\n• **Power Apps** → Municipal automation (ELM, licensing, HR)\n• **Power BI** → Financial dashboards ($73M+ tracked)\n• **Power Automate** → Workflow optimization (585+ hours saved)\n• **Copilot Studio** → AI agents (3,600+ queries automated)\n\n🏆 This expertise earned the Microsoft Best in Automation Award!",
+            
+            "🛠️ **Full Power Platform ecosystem integration:**\n\n**Real-World Applications:**\n• **Apps** → Employee lifecycle, block party requests, water services\n• **Dashboards** → Project oversight, aid tracking, performance metrics\n• **Automation** → Approval workflows, notifications, integrations\n• **AI** → Property research, ordinance lookup, citizen services\n\n🚀 Connected with SharePoint, Teams, and Azure for complete solutions!"
+        ];
+        
+        return this.selectUnusedResponse('power_platform_responses', responses);
     }
 
     getELMProjectResponse() {
@@ -713,22 +775,52 @@ Q: Why trust his work?
     }
 
     isRepetitiveRequest(intent) {
-        // Check if the same intent type has been asked recently
-        const recentSameIntents = this.conversationContext.recentIntents
-            .filter(prevIntent => prevIntent.type === intent.type).length;
+        // Only consider it repetitive if it's the EXACT SAME question or very similar
+        // Don't trigger on different questions of the same category
         
-        if (recentSameIntents >= 2) {
-            return true;
+        // Get recent user messages for similarity comparison
+        const recentUserMessages = this.conversationHistory
+            .filter(msg => msg.role === 'user')
+            .slice(-3)
+            .map(msg => msg.content.toLowerCase().trim());
+        
+        if (recentUserMessages.length < 2) return false;
+        
+        const currentMessage = recentUserMessages[recentUserMessages.length - 1];
+        const previousMessages = recentUserMessages.slice(0, -1);
+        
+        // Check for very similar messages (high keyword overlap)
+        for (const prevMessage of previousMessages) {
+            const similarity = this.calculateMessageSimilarity(currentMessage, prevMessage);
+            if (similarity > 0.7) { // 70% similarity threshold
+                return true;
+            }
         }
         
-        // Check if asking about the same specific project multiple times
-        if (intent.context?.specificProject) {
-            const sameProjectRequests = this.conversationContext.recentIntents
-                .filter(prevIntent => prevIntent.context?.specificProject === intent.context.specificProject).length;
-            return sameProjectRequests >= 2;
-        }
+        // Check for identical intent AND context (very specific repetition)
+        const recentIdenticalRequests = this.conversationContext.recentIntents
+            .filter(prevIntent => 
+                prevIntent.type === intent.type &&
+                prevIntent.context?.specificProject === intent.context?.specificProject &&
+                prevIntent.context?.projectType === intent.context?.projectType &&
+                prevIntent.context?.skillArea === intent.context?.skillArea
+            ).length;
         
-        return false;
+        // Only trigger if 3+ identical specific requests (much higher threshold)
+        return recentIdenticalRequests >= 3;
+    }
+
+    calculateMessageSimilarity(msg1, msg2) {
+        // Simple keyword overlap calculation
+        const words1 = msg1.split(/\s+/).filter(w => w.length > 3);
+        const words2 = msg2.split(/\s+/).filter(w => w.length > 3);
+        
+        if (words1.length === 0 || words2.length === 0) return 0;
+        
+        const intersection = words1.filter(word => words2.includes(word));
+        const union = [...new Set([...words1, ...words2])];
+        
+        return intersection.length / union.length;
     }
 
     handleRepetitiveRequest(intent, message) {
