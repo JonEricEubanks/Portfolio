@@ -103,18 +103,18 @@ class JonEricChatBot {
         this.responseVariations.set('greeting', [
             "👋 Hi! I'm JonEric's AI assistant. I can tell you about his Microsoft Award-winning projects, Power Platform expertise, and municipal solutions. What interests you?",
             "🤖 Hello! I specialize in JonEric's work - from the award-winning ELM app to Power BI dashboards and AI copilots. What would you like to explore?",
-            "👨‍💻 Welcome! Ask me about JonEric's 8+ innovative solutions, including his Microsoft-recognized automation work and $73M+ in tracked municipal funds!",
+            "👨‍💻 Welcome! Ask me about JonEric's 8+ innovative solutions, including his Microsoft-recognized automation work and $195.9M+ in tracked municipal funds!",
             "🚀 Greetings! Ready to learn about JonEric's municipal technology innovations? I can share details about his Power Platform mastery and real-world impact!"
         ]);
 
         this.responseVariations.set('projects_overview', [
-            `🛠️ JonEric has built ${this.portfolioData.projects.length}+ award-winning solutions!\n\n**Highlights:**\n• ELM App → Microsoft's Best in Automation Award\n• Municipal Dashboards → $73M+ funds tracked\n• AI Copilots → 3,600+ automated queries\n• Power Apps → 585+ hours saved annually\n\n🏆 Used across 6+ municipalities from Illinois to Texas!`,
+            `🛠️ JonEric has built ${this.portfolioData.projects.length}+ award-winning solutions!\n\n**Highlights:**\n• ELM App → Microsoft's Best in Automation Award\n• Municipal Dashboards → $195.9M+ funds tracked\n• AI Copilots → 3,600+ automated queries\n• Power Apps → 585+ hours saved annually\n\n🏆 Used across 6+ municipalities from Illinois to Texas!`,
             
             `📊 His portfolio demonstrates real municipal impact:\n\n**Key Projects:**\n• Employment Lifecycle Management (Microsoft Award Winner)\n• Project 25 Dashboard → $7.2M construction oversight  \n• Rental Aid Dashboard → $53M community aid tracking\n• LISA AI Agent → Automated property research\n\n⚡ Each solution delivers measurable efficiency gains!`,
             
             `🚀 JonEric's ${this.portfolioData.projects.length} projects span the complete government tech stack:\n\n**Power Platform Solutions:**\n• Apps: HR automation, service requests, licensing\n• Dashboards: Budget tracking, KPIs, aid distribution\n• AI: Copilot Studio agents for citizen services\n• Integration: SharePoint, Teams, Azure AI Search\n\n💡 Transforming how cities serve their communities!`,
             
-            `� Municipal technology excellence across multiple domains:\n\n**Impact Areas:**\n• Human Resources → 400+ hours saved (ELM App)\n• Financial Oversight → $73M+ tracked accurately\n• Citizen Services → 30% faster response times\n• Data Analytics → Real-time decision support\n\n🌟 Proven scalability from small towns to major cities!`
+            `� Municipal technology excellence across multiple domains:\n\n**Impact Areas:**\n• Human Resources → 400+ hours saved (ELM App)\n• Financial Oversight → $195.9M+ tracked accurately\n• Citizen Services → 30% faster response times\n• Data Analytics → Real-time decision support\n\n🌟 Proven scalability from small towns to major cities!`
         ]);
 
         this.responseVariations.set('skills_overview', [
@@ -126,13 +126,13 @@ class JonEricChatBot {
         ]);
 
         this.responseVariations.set('achievements', [
-            `🏆 Recognition that speaks to real impact!\n\n**Top Achievements:**\n• Microsoft's Best in Automation Award (ELM App)\n• Official Microsoft case study published\n• $73M+ in municipal funds tracked and managed\n• 585+ staff hours saved annually through automation\n• 6+ cities using his solutions across multiple states`,
+            `🏆 Recognition that speaks to real impact!\n\n**Top Achievements:**\n• Microsoft's Best in Automation Award (ELM App)\n• Official Microsoft case study published\n• $195.9M+ in municipal funds tracked and managed\n• 585+ staff hours saved annually through automation\n• 6+ cities using his solutions across multiple states`,
             
-            `⭐ Awards backed by measurable municipal results!\n\n**Key Accomplishments:**\n• Microsoft Award Winner → ELM automation solution\n• Efficiency Expert → 30% faster municipal response times\n• Financial Steward → $73M+ in accurate fund tracking\n• Innovation Leader → AI copilots serving thousands of citizens`,
+            `⭐ Awards backed by measurable municipal results!\n\n**Key Accomplishments:**\n• Microsoft Award Winner → ELM automation solution\n• Efficiency Expert → 30% faster municipal response times\n• Financial Steward → $195.9M+ in accurate fund tracking\n• Innovation Leader → AI copilots serving thousands of citizens`,
             
-            `📈 Excellence recognized at the highest levels!\n\n**Impact Portfolio:**\n• Microsoft's Best in Automation (official case study)\n• Government Efficiency → 585+ hours saved per year\n• Financial Accuracy → $73M+ managed across programs\n• Scalable Solutions → Deployed in Illinois and Texas`,
+            `📈 Excellence recognized at the highest levels!\n\n**Impact Portfolio:**\n• Microsoft's Best in Automation (official case study)\n• Government Efficiency → 585+ hours saved per year\n• Financial Accuracy → $195.9M+ managed across programs\n• Scalable Solutions → Deployed in Illinois and Texas`,
             
-            `🌟 Professional recognition meets community impact!\n\n**Achievement Highlights:**\n• Microsoft Award for ELM App innovation\n• Municipal Technology Leader (6+ city deployments)\n• Automation Expert (400+ hours saved in HR alone)\n• Data Steward ($73M+ tracked with 99%+ accuracy)`
+            `🌟 Professional recognition meets community impact!\n\n**Achievement Highlights:**\n• Microsoft Award for ELM App innovation\n• Municipal Technology Leader (6+ city deployments)\n• Automation Expert (400+ hours saved in HR alone)\n• Data Steward ($195.9M+ tracked with 99%+ accuracy)`
         ]);
     }
 
@@ -431,7 +431,7 @@ Response Strategy:
 
     getChallengesResponse() {
         const responses = [
-            "💡 **JonEric's honest self-assessment:**\n\n\"Restless curiosity\" - I move fast with new tools and technologies, sometimes too fast! \n\n🚀 **But here's the flip side:**\n• That drive transforms experiments into full-scale solutions\n• It keeps me ahead of technology trends\n• It delivers cutting-edge results for clients\n\n⚡ This 'weakness' has led to the Microsoft Award and $73M+ in tracked funds!",
+            "💡 **JonEric's honest self-assessment:**\n\n\"Restless curiosity\" - I move fast with new tools and technologies, sometimes too fast! \n\n🚀 **But here's the flip side:**\n• That drive transforms experiments into full-scale solutions\n• It keeps me ahead of technology trends\n• It delivers cutting-edge results for clients\n\n⚡ This 'weakness' has led to the Microsoft Award and $195.9M+ in tracked funds!",
             
             "🎯 **The challenge that drives results:**\n\nJonEric's eagerness to explore new technology can sometimes outpace documentation. But this trait has:\n\n✅ Led to innovative solutions like AI copilots\n✅ Earned Microsoft recognition\n✅ Delivered measurable municipal impact\n\n💼 In government work, this forward-thinking approach is actually a huge asset!"
         ];
@@ -451,7 +451,7 @@ Response Strategy:
 
     getPowerPlatformResponse() {
         const responses = [
-            "⚡ **JonEric's Power Platform mastery is comprehensive!**\n\n**Platform Expertise:**\n• **Power Apps** → Municipal automation (ELM, licensing, HR)\n• **Power BI** → Financial dashboards ($73M+ tracked)\n• **Power Automate** → Workflow optimization (585+ hours saved)\n• **Copilot Studio** → AI agents (3,600+ queries automated)\n\n🏆 This expertise earned the Microsoft Best in Automation Award!",
+            "⚡ **JonEric's Power Platform mastery is comprehensive!**\n\n**Platform Expertise:**\n• **Power Apps** → Municipal automation (ELM, licensing, HR)\n• **Power BI** → Financial dashboards ($195.9M+ tracked)\n• **Power Automate** → Workflow optimization (585+ hours saved)\n• **Copilot Studio** → AI agents (3,600+ queries automated)\n\n🏆 This expertise earned the Microsoft Best in Automation Award!",
             
             "🛠️ **Full Power Platform ecosystem integration:**\n\n**Real-World Applications:**\n• **Apps** → Employee lifecycle, block party requests, water services\n• **Dashboards** → Project oversight, aid tracking, performance metrics\n• **Automation** → Approval workflows, notifications, integrations\n• **AI** → Property research, ordinance lookup, citizen services\n\n🚀 Connected with SharePoint, Teams, and Azure for complete solutions!"
         ];
@@ -517,7 +517,7 @@ Response Strategy:
 
     getMunicipalResponse() {
         const responses = [
-            "🏛️ JonEric specializes in municipal technology that delivers real government impact!\n\n**Cities Served:** Buffalo Grove, Glencoe, Brookfield, Lincolnshire, Fort Worth\n**Focus Areas:** HR automation, financial oversight, citizen services\n**Measurable Results:** 585+ hours saved, $73M+ tracked, 30% faster response times\n\n💡 His solutions address the unique challenges of local government operations.",
+            "🏛️ JonEric specializes in municipal technology that delivers real government impact!\n\n**Cities Served:** Buffalo Grove, Glencoe, Brookfield, Lincolnshire, Fort Worth\n**Focus Areas:** HR automation, financial oversight, citizen services\n**Measurable Results:** 585+ hours saved, $195.9M+ tracked, 30% faster response times\n\n💡 His solutions address the unique challenges of local government operations.",
             
             "🌟 Municipal technology with proven ROI across multiple cities!\n\n**Government Expertise:**\n• Employment lifecycle management\n• Budget and aid tracking\n• Citizen service automation\n• Compliance and reporting\n\n📈 Each solution improves efficiency, transparency, and service delivery for real communities."
         ];
@@ -628,7 +628,7 @@ Other Tools
 • Employment Lifecycle Management (ELM) App → Won Microsoft’s Best in Automation award; official case study published.
 • Municipal apps + dashboards for Buffalo Grove, Glencoe, Brookfield, Lincolnshire, Fort Worth.
 • Efficiency gains: 400+ hrs saved with onboarding automation, 60+ hrs with water service tracking, 55 hrs with block party workflows.
-• Financial oversight: $73M+ tracked across aid, rental programs, repairs, construction oversight.
+• Financial oversight: $195.9M+ tracked across aid, rental programs, repairs, construction oversight.
 • AI Leadership: Built Copilot Studio agents like LISA (Land Info Service Agent), ordinance research copilots, CRM dashboards, and RAG-powered property insights.
 
 📜 Certifications
@@ -670,7 +670,7 @@ Q: What’s his biggest project?
 
 Q: What measurable impact has he delivered?
 ⚡ Efficiency: 585+ staff hours saved annually
-💵 Financial Oversight: $73M+ tracked in aid, budgets, and construction projects
+💵 Financial Oversight: $195.9M+ tracked in aid, budgets, and construction projects
 🚀 Service Delivery: 30%+ faster municipal response times
 📊 Adoption: Used by multiple municipalities across Illinois + Fort Worth
 

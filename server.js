@@ -107,7 +107,7 @@ CURRENT PORTFOLIO STATS:
 • Microsoft Award Winner: ELM App (Best in Automation)
 • Municipal Impact: 6+ cities using his solutions
 • Efficiency Gains: 585+ staff hours saved annually
-• Financial Oversight: $73M+ tracked across projects
+• Financial Oversight: $195.9M+ tracked across projects
 • Certifications: ${certificationCount}+ including PMP, Microsoft, ESRI
 
 RECENT KEY PROJECTS:
@@ -123,7 +123,7 @@ CORE EXPERTISE:
 
 KEY ACHIEVEMENTS:
 🏆 Microsoft's Best in Automation Award (ELM App)
-💰 $73M+ in municipal funds tracked and managed
+💰 $195.9M+ in municipal funds tracked and managed
 ⚡ 585+ hours saved annually through automation
 🏛️ 6+ municipalities using his solutions
 📈 30%+ improvement in municipal service delivery times
