@@ -101,32 +101,38 @@ class JonEricChatBot {
 
     initializeResponseVariations() {
         this.responseVariations.set('greeting', [
-            "👋 Hi! I'm here to help you learn about JonEric's work and expertise. What would you like to know?",
-            "🤖 Hello! I can tell you about JonEric's projects, skills, and achievements. What interests you most?",
-            "👨‍💻 Welcome! Ask me anything about JonEric's portfolio - from Power Platform projects to AI solutions!",
-            "🚀 Greetings! Ready to explore JonEric's municipal technology innovations? What catches your eye?"
+            "👋 Hi! I'm JonEric's AI assistant. I can tell you about his Microsoft Award-winning projects, Power Platform expertise, and municipal solutions. What interests you?",
+            "🤖 Hello! I specialize in JonEric's work - from the award-winning ELM app to Power BI dashboards and AI copilots. What would you like to explore?",
+            "👨‍💻 Welcome! Ask me about JonEric's 8+ innovative solutions, including his Microsoft-recognized automation work and $73M+ in tracked municipal funds!",
+            "🚀 Greetings! Ready to learn about JonEric's municipal technology innovations? I can share details about his Power Platform mastery and real-world impact!"
         ]);
 
         this.responseVariations.set('projects_overview', [
-            `🛠️ JonEric has built ${this.portfolioData.projects.length}+ innovative solutions including:\n• ${this.getProjectsByCategory('app').length} Power Apps\n• ${this.getProjectsByCategory('dashboard').length} Power BI dashboards\n• ${this.getProjectsByCategory('ai').length} AI agents\n• ${this.getProjectsByCategory('gis').length} GIS solutions`,
-            `📊 His portfolio spans ${this.portfolioData.projects.length} major projects across:\n• Municipal automation apps\n• Data visualization dashboards\n• AI-powered copilots\n• Geographic information systems`,
-            `🚀 JonEric's ${this.portfolioData.projects.length} projects demonstrate expertise in:\n• Low-code development\n• Business intelligence\n• Artificial intelligence\n• Spatial analytics`,
-            `💡 From concept to deployment, he's delivered ${this.portfolioData.projects.length} solutions that:\n• Automate government processes\n• Visualize complex data\n• Enhance citizen services\n• Optimize municipal operations`
+            `🛠️ JonEric has built ${this.portfolioData.projects.length}+ award-winning solutions!\n\n**Highlights:**\n• ELM App → Microsoft's Best in Automation Award\n• Municipal Dashboards → $73M+ funds tracked\n• AI Copilots → 3,600+ automated queries\n• Power Apps → 585+ hours saved annually\n\n🏆 Used across 6+ municipalities from Illinois to Texas!`,
+            
+            `📊 His portfolio demonstrates real municipal impact:\n\n**Key Projects:**\n• Employment Lifecycle Management (Microsoft Award Winner)\n• Project 25 Dashboard → $7.2M construction oversight  \n• Rental Aid Dashboard → $53M community aid tracking\n• LISA AI Agent → Automated property research\n\n⚡ Each solution delivers measurable efficiency gains!`,
+            
+            `🚀 JonEric's ${this.portfolioData.projects.length} projects span the complete government tech stack:\n\n**Power Platform Solutions:**\n• Apps: HR automation, service requests, licensing\n• Dashboards: Budget tracking, KPIs, aid distribution\n• AI: Copilot Studio agents for citizen services\n• Integration: SharePoint, Teams, Azure AI Search\n\n💡 Transforming how cities serve their communities!`,
+            
+            `� Municipal technology excellence across multiple domains:\n\n**Impact Areas:**\n• Human Resources → 400+ hours saved (ELM App)\n• Financial Oversight → $73M+ tracked accurately\n• Citizen Services → 30% faster response times\n• Data Analytics → Real-time decision support\n\n🌟 Proven scalability from small towns to major cities!`
         ]);
 
         this.responseVariations.set('skills_overview', [
-            "🛠️ JonEric's technical expertise spans the complete Microsoft ecosystem!\n\n**Core Platforms:**\n• Power Platform (Apps, BI, Automate, Copilot Studio)\n• Microsoft 365 (SharePoint, Teams, Entra ID)\n• Azure AI Search & GIS (ArcGIS Pro/Online)\n\n📋 Plus PMP project management for end-to-end solution delivery.",
+            "🛠️ JonEric brings certified expertise across the Microsoft ecosystem!\n\n**Core Specializations:**\n• Power Platform (Apps, BI, Automate, Copilot Studio)\n• Microsoft 365 (SharePoint, Teams, Entra ID)\n• Azure AI Search & GIS (ArcGIS Pro/Online)\n• PMP Project Management\n\n📜 15+ certifications including Microsoft, ESRI, and Google credentials!",
             
-            "⚡ Multi-platform expertise with deep municipal focus!\n\n**Technical Skills:**\n• Low-code development (Power Platform)\n• Data analytics & visualization\n• AI/Copilot development\n• Spatial analysis & GIS\n• Project management (PMP certified)\n\n🎯 15+ certifications backing real-world government solutions.",
+            "⚡ Full-stack low-code development with government focus!\n\n**Technical Expertise:**\n• Power Apps → Municipal automation solutions\n• Power BI → Financial and operational dashboards  \n• Power Automate → Workflow optimization\n• Copilot Studio → AI agent development\n• ArcGIS → Spatial analysis and mapping\n\n🎯 Skills proven across 6+ municipalities with measurable ROI!",
             
-            "🚀 Technology stack optimized for government innovation!\n\n**Specializations:**\n• Microsoft Power Platform mastery\n• Business intelligence & analytics\n• AI automation & copilots\n• Geographic information systems\n• Agile project management\n\n💼 Skills proven across 6+ municipalities with measurable impact."
+            "🚀 Technology mastery spanning development to deployment!\n\n**Platform Proficiency:**\n• Microsoft Power Platform (certified)\n• Business Intelligence & Analytics\n• AI/Copilot Development\n• Geographic Information Systems\n• Agile Project Management (PMP)\n\n💼 Each skill directly contributes to government innovation and efficiency!"
         ]);
 
         this.responseVariations.set('achievements', [
-            `🏆 Key achievements:\n• ${this.portfolioData.achievements[0]?.award || 'Microsoft Award Winner'}\n• ${this.portfolioData.achievements.find(a => a.value?.includes('$'))?.value || '$73M+'} in funds tracked\n• ${this.portfolioData.achievements.find(a => a.value?.includes('+'))?.value || '585+'} hours saved annually`,
-            `⭐ Notable accomplishments:\n• Award-winning ELM app recognized by Microsoft\n• Streamlined municipal operations across multiple cities\n• Delivered measurable ROI through automation`,
-            `📈 Impact delivered:\n• Government efficiency improvements\n• Significant cost savings through automation\n• Enhanced citizen service delivery`,
-            `🌟 Recognition & Results:\n• Microsoft's Best in Automation Award\n• Official case study published\n• 6+ municipalities using solutions\n• 30% faster municipal response times`
+            `🏆 Recognition that speaks to real impact!\n\n**Top Achievements:**\n• Microsoft's Best in Automation Award (ELM App)\n• Official Microsoft case study published\n• $73M+ in municipal funds tracked and managed\n• 585+ staff hours saved annually through automation\n• 6+ cities using his solutions across multiple states`,
+            
+            `⭐ Awards backed by measurable municipal results!\n\n**Key Accomplishments:**\n• Microsoft Award Winner → ELM automation solution\n• Efficiency Expert → 30% faster municipal response times\n• Financial Steward → $73M+ in accurate fund tracking\n• Innovation Leader → AI copilots serving thousands of citizens`,
+            
+            `📈 Excellence recognized at the highest levels!\n\n**Impact Portfolio:**\n• Microsoft's Best in Automation (official case study)\n• Government Efficiency → 585+ hours saved per year\n• Financial Accuracy → $73M+ managed across programs\n• Scalable Solutions → Deployed in Illinois and Texas`,
+            
+            `🌟 Professional recognition meets community impact!\n\n**Achievement Highlights:**\n• Microsoft Award for ELM App innovation\n• Municipal Technology Leader (6+ city deployments)\n• Automation Expert (400+ hours saved in HR alone)\n• Data Steward ($73M+ tracked with 99%+ accuracy)`
         ]);
     }
 
@@ -814,34 +820,58 @@ RESPONSE INSTRUCTIONS:
 • Keep response under 150 words
 • Include relevant emojis and formatting`;
 
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: userMessage,
-                context: enhancedContext,
-                conversationHistory: this.conversationHistory.slice(-6), // Send recent history
-                portfolioData: {
-                    projectCount: this.portfolioData.projects.length,
-                    recentProjects: this.portfolioData.projects.slice(0, 5).map(p => ({
-                        title: p.title,
-                        category: p.category,
-                        description: p.descriptions[0]?.substring(0, 100)
-                    })),
-                    achievements: this.portfolioData.achievements,
-                    certificationCount: this.portfolioData.certifications.length
-                }
-            })
-        });
+        try {
+            console.log('🚀 Attempting API call to /api/chat');
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: userMessage,
+                    context: enhancedContext,
+                    conversationHistory: this.conversationHistory.slice(-6), // Send recent history
+                    portfolioData: {
+                        projectCount: this.portfolioData.projects.length,
+                        recentProjects: this.portfolioData.projects.slice(0, 5).map(p => ({
+                            title: p.title,
+                            category: p.category,
+                            description: p.descriptions[0]?.substring(0, 100)
+                        })),
+                        achievements: this.portfolioData.achievements,
+                        certificationCount: this.portfolioData.certifications.length
+                    }
+                })
+            });
 
-        if (!response.ok) {
-            throw new Error('Failed to get AI response');
+            console.log('📡 API Response Status:', response.status);
+
+            if (!response.ok) {
+                console.error('❌ API Error:', response.status, response.statusText);
+                const errorText = await response.text();
+                console.error('❌ Error Details:', errorText);
+                throw new Error(`API Error: ${response.status} - ${errorText}`);
+            }
+
+            const data = await response.json();
+            console.log('✅ API Success:', data);
+            return data.reply;
+        } catch (error) {
+            console.error('💥 API Call Failed:', error);
+            // Return a fallback response that indicates the issue
+            return `🔧 **API Connection Issue Detected**
+
+I'm having trouble connecting to the enhanced AI backend. This might be because:
+• The OpenAI API key isn't configured on the server
+• There's a deployment issue
+• The API endpoint is not responding
+
+**Currently showing basic responses only.** 
+
+For now, I can tell you that JonEric has built 8+ innovative solutions including Power Apps, dashboards, AI agents, and GIS solutions. His ELM app won Microsoft's Best in Automation award!
+
+*Note: Full AI capabilities will return once the backend is properly configured.*`;
         }
-
-        const data = await response.json();
-        return data.reply;
     }
 
     addMessage(content, sender, isError = false) {
