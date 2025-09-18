@@ -341,6 +341,7 @@ Response Strategy:
 
     generateContextualResponse(userMessage, intent) {
         // Enhanced contextual response generation based on intent analysis
+        console.log('🔍 Generating contextual response for intent:', intent);
         
         if (intent.type === 'greeting') {
             return this.getVariedResponse('greeting');
@@ -348,18 +349,22 @@ Response Strategy:
         
         // Handle specific question types with dedicated responses
         if (intent.type === 'challenges') {
+            console.log('🎯 Using challenges response');
             return this.getChallengesResponse();
         }
         
         if (intent.type === 'dashboards') {
+            console.log('🎯 Using dashboards response');
             return this.getDashboardResponse();
         }
         
         if (intent.type === 'power_platform') {
+            console.log('🎯 Using power platform response');
             return this.getPowerPlatformResponse();
         }
         
         if (intent.type === 'projects') {
+            console.log('🎯 Using projects response');
             // Check for specific project context
             if (intent.context.specificProject === 'elm') {
                 return this.getELMProjectResponse();
@@ -373,10 +378,23 @@ Response Strategy:
         }
         
         if (intent.type === 'skills') {
+            console.log('🎯 Using skills response, skillArea:', intent.context?.skillArea);
             if (intent.context.skillArea) {
-                return this.getSkillAreaResponse(intent.context.skillArea);
+                const skillResponse = this.getSkillAreaResponse(intent.context.skillArea);
+                if (skillResponse) {
+                    console.log('✅ Got skill area response');
+                    return skillResponse;
+                } else {
+                    console.warn('❌ No skill area response found');
+                }
             } else {
-                return this.getVariedResponse('skills_overview');
+                const skillsOverview = this.getVariedResponse('skills_overview');
+                if (skillsOverview) {
+                    console.log('✅ Got skills overview response');
+                    return skillsOverview;
+                } else {
+                    console.warn('❌ No skills overview response found');
+                }
             }
         }
         
@@ -407,6 +425,7 @@ Response Strategy:
             return this.getComparisonResponse(userMessage);
         }
         
+        console.log('⚠️ No contextual response found, falling back to AI API');
         return null; // Fall back to AI API
     }
 
@@ -522,6 +541,12 @@ Want to explore any specific aspect of this ${project.category} solution?`;
     selectUnusedResponse(key, responses) {
         if (!this.usedResponseSets) this.usedResponseSets = new Map();
         
+        // Handle empty responses array
+        if (!responses || responses.length === 0) {
+            console.warn(`No responses available for key: ${key}`);
+            return null;
+        }
+        
         const used = this.usedResponseSets.get(key) || [];
         const unused = responses.filter((_, index) => !used.includes(index));
         const available = unused.length > 0 ? unused : responses;
@@ -534,6 +559,7 @@ Want to explore any specific aspect of this ${project.category} solution?`;
         if (used.length >= responses.length) used.shift();
         this.usedResponseSets.set(key, used);
         
+        console.log(`🎯 Selected response for ${key}:`, selected.substring(0, 50) + '...');
         return selected;
     }
 
