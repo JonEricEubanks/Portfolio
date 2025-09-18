@@ -12,6 +12,13 @@ class JonEricChatBot {
         this.chatStatus = document.getElementById('chat-status');
         this.conversationHistory = [];
         this.responseVariations = new Map();
+        this.usedResponseSets = new Map(); // Track used responses to prevent repetition
+        this.conversationContext = { // Track conversation themes and topics
+            discussedTopics: new Set(),
+            recentIntents: [],
+            userPreferences: {},
+            conversationDepth: 0
+        };
         
         this.initializeEventListeners();
         this.contextPrompt = this.buildContextPrompt();
@@ -96,19 +103,30 @@ class JonEricChatBot {
         this.responseVariations.set('greeting', [
             "👋 Hi! I'm here to help you learn about JonEric's work and expertise. What would you like to know?",
             "🤖 Hello! I can tell you about JonEric's projects, skills, and achievements. What interests you most?",
-            "👨‍💻 Welcome! Ask me anything about JonEric's portfolio - from Power Platform projects to AI solutions!"
+            "👨‍💻 Welcome! Ask me anything about JonEric's portfolio - from Power Platform projects to AI solutions!",
+            "🚀 Greetings! Ready to explore JonEric's municipal technology innovations? What catches your eye?"
         ]);
 
         this.responseVariations.set('projects_overview', [
             `🛠️ JonEric has built ${this.portfolioData.projects.length}+ innovative solutions including:\n• ${this.getProjectsByCategory('app').length} Power Apps\n• ${this.getProjectsByCategory('dashboard').length} Power BI dashboards\n• ${this.getProjectsByCategory('ai').length} AI agents\n• ${this.getProjectsByCategory('gis').length} GIS solutions`,
             `📊 His portfolio spans ${this.portfolioData.projects.length} major projects across:\n• Municipal automation apps\n• Data visualization dashboards\n• AI-powered copilots\n• Geographic information systems`,
-            `🚀 JonEric's ${this.portfolioData.projects.length} projects demonstrate expertise in:\n• Low-code development\n• Business intelligence\n• Artificial intelligence\n• Spatial analytics`
+            `🚀 JonEric's ${this.portfolioData.projects.length} projects demonstrate expertise in:\n• Low-code development\n• Business intelligence\n• Artificial intelligence\n• Spatial analytics`,
+            `💡 From concept to deployment, he's delivered ${this.portfolioData.projects.length} solutions that:\n• Automate government processes\n• Visualize complex data\n• Enhance citizen services\n• Optimize municipal operations`
+        ]);
+
+        this.responseVariations.set('skills_overview', [
+            "🛠️ JonEric's technical expertise spans the complete Microsoft ecosystem!\n\n**Core Platforms:**\n• Power Platform (Apps, BI, Automate, Copilot Studio)\n• Microsoft 365 (SharePoint, Teams, Entra ID)\n• Azure AI Search & GIS (ArcGIS Pro/Online)\n\n📋 Plus PMP project management for end-to-end solution delivery.",
+            
+            "⚡ Multi-platform expertise with deep municipal focus!\n\n**Technical Skills:**\n• Low-code development (Power Platform)\n• Data analytics & visualization\n• AI/Copilot development\n• Spatial analysis & GIS\n• Project management (PMP certified)\n\n🎯 15+ certifications backing real-world government solutions.",
+            
+            "🚀 Technology stack optimized for government innovation!\n\n**Specializations:**\n• Microsoft Power Platform mastery\n• Business intelligence & analytics\n• AI automation & copilots\n• Geographic information systems\n• Agile project management\n\n💼 Skills proven across 6+ municipalities with measurable impact."
         ]);
 
         this.responseVariations.set('achievements', [
-            `🏆 Key achievements:\n• ${this.portfolioData.achievements[0]?.award || 'Microsoft Award Winner'}\n• ${this.portfolioData.achievements.find(a => a.value?.includes('$'))?.value || '$195M+'} in funds tracked\n• ${this.portfolioData.achievements.find(a => a.value?.includes('+'))?.value || '585+'} hours saved annually`,
+            `🏆 Key achievements:\n• ${this.portfolioData.achievements[0]?.award || 'Microsoft Award Winner'}\n• ${this.portfolioData.achievements.find(a => a.value?.includes('$'))?.value || '$73M+'} in funds tracked\n• ${this.portfolioData.achievements.find(a => a.value?.includes('+'))?.value || '585+'} hours saved annually`,
             `⭐ Notable accomplishments:\n• Award-winning ELM app recognized by Microsoft\n• Streamlined municipal operations across multiple cities\n• Delivered measurable ROI through automation`,
-            `📈 Impact delivered:\n• Government efficiency improvements\n• Significant cost savings through automation\n• Enhanced citizen service delivery`
+            `📈 Impact delivered:\n• Government efficiency improvements\n• Significant cost savings through automation\n• Enhanced citizen service delivery`,
+            `🌟 Recognition & Results:\n• Microsoft's Best in Automation Award\n• Official case study published\n• 6+ municipalities using solutions\n• 30% faster municipal response times`
         ]);
     }
 
@@ -203,46 +221,125 @@ Response Strategy:
 
     analyzeUserIntent(message) {
         const lowMessage = message.toLowerCase();
+        const intent = { type: 'general', confidence: 0.5, keywords: [], context: {} };
         
-        // Greeting detection
-        if (/^(hi|hello|hey|greetings)/i.test(message.trim())) {
-            return { type: 'greeting', confidence: 0.9 };
+        // Enhanced greeting detection
+        if (/^(hi|hello|hey|greetings|good\s+(morning|afternoon|evening))/i.test(message.trim())) {
+            intent.type = 'greeting';
+            intent.confidence = 0.95;
+            return intent;
         }
         
-        // Project-related queries
-        if (lowMessage.includes('project') || lowMessage.includes('work') || lowMessage.includes('built') || lowMessage.includes('app')) {
-            return { type: 'projects', confidence: 0.8 };
+        // Project-related queries with specific detection
+        const projectKeywords = ['project', 'work', 'built', 'app', 'application', 'solution', 'system'];
+        const projectMatches = projectKeywords.filter(keyword => lowMessage.includes(keyword));
+        if (projectMatches.length > 0) {
+            intent.type = 'projects';
+            intent.confidence = 0.8 + (projectMatches.length * 0.05);
+            intent.keywords = projectMatches;
+            
+            // Detect specific project types
+            if (lowMessage.includes('elm') || lowMessage.includes('employment')) {
+                intent.context.specificProject = 'elm';
+                intent.confidence = 0.9;
+            } else if (lowMessage.includes('dashboard') || lowMessage.includes('power bi')) {
+                intent.context.projectType = 'dashboard';
+            } else if (lowMessage.includes('gis') || lowMessage.includes('map') || lowMessage.includes('spatial')) {
+                intent.context.projectType = 'gis';
+            } else if (lowMessage.includes('ai') || lowMessage.includes('copilot') || lowMessage.includes('agent')) {
+                intent.context.projectType = 'ai';
+            }
         }
         
-        // Skills/expertise queries
-        if (lowMessage.includes('skill') || lowMessage.includes('expertise') || lowMessage.includes('experience') || lowMessage.includes('technology')) {
-            return { type: 'skills', confidence: 0.8 };
+        // Skills/expertise queries with depth detection
+        const skillKeywords = ['skill', 'expertise', 'experience', 'technology', 'platform', 'certification', 'qualified'];
+        const skillMatches = skillKeywords.filter(keyword => lowMessage.includes(keyword));
+        if (skillMatches.length > 0) {
+            intent.type = 'skills';
+            intent.confidence = 0.8 + (skillMatches.length * 0.05);
+            intent.keywords = skillMatches;
+            
+            // Detect specific skill areas
+            if (lowMessage.includes('power') || lowMessage.includes('microsoft')) {
+                intent.context.skillArea = 'microsoft';
+            } else if (lowMessage.includes('gis') || lowMessage.includes('arcgis')) {
+                intent.context.skillArea = 'gis';
+            } else if (lowMessage.includes('data') || lowMessage.includes('analytics')) {
+                intent.context.skillArea = 'data';
+            } else if (lowMessage.includes('project') && lowMessage.includes('management')) {
+                intent.context.skillArea = 'pm';
+            }
         }
         
         // Achievement/award queries
-        if (lowMessage.includes('award') || lowMessage.includes('achievement') || lowMessage.includes('recognition') || lowMessage.includes('accomplishment')) {
-            return { type: 'achievements', confidence: 0.8 };
+        const achievementKeywords = ['award', 'achievement', 'recognition', 'accomplishment', 'success', 'impact', 'result'];
+        const achievementMatches = achievementKeywords.filter(keyword => lowMessage.includes(keyword));
+        if (achievementMatches.length > 0) {
+            intent.type = 'achievements';
+            intent.confidence = 0.85;
+            intent.keywords = achievementMatches;
         }
         
-        // Specific project queries
-        const projectKeywords = ['elm', 'dashboard', 'power bi', 'power apps', 'gis', 'agent', 'copilot', 'ai'];
-        const foundKeyword = projectKeywords.find(keyword => lowMessage.includes(keyword));
-        if (foundKeyword) {
-            return { type: 'specific_project', keyword: foundKeyword, confidence: 0.7 };
+        // Municipal/government context detection
+        if (lowMessage.includes('government') || lowMessage.includes('municipal') || lowMessage.includes('city') || lowMessage.includes('public')) {
+            intent.context.domain = 'government';
+            intent.confidence = Math.min(intent.confidence + 0.1, 0.95);
         }
         
-        return { type: 'general', confidence: 0.5 };
+        // Question type detection
+        if (message.includes('?')) {
+            intent.context.isQuestion = true;
+            if (lowMessage.startsWith('what') || lowMessage.startsWith('which')) {
+                intent.context.questionType = 'what';
+            } else if (lowMessage.startsWith('how')) {
+                intent.context.questionType = 'how';
+            } else if (lowMessage.startsWith('why')) {
+                intent.context.questionType = 'why';
+            } else if (lowMessage.startsWith('when')) {
+                intent.context.questionType = 'when';
+            } else if (lowMessage.startsWith('where')) {
+                intent.context.questionType = 'where';
+            }
+        }
+        
+        // Detect comparison or evaluation queries
+        if (lowMessage.includes('compare') || lowMessage.includes('versus') || lowMessage.includes('vs') || lowMessage.includes('better')) {
+            intent.context.isComparison = true;
+        }
+        
+        // Detect specific entity mentions
+        const specificEntities = ['buffalo grove', 'mgp', 'microsoft', 'power platform', 'azure', 'sharepoint'];
+        intent.context.entities = specificEntities.filter(entity => lowMessage.includes(entity));
+        
+        return intent;
     }
 
     generateContextualResponse(userMessage, intent) {
-        // Try to use varied responses first
+        // Enhanced contextual response generation based on intent analysis
+        
         if (intent.type === 'greeting') {
             return this.getVariedResponse('greeting');
         }
         
         if (intent.type === 'projects') {
-            const variedResponse = this.getVariedResponse('projects_overview');
-            if (variedResponse) return variedResponse;
+            // Check for specific project context
+            if (intent.context.specificProject === 'elm') {
+                return this.getELMProjectResponse();
+            } else if (intent.context.projectType) {
+                return this.getProjectTypeResponse(intent.context.projectType);
+            } else {
+                // General projects overview with variation
+                const variedResponse = this.getVariedResponse('projects_overview');
+                if (variedResponse) return variedResponse;
+            }
+        }
+        
+        if (intent.type === 'skills') {
+            if (intent.context.skillArea) {
+                return this.getSkillAreaResponse(intent.context.skillArea);
+            } else {
+                return this.getVariedResponse('skills_overview');
+            }
         }
         
         if (intent.type === 'achievements') {
@@ -250,6 +347,7 @@ Response Strategy:
             if (variedResponse) return variedResponse;
         }
         
+        // Handle specific project queries with keyword matching
         if (intent.type === 'specific_project' && intent.keyword) {
             const relevantProjects = this.portfolioData.projects.filter(p => 
                 p.title.toLowerCase().includes(intent.keyword) ||
@@ -257,19 +355,118 @@ Response Strategy:
             );
             
             if (relevantProjects.length > 0) {
-                const project = relevantProjects[0];
-                return `🎯 Great question about ${intent.keyword}! 
-
-**${project.title}**
-${project.descriptions[0]?.substring(0, 120)}...
-
-${project.hasSlideshow ? '📷 This project includes detailed screenshots and walkthroughs in the portfolio.' : ''}
-
-Want to know more about any specific aspect?`;
+                return this.generateProjectResponse(relevantProjects[0], intent.keyword);
             }
         }
         
+        // Handle government/municipal context
+        if (intent.context.domain === 'government') {
+            return this.getMunicipalResponse();
+        }
+        
+        // Handle comparison queries
+        if (intent.context.isComparison) {
+            return this.getComparisonResponse(userMessage);
+        }
+        
         return null; // Fall back to AI API
+    }
+
+    getELMProjectResponse() {
+        const responses = [
+            "🏆 The ELM (Employment Lifecycle Management) App is JonEric's crown jewel! \n\n**Key Impact:**\n• Won Microsoft's Best in Automation Award\n• Official Microsoft case study published\n• Deployed across 6+ municipalities\n• Saves 400+ hours annually in onboarding/offboarding\n\n🛠️ Built with Power Apps, it unified HR workflows across departments and transformed how cities manage employee lifecycles.",
+            
+            "⭐ Great question about ELM! This award-winning solution revolutionized municipal HR:\n\n**The Challenge:** Manual onboarding/offboarding across multiple departments\n**The Solution:** Unified Power Apps workflow\n**The Result:** 400+ hours saved, Microsoft recognition, 6+ city deployments\n\n🚀 It's a perfect example of how low-code can deliver enterprise-level impact.",
+            
+            "💡 The ELM App showcases JonEric's municipal innovation expertise!\n\n**Technical Highlights:**\n• Power Apps front-end with SharePoint backend\n• Automated approval workflows\n• Cross-department integration\n• Real-time status tracking\n\n🏛️ Used by cities from Illinois to Texas, proving scalable government solutions work!"
+        ];
+        
+        return this.selectUnusedResponse('elm_responses', responses);
+    }
+
+    getProjectTypeResponse(type) {
+        const responses = {
+            dashboard: [
+                "📊 JonEric's dashboard expertise shines through Power BI solutions!\n\n**Featured Dashboards:**\n• Project 25 Dashboard → $7.2M construction oversight\n• Rental Aid Dashboard → $53M community aid tracking\n• Municipal KPI Dashboards → Real-time city metrics\n\n⚡ These aren't just charts - they're decision-making tools that guide million-dollar municipal investments.",
+                
+                "🎯 His dashboard portfolio spans from financial oversight to operational excellence:\n\n• **Budget Tracking:** Real-time fund allocation and spending\n• **Project Management:** Construction change orders and timelines\n• **Community Services:** Aid distribution and impact metrics\n\n📈 Each dashboard delivers actionable insights that improve municipal decision-making."
+            ],
+            gis: [
+                "🗺️ JonEric's GIS expertise combines spatial analysis with municipal needs!\n\n**GIS Solutions:**\n• Property research automation with AI\n• Municipal asset mapping\n• Service area optimization\n• Land use analysis\n\n🛠️ Using ArcGIS Pro/Online, he creates solutions that help cities understand their geography and optimize services.",
+                
+                "📍 His spatial analytics work includes:\n\n• **LISA Agent:** AI-powered land information research\n• **Municipal Mapping:** Asset and infrastructure visualization\n• **Service Optimization:** Route planning and coverage analysis\n\n🚀 Combining GIS with Power Platform creates powerful municipal tools."
+            ],
+            ai: [
+                "🤖 JonEric's AI solutions are transforming municipal services!\n\n**AI Projects:**\n• LISA (Land Info Service Agent) → Automated property research\n• Ordinance Research Copilots → Instant policy lookup\n• CRM Integration Agents → 3,600+ automated queries\n\n⚡ Built with Copilot Studio and Azure AI Search, these agents scale government capabilities.",
+                
+                "💡 His AI approach focuses on practical municipal applications:\n\n• **Citizens:** Faster service through automated responses\n• **Staff:** Reduced research time with AI assistance\n• **Government:** Improved efficiency and transparency\n\n🛠️ Each AI solution addresses real government pain points with measurable results."
+            ]
+        };
+        
+        const typeResponses = responses[type] || [];
+        return this.selectUnusedResponse(`${type}_responses`, typeResponses);
+    }
+
+    getSkillAreaResponse(area) {
+        const responses = {
+            microsoft: [
+                "🛠️ JonEric's Microsoft expertise is comprehensive and certified!\n\n**Power Platform Mastery:**\n• Power Apps → Municipal automation solutions\n• Power BI → Financial and operational dashboards\n• Power Automate → Workflow optimization\n• Copilot Studio → AI agent development\n\n📜 Microsoft certified with hands-on experience across the entire ecosystem.",
+                
+                "⚡ His Microsoft 365 integration skills create seamless workflows:\n\n• **SharePoint:** Backend for municipal apps\n• **Teams:** Collaborative government workspace\n• **Entra ID:** Secure identity management\n• **Azure AI Search:** Intelligent content discovery\n\n🚀 This deep ecosystem knowledge enables end-to-end solutions."
+            ],
+            gis: [
+                "📍 ESRI-certified GIS expertise with municipal focus!\n\n**ArcGIS Capabilities:**\n• Pro → Advanced spatial analysis\n• Online → Web-based mapping solutions\n• ModelBuilder → Automated geoprocessing\n• LiDAR → Surface modeling and analysis\n\n🗺️ Multiple ESRI certifications back real-world municipal mapping projects.",
+                
+                "🛰️ His spatial analytics combine traditional GIS with modern integration:\n\n• **Data Integration:** Connecting GIS with Power Platform\n• **Automation:** ModelBuilder workflows for efficiency\n• **Visualization:** Maps that tell municipal stories\n• **Analysis:** Data-driven spatial decision making\n\n📊 Geography meets technology for smarter government."
+            ],
+            pm: [
+                "📋 PMP-certified project management with government expertise!\n\n**Methodologies:**\n• PMP → Traditional project management\n• Agile → Iterative development approach\n• Lean Six Sigma → Process optimization\n• Change Management → Stakeholder engagement\n\n🎯 Successfully managing complex municipal technology initiatives from concept to deployment."
+            ]
+        };
+        
+        const areaResponses = responses[area] || [];
+        return this.selectUnusedResponse(`${area}_skill_responses`, areaResponses);
+    }
+
+    getMunicipalResponse() {
+        const responses = [
+            "🏛️ JonEric specializes in municipal technology that delivers real government impact!\n\n**Cities Served:** Buffalo Grove, Glencoe, Brookfield, Lincolnshire, Fort Worth\n**Focus Areas:** HR automation, financial oversight, citizen services\n**Measurable Results:** 585+ hours saved, $73M+ tracked, 30% faster response times\n\n💡 His solutions address the unique challenges of local government operations.",
+            
+            "🌟 Municipal technology with proven ROI across multiple cities!\n\n**Government Expertise:**\n• Employment lifecycle management\n• Budget and aid tracking\n• Citizen service automation\n• Compliance and reporting\n\n📈 Each solution improves efficiency, transparency, and service delivery for real communities."
+        ];
+        
+        return this.selectUnusedResponse('municipal_responses', responses);
+    }
+
+    generateProjectResponse(project, keyword) {
+        return `🎯 Great question about ${keyword}! 
+
+**${project.title}**
+${project.descriptions[0]?.substring(0, 150)}...
+
+${project.hasSlideshow ? '📷 This project includes detailed screenshots and walkthroughs in the portfolio.' : ''}
+${project.category === 'ai' ? '🤖 This AI solution demonstrates JonEric\'s innovative approach to automation.' : ''}
+${project.category === 'dashboard' ? '📊 This dashboard provides real-time insights for data-driven decisions.' : ''}
+
+Want to explore any specific aspect of this ${project.category} solution?`;
+    }
+
+    selectUnusedResponse(key, responses) {
+        if (!this.usedResponseSets) this.usedResponseSets = new Map();
+        
+        const used = this.usedResponseSets.get(key) || [];
+        const unused = responses.filter((_, index) => !used.includes(index));
+        const available = unused.length > 0 ? unused : responses;
+        
+        const selectedIndex = Math.floor(Math.random() * available.length);
+        const selected = available[selectedIndex];
+        const originalIndex = responses.indexOf(selected);
+        
+        used.push(originalIndex);
+        if (used.length >= responses.length) used.shift();
+        this.usedResponseSets.set(key, used);
+        
+        return selected;
     }
 
     initializeEventListeners() {
@@ -429,6 +626,7 @@ Q: Why trust his work?
         
         // Add to conversation history
         this.conversationHistory.push({ role: 'user', content: message });
+        this.conversationContext.conversationDepth++;
         
         // Auto-collapse suggestions after sending a message
         autoCollapseSuggestions();
@@ -437,16 +635,31 @@ Q: Why trust his work?
         this.showTypingIndicator();
         
         try {
-            // Analyze user intent
+            // Analyze user intent with enhanced context
             const intent = this.analyzeUserIntent(message);
+            
+            // Update conversation context
+            this.updateConversationContext(intent, message);
+            
+            // Check for repetitive requests
+            if (this.isRepetitiveRequest(intent)) {
+                const response = this.handleRepetitiveRequest(intent, message);
+                this.hideTypingIndicator();
+                this.addMessage(response, 'ai');
+                this.conversationHistory.push({ role: 'assistant', content: response });
+                return;
+            }
             
             // Try to generate contextual response first
             let response = this.generateContextualResponse(message, intent);
             
-            // If no contextual response, use AI API
+            // If no contextual response, use AI API with enhanced context
             if (!response) {
                 response = await this.getAIResponse(message);
             }
+            
+            // Track the response to prevent future repetition
+            this.trackResponse(response, intent);
             
             this.hideTypingIndicator();
             this.addMessage(response, 'ai');
@@ -454,9 +667,9 @@ Q: Why trust his work?
             // Add AI response to conversation history
             this.conversationHistory.push({ role: 'assistant', content: response });
             
-            // Keep conversation history manageable (last 10 exchanges)
-            if (this.conversationHistory.length > 20) {
-                this.conversationHistory = this.conversationHistory.slice(-20);
+            // Keep conversation history manageable (last 20 exchanges)
+            if (this.conversationHistory.length > 40) {
+                this.conversationHistory = this.conversationHistory.slice(-40);
             }
             
         } catch (error) {
@@ -464,6 +677,112 @@ Q: Why trust his work?
             this.addMessage('Sorry, I encountered an error. Please try again later.', 'ai', true);
             console.error('Chat error:', error);
         }
+    }
+
+    updateConversationContext(intent, message) {
+        // Track discussed topics
+        this.conversationContext.discussedTopics.add(intent.type);
+        if (intent.context?.specificProject) {
+            this.conversationContext.discussedTopics.add(intent.context.specificProject);
+        }
+        if (intent.context?.projectType) {
+            this.conversationContext.discussedTopics.add(intent.context.projectType);
+        }
+        
+        // Track recent intents (last 5)
+        this.conversationContext.recentIntents.push(intent);
+        if (this.conversationContext.recentIntents.length > 5) {
+            this.conversationContext.recentIntents.shift();
+        }
+        
+        // Detect user preferences
+        if (intent.keywords?.length > 0) {
+            intent.keywords.forEach(keyword => {
+                if (!this.conversationContext.userPreferences[keyword]) {
+                    this.conversationContext.userPreferences[keyword] = 0;
+                }
+                this.conversationContext.userPreferences[keyword]++;
+            });
+        }
+    }
+
+    isRepetitiveRequest(intent) {
+        // Check if the same intent type has been asked recently
+        const recentSameIntents = this.conversationContext.recentIntents
+            .filter(prevIntent => prevIntent.type === intent.type).length;
+        
+        if (recentSameIntents >= 2) {
+            return true;
+        }
+        
+        // Check if asking about the same specific project multiple times
+        if (intent.context?.specificProject) {
+            const sameProjectRequests = this.conversationContext.recentIntents
+                .filter(prevIntent => prevIntent.context?.specificProject === intent.context.specificProject).length;
+            return sameProjectRequests >= 2;
+        }
+        
+        return false;
+    }
+
+    handleRepetitiveRequest(intent, message) {
+        const repetitiveResponses = [
+            "🔄 I notice you're interested in learning more about this topic! Let me provide a different perspective...\n\nIs there a specific aspect you'd like me to dive deeper into?",
+            
+            "💡 Since you're curious about this area, here's another angle:\n\nWhat particular details would be most valuable for you to know?",
+            
+            "🎯 You seem really interested in this! Let me share some additional insights:\n\nAny specific questions I can answer about this topic?",
+            
+            "📚 Great follow-up! Here's what else might interest you about this:\n\nWould you like me to elaborate on any particular aspect?"
+        ];
+        
+        const selectedResponse = repetitiveResponses[Math.floor(Math.random() * repetitiveResponses.length)];
+        
+        // Add contextual follow-up based on intent
+        if (intent.type === 'projects') {
+            return selectedResponse + "\n\n🚀 I can tell you about technical implementation, business impact, or specific features of any project.";
+        } else if (intent.type === 'skills') {
+            return selectedResponse + "\n\n⚡ I can elaborate on certifications, real-world applications, or how these skills solve business problems.";
+        } else if (intent.type === 'achievements') {
+            return selectedResponse + "\n\n🏆 I can share more details about the impact, recognition, or measurable results of JonEric's work.";
+        }
+        
+        return selectedResponse;
+    }
+
+    trackResponse(response, intent) {
+        // Simple response tracking to help identify patterns
+        const responseHash = this.simpleHash(response.substring(0, 100));
+        
+        if (!this.responseTracking) {
+            this.responseTracking = new Map();
+        }
+        
+        if (this.responseTracking.has(responseHash)) {
+            console.warn('Potential response repetition detected');
+        } else {
+            this.responseTracking.set(responseHash, {
+                intent: intent.type,
+                timestamp: Date.now(),
+                responsePreview: response.substring(0, 50)
+            });
+        }
+        
+        // Clean old tracking data (keep last 50 responses)
+        if (this.responseTracking.size > 50) {
+            const oldestKey = this.responseTracking.keys().next().value;
+            this.responseTracking.delete(oldestKey);
+        }
+    }
+
+    simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
     }
 
     async getAIResponse(userMessage) {
