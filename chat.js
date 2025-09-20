@@ -134,6 +134,14 @@ class JonEricChatBot {
             
             `🌟 Professional recognition meets community impact!\n\n**Achievement Highlights:**\n• Microsoft Award for ELM App innovation\n• Municipal Technology Leader (6+ city deployments)\n• Automation Expert (400+ hours saved in HR alone)\n• Data Steward ($195.9M+ tracked with 99%+ accuracy)`
         ]);
+
+        this.responseVariations.set('career_growth', [
+            `🚀 **Strategic Career Development with Clear Goals:**\n\n**Short-term (1-2 Years):**\n• **Technical Leadership** → Lead larger municipal technology initiatives | Mentor junior developers\n• **Certification Expansion** → Azure AI Fundamentals | Advanced Power Platform Specialist | Salesforce Admin\n• **Industry Recognition** → Speaking at Microsoft/ESRI conferences | Thought leadership in municipal tech\n• **Skills Enhancement** → Advanced AI/ML integration | Enterprise-scale Power Platform architecture\n\n**Long-term (3-5 Years):**\n• **Solution Architecture** → Senior Technical Architect role | Design enterprise municipal systems\n• **Consulting Practice** → Independent municipal technology consultant | Multi-city implementations\n• **Innovation Hub** → Lead municipal AI/automation center of excellence\n• **Industry Impact** → Published author on government technology transformation\n\n🎯 This plan leverages his Microsoft award-winning track record to scale impact from single municipalities to transforming how government operates nationwide.`,
+            
+            `💡 **Professional Development Strategy with Measurable Objectives:**\n\n**Technical Growth:**\n• **Cloud Architecture** → Azure solution architect certification | Enterprise-scale implementations\n• **AI Leadership** → Advanced machine learning | Predictive analytics for government\n• **Platform Mastery** → Power Platform Center of Excellence leadership | Enterprise governance\n\n**Career Advancement:**\n• **Leadership Roles** → Technical team management | Strategic planning responsibilities\n• **Industry Influence** → Conference speaking | Thought leadership articles | Best practice development\n• **Business Impact** → Municipal consulting practice | Multi-city technology transformation\n\n**Innovation Focus:**\n• **Emerging Tech** → IoT integration | Blockchain for government | Advanced AI applications\n• **Research & Development** → Patent development | Municipal technology research | Academic partnerships\n\n🚀 Building on his Microsoft award foundation to become a recognized leader in government technology transformation!`,
+            
+            `🎯 **Career Trajectory Built on Proven Success:**\n\n**Key Growth Areas:**\n• **Technical** → Azure cloud architecture | Advanced AI integration | Enterprise Power Platform\n• **Leadership** → Team management | Strategic planning | Stakeholder engagement\n• **Business** → Municipal budgeting expertise | Grant writing | Contract negotiation\n• **Innovation** → Emerging tech evaluation | R&D leadership | Patent development\n\n**Strategic Milestones:**\n• **Year 1-2** → Senior developer role | Team leadership | Advanced certifications\n• **Year 3-5** → Solution architect | Consulting practice | Industry recognition\n• **Year 5+** → Technology executive | Innovation center leader | Published author\n\n**Impact Vision:**\nTransform from award-winning individual contributor to industry leader shaping how government leverages technology for citizen services. Each step builds on documented success with measurable outcomes.\n\n💼 The plan: Scale proven municipal impact to national government transformation leadership!`
+        ]);
     }
 
     getProjectsByCategory(category) {
@@ -305,6 +313,15 @@ Response Strategy:
             intent.keywords = achievementMatches;
         }
         
+        // Career growth/plan queries
+        const careerKeywords = ['career', 'growth', 'plan', 'future', 'goals', 'development', 'advancement', 'trajectory', 'next', 'where is he going', 'long term', 'short term'];
+        const careerMatches = careerKeywords.filter(keyword => lowMessage.includes(keyword));
+        if (careerMatches.length > 0) {
+            intent.type = 'career_growth';
+            intent.confidence = 0.9;
+            intent.keywords = careerMatches;
+        }
+        
         // Municipal/government context detection
         if (lowMessage.includes('government') || lowMessage.includes('municipal') || lowMessage.includes('city') || lowMessage.includes('public')) {
             intent.context.domain = 'government';
@@ -400,6 +417,12 @@ Response Strategy:
         
         if (intent.type === 'achievements') {
             const variedResponse = this.getVariedResponse('achievements');
+            if (variedResponse) return variedResponse;
+        }
+        
+        if (intent.type === 'career_growth') {
+            console.log('🎯 Using career growth response');
+            const variedResponse = this.getVariedResponse('career_growth');
             if (variedResponse) return variedResponse;
         }
         
