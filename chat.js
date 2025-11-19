@@ -322,6 +322,15 @@ Response Strategy:
             intent.keywords = careerMatches;
         }
         
+        // Notification queries - detect when users ask about notification features
+        const notificationKeywords = ['notification', 'notifications', 'alert', 'alerts', 'notify', 'bell icon'];
+        const notificationMatches = notificationKeywords.filter(keyword => lowMessage.includes(keyword));
+        if (notificationMatches.length > 0 && (lowMessage.includes('find') || lowMessage.includes('where') || lowMessage.includes('how') || lowMessage.includes('get'))) {
+            intent.type = 'notifications';
+            intent.confidence = 0.95;
+            intent.keywords = notificationMatches;
+        }
+        
         // Municipal/government context detection
         if (lowMessage.includes('government') || lowMessage.includes('municipal') || lowMessage.includes('city') || lowMessage.includes('public')) {
             intent.context.domain = 'government';
@@ -426,6 +435,11 @@ Response Strategy:
             if (variedResponse) return variedResponse;
         }
         
+        if (intent.type === 'notifications') {
+            console.log('🎯 Using notifications response');
+            return this.getNotificationsResponse();
+        }
+        
         // Handle specific project queries with keyword matching
         if (intent.type === 'specific_project' && intent.keyword) {
             const relevantProjects = this.portfolioData.projects.filter(p => 
@@ -460,6 +474,16 @@ Response Strategy:
         ];
         
         return this.selectUnusedResponse('challenges_responses', responses);
+    }
+
+    getNotificationsResponse() {
+        const responses = [
+            "📧 **Looking for notifications?**\n\nThis is JonEric's portfolio website - it doesn't have user notifications. However, he builds systems that *deliver* notifications!\n\n**Notification Projects:**\n• **Block Party Requests** → Automated staff alerts for approvals\n• **Water Service Records** → Real-time updates when records change\n• **ELM App** → AI-enhanced email notifications for HR tasks\n\n💡 Want to learn more about these automation projects? Just ask!",
+            
+            "🔔 **About notifications on this site:**\n\nThis portfolio showcases JonEric's work - there's no notification system for visitors here.\n\n**But check out his notification automation work:**\n• Staff notification systems for municipal workflows\n• Automated approval alerts via Power Automate\n• Real-time updates integrated with Teams & email\n\n📊 Scroll through the portfolio sections to explore these automation projects!"
+        ];
+        
+        return this.selectUnusedResponse('notifications_responses', responses);
     }
 
     getDashboardResponse() {
