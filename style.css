@@ -1368,7 +1368,7 @@ body.dashboard-mode .author-info span {
   backdrop-filter: blur(15px); /* Slightly less blur for more transparency */
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(15, 118, 110, 0.15); /* More transparent border */
-  border-radius: var(--radius-full);
+  border-radius: 50px;
   padding: var(--space-2) var(--space-4);
   box-shadow: 
     0 8px 32px rgba(15, 118, 110, 0.1), /* More transparent shadow */
