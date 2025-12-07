@@ -401,19 +401,20 @@ html {
 /* Mobile Navigation Toggle - Shown by default, hidden on desktop */
 .nav-toggle {
   display: flex;
-  background: white;
-  border: 2px solid var(--primary-light);
+  background: var(--primary-color);
+  border: none;
   cursor: pointer;
-  padding: 0.625rem 0.75rem;
+  padding: 0.75rem;
   border-radius: var(--radius-lg);
   transition: all 0.2s ease;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .nav-toggle:hover {
-  background: var(--gray-100);
-  border-color: var(--primary-color);
+  background: var(--primary-dark);
+  transform: scale(1.05);
 }
 
 /* Force nav to be visible on desktop (above 1185px) */
@@ -440,9 +441,9 @@ html {
 
 .hamburger {
   display: block;
-  width: 22px;
+  width: 20px;
   height: 3px;
-  background: var(--primary-color);
+  background: white;
   border-radius: 2px;
   position: relative;
   transition: all 0.3s ease;
@@ -452,9 +453,9 @@ html {
 .hamburger::after {
   content: '';
   position: absolute;
-  width: 22px;
+  width: 20px;
   height: 3px;
-  background: var(--primary-color);
+  background: white;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
