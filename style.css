@@ -262,9 +262,9 @@ html {
   letter-spacing: 0.02em;
 }
 
-/* Navigation Section */
+/* Navigation Section - Hidden by default on mobile, shown on desktop */
 .modern-nav {
-  display: flex;
+  display: none; /* Hidden by default - shown via media query on desktop */
   align-items: center;
   gap: 0.25rem;
   flex: 1;
@@ -398,15 +398,17 @@ html {
   background: linear-gradient(135deg, #e081e9 0%, #e3455a 100%);
 }
 
-/* Mobile Navigation Toggle */
+/* Mobile Navigation Toggle - Shown by default, hidden on desktop */
 .nav-toggle {
-  display: none;
+  display: flex;
   background: var(--gray-100);
   border: none;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-toggle:hover {
