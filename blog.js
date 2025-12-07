@@ -963,41 +963,27 @@ Respond with ONLY one sentence, no quotes, no explanation.`
 
     async loadPosts() {
         try {
-            // Try to fetch from GitHub API first
-            const response = await fetch('/api/posts');
+            // Only fetch from GitHub API
+            const response = await fetch('/api/posts', { cache: 'no-store' });
             if (response.ok) {
                 const posts = await response.json();
                 if (Array.isArray(posts)) {
-                    // Always use GitHub data as source of truth
                     this.posts = posts;
-                    // Cache in localStorage for offline access
-                    localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
                     console.log('Loaded', posts.length, 'posts from GitHub');
                 } else {
-                    // Fallback to localStorage if API returns invalid data
-                    const stored = localStorage.getItem(this.storageKey);
-                    this.posts = stored ? JSON.parse(stored) : [];
-                    console.log('Invalid API response, using localStorage');
+                    this.posts = [];
+                    console.log('Invalid API response, using empty array');
                 }
             } else {
-                // Fallback to localStorage
-                const stored = localStorage.getItem(this.storageKey);
-                this.posts = stored ? JSON.parse(stored) : [];
-                console.log('API failed, using localStorage');
+                this.posts = [];
+                console.log('API failed, using empty array');
             }
             // Sort by date, newest first
             this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
             this.renderPosts();
         } catch (error) {
             console.error('Error loading posts:', error);
-            // Fallback to localStorage
-            try {
-                const stored = localStorage.getItem(this.storageKey);
-                this.posts = stored ? JSON.parse(stored) : [];
-                this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-            } catch (e) {
-                this.posts = [];
-            }
+            this.posts = [];
             this.renderPosts();
         }
     }
@@ -1006,7 +992,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         try {
             // Always save to localStorage first (instant)
             localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
-            
+
             // If authenticated, also save to GitHub
             if (this.isAuthenticated()) {
                 const token = sessionStorage.getItem(this._authToken) || localStorage.getItem(this._authToken);
@@ -1018,9 +1004,12 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                     },
                     body: JSON.stringify({ posts: this.posts })
                 });
-                
+
                 if (!response.ok) {
                     console.warn('Failed to save to GitHub, but localStorage saved');
+                } else {
+                    // Always reload posts from GitHub after save
+                    await this.loadPosts();
                 }
             }
         } catch (error) {
