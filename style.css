@@ -470,8 +470,8 @@ html {
 } 
 */
 
-/* Tablet Responsive - 968px and below */
-@media (max-width: 968px) {
+/* Mobile Responsive - 768px and below */
+@media (max-width: 768px) {
   .modern-header {
     padding: 0.75rem 1rem;
   }
