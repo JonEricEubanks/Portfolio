@@ -413,8 +413,8 @@ html {
   background: var(--gray-200);
 }
 
-/* Force nav to be visible on desktop (above 1175px) */
-@media (min-width: 1176px) {
+/* Force nav to be visible on desktop (above 1185px) */
+@media (min-width: 1186px) {
   .modern-nav {
     display: flex !important;
     position: static !important;
@@ -470,8 +470,8 @@ html {
 } 
 */
 
-/* Mobile Responsive - 1175px and below */
-@media (max-width: 1175px) {
+/* Mobile Responsive - 1185px and below */
+@media (max-width: 1185px) {
   .modern-header {
     padding: 0.75rem 1rem;
   }
@@ -479,6 +479,7 @@ html {
   .header-container {
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .header-brand {
@@ -493,10 +494,30 @@ html {
     font-size: 0.75rem;
   }
 
-  /* Hide navigation, show toggle */
-  .nav-toggle {
+  /* Header actions container with flexbox ordering */
+  .header-actions {
+    margin-left: auto;
     display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  /* Order: Spotlight (1), Chat (2), Hamburger (3) - left to right */
+  .header-actions .spotlight-btn {
+    order: 1;
+  }
+  
+  .header-actions .chat-btn {
+    order: 2;
+  }
+  
+  .header-actions .nav-toggle {
     order: 3;
+  }
+
+  /* Show hamburger toggle */
+  .nav-toggle {
+    display: flex !important;
   }
 
   .modern-nav {
@@ -535,11 +556,6 @@ html {
     width: 100%;
     padding: 0.75rem 1rem;
     justify-content: flex-start;
-  }
-
-  .header-actions {
-    order: 2;
-    margin-left: auto;
   }
 
   .action-btn .btn-text {
