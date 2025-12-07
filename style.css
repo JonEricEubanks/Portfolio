@@ -413,6 +413,23 @@ html {
   background: var(--gray-200);
 }
 
+/* Force nav to be visible on desktop (above 968px) */
+@media (min-width: 969px) {
+  .modern-nav {
+    display: flex !important;
+    position: static !important;
+    flex-direction: row !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  
+  .nav-toggle {
+    display: none !important;
+  }
+}
+
 .hamburger {
   display: block;
   width: 20px;
