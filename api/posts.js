@@ -60,7 +60,7 @@ export default async function handler(req, res) {
                 `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`,
                 {
                     headers: {
-                        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                        'Authorization': `token ${GITHUB_TOKEN}`,
                         'Accept': 'application/vnd.github.v3+json'
                     }
                 }
@@ -70,26 +70,35 @@ export default async function handler(req, res) {
             if (fileResponse.ok) {
                 const fileData = await fileResponse.json();
                 sha = fileData.sha;
+            } else {
+                const errData = await fileResponse.json();
+                console.error('Error getting file SHA:', errData);
             }
 
             // Update the file
             const content = Buffer.from(JSON.stringify(posts, null, 2)).toString('base64');
+            
+            const updateBody = {
+                message: `Update blog posts - ${new Date().toISOString()}`,
+                content: content,
+                branch: 'main'
+            };
+            
+            // Only include sha if file exists (required for updates, omit for creates)
+            if (sha) {
+                updateBody.sha = sha;
+            }
             
             const updateResponse = await fetch(
                 `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`,
                 {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                        'Authorization': `token ${GITHUB_TOKEN}`,
                         'Accept': 'application/vnd.github.v3+json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        message: `Update blog posts - ${new Date().toISOString()}`,
-                        content: content,
-                        sha: sha,
-                        branch: 'main'
-                    })
+                    body: JSON.stringify(updateBody)
                 }
             );
 
