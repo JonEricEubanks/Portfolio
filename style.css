@@ -413,8 +413,8 @@ html {
   background: var(--gray-200);
 }
 
-/* Force nav to be visible on desktop (above 968px) */
-@media (min-width: 969px) {
+/* Force nav to be visible on desktop (above 768px) */
+@media (min-width: 769px) {
   .modern-nav {
     display: flex !important;
     position: static !important;
