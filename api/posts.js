@@ -96,13 +96,18 @@ export default async function handler(req, res) {
             if (!updateResponse.ok) {
                 const errorData = await updateResponse.json();
                 console.error('GitHub API error:', errorData);
-                return res.status(500).json({ error: 'Failed to save to GitHub' });
+                return res.status(500).json({ 
+                    error: 'Failed to save to GitHub', 
+                    details: errorData.message,
+                    owner: GITHUB_OWNER,
+                    repo: GITHUB_REPO 
+                });
             }
 
             return res.status(200).json({ success: true, message: 'Posts saved to GitHub' });
         } catch (error) {
             console.error('Error saving posts:', error);
-            return res.status(500).json({ error: 'Failed to save posts' });
+            return res.status(500).json({ error: 'Failed to save posts', details: error.message });
         }
     }
 
