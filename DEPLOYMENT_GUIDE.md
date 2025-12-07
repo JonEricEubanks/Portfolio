@@ -52,17 +52,31 @@ vercel --prod
 | `OPENAI_API_KEY` | Your OpenAI API key for the chat assistant |
 | `BLOG_ADMIN_EMAIL` | Your blog admin email address |
 | `BLOG_ADMIN_PASSWORD` | Your blog admin password |
+| `GITHUB_TOKEN` | Personal Access Token with repo write access (for saving blog posts) |
+| `GITHUB_OWNER` | Your GitHub username: `JonEricEubanks` |
+| `GITHUB_REPO` | Your repository name: `Portfolio` |
+
+### Creating a GitHub Personal Access Token:
+1. Go to https://github.com/settings/tokens
+2. Click "Generate new token (classic)"
+3. Name it "Portfolio Blog"
+4. Select scope: `repo` (full control of private repositories)
+5. Generate and copy the token
+6. Add it to Vercel as `GITHUB_TOKEN`
 
 ### Vercel CLI (if using):
 ```bash
 vercel env add OPENAI_API_KEY
 vercel env add BLOG_ADMIN_EMAIL
 vercel env add BLOG_ADMIN_PASSWORD
+vercel env add GITHUB_TOKEN
+vercel env add GITHUB_OWNER
+vercel env add GITHUB_REPO
 # Paste each value when prompted
 ```
 
 ### 🔒 Security Note
-Your blog admin credentials are stored securely as environment variables on Vercel's servers. They are NOT included in your GitHub repository code, keeping them private and secure.
+Your blog admin credentials and GitHub token are stored securely as environment variables on Vercel's servers. They are NOT included in your GitHub repository code, keeping them private and secure.
 
 ---
 

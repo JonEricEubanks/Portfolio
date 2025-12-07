@@ -24,10 +24,24 @@ class BlogManager {
         this.initializeElements();
         this.initializeAuth();
         this.initializeSecretAccess();
-        this.loadPosts();
         this.initializeEventListeners();
         this.initializeImageUpload();
-        this.renderPosts();
+        
+        // Load posts asynchronously, render from localStorage first for speed
+        this.loadPostsFromCache();
+        this.loadPosts(); // Then fetch from GitHub
+    }
+    
+    // Load from localStorage for instant display
+    loadPostsFromCache() {
+        try {
+            const stored = localStorage.getItem(this.storageKey);
+            this.posts = stored ? JSON.parse(stored) : [];
+            this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            this.renderPosts();
+        } catch (error) {
+            this.posts = [];
+        }
     }
     
     // Check if authenticated
@@ -947,24 +961,67 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         }
     }
 
-    loadPosts() {
+    async loadPosts() {
         try {
-            const stored = localStorage.getItem(this.storageKey);
-            this.posts = stored ? JSON.parse(stored) : [];
+            // Try to fetch from GitHub API first
+            const response = await fetch('/api/posts');
+            if (response.ok) {
+                const posts = await response.json();
+                if (Array.isArray(posts) && posts.length > 0) {
+                    this.posts = posts;
+                    // Cache in localStorage for offline access
+                    localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
+                } else {
+                    // Fallback to localStorage if API returns empty
+                    const stored = localStorage.getItem(this.storageKey);
+                    this.posts = stored ? JSON.parse(stored) : [];
+                }
+            } else {
+                // Fallback to localStorage
+                const stored = localStorage.getItem(this.storageKey);
+                this.posts = stored ? JSON.parse(stored) : [];
+            }
             // Sort by date, newest first
             this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            this.renderPosts();
         } catch (error) {
             console.error('Error loading posts:', error);
-            this.posts = [];
+            // Fallback to localStorage
+            try {
+                const stored = localStorage.getItem(this.storageKey);
+                this.posts = stored ? JSON.parse(stored) : [];
+                this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } catch (e) {
+                this.posts = [];
+            }
+            this.renderPosts();
         }
     }
 
-    savePosts() {
+    async savePosts() {
         try {
+            // Always save to localStorage first (instant)
             localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
+            
+            // If authenticated, also save to GitHub
+            if (this.isAuthenticated()) {
+                const token = sessionStorage.getItem(this._authToken) || localStorage.getItem(this._authToken);
+                const response = await fetch('/api/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ posts: this.posts })
+                });
+                
+                if (!response.ok) {
+                    console.warn('Failed to save to GitHub, but localStorage saved');
+                }
+            }
         } catch (error) {
             console.error('Error saving posts:', error);
-            alert('Failed to save post. Storage might be full.');
+            alert('Failed to save post. Changes saved locally only.');
         }
     }
 
