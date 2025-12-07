@@ -1,4 +1,5 @@
 // Vercel serverless function to save blog posts to GitHub
+// Version 2 - with detailed error logging
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -43,39 +44,61 @@ export default async function handler(req, res) {
         const GITHUB_OWNER = process.env.GITHUB_OWNER;
         const GITHUB_REPO = process.env.GITHUB_REPO;
 
+        // Debug: Check what we have
+        const tokenExists = !!GITHUB_TOKEN;
+        const tokenLength = GITHUB_TOKEN ? GITHUB_TOKEN.length : 0;
+        const tokenPrefix = GITHUB_TOKEN ? GITHUB_TOKEN.substring(0, 4) : 'none';
+
         if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-            console.error('GitHub environment variables not configured');
-            return res.status(500).json({ error: 'Server configuration error' });
+            return res.status(500).json({ 
+                error: 'Server configuration error',
+                debug: {
+                    tokenExists,
+                    tokenLength,
+                    tokenPrefix,
+                    owner: GITHUB_OWNER || 'missing',
+                    repo: GITHUB_REPO || 'missing'
+                }
+            });
         }
 
         try {
             const { posts } = req.body;
 
             if (!Array.isArray(posts)) {
-                return res.status(400).json({ error: 'Posts must be an array' });
+                return res.status(400).json({ error: 'Posts must be an array', received: typeof posts });
             }
 
-            // Get the current file SHA (required for updates)
-            const fileResponse = await fetch(
-                `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`,
-                {
-                    headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                }
-            );
-
+            // Step 1: Get the current file SHA (required for updates)
             let sha = null;
+            let step = 'get-sha';
+            
+            const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`;
+            const fileResponse = await fetch(fileUrl, {
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
             if (fileResponse.ok) {
                 const fileData = await fileResponse.json();
                 sha = fileData.sha;
             } else {
                 const errData = await fileResponse.json();
-                console.error('Error getting file SHA:', errData);
+                // If file doesn't exist, that's OK - we'll create it
+                if (fileResponse.status !== 404) {
+                    return res.status(500).json({ 
+                        error: 'Failed at step: get-sha',
+                        status: fileResponse.status,
+                        details: errData.message || JSON.stringify(errData),
+                        url: fileUrl
+                    });
+                }
             }
 
-            // Update the file
+            // Step 2: Update the file
+            step = 'update-file';
             const content = Buffer.from(JSON.stringify(posts, null, 2)).toString('base64');
             
             const updateBody = {
@@ -84,39 +107,39 @@ export default async function handler(req, res) {
                 branch: 'main'
             };
             
-            // Only include sha if file exists (required for updates, omit for creates)
             if (sha) {
                 updateBody.sha = sha;
             }
             
-            const updateResponse = await fetch(
-                `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updateBody)
-                }
-            );
+            const updateResponse = await fetch(fileUrl, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateBody)
+            });
 
             if (!updateResponse.ok) {
                 const errorData = await updateResponse.json();
-                console.error('GitHub API error:', errorData);
                 return res.status(500).json({ 
-                    error: 'Failed to save to GitHub', 
-                    details: errorData.message,
+                    error: 'Failed at step: update-file',
+                    status: updateResponse.status,
+                    details: errorData.message || JSON.stringify(errorData),
+                    sha: sha || 'none',
                     owner: GITHUB_OWNER,
-                    repo: GITHUB_REPO 
+                    repo: GITHUB_REPO
                 });
             }
 
             return res.status(200).json({ success: true, message: 'Posts saved to GitHub' });
         } catch (error) {
-            console.error('Error saving posts:', error);
-            return res.status(500).json({ error: 'Failed to save posts', details: error.message });
+            return res.status(500).json({ 
+                error: 'Exception caught', 
+                message: error.message,
+                stack: error.stack ? error.stack.substring(0, 500) : 'no stack'
+            });
         }
     }
 
