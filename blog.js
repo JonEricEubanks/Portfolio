@@ -438,7 +438,13 @@ class BlogManager {
                 insertion = `[${selected || 'link text'}](${url})`;
                 break;
             case 'image':
-                insertion = `![${selected || 'alt text'}](url)`;
+                const imgUrl = prompt('Enter image URL:', selected.startsWith('http') ? selected : 'https://');
+                if (imgUrl) {
+                    const altText = prompt('Enter alt text (description):', 'Image') || 'Image';
+                    insertion = `![${altText}](${imgUrl})`;
+                } else {
+                    return; // User cancelled
+                }
                 break;
             case 'code':
                 insertion = `\`${selected || 'code'}\``;
@@ -602,34 +608,32 @@ class BlogManager {
         const textBefore = this.postContent.value.substring(0, cursorPos);
         const textAfter = this.postContent.value.substring(cursorPos);
         
-        const placeholder = '\n[⏳ Uploading image...]\n';
+        const placeholder = '\n[⏳ Processing image...]\n';
         this.postContent.value = textBefore + placeholder + textAfter;
         
         try {
-            // Upload the image
-            const formData = new FormData();
-            formData.append('image', file, `paste-${Date.now()}.png`);
+            // Convert image to Base64 data URL
+            const base64 = await this.fileToBase64(file);
             
-            const response = await fetch('/api/upload-image', {
-                method: 'POST',
-                body: formData
-            });
+            // Replace placeholder with actual image markdown using data URL
+            this.postContent.value = textBefore + `\n![Screenshot](${base64})\n` + textAfter;
             
-            const result = await response.json();
-            
-            // Server returns imagePath, not imageUrl
-            if (result.success && result.imagePath) {
-                // Replace placeholder with actual image markdown
-                this.postContent.value = textBefore + `\n![Screenshot](/${result.imagePath})\n` + textAfter;
-            } else {
-                // Remove placeholder on error
-                this.postContent.value = textBefore + '\n[❌ Image upload failed]\n' + textAfter;
-            }
+            // Trigger autosave
+            this.triggerAutosave();
         } catch (error) {
-            // Remove placeholder on error - likely server not running
-            this.postContent.value = textBefore + '\n[❌ Image upload failed - make sure server is running with: node server.js]\n' + textAfter;
-            console.error('Image upload error:', error);
+            // Remove placeholder on error
+            this.postContent.value = textBefore + '\n[❌ Image processing failed]\n' + textAfter;
+            console.error('Image processing error:', error);
         }
+    }
+    
+    fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
     }
 
     initializeImageUpload() {
@@ -670,45 +674,30 @@ class BlogManager {
     }
     
     async handleImageUpload(file) {
-        // Validate file size (5MB)
-        if (file.size > 5 * 1024 * 1024) {
-            this.showUploadStatus('File too large. Maximum size is 5MB.', 'error');
+        // Validate file size (2MB for featured image to keep localStorage manageable)
+        if (file.size > 2 * 1024 * 1024) {
+            this.showUploadStatus('File too large. Maximum size is 2MB for featured images.', 'error');
             return;
         }
         
-        // Show uploading status
-        this.showUploadStatus('Uploading...', 'uploading');
+        // Show processing status
+        this.showUploadStatus('Processing...', 'uploading');
         
-        // Show preview immediately
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            this.previewImg.src = e.target.result;
+        try {
+            // Convert to Base64 data URL
+            const base64 = await this.fileToBase64(file);
+            
+            // Show preview
+            this.previewImg.src = base64;
             this.uploadPlaceholder.style.display = 'none';
             this.imagePreview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-        
-        // Upload to server
-        try {
-            const formData = new FormData();
-            formData.append('image', file);
             
-            const response = await fetch('/api/upload-image', {
-                method: 'POST',
-                body: formData
-            });
-            
-            const result = await response.json();
-            
-            if (result.success) {
-                this.postImage.value = result.imagePath;
-                this.showUploadStatus('Image uploaded successfully!', 'success');
-            } else {
-                throw new Error(result.error || 'Upload failed');
-            }
+            // Store the base64 data URL as the image value
+            this.postImage.value = base64;
+            this.showUploadStatus('Image ready!', 'success');
         } catch (error) {
-            console.error('Upload error:', error);
-            this.showUploadStatus('Upload failed. Please try again.', 'error');
+            console.error('Image processing error:', error);
+            this.showUploadStatus('Processing failed. Please try again.', 'error');
             this.clearImagePreview();
         }
     }
