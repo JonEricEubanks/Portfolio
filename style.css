@@ -401,18 +401,19 @@ html {
 /* Mobile Navigation Toggle - Shown by default, hidden on desktop */
 .nav-toggle {
   display: flex;
-  background: var(--gray-100);
-  border: none;
+  background: white;
+  border: 2px solid var(--primary-light);
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: var(--radius-md);
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-lg);
   transition: all 0.2s ease;
   align-items: center;
   justify-content: center;
 }
 
 .nav-toggle:hover {
-  background: var(--gray-200);
+  background: var(--gray-100);
+  border-color: var(--primary-color);
 }
 
 /* Force nav to be visible on desktop (above 1185px) */
@@ -439,9 +440,9 @@ html {
 
 .hamburger {
   display: block;
-  width: 20px;
-  height: 2px;
-  background: var(--gray-700);
+  width: 22px;
+  height: 3px;
+  background: var(--primary-color);
   border-radius: 2px;
   position: relative;
   transition: all 0.3s ease;
@@ -451,15 +452,15 @@ html {
 .hamburger::after {
   content: '';
   position: absolute;
-  width: 20px;
-  height: 2px;
-  background: var(--gray-700);
+  width: 22px;
+  height: 3px;
+  background: var(--primary-color);
   border-radius: 2px;
   transition: all 0.3s ease;
 }
 
-.hamburger::before { top: -6px; }
-.hamburger::after { top: 6px; }
+.hamburger::before { top: -7px; }
+.hamburger::after { top: 7px; }
 
 /* 
 .nav-toggle[aria-expanded="true"] .hamburger {
