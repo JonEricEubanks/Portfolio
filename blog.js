@@ -967,19 +967,23 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             const response = await fetch('/api/posts');
             if (response.ok) {
                 const posts = await response.json();
-                if (Array.isArray(posts) && posts.length > 0) {
+                if (Array.isArray(posts)) {
+                    // Always use GitHub data as source of truth
                     this.posts = posts;
                     // Cache in localStorage for offline access
                     localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
+                    console.log('Loaded', posts.length, 'posts from GitHub');
                 } else {
-                    // Fallback to localStorage if API returns empty
+                    // Fallback to localStorage if API returns invalid data
                     const stored = localStorage.getItem(this.storageKey);
                     this.posts = stored ? JSON.parse(stored) : [];
+                    console.log('Invalid API response, using localStorage');
                 }
             } else {
                 // Fallback to localStorage
                 const stored = localStorage.getItem(this.storageKey);
                 this.posts = stored ? JSON.parse(stored) : [];
+                console.log('API failed, using localStorage');
             }
             // Sort by date, newest first
             this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
