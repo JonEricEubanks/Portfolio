@@ -4315,3 +4315,43 @@ body:not(.dashboard-mode) .kpi-indicator {
   }
 }
 
+/* ==========================================================================
+   FINAL OVERRIDE - Navigation Visibility Rules (placed at end for priority)
+   ========================================================================== */
+
+/* Desktop: 1186px and above - Show nav links, hide hamburger */
+@media (min-width: 1186px) {
+  #primary-nav.modern-nav,
+  .navigation.modern-nav {
+    display: flex !important;
+    position: static !important;
+    flex-direction: row !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border: none !important;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .nav-toggle {
+    display: none !important;
+  }
+}
+
+/* Mobile/Tablet: 1185px and below - Hide nav (until toggled), show hamburger */
+@media (max-width: 1185px) {
+  #primary-nav.modern-nav,
+  .navigation.modern-nav {
+    display: none !important;
+  }
+  
+  #primary-nav.modern-nav[aria-hidden="false"],
+  .navigation.modern-nav[aria-hidden="false"] {
+    display: flex !important;
+  }
+  
+  .nav-toggle {
+    display: flex !important;
+  }
+}
