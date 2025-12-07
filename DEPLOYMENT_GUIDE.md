@@ -40,18 +40,29 @@ vercel --prod
 
 ## 🔑 Required Environment Variables
 
-**IMPORTANT**: You'll need to set this in Vercel:
+**IMPORTANT**: You'll need to set these in Vercel:
 
 ### In Vercel Dashboard:
 1. Go to your project settings
 2. Navigate to "Environment Variables"
-3. Add: `OPENAI_API_KEY` = `your_openai_api_key_here`
+3. Add the following:
+
+| Variable | Description |
+|----------|-------------|
+| `OPENAI_API_KEY` | Your OpenAI API key for the chat assistant |
+| `BLOG_ADMIN_EMAIL` | Your blog admin email address |
+| `BLOG_ADMIN_PASSWORD` | Your blog admin password |
 
 ### Vercel CLI (if using):
 ```bash
 vercel env add OPENAI_API_KEY
-# Paste your OpenAI API key when prompted
+vercel env add BLOG_ADMIN_EMAIL
+vercel env add BLOG_ADMIN_PASSWORD
+# Paste each value when prompted
 ```
+
+### 🔒 Security Note
+Your blog admin credentials are stored securely as environment variables on Vercel's servers. They are NOT included in your GitHub repository code, keeping them private and secure.
 
 ---
 

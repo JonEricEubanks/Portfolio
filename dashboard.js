@@ -533,6 +533,89 @@ document.addEventListener('DOMContentLoaded', function() {
  * Navigation functionality for header pills
  */
 function initNavigation() {
+  // Mobile navigation toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const primaryNav = document.getElementById('primary-nav');
+  
+  if (navToggle && primaryNav) {
+    // Toggle function
+    function toggleMenu(e) {
+      if (e) e.stopPropagation(); // Prevent document click from immediately closing it
+      
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      const newState = !isExpanded;
+      
+      navToggle.setAttribute('aria-expanded', newState);
+      primaryNav.setAttribute('aria-hidden', !newState);
+      
+      // Also toggle the 'open' class for CSS animations if needed
+      if (newState) {
+        primaryNav.classList.add('open');
+        navToggle.classList.add('active');
+      } else {
+        primaryNav.classList.remove('open');
+        navToggle.classList.remove('active');
+      }
+    }
+
+    // Toggle click listener
+    navToggle.addEventListener('click', toggleMenu);
+
+    // Close navigation when clicking a link
+    const navLinks = primaryNav.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.setAttribute('aria-expanded', 'false');
+        primaryNav.setAttribute('aria-hidden', 'true');
+        primaryNav.classList.remove('open');
+        navToggle.classList.remove('active');
+      });
+    });
+
+    // Close navigation when clicking outside
+    document.addEventListener('click', (e) => {
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      
+      // Only try to close if it's open
+      if (isExpanded && !primaryNav.contains(e.target) && !navToggle.contains(e.target)) {
+        navToggle.setAttribute('aria-expanded', 'false');
+        primaryNav.setAttribute('aria-hidden', 'true');
+        primaryNav.classList.remove('open');
+        navToggle.classList.remove('active');
+      }
+    });
+  }
+
+  // Active navigation highlighting on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.modern-nav-item');
+
+  function highlightNavOnScroll() {
+    // Use a larger offset (30% of viewport height) to highlight sections earlier
+    const scrollPos = window.scrollY + (window.innerHeight * 0.3);
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute('id');
+
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+        navItems.forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('href') === `#${sectionId}`) {
+            item.classList.add('active');
+          }
+        });
+      }
+    });
+  }
+
+  // Run on scroll
+  window.addEventListener('scroll', highlightNavOnScroll);
+  // Run on load
+  highlightNavOnScroll();
+
+  // Portfolio filter navigation (if exists)
   const navPills = document.querySelectorAll('.nav-pill');
   const portfolioCards = document.querySelectorAll('.link-container');
   

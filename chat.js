@@ -33,7 +33,8 @@ class JonEricChatBot {
             certifications: [],
             achievements: [],
             skills: [],
-            testimonials: []
+            testimonials: [],
+            blogPosts: []
         };
 
         // Extract project data from modal triggers
@@ -75,6 +76,11 @@ class JonEricChatBot {
                 data.achievements.push({ value, label });
             }
         });
+
+        // Extract blog posts from blogManager if available
+        if (window.blogManager) {
+            data.blogPosts = window.blogManager.getPostsForContext();
+        }
 
         // Extract award information
         const awardBadge = document.querySelector('.elm-title-text')?.textContent;

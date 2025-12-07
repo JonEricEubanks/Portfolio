@@ -7,8 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Prism.js for code syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="chat-styles.css">
+  <link rel="stylesheet" href="blog-styles.css">
 </head>
 <body class="modern-portfolio">
   <!-- Animated background -->
@@ -20,53 +23,52 @@
 
   <header class="modern-header">
     <div class="header-container glass-morphism">
+      <!-- Brand -->
       <div class="header-brand">
         <h1 class="portfolio-title">
-          <span class="name-gradient">
-            <span class="name-full">JonEric Eubanks</span>
-            <span class="name-short">JonEric</span>
-          </span>
+          <span class="name-gradient">JonEric Eubanks</span>
         </h1>
-        <p class="portfolio-subtitle">Low-code developer • Dashboards • GIS • Automation</p>
+        <p class="portfolio-subtitle">Low-code • Dashboards • GIS • AI</p>
       </div>
 
+      <!-- Navigation -->
+      <nav id="primary-nav" class="navigation modern-nav">
+        <a href="#lowcode" class="nav-link modern-nav-item">
+          <span class="nav-icon">🚀</span>
+          <span class="nav-text">Projects</span>
+        </a>
+        <a href="#dashboards" class="nav-link modern-nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboards</span>
+        </a>
+        <a href="#GIS" class="nav-link modern-nav-item">
+          <span class="nav-icon">🗺️</span>
+          <span class="nav-text">GIS</span>
+        </a>
+        <a href="#certifications" class="nav-link modern-nav-item">
+          <span class="nav-icon">🎓</span>
+          <span class="nav-text">Certs</span>
+        </a>
+        <a href="#blog" class="nav-link modern-nav-item">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-text">Blog</span>
+        </a>
+      </nav>
+
+      <!-- Actions -->
       <div class="header-actions">
-        <!-- Dashboard Mode Toggle -->
         <button id="dashboard-toggle" class="action-btn spotlight-btn" aria-label="Toggle spotlight mode">
           <span class="btn-icon">⚡</span>
           <span class="btn-text">Spotlight</span>
         </button>
-
-        <!-- Chat toggle -->
         <button onclick="toggleChat()" class="action-btn chat-btn" aria-label="Open AI chat">
           <span class="btn-icon">💬</span>
           <span class="btn-text">Ask AI</span>
         </button>
-
-        <!-- mobile nav toggle -->
         <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open navigation">
           <span class="hamburger"></span>
         </button>
       </div>
-
-      <nav id="primary-nav" class="navigation modern-nav">
-        <a href="#lowcode" class="nav-link modern-nav-item">
-          <span class="nav-icon">🚀</span>
-          <span>Low Code Developer</span>
-        </a>
-        <a href="#dashboards" class="nav-link modern-nav-item">
-          <span class="nav-icon">📊</span>
-          <span>Dashboards</span>
-        </a>
-        <a href="#GIS" class="nav-link modern-nav-item">
-          <span class="nav-icon">🗺️</span>
-          <span>GIS Maps</span>
-        </a>
-        <a href="#certifications" class="nav-link modern-nav-item">
-          <span class="nav-icon">🎓</span>
-          <span>Certifications</span>
-        </a>
-      </nav>
     </div>
   </header>
 
@@ -297,7 +299,6 @@
       <!-- Low Code Developer Section -->
       <section id="lowcode" class="portfolio-section">
         <div class="section-header">
-          <div class="section-icon">🚀</div>
           <h2 class="section-title gradient-text">Low Code Developer</h2>
           <p class="section-description">Building powerful applications with minimal code</p>
         </div>
@@ -441,9 +442,11 @@
       
       
 
-      <h2 id="dashboards">Dashboards</h2>
-      <p class="section-description">Empowering strategy with insight</p>
-      <section id="dashboards">
+      <section id="dashboards" class="portfolio-section">
+        <div class="section-header">
+          <h2 class="section-title gradient-text">Dashboards</h2>
+          <p class="section-description">Empowering strategy with insight</p>
+        </div>
         <div class="grid-container">
           <div class="link-container modal-trigger" 
                data-modal-title="Power BI Emergency Rental Assistance Dashboard"
@@ -575,9 +578,11 @@
       
       
 
-      <h2 id="GIS">GIS Maps</h2>
-      <p class="section-description">Mapping insights into action</p>
-      <section id="GIS">
+      <section id="GIS" class="portfolio-section">
+        <div class="section-header">
+          <h2 class="section-title gradient-text">GIS Maps</h2>
+          <p class="section-description">Mapping insights into action</p>
+        </div>
         <div class="grid-container">
           
           <div class="link-container modal-trigger" 
@@ -713,8 +718,10 @@
       <section id="dashboards">
       </section>
 
-      <section id="certifications"></section>
-      <h2 id="certifications">Certifications</h2>
+      <section id="certifications" class="portfolio-section">
+        <div class="section-header">
+          <h2 class="section-title gradient-text">Certifications</h2>
+        </div>
       <div class="certification-container">
        
         <ul>
@@ -866,7 +873,212 @@
       </div>
         </section>
       </div>
+
+      <!-- Blog Section -->
+      <section id="blog" class="portfolio-section blog-section" aria-labelledby="blog-title">
+        <div class="section-header">
+          <h2 id="blog-title" class="section-title gradient-text" title="Triple-click for admin">Blog</h2>
+          <p class="section-description">Thoughts on Power Platform, AI, dashboards, and building solutions that matter</p>
+          <button id="admin-toggle" class="action-btn admin-btn hidden-admin" aria-label="Write new blog post" style="display: none;">
+            <span class="btn-icon" aria-hidden="true">✏️</span>
+            <span class="btn-text">Write</span>
+          </button>
+        </div>
+        
+        <!-- Category Filter Buttons -->
+        <div class="blog-filters" id="blog-filters" role="group" aria-label="Filter blog posts by category">
+          <button class="filter-btn active" data-filter="all" aria-pressed="true">
+            <span class="filter-icon" aria-hidden="true">✨</span>
+            <span class="filter-text">All</span>
+          </button>
+          <button class="filter-btn" data-filter="power-platform" aria-pressed="false">
+            <span class="filter-icon" aria-hidden="true">⚡</span>
+            <span class="filter-text">Power Platform</span>
+          </button>
+          <button class="filter-btn" data-filter="ai-copilot" aria-pressed="false">
+            <span class="filter-icon" aria-hidden="true">🤖</span>
+            <span class="filter-text">AI & Copilot</span>
+          </button>
+          <button class="filter-btn" data-filter="dashboards" aria-pressed="false">
+            <span class="filter-icon" aria-hidden="true">📊</span>
+            <span class="filter-text">Dashboards</span>
+          </button>
+          <button class="filter-btn" data-filter="gis-gov" aria-pressed="false">
+            <span class="filter-icon" aria-hidden="true">🏛️</span>
+            <span class="filter-text">GIS & Gov</span>
+          </button>
+          <button class="filter-btn" data-filter="career-tutorials" aria-pressed="false">
+            <span class="filter-icon" aria-hidden="true">🎯</span>
+            <span class="filter-text">Career</span>
+          </button>
+        </div>
+        
+        <div id="blog-posts-container" class="grid-container modern-portfolio-grid" role="feed" aria-label="Blog posts">
+          <!-- Blog posts will be dynamically inserted here -->
+          <div class="empty-state" id="empty-blog-state">
+            <span class="empty-icon" aria-hidden="true">📝</span>
+            <p>No posts yet. Share your first insight!</p>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <!-- Blog Admin Panel -->
+    <div id="blog-admin-panel" class="blog-admin-panel" style="display: none;">
+      <div class="admin-overlay"></div>
+      <div class="admin-content glass-morphism">
+        <div class="admin-header">
+          <h3>Blog Admin</h3>
+          <button class="close-admin" id="close-admin">✕</button>
+        </div>
+        <div class="admin-body">
+          <form id="blog-post-form">
+            <input type="hidden" id="post-id" value="">
+            
+            <div class="form-group">
+              <label for="post-title">Title</label>
+              <input type="text" id="post-title" required placeholder="Enter blog post title">
+            </div>
+            
+            <div class="form-group">
+              <label for="post-category">Category</label>
+              <select id="post-category" required>
+                <option value="">Select category</option>
+                <option value="power-platform">Power Platform</option>
+                <option value="ai-copilot">AI & Copilot</option>
+                <option value="dashboards">Dashboards (Power BI)</option>
+                <option value="gis-gov">GIS & Local Government</option>
+                <option value="career-tutorials">Career & Tutorials</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="post-content">Content</label>
+              
+              <!-- Preview Toggle -->
+              <div class="preview-toggle">
+                <button type="button" class="preview-btn active" data-mode="edit">✏️ Write</button>
+                <button type="button" class="preview-btn" data-mode="preview">👁️ Preview</button>
+              </div>
+              
+              <!-- Content Wrapper -->
+              <div class="content-wrapper" id="content-wrapper">
+                <!-- Markdown Toolbar -->
+                <div class="markdown-toolbar" id="markdown-toolbar">
+                  <button type="button" class="md-btn" data-action="bold" title="Bold (Ctrl+B)">𝐁</button>
+                  <button type="button" class="md-btn" data-action="italic" title="Italic (Ctrl+I)">𝑰</button>
+                  <button type="button" class="md-btn" data-action="strikethrough" title="Strikethrough">~S~</button>
+                  <span class="md-separator"></span>
+                  <button type="button" class="md-btn" data-action="h1" title="Heading 1">H1</button>
+                  <button type="button" class="md-btn" data-action="h2" title="Heading 2">H2</button>
+                  <button type="button" class="md-btn" data-action="h3" title="Heading 3">H3</button>
+                  <span class="md-separator"></span>
+                  <button type="button" class="md-btn" data-action="link" title="Insert Link">🔗</button>
+                  <button type="button" class="md-btn" data-action="image" title="Insert Image">🖼️</button>
+                  <button type="button" class="md-btn" data-action="code" title="Inline Code">&lt;/&gt;</button>
+                  <button type="button" class="md-btn" data-action="codeblock" title="Code Block">📝</button>
+                  <span class="md-separator"></span>
+                  <button type="button" class="md-btn" data-action="ul" title="Bullet List">•</button>
+                  <button type="button" class="md-btn" data-action="ol" title="Numbered List">1.</button>
+                  <button type="button" class="md-btn" data-action="quote" title="Quote">❝</button>
+                </div>
+                
+                <textarea id="post-content" rows="12" required placeholder="Write your blog post content here... (Markdown supported)"></textarea>
+                
+                <!-- Preview Container -->
+                <div class="preview-container" id="preview-container"></div>
+              </div>
+            </div>
+            
+            <!-- Hidden excerpt field for backwards compatibility -->
+            <input type="hidden" id="post-excerpt" value="">
+            
+            <div class="form-group">
+              <label>Featured Image</label>
+              <div class="image-upload-container">
+                <div class="image-upload-area" id="image-upload-area">
+                  <input type="file" id="post-image-file" accept="image/*" class="file-input">
+                  <div class="upload-placeholder" id="upload-placeholder">
+                    <span class="upload-icon">📷</span>
+                    <span class="upload-text">Click or drag image here</span>
+                    <span class="upload-hint">JPG, PNG, GIF, WebP (Max 5MB)</span>
+                  </div>
+                  <div class="image-preview" id="image-preview" style="display: none;">
+                    <img id="preview-img" src="" alt="Preview">
+                    <button type="button" class="remove-image-btn" id="remove-image-btn">✕</button>
+                  </div>
+                </div>
+                <input type="hidden" id="post-image" value="">
+                <div class="upload-status" id="upload-status"></div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="post-tags">Tags (comma-separated)</label>
+              <input type="text" id="post-tags" placeholder="power-apps, power-bi, tutorial">
+            </div>
+            
+            <!-- Post Status & Scheduling -->
+            <div class="form-row">
+              <div class="form-group form-group-half">
+                <label for="post-status">Status</label>
+                <select id="post-status">
+                  <option value="published">📢 Publish Now</option>
+                  <option value="draft">📝 Save as Draft</option>
+                  <option value="scheduled">📅 Schedule</option>
+                </select>
+              </div>
+              <div class="form-group form-group-half" id="schedule-group" style="display: none;">
+                <label for="post-schedule">Publish Date & Time</label>
+                <input type="datetime-local" id="post-schedule">
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" id="submit-btn">Publish Post</button>
+              <button type="button" class="btn-secondary" id="cancel-post">Cancel</button>
+              <button type="button" class="btn-export" id="export-posts">Export All Posts</button>
+            </div>
+          </form>
+          
+          <div class="admin-posts-list">
+            <h4>Manage Posts</h4>
+            <div id="admin-posts-container">
+              <!-- Existing posts will be listed here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Login Modal (Analytics Config) -->
+    <div id="analytics-config-modal" class="config-auth-modal" style="display: none;">
+      <div class="config-overlay"></div>
+      <div class="config-modal-content glass-morphism">
+        <div class="config-header">
+          <h3>🔐 Admin Access</h3>
+          <button class="config-close" id="config-close">✕</button>
+        </div>
+        <form id="config-auth-form" class="config-form">
+          <div class="config-field">
+            <label for="config-user">Email</label>
+            <input type="email" id="config-user" placeholder="Enter admin email" required autocomplete="username">
+          </div>
+          <div class="config-field">
+            <label for="config-key">Password</label>
+            <input type="password" id="config-key" placeholder="Enter password" required autocomplete="current-password">
+          </div>
+          <div class="config-remember">
+            <label class="remember-label">
+              <input type="checkbox" id="config-remember" checked>
+              <span>Keep me signed in</span>
+            </label>
+          </div>
+          <div class="config-error" id="config-error"></div>
+          <button type="submit" class="config-submit">Sign In</button>
+        </form>
+      </div>
+    </div>
 
     <!-- Chat Sidebar -->
     <div class="chat-container" id="chat-sidebar">
@@ -950,6 +1162,36 @@
 
  <button class="top-button" onclick="topFunction()" id="topBtn">Back to Top</button>
     
+    <!-- Blog Reader - Full Page Article View -->
+    <div id="blogReader" class="blog-reader">
+      <header class="blog-reader-header">
+        <button class="blog-reader-back" id="closeBlogReader">
+          <span class="back-arrow">←</span>
+          <span class="back-text">Back to Blog</span>
+        </button>
+        <div class="blog-reader-title-bar" id="readerTitleBar"></div>
+        <div class="blog-reader-actions">
+          <button class="blog-reader-share" id="sharePost" title="Share">
+            📤
+          </button>
+        </div>
+      </header>
+      <main class="blog-reader-content">
+        <header class="blog-reader-article-header">
+          <div class="blog-reader-meta">
+            <span class="blog-reader-category" id="readerCategory"></span>
+            <span class="blog-reader-date" id="readerDate"></span>
+          </div>
+          <h1 class="blog-reader-article-title" id="readerTitle"></h1>
+        </header>
+        <div class="blog-reader-featured" id="readerFeatured"></div>
+        <article class="blog-reader-body" id="readerBody"></article>
+        <footer class="blog-reader-footer">
+          <div class="blog-reader-tags" id="readerTags"></div>
+        </footer>
+      </main>
+    </div>
+    
     <!-- Modal Structure -->
     <div id="imageModal" class="modal">
       <div class="modal-overlay"></div>
@@ -1017,31 +1259,7 @@
     </footer>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Mobile navigation toggle
-        const toggle = document.querySelector('.nav-toggle');
-        const nav = document.getElementById('primary-nav');
-        
-        if(toggle && nav) {
-          function setOpen(open) {
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-            nav.classList.toggle('open', open);
-            toggle.classList.toggle('active', open); // Add active class for hamburger animation
-            document.body.style.overflow = open ? 'hidden' : '';
-          }
-
-          toggle.addEventListener('click', () => {
-            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-            setOpen(!isOpen);
-          });
-
-          // Close nav when any nav link is clicked
-          nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
-
-          // Reset on resize
-          window.addEventListener('resize', () => {
-            if(window.innerWidth > 768) setOpen(false);
-          });
-        }
+        // Mobile navigation logic moved to dashboard.js to prevent conflicts
 
         // Modal functionality
         const modal = document.getElementById('imageModal');
@@ -1866,6 +2084,18 @@
     <script src="dashboard.js"></script>
     <!-- Add chat functionality -->
     <script src="chat.js"></script>
+    <!-- Prism.js for code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-powershell.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+    <!-- Add blog functionality -->
+    <script src="blog.js"></script>
     <!-- Add dashboard grid background (hidden by default) -->
     <div id="dashboard-background" class="dashboard-background">
       <div class="grid-lines"></div>

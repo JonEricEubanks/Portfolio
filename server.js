@@ -1,25 +1,106 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Configure multer for image uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const uploadPath = path.join(__dirname, 'Images');
+        // Create Images folder if it doesn't exist
+        if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true });
+        }
+        cb(null, uploadPath);
+    },
+    filename: function (req, file, cb) {
+        // Generate unique filename with timestamp
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        const baseName = path.basename(file.originalname, ext)
+            .replace(/[^a-zA-Z0-9]/g, '-')
+            .toLowerCase()
+            .substring(0, 30);
+        cb(null, `blog-${baseName}-${uniqueSuffix}${ext}`);
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB limit
+    },
+    fileFilter: function (req, file, cb) {
+        const allowedTypes = /jpeg|jpg|png|gif|webp/;
+        const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+        const mimetype = allowedTypes.test(file.mimetype);
+        if (extname && mimetype) {
+            return cb(null, true);
+        }
+        cb(new Error('Only image files (jpg, png, gif, webp) are allowed!'));
+    }
+});
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
-// OpenAI configuration
-const { OpenAI } = require('openai');
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+// Image upload endpoint
+app.post('/api/upload-image', upload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No image file provided' });
+        }
+        
+        // Return the relative path to use in the blog
+        const imagePath = `Images/${req.file.filename}`;
+        res.json({ 
+            success: true, 
+            imagePath: imagePath,
+            filename: req.file.filename
+        });
+    } catch (error) {
+        console.error('Upload error:', error);
+        res.status(500).json({ error: 'Failed to upload image' });
+    }
 });
+
+// Error handling for multer
+app.use((error, req, res, next) => {
+    if (error instanceof multer.MulterError) {
+        if (error.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({ error: 'File too large. Maximum size is 5MB.' });
+        }
+        return res.status(400).json({ error: error.message });
+    }
+    if (error) {
+        return res.status(400).json({ error: error.message });
+    }
+    next();
+});
+
+// OpenAI configuration (optional - server works without it for image uploads)
+const { OpenAI } = require('openai');
+let openai = null;
+if (process.env.OPENAI_API_KEY) {
+    openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+    });
+}
 
 // Chat endpoint
 app.post('/api/chat', async (req, res) => {
     try {
+        if (!openai) {
+            return res.status(503).json({ error: 'OpenAI API key not configured' });
+        }
+        
         const { message, context, conversationHistory = [], portfolioData = {} } = req.body;
 
         if (!message) {
