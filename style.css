@@ -413,8 +413,8 @@ html {
   background: var(--gray-200);
 }
 
-/* Force nav to be visible on desktop (above 768px) */
-@media (min-width: 769px) {
+/* Force nav to be visible on desktop (above 1000px) */
+@media (min-width: 1001px) {
   .modern-nav {
     display: flex !important;
     position: static !important;
@@ -470,8 +470,8 @@ html {
 } 
 */
 
-/* Mobile Responsive - 768px and below */
-@media (max-width: 768px) {
+/* Mobile Responsive - 1000px and below */
+@media (max-width: 1000px) {
   .modern-header {
     padding: 0.75rem 1rem;
   }
