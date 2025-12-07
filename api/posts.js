@@ -1,11 +1,16 @@
 // Vercel serverless function to save blog posts to GitHub
-// Version 2 - with detailed error logging
+// Version 3 - with detailed error logging
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
     res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization');
+
+    // Version check endpoint
+    if (req.method === 'GET' && req.query.version) {
+        return res.status(200).json({ version: 3, timestamp: new Date().toISOString() });
+    }
 
     if (req.method === 'OPTIONS') {
         res.status(200).end();
