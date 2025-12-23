@@ -1067,7 +1067,12 @@
           </div>
           <div class="config-field">
             <label for="config-key">Password</label>
-            <input type="password" id="config-key" placeholder="Enter password" required autocomplete="current-password">
+            <div class="password-input-wrapper">
+              <input type="password" id="config-key" placeholder="Enter password" required autocomplete="current-password">
+              <button type="button" class="toggle-password" id="toggle-password" title="Show password">
+                <span class="eye-icon">👁️</span>
+              </button>
+            </div>
           </div>
           <div class="config-remember">
             <label class="remember-label">
@@ -1187,6 +1192,56 @@
         </header>
         <div class="blog-reader-featured" id="readerFeatured"></div>
         <article class="blog-reader-body" id="readerBody"></article>
+        
+        <!-- Engagement Section: Likes -->
+        <div class="blog-reader-engagement" id="readerEngagement">
+          <button class="like-button" id="likeButton">
+            <span class="like-icon">❤️</span>
+            <span class="like-text">Like</span>
+            <span class="like-count" id="likeCount">0</span>
+          </button>
+          <div class="engagement-stats">
+            <span>💬 <span id="commentCountDisplay">0</span> comments</span>
+          </div>
+        </div>
+        
+        <!-- Comments Section -->
+        <section class="comments-section" id="commentsSection">
+          <div class="comments-header">
+            <h3 class="comments-title">
+              💬 Comments
+              <span class="comments-count" id="commentsCount">0</span>
+            </h3>
+          </div>
+          
+          <!-- Comment Form -->
+          <form class="comment-form" id="commentForm">
+            <div class="comment-form-header">
+              <h4>Leave a comment</h4>
+            </div>
+            <div class="comment-form-row">
+              <label for="commentName">Your Name *</label>
+              <input type="text" id="commentName" placeholder="Enter your name" required maxlength="50">
+            </div>
+            <div class="comment-form-row">
+              <label for="commentContent">Comment *</label>
+              <textarea id="commentContent" placeholder="Share your thoughts..." required maxlength="1000"></textarea>
+            </div>
+            <button type="submit" class="comment-submit-btn" id="commentSubmitBtn">
+              <span>Post Comment</span>
+              <span>→</span>
+            </button>
+          </form>
+          
+          <!-- Comments List -->
+          <div class="comments-list" id="commentsList">
+            <div class="no-comments">
+              <span class="no-comments-icon">💭</span>
+              <p>No comments yet. Be the first to share your thoughts!</p>
+            </div>
+          </div>
+        </section>
+        
         <footer class="blog-reader-footer">
           <div class="blog-reader-tags" id="readerTags"></div>
         </footer>

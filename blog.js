@@ -61,6 +61,16 @@ class BlogManager {
         // Auth form submission
         this.authForm?.addEventListener('submit', (e) => this.handleAuth(e));
         
+        // Password visibility toggle
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('config-key');
+        togglePassword?.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            togglePassword.classList.toggle('showing', isPassword);
+            togglePassword.title = isPassword ? 'Hide password' : 'Show password';
+        });
+        
         // Close modal
         this.authClose?.addEventListener('click', () => this.closeAuthModal());
         this.authOverlay?.addEventListener('click', () => this.closeAuthModal());
@@ -1210,6 +1220,16 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                     </div>
                     <h3 class="blog-title">${this.escapeHtml(post.title)}</h3>
                     <div class="blog-footer">
+                        <div class="blog-stats">
+                            <span class="blog-stat likes-stat" title="Likes">
+                                <span class="stat-icon">❤️</span>
+                                <span class="stat-count">${post.likes || 0}</span>
+                            </span>
+                            <span class="blog-stat comments-stat" title="Comments">
+                                <span class="stat-icon">💬</span>
+                                <span class="stat-count">${post.comments?.length || 0}</span>
+                            </span>
+                        </div>
                         <span class="read-more-btn">
                             Read More <span class="arrow">→</span>
                         </span>
@@ -1355,6 +1375,9 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         } else {
             readerTags.innerHTML = '';
         }
+        
+        // Set up engagement section (likes & comments)
+        this.setupEngagement(post);
         
         // Add related posts
         this.addRelatedPosts(post, readerBody);
@@ -1572,6 +1595,247 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         `;
         
         container.appendChild(relatedSection);
+    }
+    
+    // ============================================
+    // Engagement System (Likes & Comments)
+    // ============================================
+    setupEngagement(post) {
+        const likeButton = document.getElementById('likeButton');
+        const likeCount = document.getElementById('likeCount');
+        const commentCount = document.getElementById('commentCount');
+        const commentForm = document.getElementById('commentForm');
+        const commentsList = document.getElementById('commentsList');
+        
+        if (!likeButton || !commentForm || !commentsList) return;
+        
+        // Store current post ID for engagement actions
+        this.currentPostId = post.id;
+        
+        // Update like count display
+        likeCount.textContent = post.likes || 0;
+        commentCount.textContent = post.comments?.length || 0;
+        
+        // Reset like button state
+        likeButton.classList.remove('liked');
+        
+        // Set up like button handler
+        likeButton.onclick = () => this.handleLike(post.id);
+        
+        // Set up comment form handler
+        commentForm.onsubmit = (e) => this.handleCommentSubmit(e, post.id);
+        
+        // Render existing comments (newest first)
+        this.renderComments(post.comments || []);
+    }
+    
+    async handleLike(postId) {
+        const likeButton = document.getElementById('likeButton');
+        const likeCount = document.getElementById('likeCount');
+        
+        // Disable button while processing
+        likeButton.disabled = true;
+        likeButton.classList.add('liking');
+        
+        try {
+            const response = await fetch('/api/like', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ postId })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update UI
+                likeCount.textContent = data.likes;
+                likeButton.classList.add('liked');
+                
+                // Update local post data
+                const post = this.posts.find(p => p.id === postId);
+                if (post) {
+                    post.likes = data.likes;
+                    this.savePostsToCache();
+                    this.renderPosts(); // Update card counts
+                }
+                
+                this.showToast('Thanks for the love! ❤️');
+            } else {
+                this.showToast('Could not add like. Try again!', 'error');
+            }
+        } catch (error) {
+            console.error('Like error:', error);
+            this.showToast('Could not add like. Try again!', 'error');
+        } finally {
+            likeButton.disabled = false;
+            likeButton.classList.remove('liking');
+        }
+    }
+    
+    async handleCommentSubmit(e, postId) {
+        e.preventDefault();
+        
+        const nameInput = document.getElementById('commentName');
+        const contentInput = document.getElementById('commentContent');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        
+        const name = nameInput.value.trim();
+        const content = contentInput.value.trim();
+        
+        if (!name || !content) {
+            this.showToast('Please fill in your name and comment!', 'error');
+            return;
+        }
+        
+        // Disable form while submitting
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Posting...';
+        
+        try {
+            const response = await fetch('/api/comment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ postId, name, content })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update comment count
+                document.getElementById('commentCount').textContent = data.totalComments;
+                
+                // Add new comment to top of list
+                this.addCommentToList(data.comment);
+                
+                // Update local post data
+                const post = this.posts.find(p => p.id === postId);
+                if (post) {
+                    if (!post.comments) post.comments = [];
+                    post.comments.unshift(data.comment);
+                    this.savePostsToCache();
+                    this.renderPosts(); // Update card counts
+                }
+                
+                // Clear form
+                nameInput.value = '';
+                contentInput.value = '';
+                
+                this.showToast('Comment posted! 💬');
+            } else {
+                this.showToast(data.error || 'Could not post comment. Try again!', 'error');
+            }
+        } catch (error) {
+            console.error('Comment error:', error);
+            this.showToast('Could not post comment. Try again!', 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Post Comment';
+        }
+    }
+    
+    renderComments(comments) {
+        const commentsList = document.getElementById('commentsList');
+        if (!commentsList) return;
+        
+        if (comments.length === 0) {
+            commentsList.innerHTML = '<p class="no-comments">No comments yet. Be the first to share your thoughts!</p>';
+            return;
+        }
+        
+        commentsList.innerHTML = comments.map(comment => this.createCommentHTML(comment)).join('');
+    }
+    
+    addCommentToList(comment) {
+        const commentsList = document.getElementById('commentsList');
+        if (!commentsList) return;
+        
+        // Remove "no comments" message if present
+        const noComments = commentsList.querySelector('.no-comments');
+        if (noComments) noComments.remove();
+        
+        // Add new comment at top
+        const commentHTML = this.createCommentHTML(comment);
+        commentsList.insertAdjacentHTML('afterbegin', commentHTML);
+        
+        // Animate new comment
+        const newComment = commentsList.firstElementChild;
+        newComment.classList.add('comment-new');
+        setTimeout(() => newComment.classList.remove('comment-new'), 500);
+    }
+    
+    createCommentHTML(comment) {
+        const date = new Date(comment.createdAt);
+        const timeAgo = this.getTimeAgo(date);
+        const initial = comment.name.charAt(0).toUpperCase();
+        
+        return `
+            <div class="comment-item">
+                <div class="comment-avatar">${initial}</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="comment-author">${this.escapeHtml(comment.name)}</span>
+                        <span class="comment-date">${timeAgo}</span>
+                    </div>
+                    <p class="comment-text">${this.escapeHtml(comment.content)}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    getTimeAgo(date) {
+        const seconds = Math.floor((new Date() - date) / 1000);
+        
+        const intervals = [
+            { label: 'year', seconds: 31536000 },
+            { label: 'month', seconds: 2592000 },
+            { label: 'week', seconds: 604800 },
+            { label: 'day', seconds: 86400 },
+            { label: 'hour', seconds: 3600 },
+            { label: 'minute', seconds: 60 }
+        ];
+        
+        for (const interval of intervals) {
+            const count = Math.floor(seconds / interval.seconds);
+            if (count >= 1) {
+                return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
+            }
+        }
+        
+        return 'Just now';
+    }
+    
+    savePostsToCache() {
+        try {
+            localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
+        } catch (error) {
+            console.error('Failed to save to cache:', error);
+        }
+    }
+    
+    showToast(message, type = 'success') {
+        // Remove existing toast
+        const existingToast = document.querySelector('.toast-notification');
+        if (existingToast) existingToast.remove();
+        
+        // Create new toast
+        const toast = document.createElement('div');
+        toast.className = `toast-notification toast-${type}`;
+        toast.textContent = message;
+        
+        document.body.appendChild(toast);
+        
+        // Show toast
+        setTimeout(() => toast.classList.add('show'), 10);
+        
+        // Hide and remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 }
 
