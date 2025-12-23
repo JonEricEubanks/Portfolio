@@ -37,9 +37,22 @@ export default async function handler(req, res) {
         }
 
         try {
-            const { postId, name, content: commentContent } = req.body;
+            // Parse body if it's a string
+            let body = req.body;
+            if (typeof body === 'string') {
+                try {
+                    body = JSON.parse(body);
+                } catch (e) {
+                    return res.status(400).json({ error: 'Invalid JSON body' });
+                }
+            }
+            
+            const postId = body?.postId;
+            const name = body?.name;
+            const commentContent = body?.content;
 
             if (!postId || !name || !commentContent) {
+                console.error('Missing fields in body:', body);
                 return res.status(400).json({ error: 'Post ID, name, and comment content are required' });
             }
 

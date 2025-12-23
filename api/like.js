@@ -37,10 +37,21 @@ export default async function handler(req, res) {
         }
 
         try {
-            const { postId } = req.body;
+            // Parse body if it's a string
+            let body = req.body;
+            if (typeof body === 'string') {
+                try {
+                    body = JSON.parse(body);
+                } catch (e) {
+                    return res.status(400).json({ error: 'Invalid JSON body' });
+                }
+            }
+            
+            const postId = body?.postId;
 
             if (!postId) {
-                return res.status(400).json({ error: 'Post ID is required' });
+                console.error('No postId in body:', body);
+                return res.status(400).json({ error: 'Post ID is required', received: body });
             }
 
             console.log('Like request for post:', postId);
