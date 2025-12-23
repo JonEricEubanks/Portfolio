@@ -1,4 +1,14 @@
 // Vercel serverless function to handle post likes
+
+// Helper functions for base64 encoding/decoding (Node.js compatible)
+function decodeBase64(str) {
+    return Buffer.from(str, 'base64').toString('utf8');
+}
+
+function encodeBase64(str) {
+    return Buffer.from(str, 'utf8').toString('base64');
+}
+
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -18,6 +28,11 @@ export default async function handler(req, res) {
         const GITHUB_REPO = process.env.GITHUB_REPO;
 
         if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+            console.error('Missing env vars:', { 
+                hasToken: !!GITHUB_TOKEN, 
+                hasOwner: !!GITHUB_OWNER, 
+                hasRepo: !!GITHUB_REPO 
+            });
             return res.status(500).json({ error: 'Server configuration error' });
         }
 
@@ -27,6 +42,8 @@ export default async function handler(req, res) {
             if (!postId) {
                 return res.status(400).json({ error: 'Post ID is required' });
             }
+
+            console.log('Like request for post:', postId);
 
             // Step 1: Fetch current posts
             const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`;
@@ -38,12 +55,17 @@ export default async function handler(req, res) {
             });
 
             if (!fileResponse.ok) {
-                return res.status(500).json({ error: 'Failed to fetch posts' });
+                const errText = await fileResponse.text();
+                console.error('GitHub fetch failed:', fileResponse.status, errText);
+                return res.status(500).json({ error: 'Failed to fetch posts', status: fileResponse.status });
             }
 
             const fileData = await fileResponse.json();
             const sha = fileData.sha;
-            const posts = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+            
+            // Decode base64 content
+            const decodedContent = decodeBase64(fileData.content.replace(/\n/g, ''));
+            const posts = JSON.parse(decodedContent);
 
             // Step 2: Find post and increment likes
             const postIndex = posts.findIndex(p => p.id === postId);
@@ -60,7 +82,7 @@ export default async function handler(req, res) {
             posts[postIndex].likes += 1;
 
             // Step 3: Save updated posts
-            const content = Buffer.from(JSON.stringify(posts, null, 2)).toString('base64');
+            const content = encodeBase64(JSON.stringify(posts, null, 2));
             
             const updateResponse = await fetch(fileUrl, {
                 method: 'PUT',
@@ -79,6 +101,7 @@ export default async function handler(req, res) {
 
             if (!updateResponse.ok) {
                 const errorData = await updateResponse.json();
+                console.error('GitHub update failed:', errorData);
                 return res.status(500).json({ error: 'Failed to save like', details: errorData.message });
             }
 
@@ -87,6 +110,7 @@ export default async function handler(req, res) {
                 likes: posts[postIndex].likes 
             });
         } catch (error) {
+            console.error('Like exception:', error);
             return res.status(500).json({ 
                 error: 'Exception caught', 
                 message: error.message
