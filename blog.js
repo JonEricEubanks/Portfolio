@@ -1652,6 +1652,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             });
             
             const data = await response.json();
+            console.log('Like API response:', response.status, data);
             
             if (data.success) {
                 // Update UI
@@ -1668,7 +1669,8 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                 
                 this.showToast('Thanks for the love! ❤️');
             } else {
-                this.showToast('Could not add like. Try again!', 'error');
+                console.error('Like failed:', data);
+                this.showToast(data.error || 'Could not add like. Try again!', 'error');
             }
         } catch (error) {
             console.error('Like error:', error);
