@@ -1603,7 +1603,8 @@ Respond with ONLY one sentence, no quotes, no explanation.`
     setupEngagement(post) {
         const likeButton = document.getElementById('likeButton');
         const likeCount = document.getElementById('likeCount');
-        const commentCount = document.getElementById('commentCount');
+        const commentCountDisplay = document.getElementById('commentCountDisplay');
+        const commentsCount = document.getElementById('commentsCount');
         const commentForm = document.getElementById('commentForm');
         const commentsList = document.getElementById('commentsList');
         
@@ -1613,8 +1614,12 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         this.currentPostId = post.id;
         
         // Update like count display
-        likeCount.textContent = post.likes || 0;
-        commentCount.textContent = post.comments?.length || 0;
+        if (likeCount) likeCount.textContent = post.likes || 0;
+        
+        // Update comment counts
+        const commentTotal = post.comments?.length || 0;
+        if (commentCountDisplay) commentCountDisplay.textContent = commentTotal;
+        if (commentsCount) commentsCount.textContent = commentTotal;
         
         // Reset like button state
         likeButton.classList.remove('liked');
@@ -1705,8 +1710,11 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             const data = await response.json();
             
             if (data.success) {
-                // Update comment count
-                document.getElementById('commentCount').textContent = data.totalComments;
+                // Update comment counts
+                const commentCountDisplay = document.getElementById('commentCountDisplay');
+                const commentsCount = document.getElementById('commentsCount');
+                if (commentCountDisplay) commentCountDisplay.textContent = data.totalComments;
+                if (commentsCount) commentsCount.textContent = data.totalComments;
                 
                 // Add new comment to top of list
                 this.addCommentToList(data.comment);
