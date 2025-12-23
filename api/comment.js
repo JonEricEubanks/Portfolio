@@ -66,29 +66,36 @@ export default async function handler(req, res) {
 
             console.log('Comment request for post:', postId, 'by:', name);
 
-            // Step 1: Fetch current posts
+            // Step 1: Get current SHA from GitHub API
             const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`;
-            const fileResponse = await fetch(fileUrl, {
+            const shaResponse = await fetch(fileUrl, {
                 headers: {
                     'Authorization': `token ${GITHUB_TOKEN}`,
                     'Accept': 'application/vnd.github.v3+json'
                 }
             });
 
-            if (!fileResponse.ok) {
-                const errText = await fileResponse.text();
-                console.error('GitHub fetch failed:', fileResponse.status, errText);
-                return res.status(500).json({ error: 'Failed to fetch posts', status: fileResponse.status });
+            if (!shaResponse.ok) {
+                const errText = await shaResponse.text();
+                console.error('GitHub SHA fetch failed:', shaResponse.status, errText);
+                return res.status(500).json({ error: 'Failed to get file info', status: shaResponse.status });
             }
 
-            const fileData = await fileResponse.json();
-            const sha = fileData.sha;
+            const shaData = await shaResponse.json();
+            const sha = shaData.sha;
             
-            // Decode base64 content
-            const decodedContent = decodeBase64(fileData.content.replace(/\n/g, ''));
-            const posts = JSON.parse(decodedContent);
+            // Step 2: Fetch posts from raw URL (simpler, no base64)
+            const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`;
+            const postsResponse = await fetch(rawUrl, { cache: 'no-store' });
+            
+            if (!postsResponse.ok) {
+                console.error('GitHub raw fetch failed:', postsResponse.status);
+                return res.status(500).json({ error: 'Failed to fetch posts' });
+            }
+            
+            const posts = await postsResponse.json();
 
-            // Step 2: Find post and add comment
+            // Step 3: Find post and add comment
             const postIndex = posts.findIndex(p => p.id === postId);
             if (postIndex === -1) {
                 return res.status(404).json({ error: 'Post not found' });
