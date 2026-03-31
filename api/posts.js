@@ -63,8 +63,19 @@ export default async function handler(req, res) {
 
         if (fileResponse.ok) {
             const fileData = await fileResponse.json();
-            const content = Buffer.from(fileData.content, 'base64').toString('utf8');
-            return { posts: JSON.parse(content), sha: fileData.sha };
+            // For large files (>1MB), GitHub Contents API doesn't include content
+            // Fetch actual content from raw URL instead
+            let posts;
+            if (fileData.content) {
+                posts = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+            } else {
+                const rawResponse = await fetch(
+                    `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`,
+                    { cache: 'no-store' }
+                );
+                posts = rawResponse.ok ? await rawResponse.json() : [];
+            }
+            return { posts, sha: fileData.sha };
         } else if (fileResponse.status === 404) {
             return { posts: [], sha: null };
         } else {
