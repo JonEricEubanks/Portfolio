@@ -998,7 +998,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         }
     }
 
-    async savePosts() {
+    async savePosts(savedPost) {
         // Try localStorage (best-effort, may hit quota)
         try {
             localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
@@ -1012,8 +1012,8 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             }
         }
 
-        // Save to GitHub if authenticated (independent of localStorage)
-        if (this.isAuthenticated()) {
+        // Save to GitHub if authenticated — send only the single post
+        if (this.isAuthenticated() && savedPost) {
             try {
                 const token = sessionStorage.getItem(this._authToken) || localStorage.getItem(this._authToken);
                 const response = await fetch('/api/posts', {
@@ -1022,7 +1022,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({ posts: this.posts })
+                    body: JSON.stringify({ post: savedPost })
                 });
 
                 if (!response.ok) {
@@ -1084,7 +1084,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             this.posts.unshift(post); // Add to beginning
         }
 
-        this.savePosts();
+        this.savePosts(post);
         this.renderPosts();
         
         // Clear draft on successful publish
@@ -1172,12 +1172,33 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         modal.querySelector('.delete-modal-cancel').onclick = closeModal;
         
         // Handle confirm delete
-        modal.querySelector('.delete-modal-confirm').onclick = () => {
+        modal.querySelector('.delete-modal-confirm').onclick = async () => {
+            const deletedId = id;
             this.posts = this.posts.filter(p => p.id !== id);
             this.savePosts();
             this.renderPosts();
             this.renderAdminPosts();
             closeModal();
+
+            // Also delete from GitHub
+            if (this.isAuthenticated()) {
+                try {
+                    const token = sessionStorage.getItem(this._authToken) || localStorage.getItem(this._authToken);
+                    const response = await fetch('/api/posts', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ postId: deletedId })
+                    });
+                    if (!response.ok) {
+                        console.warn('Failed to delete from GitHub:', await response.json().catch(() => ({})));
+                    }
+                } catch (error) {
+                    console.warn('Error deleting from GitHub:', error);
+                }
+            }
         };
     }
 
