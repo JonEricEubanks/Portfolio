@@ -999,12 +999,22 @@ Respond with ONLY one sentence, no quotes, no explanation.`
     }
 
     async savePosts() {
+        // Try localStorage (best-effort, may hit quota)
         try {
-            // Always save to localStorage first (instant)
             localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
+        } catch (storageError) {
+            console.warn('localStorage quota exceeded, clearing old data:', storageError);
+            try {
+                localStorage.removeItem(this.storageKey);
+                localStorage.setItem(this.storageKey, JSON.stringify(this.posts));
+            } catch (e) {
+                console.warn('localStorage still full after cleanup, skipping local save');
+            }
+        }
 
-            // If authenticated, also save to GitHub
-            if (this.isAuthenticated()) {
+        // Save to GitHub if authenticated (independent of localStorage)
+        if (this.isAuthenticated()) {
+            try {
                 const token = sessionStorage.getItem(this._authToken) || localStorage.getItem(this._authToken);
                 const response = await fetch('/api/posts', {
                     method: 'POST',
@@ -1016,15 +1026,16 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                 });
 
                 if (!response.ok) {
-                    console.warn('Failed to save to GitHub, but localStorage saved');
+                    const errData = await response.json().catch(() => ({}));
+                    console.error('Failed to save to GitHub:', errData);
+                    alert('Failed to save post to GitHub. Changes saved locally only.');
                 } else {
-                    // Always reload posts from GitHub after save
                     await this.loadPosts();
                 }
+            } catch (error) {
+                console.error('Error saving posts to GitHub:', error);
+                alert('Failed to save post to GitHub. Changes saved locally only.');
             }
-        } catch (error) {
-            console.error('Error saving posts:', error);
-            alert('Failed to save post. Changes saved locally only.');
         }
     }
 
