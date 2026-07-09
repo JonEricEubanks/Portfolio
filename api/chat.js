@@ -1,5 +1,6 @@
 // Vercel serverless function for AI chat
-import { OpenAI } from 'openai';
+// Powered by GitHub Models (Claude via GitHub Copilot subscription)
+import OpenAI from 'openai';
 
 export default async function handler(req, res) {
     // Enable CORS
@@ -17,14 +18,17 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    // Check if API key is configured
-    if (!process.env.OPENAI_API_KEY) {
-        console.error('OPENAI_API_KEY environment variable is not set');
-        return res.status(500).json({ error: 'OpenAI API key not configured' });
+    // Check if GitHub token is configured
+    if (!process.env.GITHUB_TOKEN) {
+        console.error('GITHUB_TOKEN environment variable is not set');
+        return res.status(500).json({ error: 'GitHub token not configured. Add GITHUB_TOKEN to your Vercel environment variables.' });
     }
 
+    // GitHub Models endpoint — works with your existing GitHub Copilot subscription
+    // Supports Claude 3.5 Sonnet, GPT-4o, Llama 3.3, and more
     const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY
+        baseURL: 'https://models.inference.ai.azure.com',
+        apiKey: process.env.GITHUB_TOKEN
     });
 
     try {
@@ -69,19 +73,17 @@ export default async function handler(req, res) {
         }
 
         const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini", // Updated to more capable model
+            model: "claude-3-5-sonnet", // Claude via GitHub Models (requires GITHUB_TOKEN)
             messages: messages,
-            max_tokens: 400, // Increased for more detailed responses
-            temperature: 0.8, // Slightly increased for more variation
-            presence_penalty: 0.6, // Discourage repetition
-            frequency_penalty: 0.3 // Further discourage repetition
+            max_tokens: 400,
+            temperature: 0.8
         });
 
         const reply = completion.choices[0].message.content;
         res.status(200).json({ reply });
 
     } catch (error) {
-        console.error('OpenAI API error:', error);
+        console.error('GitHub Models API error:', error);
         res.status(500).json({ 
             error: 'Failed to process chat request',
             details: error.message 
