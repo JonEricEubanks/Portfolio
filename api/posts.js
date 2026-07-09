@@ -89,7 +89,7 @@ export default async function handler(req, res) {
         });
         if (!blobRes.ok) {
             const e = await blobRes.json();
-            throw new Error(`Blob create failed (${blobRes.status}): ${e.message}`);
+            throw new Error(`Blob create failed (${blobRes.status}): ${e.message} [repo: ${GITHUB_OWNER}/${GITHUB_REPO}]`);
         }
         const { sha: blobSha } = await blobRes.json();
 
