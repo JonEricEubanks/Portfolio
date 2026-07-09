@@ -1031,7 +1031,16 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                     console.error('Failed to save to GitHub:', errData);
                     alert(`Failed to save post to GitHub.\nServer error: ${detail}\nChanges saved locally only.`);
                 } else {
-                    await this.loadPosts();
+                    // Update local state immediately — raw.githubusercontent.com CDN
+                    // caches up to 5 min after a write, so re-fetching would show stale data.
+                    const idx = this.posts.findIndex(p => p.id === savedPost.id);
+                    if (idx !== -1) {
+                        this.posts[idx] = savedPost;
+                    } else {
+                        this.posts.unshift(savedPost);
+                    }
+                    this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    this.renderPosts();
                 }
             } catch (error) {
                 console.error('Error saving posts to GitHub:', error);
