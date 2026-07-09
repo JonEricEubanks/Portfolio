@@ -923,3 +923,87 @@ body.dashboard-mode .ai-message .message-content {
     user-select: text;
   }
 }
+
+/* ==========================================================================
+   Standalone Chat Page + Sidebar Responsiveness Overrides
+   ========================================================================== */
+
+/* Keep sidebar behavior on portfolio page */
+body.modern-portfolio .chat-container {
+    width: min(420px, 100vw);
+    height: 100dvh;
+    top: 0;
+    right: 0;
+    border-radius: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Standalone chat page should be visible and centered, not off-canvas */
+body.chat-body .chat-main {
+    padding: clamp(0.75rem, 3vw, 2rem);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+body.chat-body .chat-container {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: min(100%, 980px);
+    height: min(calc(100dvh - 7rem), 860px);
+    margin: 0 auto;
+    border-left: none;
+    border-radius: 22px;
+    box-shadow: 0 20px 40px rgba(2, 6, 23, 0.15);
+}
+
+body.chat-body .chat-header {
+    border-radius: 22px 22px 0 0;
+}
+
+body.chat-body .chat-messages {
+    padding: 1rem;
+}
+
+body.chat-body .chat-input-container {
+    padding: 0.9rem;
+}
+
+@media (max-width: 900px) {
+    body.chat-body .chat-container {
+        width: 100%;
+        height: calc(100dvh - 5.8rem);
+        border-radius: 16px;
+    }
+
+    body.chat-body .chat-header {
+        padding: 0.9rem;
+        border-radius: 16px 16px 0 0;
+    }
+}
+
+@media (max-width: 640px) {
+    body.modern-portfolio .chat-container {
+        width: 100vw;
+    }
+
+    body.chat-body .chat-main {
+        padding: 0.4rem;
+    }
+
+    body.chat-body .chat-container {
+        height: calc(100dvh - 0.8rem);
+        border-radius: 12px;
+    }
+
+    body.chat-body .chat-header {
+        border-radius: 12px 12px 0 0;
+    }
+
+    body.chat-body .suggestion-chips {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}

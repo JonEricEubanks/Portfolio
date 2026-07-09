@@ -6,7 +6,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize navigation functionality
   initNavigation();
-  
+
+  // Initialize Lucide icons
+  if (window.lucide) lucide.createIcons();
+
   // Elements
   const dashboardToggle = document.getElementById('dashboard-toggle');
   const body = document.body;
@@ -538,6 +541,8 @@ function initNavigation() {
   const primaryNav = document.getElementById('primary-nav');
   
   if (navToggle && primaryNav) {
+    const desktopQuery = window.matchMedia('(min-width: 1186px)');
+
     // Toggle function
     function toggleMenu(e) {
       if (e) e.stopPropagation(); // Prevent document click from immediately closing it
@@ -584,6 +589,23 @@ function initNavigation() {
         navToggle.classList.remove('active');
       }
     });
+
+    function syncNavigationForViewport() {
+      if (desktopQuery.matches) {
+        navToggle.setAttribute('aria-expanded', 'false');
+        primaryNav.setAttribute('aria-hidden', 'false');
+        primaryNav.classList.remove('open');
+        navToggle.classList.remove('active');
+      } else {
+        navToggle.setAttribute('aria-expanded', 'false');
+        primaryNav.setAttribute('aria-hidden', 'true');
+        primaryNav.classList.remove('open');
+        navToggle.classList.remove('active');
+      }
+    }
+
+    syncNavigationForViewport();
+    desktopQuery.addEventListener('change', syncNavigationForViewport);
   }
 
   // Active navigation highlighting on scroll

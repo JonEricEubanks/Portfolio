@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,6 +12,8 @@
     />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="chat-styles.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   </head>
   <body class="chat-body">
     <!-- Animated background -->
@@ -25,7 +27,7 @@
       <div class="header-container glass-morphism">
         <div class="header-left">
           <div class="ai-badge">
-            <span class="ai-icon">🤖</span>
+            <i data-lucide="bot" class="ai-icon"></i>
             <span class="pulse-ring"></span>
           </div>
           <div class="header-text">
@@ -37,7 +39,7 @@
         </div>
         <nav class="navigation">
           <a href="index.html" class="back-button">
-            <span class="back-icon">←</span>
+            <i data-lucide="arrow-left" class="back-icon"></i>
             <span>Back to Portfolio</span>
           </a>
         </nav>
@@ -48,7 +50,7 @@
       <div class="chat-container glass-morphism">
         <div class="chat-header">
           <div class="ai-avatar floating">
-            <span class="avatar-emoji">🤖</span>
+            <i data-lucide="bot" class="avatar-emoji"></i>
             <div class="avatar-glow"></div>
           </div>
           <div class="chat-info">
@@ -66,7 +68,23 @@
         <div class="chat-messages" id="chat-messages">
           <div class="message ai-message animate-in">
             <div class="message-avatar">
-              <span class="avatar-emoji">🤖</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect width="18" height="10" x="3" y="11" rx="2" />
+                <circle cx="12" cy="5" r="2" />
+                <path d="M12 7v4" />
+                <path d="M8 16h.01" />
+                <path d="M16 16h.01" />
+              </svg>
             </div>
             <div class="message-content glass-card">
               <p>
@@ -84,9 +102,13 @@
 
         <div class="suggested-questions glass-card" id="suggested-questions">
           <div class="suggestions-header" onclick="toggleSuggestions()">
-            <p class="suggestions-title">💡 Try asking:</p>
-            <button class="collapse-button modern" id="collapse-button">
-              <span class="collapse-icon">⌄</span>
+            <p class="suggestions-title">Try asking:</p>
+            <button
+              class="collapse-button modern"
+              id="collapse-button"
+              aria-label="Toggle suggestions"
+            >
+              <i data-lucide="chevron-down" class="collapse-icon"></i>
             </button>
           </div>
           <div class="suggestion-chips" id="suggestion-chips">
@@ -94,28 +116,30 @@
               class="suggestion-chip modern-chip"
               onclick="sendSuggestion('What projects has JonEric worked on?')"
             >
-              <span class="chip-icon">🚀</span>
+              <i data-lucide="rocket" class="chip-icon"></i>
               What projects has JonEric worked on?
             </button>
             <button
               class="suggestion-chip modern-chip"
-              onclick="sendSuggestion('Tell me about his Power Platform experience')"
+              onclick="
+                sendSuggestion('Tell me about his Power Platform experience')
+              "
             >
-              <span class="chip-icon">⚡</span>
+              <i data-lucide="zap" class="chip-icon"></i>
               Tell me about his Power Platform experience
             </button>
             <button
               class="suggestion-chip modern-chip"
               onclick="sendSuggestion('What dashboards has he built?')"
             >
-              <span class="chip-icon">📊</span>
+              <i data-lucide="bar-chart-2" class="chip-icon"></i>
               What dashboards has he built?
             </button>
             <button
               class="suggestion-chip modern-chip"
               onclick="sendSuggestion('What are his certifications?')"
             >
-              <span class="chip-icon">🎓</span>
+              <i data-lucide="graduation-cap" class="chip-icon"></i>
               What are his certifications?
             </button>
           </div>
@@ -134,8 +158,9 @@
               id="send-button"
               onclick="sendMessage()"
               class="send-button modern-send"
+              aria-label="Send message"
             >
-              <span class="send-icon">➤</span>
+              <i data-lucide="send" class="send-icon"></i>
               <div class="button-ripple"></div>
             </button>
           </div>
@@ -150,5 +175,10 @@
     </main>
 
     <script src="chat.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) lucide.createIcons();
+      });
+    </script>
   </body>
 </html>

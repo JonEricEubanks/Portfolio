@@ -1052,8 +1052,9 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             return;
         }
         
-        // Auto-generate excerpt from content for backwards compatibility
-        const autoExcerpt = this.createSmartExcerpt(content, this.postTitle.value.trim());
+        // Use AI-generated excerpt if available, otherwise auto-generate from content
+        const storedExcerpt = this.postExcerpt?.value.trim();
+        const autoExcerpt = storedExcerpt || this.createSmartExcerpt(content, this.postTitle.value.trim());
         
         const post = {
             id: this.postId.value || this.generateId(),
@@ -1219,6 +1220,13 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         
         if (filteredPosts.length === 0) {
             this.emptyState.style.display = 'block';
+            // Update empty state message based on filter
+            const emptyMsg = this.emptyState.querySelector('p');
+            if (emptyMsg) {
+                emptyMsg.textContent = this.currentFilter === 'all'
+                    ? 'No posts yet. Check back soon!'
+                    : `No posts in ${this.getCategoryLabel(this.currentFilter)} yet.`;
+            }
             // Clear any existing posts
             const cards = this.postsContainer.querySelectorAll('.blog-card');
             cards.forEach(card => card.remove());
@@ -1251,6 +1259,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                         <span class="blog-date">${this.formatDate(post.date)}</span>
                     </div>
                     <h3 class="blog-title">${this.escapeHtml(post.title)}</h3>
+                    ${post.excerpt ? `<p class="blog-excerpt">${this.escapeHtml(post.excerpt)}</p>` : ''}
                     <div class="blog-footer">
                         <div class="blog-stats">
                             <span class="blog-stat likes-stat" title="Likes">
@@ -1430,6 +1439,11 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             document.body.style.overflow = '';
             // Hide reading progress
             this.hideReadingProgress();
+            // Clean up event listeners
+            document.removeEventListener('keydown', this._readerEscHandler);
+            window.removeEventListener('popstate', this._readerPopStateHandler);
+            this._readerEscHandler = null;
+            this._readerPopStateHandler = null;
             // Scroll back to blog section
             setTimeout(() => {
                 document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth' });
@@ -1453,71 +1467,104 @@ Respond with ONLY one sentence, no quotes, no explanation.`
             }
         };
         
+        // Remove any existing reader keyboard/popstate handlers before adding new ones
+        if (this._readerEscHandler) document.removeEventListener('keydown', this._readerEscHandler);
+        if (this._readerPopStateHandler) window.removeEventListener('popstate', this._readerPopStateHandler);
+        
         // ESC key to close
-        const escHandler = (e) => {
-            if (e.key === 'Escape') {
-                closeReader();
-                document.removeEventListener('keydown', escHandler);
-            }
+        this._readerEscHandler = (e) => {
+            if (e.key === 'Escape') closeReader();
         };
-        document.addEventListener('keydown', escHandler);
+        document.addEventListener('keydown', this._readerEscHandler);
         
         // Browser back button support
         history.pushState({ blogPost: id }, post.title, `#blog-${id}`);
         
-        // Handle back button
-        const popStateHandler = (e) => {
-            if (reader.classList.contains('active')) {
-                closeReader();
-                window.removeEventListener('popstate', popStateHandler);
-            }
+        this._readerPopStateHandler = () => {
+            if (reader.classList.contains('active')) closeReader();
         };
-        window.addEventListener('popstate', popStateHandler);
+        window.addEventListener('popstate', this._readerPopStateHandler);
     }
 
     formatContent(content) {
-        // Enhanced markdown-like formatting with syntax highlighting
-        let html = content
-            // Headers
+        // Step 1: Extract and protect code blocks FIRST to prevent inner content being transformed
+        const codeBlocks = [];
+        const inlineCodes = [];
+
+        let html = content.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
+            const language = lang || 'plaintext';
+            const langClass = `language-${language}`;
+            const idx = codeBlocks.length;
+            codeBlocks.push(`<pre class="${langClass}"><code class="${langClass}">${this.escapeHtml(code.trim())}</code></pre>`);
+            return `__CODEBLOCK_${idx}__`;
+        });
+
+        // Step 2: Extract inline code (XSS-safe)
+        html = html.replace(/`([^`]+)`/g, (match, code) => {
+            const idx = inlineCodes.length;
+            inlineCodes.push(`<code>${this.escapeHtml(code)}</code>`);
+            return `__INLINECODE_${idx}__`;
+        });
+
+        // Step 3: Headers
+        html = html
             .replace(/^### (.+)$/gm, '<h3>$1</h3>')
             .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-            .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-            // Images - ![alt](url)
-            .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="content-image" loading="lazy">')
-            // Bold
+            .replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+        // Step 4: Images
+        html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,
+            '<img src="$2" alt="$1" class="content-image" loading="lazy">');
+
+        // Step 5: Bold & Italic
+        html = html
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-            // Italic
-            .replace(/\*(.+?)\*/g, '<em>$1</em>')
-            // Code blocks with language support for Prism.js
-            .replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
-                const language = lang || 'plaintext';
-                const langClass = `language-${language}`;
-                return `<pre class="${langClass}"><code class="${langClass}">${this.escapeHtml(code.trim())}</code></pre>`;
-            })
-            // Inline code
-            .replace(/`([^`]+)`/g, '<code>$1</code>')
-            // Links
-            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-            // Blockquotes
-            .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-            // Unordered lists
-            .replace(/^- (.+)$/gm, '<li>$1</li>')
-            // Line breaks to paragraphs
-            .split('\n\n')
-            .map(para => {
-                para = para.trim();
-                if (!para) return '';
-                if (para.startsWith('<h') || para.startsWith('<pre>') || para.startsWith('<ul>') || para.startsWith('<ol>') || para.startsWith('<img') || para.startsWith('<blockquote') || para.startsWith('<li')) {
-                    // Wrap list items in ul
-                    if (para.includes('<li>')) {
-                        return `<ul>${para}</ul>`;
-                    }
-                    return para;
-                }
-                return `<p>${para.replace(/\n/g, '<br>')}</p>`;
-            })
-            .join('');
-        
+            .replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+        // Step 6: Strikethrough
+        html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
+
+        // Step 7: Links
+        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g,
+            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+        // Step 8: Blockquotes (single-line; collapse consecutive lines into one block)
+        html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+        html = html.replace(/<\/blockquote>\n<blockquote>/g, '<br>');
+
+        // Step 9: Ordered list items (mark so we can wrap them)
+        html = html.replace(/^\d+\. (.+)$/gm, '<li data-ol>$1</li>');
+
+        // Step 10: Unordered list items
+        html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+
+        // Step 11: Wrap in paragraphs (split on blank lines)
+        html = html.split('\n\n').map(para => {
+            para = para.trim();
+            if (!para) return '';
+
+            // Already a block-level element or code placeholder
+            const isBlock = /^<(h[1-6]|pre|blockquote|ul|ol|img)/i.test(para) ||
+                            para.startsWith('__CODEBLOCK_');
+            if (isBlock) return para;
+
+            if (para.includes('<li data-ol>')) {
+                return `<ol>${para.replace(/<li data-ol>/g, '<li>')}</ol>`;
+            }
+            if (para.includes('<li>')) {
+                return `<ul>${para}</ul>`;
+            }
+            return `<p>${para.replace(/\n/g, '<br>')}</p>`;
+        }).join('');
+
+        // Step 12: Restore code blocks and inline codes
+        codeBlocks.forEach((block, i) => {
+            html = html.split(`__CODEBLOCK_${i}__`).join(block);
+        });
+        inlineCodes.forEach((code, i) => {
+            html = html.split(`__INLINECODE_${i}__`).join(code);
+        });
+
         return html;
     }
 
@@ -1816,14 +1863,14 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         
         return `
             <div class="comment-item">
-                <div class="comment-avatar">${initial}</div>
-                <div class="comment-content">
-                    <div class="comment-header">
-                        <span class="comment-author">${this.escapeHtml(comment.name)}</span>
-                        <span class="comment-date">${timeAgo}</span>
-                    </div>
-                    <p class="comment-text">${this.escapeHtml(comment.content)}</p>
+                <div class="comment-header">
+                    <span class="comment-author">
+                        <div class="comment-avatar">${initial}</div>
+                        <span class="comment-name">${this.escapeHtml(comment.name)}</span>
+                    </span>
+                    <span class="comment-date">${timeAgo}</span>
                 </div>
+                <p class="comment-content">${this.escapeHtml(comment.content)}</p>
             </div>
         `;
     }
@@ -1865,7 +1912,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         
         // Create new toast
         const toast = document.createElement('div');
-        toast.className = `toast-notification toast-${type}`;
+        toast.className = `toast-notification ${type}`;
         toast.textContent = message;
         
         document.body.appendChild(toast);

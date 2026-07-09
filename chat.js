@@ -1025,7 +1025,9 @@ For now, I can tell you that JonEric has built 8+ innovative solutions including
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}-message`;
         
-        const avatar = sender === 'ai' ? '🤖' : '👤';
+        const BOT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="10" x="3" y="11" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M8 16h.01"/><path d="M16 16h.01"/></svg>';
+        const USER_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+        const avatar = sender === 'ai' ? BOT_SVG : USER_SVG;
         const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         
         // Ensure content is a string and handle undefined/null cases
@@ -1067,8 +1069,9 @@ For now, I can tell you that JonEric has built 8+ innovative solutions including
         typingDiv.className = 'typing-indicator';
         typingDiv.id = 'typing-indicator';
         
+        const TYPING_BOT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="10" x="3" y="11" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M8 16h.01"/><path d="M16 16h.01"/></svg>';
         typingDiv.innerHTML = `
-            <div class="message-avatar">🤖</div>
+            <div class="message-avatar">${TYPING_BOT_SVG}</div>
             <div class="typing-dots">
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
