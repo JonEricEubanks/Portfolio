@@ -1264,11 +1264,11 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                     <div class="blog-footer">
                         <div class="blog-stats">
                             <span class="blog-stat likes-stat" title="Likes">
-                                <span class="stat-icon">❤️</span>
+                                <span class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
                                 <span class="stat-count">${post.likes || 0}</span>
                             </span>
                             <span class="blog-stat comments-stat" title="Comments">
-                                <span class="stat-icon">💬</span>
+                                <span class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
                                 <span class="stat-count">${post.comments?.length || 0}</span>
                             </span>
                         </div>
@@ -1747,7 +1747,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                     this.renderPosts(); // Update card counts
                 }
                 
-                this.showToast('Thanks for the love! ❤️');
+                this.showToast('Thanks for the like!');
             } else {
                 console.error('Like failed:', data);
                 this.showToast(data.error || 'Could not add like. Try again!', 'error');
@@ -1814,7 +1814,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                 nameInput.value = '';
                 contentInput.value = '';
                 
-                this.showToast('Comment posted! 💬');
+                this.showToast('Comment posted!');
             } else {
                 this.showToast(data.error || 'Could not post comment. Try again!', 'error');
             }

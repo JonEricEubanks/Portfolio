@@ -4392,7 +4392,7 @@ body:not(.dashboard-mode) .kpi-indicator {
 
 :root {
   --fluid-copy: clamp(0.98rem, 1.1vw, 1.08rem);
-  --fluid-title: clamp(1.8rem, 4.8vw, 3.4rem);
+  --fluid-title: clamp(1.8rem, 3.8vw, 2.8rem); /* reduced max from 3.4rem to 2.8rem — prevents oversized title on mid screens */
   --fluid-section-title: clamp(1.55rem, 4vw, 2.5rem);
 }
 
@@ -4536,7 +4536,7 @@ body:not(.dashboard-mode) .kpi-indicator {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .hero-container > * {
     min-width: 0;
   }
