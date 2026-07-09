@@ -232,11 +232,12 @@ ${this.portfolioData.testimonials[0] || 'Client testimonials available in portfo
 • Data analytics and visualization
 
 Response Strategy:
-1. Detect user intent (projects, skills, achievements, specific questions)
+1. Detect user intent (projects, skills, achievements, blog posts, specific questions)
 2. Use live portfolio data for accurate answers
 3. Vary response style to maintain engagement
 4. Reference specific examples when relevant
-5. Keep responses concise but informative`;
+5. Keep responses concise but informative
+6. When asked about a blog post by title, summarize that specific post using its excerpt and tags`;
     }
 
     analyzeUserIntent(message) {
@@ -249,7 +250,19 @@ Response Strategy:
             intent.confidence = 0.95;
             return intent;
         }
-        
+
+        // Blog-related queries — check early so government/city keywords in blog titles
+        // don't get intercepted by the municipal domain check below
+        const blogKeywords = ['blog', 'post', 'article', 'wrote', 'writing', 'read', 'publish'];
+        const hasBlogKeyword = blogKeywords.some(kw => lowMessage.includes(kw));
+        const livePosts = (window.blogManager && window.blogManager.posts) ? window.blogManager.posts : [];
+        const mentionsPostTitle = livePosts.some(p => lowMessage.includes(p.title.toLowerCase().substring(0, 20)));
+        if (hasBlogKeyword || mentionsPostTitle) {
+            intent.type = 'blog';
+            intent.confidence = 0.95;
+            return intent;
+        }
+
         // Specific question analysis for better categorization
         if (lowMessage.includes('cons') || lowMessage.includes('disadvantage') || lowMessage.includes('weakness')) {
             intent.type = 'challenges';
@@ -430,6 +443,12 @@ Response Strategy:
             console.log('🎯 Using career growth response');
             const variedResponse = this.getVariedResponse('career_growth');
             if (variedResponse) return variedResponse;
+        }
+
+        // Blog queries always go to AI so it can reference actual post content
+        if (intent.type === 'blog') {
+            console.log('📚 Blog intent — deferring to AI');
+            return null;
         }
         
         // Handle specific project queries with keyword matching
