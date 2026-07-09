@@ -4402,6 +4402,19 @@ body:not(.dashboard-mode) .kpi-indicator {
   width: min(100%, 1400px);
 }
 
+/* elm-transition-container: remove hard 700px min-width — size via aspect-ratio + parent width.
+   The original base CSS sets min-width:700px which overflows the hero right column at
+   screens between 1024–1400px. With min-width:0, the container fills its grid cell naturally. */
+.elm-transition-container {
+  min-width: 0 !important;
+}
+
+/* hero-visual must not overflow its grid cell at any desktop width */
+.hero-visual {
+  overflow: hidden;
+  min-width: 0;
+}
+
 /* Hero title is inside a 2-column grid — must be left-aligned, not center from global h2 rule */
 .hero-title {
   text-align: left !important;
