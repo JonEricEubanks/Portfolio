@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
     // Version check endpoint
     if (req.method === 'GET' && req.query.version) {
-        return res.status(200).json({ version: 4, timestamp: new Date().toISOString() });
+        return res.status(200).json({ version: 5, timestamp: new Date().toISOString() });
     }
 
     if (req.method === 'OPTIONS') {

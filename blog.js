@@ -1027,8 +1027,9 @@ Respond with ONLY one sentence, no quotes, no explanation.`
 
                 if (!response.ok) {
                     const errData = await response.json().catch(() => ({}));
+                    const detail = errData.error || `HTTP ${response.status}`;
                     console.error('Failed to save to GitHub:', errData);
-                    alert('Failed to save post to GitHub. Changes saved locally only.');
+                    alert(`Failed to save post to GitHub.\nServer error: ${detail}\nChanges saved locally only.`);
                 } else {
                     await this.loadPosts();
                 }
