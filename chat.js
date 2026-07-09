@@ -939,6 +939,18 @@ Q: Why trust his work?
     }
 
     async getAIResponse(userMessage) {
+        // Fetch live blog posts at call-time so async loads are captured
+        const liveBlogPosts = (window.blogManager && window.blogManager.posts.length)
+            ? window.blogManager.getPostsForContext()
+            : this.portfolioData.blogPosts;
+
+        const blogSection = liveBlogPosts.length
+            ? `\nBLOG POSTS (${liveBlogPosts.length} published):\n` +
+              liveBlogPosts.slice(0, 10).map(p =>
+                  `• [${p.date}] "${p.title}" (${p.category})${p.excerpt ? ' — ' + p.excerpt.substring(0, 80) : ''}`
+              ).join('\n')
+            : '';
+
         // Enhanced context with conversation history and live portfolio data
         const enhancedContext = `${this.contextPrompt}
 
@@ -953,7 +965,7 @@ CURRENT PORTFOLIO STATS:
 • Dashboards: ${this.getProjectsByCategory('dashboard').length}  
 • AI Solutions: ${this.getProjectsByCategory('ai').length}
 • GIS Projects: ${this.getProjectsByCategory('gis').length}
-
+${blogSection}
 RECENT PROJECTS TO HIGHLIGHT:
 ${this.portfolioData.projects.slice(0, 3).map(p => `• ${p.title}`).join('\n')}
 
@@ -986,7 +998,8 @@ RESPONSE INSTRUCTIONS:
                             description: p.descriptions[0]?.substring(0, 100)
                         })),
                         achievements: this.portfolioData.achievements,
-                        certificationCount: this.portfolioData.certifications.length
+                        certificationCount: this.portfolioData.certifications.length,
+                        blogPosts: liveBlogPosts.slice(0, 10)
                     }
                 })
             });
