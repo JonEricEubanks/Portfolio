@@ -1006,18 +1006,11 @@ RESPONSE INSTRUCTIONS:
         } catch (error) {
             console.error('💥 API Call Failed:', error);
             // Return a fallback response that indicates the issue
-            return `🔧 **API Connection Issue Detected**
+            return `🔧 **AI Assistant Temporarily Unavailable**
 
-I'm having trouble connecting to the enhanced AI backend. This might be because:
-• The OpenAI API key isn't configured on the server
-• There's a deployment issue
-• The API endpoint is not responding
+I'm having trouble reaching the backend right now. Please try again in a moment!
 
-**Currently showing basic responses only.** 
-
-For now, I can tell you that JonEric has built 8+ innovative solutions including Power Apps, dashboards, AI agents, and GIS solutions. His ELM app won Microsoft's Best in Automation award!
-
-*Note: Full AI capabilities will return once the backend is properly configured.*`;
+While you wait — JonEric has built 8+ innovative solutions including Power Apps, dashboards, AI agents, and GIS solutions. His ELM App won Microsoft's Best in Automation award! 🏆`;
         }
     }
 

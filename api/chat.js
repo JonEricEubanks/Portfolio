@@ -73,7 +73,7 @@ export default async function handler(req, res) {
         }
 
         const completion = await openai.chat.completions.create({
-            model: "claude-3-5-sonnet", // Claude via GitHub Models (requires GITHUB_TOKEN)
+            model: "gpt-4o", // GitHub Models — works with GitHub Copilot subscription
             messages: messages,
             max_tokens: 400,
             temperature: 0.8
