@@ -34,6 +34,10 @@
 
       <!-- Navigation -->
       <nav id="primary-nav" class="navigation modern-nav" aria-hidden="true">
+        <a href="#ai-apps" class="nav-link modern-nav-item">
+          <i data-lucide="cpu" class="nav-icon"></i>
+          <span class="nav-text">AI Agents</span>
+        </a>
         <a href="#lowcode" class="nav-link modern-nav-item">
           <i data-lucide="rocket" class="nav-icon"></i>
           <span class="nav-text">Projects</span>
@@ -142,6 +146,8 @@
           <div class="elm-transition-container">
             <img src="Images/ELM.png" alt="ELM Application Preview" class="hero-image floating elm-image active" id="elm-image-1">
             <img src="Images/ELM1.png" alt="ELM Application Preview" class="hero-image floating elm-image" id="elm-image-2">
+            <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg" alt="CivicGrant IQ — Best IQ Agent" class="hero-image floating elm-image" id="elm-image-3" loading="lazy">
+            <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png" alt="CivicLens — Grand Prize Winner" class="hero-image floating elm-image" id="elm-image-4" loading="lazy">
           </div>
           <div class="elm-title-container">
             <div class="elm-title-badge">
@@ -294,6 +300,78 @@
             <div class="metric-value"><span class="counter" data-target="423">0</span>%</div>
             <div class="metric-label">Implementation ROI</div>
           </div>
+        </div>
+      </section>
+
+      <!-- AI Agents & Applications Section -->
+      <section id="ai-apps" class="portfolio-section">
+        <div class="section-header">
+          <h2 class="section-title gradient-text">AI Agents &amp; Applications</h2>
+          <p class="section-description">Building production AI agents with Azure AI Foundry, A2A orchestration, GraphRAG reasoning, and MCP Protocol</p>
+        </div>
+        <div class="grid-container modern-portfolio-grid">
+
+          <!-- CivicGrant IQ -->
+          <div class="link-container modal-trigger"
+               data-modal-title="CivicGrant IQ — Best IQ Agent · Microsoft Agents League 2026"
+               data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg"
+               data-modal-slideshow="executive-summary-civicgrant,https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg,https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/docs/architecture.svg,video:https://www.youtube.com/embed/dTRjA8eKwgQ?autoplay=1&start=15"
+               data-modal-descriptions="Best IQ Agent — Microsoft Agents League @ AI Skills Fest 2026 ($6,468 prize package). AI-powered municipal grant revenue intelligence that analyzes federal NOFOs in 6 grounded reasoning steps, every figure cited to a source document.||Grant Analysis Interface: The React 18 chat UI where users paste a federal NOFO. The agent streams 23 SSE event types — reasoning steps, GraphRAG evidence paths, agent handoffs, and guardrail verdicts — all in real time.||System Architecture: 5-agent fleet (Main Analyst, Red Team GS-14 reviewer, Competitive Intel, Portfolio Scan, Narrative Refinement) integrated with all 3 Microsoft IQ layers — Foundry IQ, Work IQ (4 live M365 signals), and Fabric IQ (live SQL analytics).||Demo Video: Full 5-minute walkthrough — paste a real NOFO, watch the 6-step GraphRAG reasoning chain, evidence paths panel, and 5-agent pressure test in action."
+               data-modal-link="https://proud-field-00978990f.7.azurestaticapps.net/"
+               data-kpi-icon=""
+               data-kpi-value="5"
+               data-kpi-title="Specialist AI Agents">
+            <div class="image-container" style="background-image: url('https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg');">
+            </div>
+            <p>CivicGrant IQ — AI Municipal Grant Intelligence Agent</p>
+          </div>
+
+          <!-- CivicLens -->
+          <div class="link-container modal-trigger"
+               data-modal-title="CivicLens — Grand Prize Winner · JavaScript AI Build-a-thon"
+               data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png"
+               data-modal-slideshow="executive-summary-civiclens,https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png,video:https://www.youtube.com/embed/rFCUO5acv5Q?autoplay=1"
+               data-modal-descriptions="Grand Prize Winner — JavaScript AI Build-a-thon (Microsoft) · $1,000 Award. CivicLens transforms invisible municipal infrastructure data into plain-language intelligence reports, dispatches repair crews, and predicts infrastructure failures — all in JavaScript.||Home Dashboard: At-a-glance municipal overview showing active work orders, priority alerts, and AI-generated insights for Lake Forest, IL. The 5-stage multi-agent pipeline powers real-time infrastructure intelligence with Weibull decay priority scoring.||Demo Video: Full walkthrough — natural-language infrastructure Q&A, interactive Leaflet map with Weibull hazard simulator, MCP tool calls, AI-generated reports, and crew dispatch in action."
+               data-modal-link="https://civiclens-app.azurewebsites.net/"
+               data-kpi-icon=""
+               data-kpi-value="1000"
+               data-kpi-title="Grand Prize · JS AI Build-a-thon"
+               data-kpi-prefix="$">
+            <div class="image-container" style="background-image: url('https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png');">
+            </div>
+            <p>CivicLens — Municipal Intelligence Reporter</p>
+          </div>
+
+          <!-- MAINTAIN AI -->
+          <div class="link-container modal-trigger"
+               data-modal-title="MAINTAIN AI — Predictive Infrastructure Command Center"
+               data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/debug-01-main.png"
+               data-modal-slideshow="executive-summary-maintain,https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/debug-01-main.png,https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/src/assests/Chat%20Reasoning.png,https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/src/assests/NLP%20Dashboard%20Landing.png,video:https://www.youtube.com/embed/_cZO8YP-Kuw?autoplay=1"
+               data-modal-descriptions="Multi-agent reasoning system for municipal infrastructure management. 6 specialist agents across 7 orchestration pipelines analyze 1,281+ work orders, predict crew needs, and optimize dispatch. Built for the Microsoft AI Dev Days Hackathon 2026.||Command Center Dashboard: The main React 18 interface with immersive Leaflet map showing priority-coded pulsing markers, glassmorphism panels, and proactive AI companion notifications from the Analysis Agent.||AI Chat and Reasoning: Multi-step reasoning panel showing confidence scores, decision factors, and the Analysis Agent’s transparent breakdown of why each infrastructure repair recommendation was made.||NLP Dashboard Builder: Type any analytics question and the NLP Dashboard Agent (GPT-4o + Code Interpreter) builds a live visualization on demand using real work order data.||Demo Video: Full walkthrough — agent orchestration, AI dispatch wizard, what-if scenario simulator, observability traces, and Responsible AI panel in action."
+               data-modal-link="https://github.com/JonEricEubanks/Maintain-"
+               data-kpi-icon=""
+               data-kpi-value="6"
+               data-kpi-title="AI Agents / 7 Pipelines">
+            <div class="image-container" style="background-image: url('https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/debug-01-main.png');">
+            </div>
+            <p>MAINTAIN AI — Predictive Infrastructure Command Center</p>
+          </div>
+
+          <!-- Kaizen AI -->
+          <div class="link-container modal-trigger"
+               data-modal-title="Kaizen AI — AI-Powered Certification Study Coach"
+               data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/01-home-dashboard.png"
+               data-modal-slideshow="executive-summary-kaizen,https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/01-home-dashboard.png,https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/03-quiz-question.png,https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/11-donna-chat.png,video:https://www.youtube.com/embed/bXF_un5gaQQ?autoplay=1&start=47"
+               data-modal-descriptions="AI-powered Microsoft certification study coach featuring Donna AI companion. Built for the GitHub Copilot Creative Apps Hackathon using Power Apps Code Apps + Dataverse + Azure Functions. Supports any Microsoft exam with AI-generated content.||Home Dashboard: XP progress, level tracking, daily challenges, streak counter, and quick quiz modes. The gamification system awards XP for every activity with streak multipliers and 25+ achievements to unlock.||Quiz Interface: Clean quiz interface with 447+ real exam-style questions. Donna AI provides contextual hints, explanations, and power-ups. AI-predicted readiness gauge after each session.||Donna AI Chat: Full-screen conversational coaching with personalized study advice, exam-specific quick prompts, and context-aware actions on every screen based on your performance.||Demo Video: MCP exam discovery, 6-agent AI content generation, Donna AI hints, DALL-E 3 slide generator, gamification, and the multi-agent reasoning pipeline in action."
+               data-modal-link="https://github.com/JonEricEubanks/kaizen-ai"
+               data-kpi-icon=""
+               data-kpi-value="447"
+               data-kpi-title="AI-Generated Exam Questions">
+            <div class="image-container" style="background-image: url('https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/01-home-dashboard.png');">
+            </div>
+            <p>Kaizen AI — AI-Powered Certification Study Coach</p>
+          </div>
+
         </div>
       </section>
 
@@ -1264,7 +1342,7 @@
           </div>
         </div>
         <div id="modal-caption" class="modal-caption" style="display: none;">
-          <div class="caption-title"><span class="emoji">⚙️</span> <span id="caption-title-text">Flow Overview</span></div>
+          <div class="caption-title"><span id="caption-title-text">Flow Overview</span></div>
           <p id="caption-content" class="caption-content">Detailed description goes here</p>
         </div>
         <p id="modal-description" class="modal-description" style="display: none;"></p>
@@ -1332,7 +1410,6 @@
         const modalDescription = document.getElementById('modal-description'); 
         const modalCaption = document.getElementById('modal-caption');
         const captionTitleText = document.getElementById('caption-title-text');
-        const captionEmoji = document.querySelector('.emoji');
         const captionContent = document.getElementById('caption-content');
 
         let currentLink = '';
@@ -1531,6 +1608,31 @@
                   emoji = "🏗️";
                   break; 
               }
+            } else if (slideshowPath.includes('civicgrant')) {
+              switch(actualIndex) {
+                case 0: title = "Grant Analysis Interface"; emoji = "📊"; break;
+                case 1: title = "System Architecture"; emoji = "🏗️"; break;
+                case 2: title = "Demo Video"; emoji = "🎬"; break;
+              }
+            } else if (slideshowPath.includes('civiclens')) {
+              switch(actualIndex) {
+                case 0: title = "Home Dashboard"; emoji = "🏠"; break;
+                case 1: title = "Demo Video"; emoji = "🎬"; break;
+              }
+            } else if (slideshowPath.includes('maintain')) {
+              switch(actualIndex) {
+                case 0: title = "Command Center Dashboard"; emoji = "🖥️"; break;
+                case 1: title = "AI Chat & Reasoning"; emoji = "💬"; break;
+                case 2: title = "NLP Dashboard Builder"; emoji = "📊"; break;
+                case 3: title = "Demo Video"; emoji = "🎬"; break;
+              }
+            } else if (slideshowPath.includes('kaizen')) {
+              switch(actualIndex) {
+                case 0: title = "Home Dashboard"; emoji = "🏠"; break;
+                case 1: title = "Quiz Interface"; emoji = "📝"; break;
+                case 2: title = "Donna AI Chat"; emoji = "🤖"; break;
+                case 3: title = "Demo Video"; emoji = "🎬"; break;
+              }
             }
             
             // Extract emoji and title for single descriptions (for dashboard items)
@@ -1577,7 +1679,6 @@
           // Display caption if available (for both images and videos)
           if (slideshowDescriptions && slideshowDescriptions[currentSlideIndex]) {
             const captionData = slideshowDescriptions[currentSlideIndex];
-            captionEmoji.textContent = captionData.emoji;
             captionTitleText.textContent = captionData.title;
             captionContent.textContent = captionData.content;
             modalCaption.style.display = 'block';
@@ -2011,7 +2112,6 @@
               const singleDescription = this.getAttribute('data-modal-description');
               if (singleDescription) {
                 const captionData = processCaptionData([singleDescription])[0];
-                captionEmoji.textContent = captionData.emoji;
                 captionTitleText.textContent = captionData.title;
                 captionContent.textContent = captionData.content;
                 modalCaption.style.display = 'block';
@@ -2074,6 +2174,18 @@
       document.addEventListener('DOMContentLoaded', function() {
         const elmImages = document.querySelectorAll('.elm-image');
         const container = document.querySelector('.elm-transition-container');
+        const titleEl  = document.querySelector('.elm-title-text');
+        const subtitleEl = document.querySelector('.elm-subtitle');
+        const badgeContainer = document.querySelector('.elm-title-container');
+
+        // Award label for each image slot (order must match the DOM order)
+        const awardData = [
+          { title: 'Award Winning ELM App',  subtitle: 'Microsoft Best in Automation Winner' },
+          { title: 'Award Winning ELM App',  subtitle: 'Microsoft Best in Automation Winner' },
+          { title: 'Award Winning Agent',    subtitle: 'Best IQ Agent \u00b7 Microsoft Agents League' },
+          { title: 'Award Winning Agent',    subtitle: 'Grand Prize \u00b7 JavaScript AI Build-a-thon' },
+        ];
+
         let currentImageIndex = 0;
         let isTransitioning = false;
         
@@ -2082,43 +2194,44 @@
           
           isTransitioning = true;
           
-          // Add a subtle glow effect during transition
+          // Subtle glow during transition
           container.style.boxShadow = '0 25px 80px rgba(15, 118, 110, 0.2), 0 10px 30px rgba(0, 0, 0, 0.1)';
           
-          // Fade out current image
+          // Fade out current image AND badge
           elmImages[currentImageIndex].classList.remove('active');
+          if (badgeContainer) badgeContainer.style.opacity = '0';
           
-          // Wait for fade out, then switch to next image
+          // Advance, then fade in next image + update text
           setTimeout(() => {
             currentImageIndex = (currentImageIndex + 1) % elmImages.length;
             elmImages[currentImageIndex].classList.add('active');
+
+            // Update award badge text to match the new image
+            const award = awardData[currentImageIndex];
+            if (award) {
+              if (titleEl)    titleEl.textContent    = award.title;
+              if (subtitleEl) subtitleEl.textContent = award.subtitle;
+            }
+            if (badgeContainer) badgeContainer.style.opacity = '1';
             
-            // Reset container glow after transition
+            // Reset container glow
             setTimeout(() => {
               container.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.08)';
               isTransitioning = false;
             }, 1000);
-          }, 1000); // Half of the CSS transition duration
+          }, 1000);
         }
         
-        // Start the transition cycle (every 5 seconds for better viewing)
+        // Start cycling: first switch after 4s, then every 5s
         if (elmImages.length > 1) {
-          // First transition after 3 seconds
           setTimeout(() => {
             switchELMImage();
-            // Then continue every 5 seconds
             setInterval(switchELMImage, 5000);
-          }, 3000);
+          }, 4000);
         }
         
-        // Pause transitions when user hovers over the container
-        container.addEventListener('mouseenter', () => {
-          container.style.animationPlayState = 'paused';
-        });
-        
-        container.addEventListener('mouseleave', () => {
-          container.style.animationPlayState = 'running';
-        });
+        container.addEventListener('mouseenter', () => { container.style.animationPlayState = 'paused'; });
+        container.addEventListener('mouseleave', () => { container.style.animationPlayState = 'running'; });
       });
 
       // Back to top functionality

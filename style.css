@@ -1358,6 +1358,7 @@ body.dashboard-mode .author-info span {
   margin-top: var(--space-6);
   text-align: center;
   animation: fadeInUp 1s ease-out 1s both;
+  transition: opacity 0.5s ease;
 }
 
 .elm-title-badge {
@@ -3110,8 +3111,7 @@ section {
 }
 
 .caption-title .emoji {
-  font-size: 22px;
-  line-height: 1;
+  display: none; /* emoji span removed from HTML; this hides any cached/stale renders */
 }
 
 .caption-content {
@@ -4724,6 +4724,53 @@ body:not(.dashboard-mode) .kpi-indicator {
 
 /* Keep stroke-width consistent across all Lucide icons */
 .lucide { stroke-width: 1.75; }
+
+/* === Hackathon Award Badges on Portfolio Cards === */
+.card-award-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.65rem;
+  margin: 0.45rem auto 0.1rem;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(251, 191, 36, 0.18));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 50px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #92400e;
+  letter-spacing: 0.01em;
+  text-align: center;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+.card-award-badge svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+/* Gold variant for Grand Prize */
+.card-award-badge--gold {
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.18), rgba(251, 191, 36, 0.26));
+  border-color: rgba(234, 179, 8, 0.5);
+  color: #78350f;
+}
+/* Spotlight/dark mode */
+body.dashboard-mode .card-award-badge {
+  background: linear-gradient(135deg, rgba(245,158,11,0.22), rgba(251,191,36,0.28));
+  border-color: rgba(245,158,11,0.55);
+  color: #fcd34d;
+}
+body.dashboard-mode .card-award-badge svg {
+  color: #fbbf24;
+}
+@media (max-width: 768px) {
+  .card-award-badge { font-size: 0.6rem; padding: 0.22rem 0.5rem; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .bg-orb,

@@ -149,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     kpiIndicator.innerHTML = `
       <div class="kpi-row">
-        <span class="kpi-icon">${icon}</span>
         <span class="kpi-value" data-target="${numericValue}" data-prefix="${prefix}" data-suffix="${suffix}">0</span>
       </div>
       <span class="kpi-title">${title}</span>
