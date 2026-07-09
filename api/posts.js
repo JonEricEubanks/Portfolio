@@ -1,5 +1,13 @@
 // Vercel serverless function to save blog posts to GitHub
-// Version 4 - single-post merge to avoid payload size limits
+// Version 5 - use Git Data API to support large files (>1MB)
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb'
+        }
+    }
+};
+
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -20,7 +28,6 @@ export default async function handler(req, res) {
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const GITHUB_OWNER = process.env.GITHUB_OWNER;
     const GITHUB_REPO = process.env.GITHUB_REPO;
-    const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`;
 
     // GET - Fetch posts from GitHub (public)
     if (req.method === 'GET') {
@@ -52,62 +59,94 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Server configuration error' });
     }
 
-    // Helper: get current posts and SHA from GitHub
-    async function getPostsAndSha() {
-        const fileResponse = await fetch(fileUrl, {
-            headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
-                'Accept': 'application/vnd.github.v3+json'
-            }
-        });
-
-        if (fileResponse.ok) {
-            const fileData = await fileResponse.json();
-            // For large files (>1MB), GitHub Contents API doesn't include content
-            // Fetch actual content from raw URL instead
-            let posts;
-            if (fileData.content) {
-                posts = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
-            } else {
-                const rawResponse = await fetch(
-                    `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`,
-                    { cache: 'no-store' }
-                );
-                posts = rawResponse.ok ? await rawResponse.json() : [];
-            }
-            return { posts, sha: fileData.sha };
-        } else if (fileResponse.status === 404) {
-            return { posts: [], sha: null };
-        } else {
-            const errData = await fileResponse.json();
-            throw new Error(`GitHub API error (${fileResponse.status}): ${errData.message}`);
+    // Helper: get current posts from GitHub (uses raw URL to handle large files)
+    async function getPosts() {
+        const rawResponse = await fetch(
+            `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`,
+            { cache: 'no-store' }
+        );
+        if (rawResponse.ok) {
+            return await rawResponse.json();
         }
+        return [];
     }
 
-    // Helper: write posts array to GitHub
-    async function writePosts(posts, sha, commitMessage) {
-        const content = Buffer.from(JSON.stringify(posts, null, 2)).toString('base64');
-        const updateBody = {
-            message: commitMessage,
-            content: content,
-            branch: 'main'
+    // Helper: write posts array to GitHub using Git Data API (supports files >1MB)
+    async function writePosts(posts, commitMessage) {
+        const content = JSON.stringify(posts, null, 2);
+        const gitApiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git`;
+        const headers = {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
         };
-        if (sha) updateBody.sha = sha;
 
-        const updateResponse = await fetch(fileUrl, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
-                'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updateBody)
+        // 1. Create blob with UTF-8 content (no base64 overhead on the wire)
+        const blobRes = await fetch(`${gitApiBase}/blobs`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({ content, encoding: 'utf-8' })
         });
-
-        if (!updateResponse.ok) {
-            const errorData = await updateResponse.json();
-            throw new Error(`GitHub write failed (${updateResponse.status}): ${errorData.message}`);
+        if (!blobRes.ok) {
+            const e = await blobRes.json();
+            throw new Error(`Blob create failed (${blobRes.status}): ${e.message}`);
         }
+        const { sha: blobSha } = await blobRes.json();
+
+        // 2. Get latest commit SHA for main branch
+        const refRes = await fetch(`${gitApiBase}/refs/heads/main`, { headers });
+        if (!refRes.ok) {
+            const e = await refRes.json();
+            throw new Error(`Ref fetch failed (${refRes.status}): ${e.message}`);
+        }
+        const latestCommitSha = (await refRes.json()).object.sha;
+
+        // 3. Get the tree SHA from the latest commit
+        const commitRes = await fetch(`${gitApiBase}/commits/${latestCommitSha}`, { headers });
+        if (!commitRes.ok) {
+            const e = await commitRes.json();
+            throw new Error(`Commit fetch failed (${commitRes.status}): ${e.message}`);
+        }
+        const treeSha = (await commitRes.json()).tree.sha;
+
+        // 4. Create a new tree pointing the file at the new blob
+        const treeRes = await fetch(`${gitApiBase}/trees`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                base_tree: treeSha,
+                tree: [{ path: 'blog-data/posts.json', mode: '100644', type: 'blob', sha: blobSha }]
+            })
+        });
+        if (!treeRes.ok) {
+            const e = await treeRes.json();
+            throw new Error(`Tree create failed (${treeRes.status}): ${e.message}`);
+        }
+        const { sha: newTreeSha } = await treeRes.json();
+
+        // 5. Create a new commit
+        const newCommitRes = await fetch(`${gitApiBase}/commits`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({ message: commitMessage, tree: newTreeSha, parents: [latestCommitSha] })
+        });
+        if (!newCommitRes.ok) {
+            const e = await newCommitRes.json();
+            throw new Error(`Commit create failed (${newCommitRes.status}): ${e.message}`);
+        }
+        const { sha: newCommitSha } = await newCommitRes.json();
+
+        // 6. Advance the branch ref
+        const updateRes = await fetch(`${gitApiBase}/refs/heads/main`, {
+            method: 'PATCH',
+            headers,
+            body: JSON.stringify({ sha: newCommitSha })
+        });
+        if (!updateRes.ok) {
+            const e = await updateRes.json();
+            throw new Error(`Ref update failed (${updateRes.status}): ${e.message}`);
+        }
+
         return true;
     }
 
@@ -121,7 +160,7 @@ export default async function handler(req, res) {
             }
 
             // Fetch existing posts from GitHub
-            const { posts, sha } = await getPostsAndSha();
+            const posts = await getPosts();
 
             // Merge: update existing or add new
             const existingIndex = posts.findIndex(p => p.id === post.id);
@@ -131,7 +170,7 @@ export default async function handler(req, res) {
                 posts.unshift(post);
             }
 
-            await writePosts(posts, sha, `Blog: save post "${post.title}" - ${new Date().toISOString()}`);
+            await writePosts(posts, `Blog: save post "${post.title}" - ${new Date().toISOString()}`);
             return res.status(200).json({ success: true, message: 'Post saved to GitHub' });
         } catch (error) {
             console.error('Error saving post:', error);
@@ -148,14 +187,14 @@ export default async function handler(req, res) {
                 return res.status(400).json({ error: 'postId is required' });
             }
 
-            const { posts, sha } = await getPostsAndSha();
+            const posts = await getPosts();
             const filtered = posts.filter(p => p.id !== postId);
 
             if (filtered.length === posts.length) {
                 return res.status(404).json({ error: 'Post not found' });
             }
 
-            await writePosts(filtered, sha, `Blog: delete post ${postId} - ${new Date().toISOString()}`);
+            await writePosts(filtered, `Blog: delete post ${postId} - ${new Date().toISOString()}`);
             return res.status(200).json({ success: true, message: 'Post deleted from GitHub' });
         } catch (error) {
             console.error('Error deleting post:', error);
