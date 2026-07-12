@@ -205,11 +205,14 @@
     .tl-timemarker.tl-timemarker-active .tl-icon-image,
     .tl-timemarker.tl-timemarker-active .tl-icon-video { color:#ffffff !important; }
 
-    /* Year tick labels */
-    .tl-timeaxis-tick-text,.tl-timeaxis-major-tick-text {
-      font-family:'Inter',sans-serif !important; color:#4B5563 !important; font-size:0.65rem !important; text-shadow:none !important;
+    /* Year tick labels — TL.js also sets inline styles so JS handles these too */
+    .tl-timeaxis-tick-text,.tl-timeaxis-major-tick-text,
+    .tl-timeaxis .tl-timeaxis-tick span { 
+      font-family:'Inter',sans-serif !important; color:#1E3A38 !important;
+      font-size:0.65rem !important; font-weight:600 !important; text-shadow:none !important;
     }
-    .tl-timeaxis-tick { border-color:#D1D5DB !important; }
+    .tl-timeaxis-tick { border-color:#94A3B8 !important; }
+    .tl-timeaxis { background:#e8faf5 !important; }
 
     /* Menubar */
     .tl-menubar { background:#e8faf6 !important; border-right:1px solid #CBD5E1 !important; }
@@ -460,10 +463,19 @@
       });
       animateCounters();
 
-      // Remove ALL CAPS forced by TL.js
-      const fixCaps = () => document.querySelectorAll('.tl-headline').forEach(el => { el.style.textTransform = 'none'; });
-      setTimeout(fixCaps, 500);
-      document.getElementById('timeline-embed').addEventListener('click', () => setTimeout(fixCaps, 150));
+      const fixTimeline = () => {
+        // Force year tick labels to dark color (TL.js sets these via inline style)
+        document.querySelectorAll('.tl-timeaxis-tick-text, .tl-timeaxis-major-tick-text, [class*="tl-timeaxis"] span, .tl-timeaxis .tl-timeaxis-tick span').forEach(el => {
+          el.style.cssText += '; color: #1E3A38 !important; font-family: Inter, sans-serif !important; font-size: 11px !important; font-weight: 600 !important;';
+        });
+        // Remove ALL CAPS on headlines
+        document.querySelectorAll('.tl-headline').forEach(el => { el.style.textTransform = 'none'; });
+      };
+
+      setTimeout(fixTimeline, 600);
+      // Re-run whenever user navigates slides (TL.js re-renders tick labels on scroll)
+      document.getElementById('timeline-embed').addEventListener('click', () => setTimeout(fixTimeline, 200));
+      window.timeline.on('change', () => setTimeout(fixTimeline, 150));
     });
   </script>
 </body>
