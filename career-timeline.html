@@ -136,83 +136,85 @@
     }
     #timeline-embed { width: 100%; height: 700px; }
 
-    /* TIMELINEJS OVERRIDES */
-    /* Slide content — dark bg, white text */
-    .tl-storyslider,.tl-slide-content-container,.tl-slide { background: #0f1e1d !important; }
+    /* TIMELINEJS OVERRIDES — Light mode, works with TL.js defaults */
+    /* Story slider: clean white */
+    .tl-storyslider,.tl-slide-content-container,.tl-slide { background:#ffffff !important; }
+    /* Date label above headline */
     .tl-headline-date,.tl-headline-date * {
-      font-family:'Inter',sans-serif !important; font-size:0.72rem !important;
+      font-family:'Inter',sans-serif !important; font-size:0.7rem !important;
       font-weight:700 !important; letter-spacing:0.12em !important;
-      text-transform:uppercase !important; color:#2DD4BF !important;
+      text-transform:uppercase !important; color:#0F766E !important;
     }
+    /* Headline */
     .tl-headline,.tl-headline a {
-      font-family:'Inter',sans-serif !important; color:#ffffff !important;
+      font-family:'Inter',sans-serif !important; color:#134E4A !important;
       font-weight:800 !important; letter-spacing:-0.02em !important;
       line-height:1.15 !important; text-transform:none !important;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4) !important;
     }
+    /* Body text */
     .tl-text p,.tl-text-content p {
-      font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.82) !important;
+      font-family:'Inter',sans-serif !important; color:#374151 !important;
       font-size:0.92rem !important; line-height:1.78 !important;
     }
-    .tl-caption { font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.45) !important; font-size:0.7rem !important; }
-    .tl-credit  { font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.35) !important; font-size:0.65rem !important; }
+    .tl-caption { font-family:'Inter',sans-serif !important; color:#6B7280 !important; font-size:0.7rem !important; }
+    .tl-credit  { font-family:'Inter',sans-serif !important; color:#9CA3AF !important; font-size:0.65rem !important; }
     /* Slide nav arrows */
-    .tl-slidenav-next,.tl-slidenav-previous { color:#2DD4BF !important; background:rgba(255,255,255,0.05) !important; }
-    .tl-slidenav-next:hover,.tl-slidenav-previous:hover { background:rgba(45,212,191,0.15) !important; }
-    .tl-slidenav-title       { font-family:'Inter',sans-serif !important; font-size:0.72rem !important; font-weight:600 !important; text-transform:none !important; color:rgba(255,255,255,0.75) !important; text-shadow:none !important; }
-    .tl-slidenav-description { color:rgba(255,255,255,0.45) !important; text-shadow:none !important; }
-    .tl-slidenav-icon        { color:#2DD4BF !important; text-shadow:none !important; }
+    .tl-slidenav-next,.tl-slidenav-previous { color:#0F766E !important; }
+    .tl-slidenav-next:hover,.tl-slidenav-previous:hover { background:rgba(15,118,110,0.08) !important; }
+    .tl-slidenav-title       { font-family:'Inter',sans-serif !important; font-size:0.72rem !important; font-weight:600 !important; text-transform:none !important; color:#374151 !important; text-shadow:none !important; }
+    .tl-slidenav-description { color:#6B7280 !important; text-shadow:none !important; }
+    .tl-slidenav-icon        { color:#0F766E !important; text-shadow:none !important; }
     /* Images */
-    .tl-media-image { border-radius:10px !important; box-shadow:0 4px 24px rgba(0,0,0,0.45) !important; }
+    .tl-media-image { border-radius:10px !important; box-shadow:0 4px 16px rgba(0,0,0,0.12) !important; }
 
-    /* ── TIMELINE NAV BAR — HIGH CONTRAST ────────────────────── */
-    .tl-timenav,.tl-timenav-background,.tl-timenav-slider-background { background:#1d3532 !important; }
-    .tl-timenav { border-top:3px solid #2DD4BF !important; }
+    /* ── TIMELINE NAV BAR — Light, high contrast ─────────────── */
+    .tl-timenav,.tl-timenav-background,.tl-timenav-slider-background { background:#f0fdf9 !important; }
+    .tl-timenav { border-top:3px solid #0F766E !important; }
 
     /* Spine line */
-    .tl-timenav-line               { background:rgba(255,255,255,0.5) !important; border:none !important; }
+    .tl-timenav-line               { background:#0D9488 !important; border:none !important; }
     .tl-timemarker-line-right,
-    .tl-timemarker-line-left       { background:rgba(255,255,255,0.5) !important; }
-    .tl-timemarker-timespan        { background:rgba(255,255,255,0.08) !important; }
+    .tl-timemarker-line-left       { background:#0D9488 !important; }
+    .tl-timemarker-timespan        { background:rgba(13,148,136,0.12) !important; }
 
     /* Dot markers */
-    .tl-timemarker-point { background:rgba(255,255,255,0.7) !important; border-color:#1d3532 !important; box-shadow:none !important; }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-point { background:#2DD4BF !important; border-color:#1d3532 !important; box-shadow:0 0 14px rgba(45,212,191,0.9) !important; }
+    .tl-timemarker-point { background:#0D9488 !important; border-color:#f0fdf9 !important; box-shadow:0 0 0 2px #0F766E !important; }
+    .tl-timemarker.tl-timemarker-active .tl-timemarker-point { background:#0F766E !important; border-color:#f0fdf9 !important; box-shadow:0 0 12px rgba(15,118,110,0.6) !important; }
 
-    /* Marker label cards */
+    /* Marker label cards — dark text on light bg */
     .tl-timemarker-content {
-      background:rgba(255,255,255,0.22) !important;
-      border:1px solid rgba(255,255,255,0.45) !important;
+      background:#ffffff !important;
+      border:1px solid #CBD5E1 !important;
       border-radius:5px !important;
+      box-shadow:0 1px 4px rgba(0,0,0,0.08) !important;
     }
     .tl-timemarker.tl-timemarker-active .tl-timemarker-content {
-      background:rgba(45,212,191,0.5) !important;
-      border:2px solid #2DD4BF !important;
+      background:#0F766E !important;
+      border:2px solid #0F766E !important;
     }
     .tl-timemarker-text .tl-headline {
-      color:#ffffff !important;
+      color:#1E3A38 !important;
       font-family:'Inter',sans-serif !important;
       font-size:0.62rem !important; font-weight:700 !important;
-      text-transform:none !important; text-shadow: 0 1px 2px rgba(0,0,0,0.6) !important;
+      text-transform:none !important; text-shadow:none !important;
     }
     .tl-timemarker.tl-timemarker-active .tl-timemarker-text .tl-headline { color:#ffffff !important; }
 
-    /* Icons in markers */
-    .tl-icon-image,.tl-icon-video,.tl-icon-document,.tl-icon-map { color:rgba(255,255,255,0.7) !important; }
+    /* Icons */
+    .tl-icon-image,.tl-icon-video,.tl-icon-document,.tl-icon-map { color:#0D9488 !important; }
     .tl-timemarker.tl-timemarker-active .tl-icon-image,
     .tl-timemarker.tl-timemarker-active .tl-icon-video { color:#ffffff !important; }
 
     /* Year tick labels */
     .tl-timeaxis-tick-text,.tl-timeaxis-major-tick-text {
-      font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.7) !important; font-size:0.65rem !important;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
+      font-family:'Inter',sans-serif !important; color:#4B5563 !important; font-size:0.65rem !important; text-shadow:none !important;
     }
-    .tl-timeaxis-tick { border-color:rgba(255,255,255,0.2) !important; }
+    .tl-timeaxis-tick { border-color:#D1D5DB !important; }
 
-    /* Menubar (zoom controls) */
-    .tl-menubar { background:#152e2b !important; border-right:1px solid rgba(255,255,255,0.15) !important; }
-    .tl-menubar-button { color:rgba(255,255,255,0.85) !important; font-size:1.1rem !important; }
-    .tl-menubar-button:hover { background:rgba(255,255,255,0.15) !important; color:white !important; }
+    /* Menubar */
+    .tl-menubar { background:#e8faf6 !important; border-right:1px solid #CBD5E1 !important; }
+    .tl-menubar-button { color:#0F766E !important; }
+    .tl-menubar-button:hover { background:rgba(15,118,110,0.1) !important; }
 
     /* CHAPTERS */
     .chapters-section {
@@ -454,24 +456,14 @@
         optimal_tick_width: 120,
         scale_factor: 2,
         start_at_slide: 0,
-        default_bg_color: { r: 15, g: 30, b: 29 }
+        default_bg_color: { r: 255, g: 255, b: 255 }
       });
       animateCounters();
 
-      // Fix ALL CAPS headlines — TL.js forces uppercase via JS text transform
-      const fixHeadlines = () => {
-        document.querySelectorAll('.tl-headline').forEach(el => {
-          if (el.dataset.fixed) return;
-          el.dataset.fixed = '1';
-          // Restore original casing from the data (stored as title-case)
-          if (el.textContent === el.textContent.toUpperCase() && el.textContent.length > 3) {
-            el.style.textTransform = 'none';
-          }
-        });
-      };
-      // Run after slides render
-      setTimeout(fixHeadlines, 600);
-      document.getElementById('timeline-embed').addEventListener('click', () => setTimeout(fixHeadlines, 200));
+      // Remove ALL CAPS forced by TL.js
+      const fixCaps = () => document.querySelectorAll('.tl-headline').forEach(el => { el.style.textTransform = 'none'; });
+      setTimeout(fixCaps, 500);
+      document.getElementById('timeline-embed').addEventListener('click', () => setTimeout(fixCaps, 150));
     });
   </script>
 </body>
