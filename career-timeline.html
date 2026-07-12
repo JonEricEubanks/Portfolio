@@ -66,13 +66,14 @@
     .tl-heading { font-size: 1.85rem; font-weight: 800; color: #111827; letter-spacing: -.03em; }
 
     /* Phase section divider */
-    .phase-section { background: linear-gradient(135deg, #0a1628 0%, #0a2020 100%); margin: 0 -1.5rem; padding: 2.2rem 3rem; display: flex; align-items: center; gap: 1.5rem; position: relative; overflow: hidden; }
-    .phase-section::before { content: ''; position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(45,212,191,.08) 0%, transparent 70%); }
-    .phase-num { font-size: 3.5rem; font-weight: 900; color: rgba(45,212,191,.15); letter-spacing: -.08em; line-height: 1; flex-shrink: 0; }
-    .phase-text { }
-    .phase-title { font-size: 1rem; font-weight: 800; color: #fff; letter-spacing: -.01em; margin-bottom: .25rem; }
-    .phase-subtitle { font-size: .78rem; color: rgba(255,255,255,.45); line-height: 1.5; }
-    .phase-badge { margin-left: auto; flex-shrink: 0; background: rgba(45,212,191,.15); border: 1px solid rgba(45,212,191,.3); color: var(--teal-l); padding: .3rem .8rem; border-radius: 99px; font-size: .65rem; font-weight: 700; white-space: nowrap; }
+    .phase-section { background: linear-gradient(135deg, #0a1628 0%, #0d2520 100%); margin: 0 -1.5rem; padding: 2rem 2.5rem; display: flex; align-items: center; gap: 1.8rem; position: relative; overflow: hidden; border-left: 4px solid var(--teal); }
+    .phase-section::before { content: ''; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(45,212,191,.07) 0%, transparent 70%); }
+    .phase-section::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--teal), transparent); }
+    .phase-num { font-size: 4rem; font-weight: 900; color: rgba(45,212,191,.18); letter-spacing: -.1em; line-height: 1; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+    .phase-text { flex: 1; }
+    .phase-title { font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -.02em; margin-bottom: .3rem; }
+    .phase-subtitle { font-size: .78rem; color: rgba(255,255,255,.48); line-height: 1.55; max-width: 480px; }
+    .phase-badge { flex-shrink: 0; background: rgba(45,212,191,.12); border: 1px solid rgba(45,212,191,.28); color: var(--teal-l); padding: .35rem 1rem; border-radius: 8px; font-size: .7rem; font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
 
     .timeline { position: relative; max-width: 860px; margin: 0 auto; }
     .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 3px; background: linear-gradient(to bottom, #E5E7EB 0%, var(--teal) 8%, var(--teal-l) 100%); border-radius: 2px; }
@@ -105,8 +106,9 @@
     .bc-gray   { border-left-color: #9CA3AF !important; }
 
     /* Award card gold banner */
-    .tl-card.bc-award .tl-award-banner { background: linear-gradient(135deg, #92400E, #D97706); padding: .55rem 1rem; display: flex; align-items: center; gap: .5rem; }
-    .tl-award-banner-txt { font-size: .65rem; font-weight: 700; color: #FEF3C7; letter-spacing: .05em; text-transform: uppercase; }
+    .tl-card.bc-award .tl-award-banner { background: linear-gradient(135deg, #78350F, #B45309); padding: .5rem 1.1rem; display: flex; align-items: center; gap: .6rem; border-bottom: 1px solid rgba(251,191,36,.2); }
+    .tl-award-banner-star { display: inline-block; width: 14px; height: 14px; flex-shrink: 0; }
+    .tl-award-banner-txt { font-size: .62rem; font-weight: 800; color: #FDE68A; letter-spacing: .07em; text-transform: uppercase; }
 
     .tl-card-img { width: 100%; height: 155px; object-fit: cover; display: block; background: #F0FDF9; }
     .tl-card-body { padding: 1rem 1.1rem 1.1rem; }
@@ -150,10 +152,9 @@
     .aw-card { background: #fff; border: 1px solid #E5E7EB; border-top: 3px solid var(--teal); border-radius: 14px; padding: 1.4rem; transition: transform .2s, box-shadow .2s; }
     .aw-card.gold { border-top-color: var(--amber); }
     .aw-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(15,118,110,.12); }
-    .aw-icon { font-size: 1.5rem; margin-bottom: .6rem; }
-    .aw-yr { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-bottom: .35rem; }
-    .aw-name { font-size: .95rem; font-weight: 700; color: #134E4A; margin-bottom: .3rem; line-height: 1.3; }
-    .aw-org { font-size: .74rem; color: #6B7280; line-height: 1.5; }
+    .aw-yr { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: .45rem; }
+    .aw-name { font-size: 1rem; font-weight: 800; color: #134E4A; margin-bottom: .35rem; line-height: 1.3; }
+    .aw-org { font-size: .74rem; color: #6B7280; line-height: 1.55; }
     .ms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 1rem; max-width: 880px; margin: 0 auto; }
     .ms-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1.3rem; text-align: center; }
     .ms-n { font-size: 1.9rem; font-weight: 900; color: var(--teal); letter-spacing: -.05em; line-height: 1; margin-bottom: .35rem; display: block; }
@@ -361,7 +362,7 @@
     <div class="tl-item tl-r" data-year="Mar 2025">
       <div class="tl-void"></div>
       <div class="tl-card bc-award">
-        <div class="tl-award-banner"><span>&#127942;</span><span class="tl-award-banner-txt">Microsoft Best in Automation Award</span></div>
+        <div class="tl-award-banner"><svg class="tl-award-banner-star" viewBox="0 0 24 24" fill="#FDE68A" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="tl-award-banner-txt">Microsoft Best in Automation Award</span></div>
         <img class="tl-card-img" src="Images/ELM1.png" alt="ELM Award" />
         <div class="tl-card-body">
           <span class="tl-tag tag-award">Award</span>
@@ -398,7 +399,7 @@
 
     <div class="tl-item tl-l" data-year="May 2026">
       <div class="tl-card bc-award">
-        <div class="tl-award-banner"><span>&#127942;</span><span class="tl-award-banner-txt">Best IQ Agent · Microsoft AI Skills Fest 2026</span></div>
+        <div class="tl-award-banner"><svg class="tl-award-banner-star" viewBox="0 0 24 24" fill="#FDE68A" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="tl-award-banner-txt">Best IQ Agent · Microsoft AI Skills Fest 2026</span></div>
         <img class="tl-card-img" src="Images/agent.png" alt="CivicGrant IQ" />
         <div class="tl-card-body">
           <span class="tl-tag tag-award">Award</span>
@@ -417,7 +418,7 @@
     <div class="tl-item tl-r" data-year="Jun 2026">
       <div class="tl-void"></div>
       <div class="tl-card bc-award">
-        <div class="tl-award-banner"><span>&#127942;</span><span class="tl-award-banner-txt">Grand Prize · JavaScript AI Build-a-thon</span></div>
+        <div class="tl-award-banner"><svg class="tl-award-banner-star" viewBox="0 0 24 24" fill="#FDE68A" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="tl-award-banner-txt">Grand Prize · JavaScript AI Build-a-thon</span></div>
         <img class="tl-card-img" src="Images/agent1.png" alt="CivicLens" />
         <div class="tl-card-body">
           <span class="tl-tag tag-award">Award</span>
@@ -453,9 +454,9 @@
   <p class="sec-ey">Recognition</p>
   <h2 class="sec-ttl">Awards &amp; Highlights</h2>
   <div class="awards-grid">
-    <div class="aw-card gold"><div class="aw-icon">&#127942;</div><div class="aw-yr">March 2025</div><div class="aw-name">Microsoft Best in Automation</div><div class="aw-org">ELM App — 6+ municipalities, 400+ hrs saved annually. Official Microsoft case study published.</div></div>
-    <div class="aw-card gold"><div class="aw-icon">&#129351;</div><div class="aw-yr">May 2026</div><div class="aw-name">Best IQ Agent — AI Skills Fest</div><div class="aw-org">CivicGrant IQ — Microsoft Agents League 2026. Beat 500+ global participants with Azure AI Foundry.</div></div>
-    <div class="aw-card gold"><div class="aw-icon">&#127919;</div><div class="aw-yr">June 2026</div><div class="aw-name">Grand Prize — JS AI Build-a-thon</div><div class="aw-org">CivicLens — AI public record analysis with real-time GitHub sync and dynamic visualizations.</div></div>
+    <div class="aw-card gold"><div class="aw-yr">March 2025</div><div class="aw-name">Microsoft Best in Automation</div><div class="aw-org">ELM App — 6+ municipalities, 400+ hrs saved annually. Official Microsoft case study published.</div></div>
+    <div class="aw-card gold"><div class="aw-yr">May 2026</div><div class="aw-name">Best IQ Agent — AI Skills Fest</div><div class="aw-org">CivicGrant IQ — Microsoft Agents League 2026. Beat 500+ global participants with Azure AI Foundry.</div></div>
+    <div class="aw-card gold"><div class="aw-yr">June 2026</div><div class="aw-name">Grand Prize — JS AI Build-a-thon</div><div class="aw-org">CivicLens — AI public record analysis with real-time GitHub sync and dynamic visualizations.</div></div>
   </div>
   <p class="sec-ey">Impact</p>
   <h2 class="sec-ttl" style="margin-bottom:1.5rem">Career Milestones</h2>
