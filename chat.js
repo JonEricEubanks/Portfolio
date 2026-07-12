@@ -615,7 +615,77 @@ Want to explore any specific aspect of this ${project.category} solution?`;
     detectAction(message) {
         const lower = message.toLowerCase();
 
-        // Require an explicit action verb to avoid false positives on info queries
+        // ── Guided tour (highest priority, no verb needed) ─────────────────
+        if (/\btour\b|walk me through|guided tour|show everything|take me through/.test(lower)) {
+            return { type: 'guided_tour' };
+        }
+
+        // ── Career timeline ────────────────────────────────────────────────
+        if (/career.*timeline|timeline|career.*journey|career.*path|career.*story|his journey/.test(lower)) {
+            return { type: 'open_career_timeline' };
+        }
+
+        // ── Stop tour ──────────────────────────────────────────────────────
+        if (this.tourActive && /stop tour|stop|cancel tour|exit tour|quit/.test(lower)) {
+            return { type: 'stop_tour' };
+        }
+
+        // ── Replay career metrics counters ────────────────────────────────
+        if (/replay.*(stat|counter|number|metric)|show.*(impact.*number|metric)|animate.*(stat|counter|number)|impact number|show metric/.test(lower)) {
+            return { type: 'replay_counters' };
+        }
+
+        // ── Copy email to clipboard ───────────────────────────────────────
+        if (/copy.*email|get.*email|email.*address|copy.*contact/.test(lower)) {
+            return { type: 'copy_email' };
+        }
+
+        // ── Project spotlight by technology ───────────────────────────────
+        if (/spotlight|highlight.*project|show only.*project|filter.*project/.test(lower)) {
+            const techMap = [
+                { kw: ['power platform', 'power app', 'power automate', 'power bi'], tech: 'power_platform', label: 'Power Platform' },
+                { kw: ['ai', 'copilot', 'agent'],                                    tech: 'ai',            label: 'AI & Copilot' },
+                { kw: ['gis', 'map', 'spatial', 'arcgis'],                           tech: 'gis',           label: 'GIS' },
+                { kw: ['dashboard', 'power bi'],                                     tech: 'dashboard',     label: 'Dashboard' },
+                { kw: ['sharepoint', 'intranet'],                                    tech: 'sharepoint',    label: 'SharePoint' },
+            ];
+            for (const t of techMap) {
+                if (t.kw.some(kw => lower.includes(kw))) {
+                    return { type: 'spotlight_projects', tech: t.tech, label: t.label };
+                }
+            }
+        }
+
+        // ── Open blog post by keyword ─────────────────────────────────────
+        if ((lower.includes('read') || lower.includes('open')) && (lower.includes('blog') || lower.includes('article') || lower.includes('post'))) {
+            const posts = (window.blogManager && window.blogManager.posts) ? window.blogManager.posts : [];
+            for (const post of posts) {
+                const words = post.title.toLowerCase().split(/\s+/).filter(w => w.length >= 4);
+                if (words.some(w => lower.includes(w))) {
+                    return { type: 'open_blog_post', postId: post.id, title: post.title };
+                }
+            }
+        }
+
+        // ── Share section deep-link ───────────────────────────────────────
+        if (/copy.*link|share.*link|get.*link|link to/.test(lower)) {
+            const sectionMap = [
+                { kw: ['ai agent', 'ai app'],          id: 'ai-apps',        label: 'AI Agents' },
+                { kw: ['project', 'low code'],         id: 'lowcode',        label: 'Projects' },
+                { kw: ['dashboard'],                   id: 'dashboards',     label: 'Dashboards' },
+                { kw: ['gis', 'map'],                  id: 'GIS',            label: 'GIS' },
+                { kw: ['certif'],                      id: 'certifications', label: 'Certifications' },
+                { kw: ['blog'],                        id: 'blog',           label: 'Blog' },
+                { kw: ['contact'],                     id: 'contact',        label: 'Contact' },
+            ];
+            for (const s of sectionMap) {
+                if (s.kw.some(kw => lower.includes(kw))) {
+                    return { type: 'share_link', sectionId: s.id, label: s.label };
+                }
+            }
+        }
+
+        // Require an explicit action verb for remaining actions
         const navVerbs  = ['show me', 'take me to', 'go to', 'navigate to', 'scroll to', 'jump to', 'bring me to', 'bring up', 'open up'];
         const openVerbs = ['open', 'demo', 'launch', 'pull up'];
         const filterVerbs = ['filter', 'show only', 'only show'];
@@ -636,7 +706,7 @@ Want to explore any specific aspect of this ${project.category} solution?`;
                 { kw: ['certif', 'credential'],                                    id: 'certifications', label: 'Certifications' },
                 { kw: ['tech stack', 'technology stack', 'tools i use'],           id: 'tech-stack',     label: 'Tech Stack' },
                 { kw: ['blog', 'article', 'writing'],                              id: 'blog',           label: 'Blog' },
-                { kw: ['contact', 'reach out', 'hire', 'email', 'connect'],       id: 'contact',        label: 'Contact' },
+                { kw: ['contact', 'reach out', 'hire', 'connect'],                id: 'contact',        label: 'Contact' },
             ];
             for (const s of sections) {
                 if (s.kw.some(kw => lower.includes(kw))) {
@@ -683,6 +753,91 @@ Want to explore any specific aspect of this ${project.category} solution?`;
 
     // ── Action Execution ─────────────────────────────────────────────────
     executeAction(action) {
+        if (action.type === 'guided_tour') {
+            this.startGuidedTour();
+            return true;
+        }
+
+        if (action.type === 'stop_tour') {
+            this.tourActive = false;
+            return true;
+        }
+
+        if (action.type === 'open_career_timeline') {
+            window.open('https://ml-for-beginners-seven.vercel.app/', '_blank');
+            return true;
+        }
+
+        if (action.type === 'replay_counters') {
+            document.getElementById('career-metrics')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+                document.querySelectorAll('.counter[data-target]').forEach(counter => {
+                    const target = parseFloat(counter.getAttribute('data-target'));
+                    counter.innerText = '0';
+                    const inc = target / 150;
+                    const tick = () => {
+                        const cur = parseFloat(counter.innerText);
+                        if (cur < target) {
+                            counter.innerText = target % 1 !== 0
+                                ? Math.min(cur + inc, target).toFixed(1)
+                                : Math.ceil(Math.min(cur + inc, target));
+                            setTimeout(tick, 8);
+                        } else {
+                            counter.innerText = target % 1 !== 0 ? target.toFixed(1) : target;
+                        }
+                    };
+                    tick();
+                });
+            }, 700);
+            return true;
+        }
+
+        if (action.type === 'copy_email') {
+            this._copyText('joneric11@gmail.com');
+            return true;
+        }
+
+        if (action.type === 'share_link') {
+            const url = `${location.origin}${location.pathname}#${action.sectionId}`;
+            this._copyText(url);
+            return true;
+        }
+
+        if (action.type === 'open_blog_post') {
+            setTimeout(() => {
+                document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => {
+                    if (window.blogManager?.openPost) window.blogManager.openPost(action.postId);
+                }, 700);
+            }, 350);
+            return true;
+        }
+
+        if (action.type === 'spotlight_projects') {
+            document.querySelectorAll('.spotlight-match,.spotlight-dim').forEach(el =>
+                el.classList.remove('spotlight-match', 'spotlight-dim'));
+            const kws = {
+                power_platform: ['power apps', 'power automate', 'power bi', 'power pages', 'copilot studio'],
+                ai:             ['ai', 'copilot', 'agent', 'lisa', 'civicgrant', 'civiclens', 'maintain', 'kaizen'],
+                gis:            ['gis', 'arcgis', 'spatial', 'land info'],
+                dashboard:      ['dashboard', 'power bi', 'smartsheet'],
+                sharepoint:     ['sharepoint', 'intranet'],
+            }[action.tech] || [action.tech];
+            let count = 0;
+            document.querySelectorAll('.modal-trigger[data-modal-title]').forEach(card => {
+                const text = ((card.getAttribute('data-modal-title') || '') + ' ' + (card.getAttribute('data-modal-descriptions') || '')).toLowerCase();
+                const match = kws.some(kw => text.includes(kw));
+                card.classList.add(match ? 'spotlight-match' : 'spotlight-dim');
+                if (match) count++;
+            });
+            // Scroll to first matching card
+            const first = document.querySelector('.spotlight-match');
+            if (first) setTimeout(() => first.scrollIntoView({ behavior: 'smooth', block: 'center' }), 350);
+            setTimeout(() => document.querySelectorAll('.spotlight-match,.spotlight-dim').forEach(el =>
+                el.classList.remove('spotlight-match', 'spotlight-dim')), 8000);
+            return count;
+        }
+
         if (action.type === 'scroll_to_section') {
             const el = document.getElementById(action.sectionId);
             if (!el) return false;
@@ -709,6 +864,51 @@ Want to explore any specific aspect of this ${project.category} solution?`;
         }
 
         return false;
+    }
+
+    // ── Guided tour ───────────────────────────────────────────────────────
+    startGuidedTour() {
+        this.tourActive = true;
+        const stops = [
+            { id: 'ai-apps',        msg: '**Stop 1 — AI Agents:** CivicGrant IQ (Microsoft Agents League 2026 winner) and CivicLens (JS AI Build-a-thon Grand Prize). Multi-agent systems built on Azure Foundry.' },
+            { id: 'lowcode',        msg: '**Stop 2 — Low-Code Projects:** The award-winning ELM App deployed across 6+ municipalities, plus Power Apps solutions saving 585+ staff hours annually.' },
+            { id: 'dashboards',     msg: '**Stop 3 — Dashboards:** Power BI solutions tracking $195.9M+ in municipal funds — construction oversight, rental aid, and neighborhood improvement.' },
+            { id: 'GIS',            msg: '**Stop 4 — GIS Solutions:** ArcGIS-powered tools including LISA, an AI agent that automated 3,000+ land information searches with 75% time savings.' },
+            { id: 'certifications', msg: '**Stop 5 — Certifications:** 20+ credentials from Microsoft, ESRI, Google, and PMI covering Power Platform, GIS, data analytics, and project management.' },
+            { id: 'contact',        msg: '**Stop 6 — Contact:** Tour complete. JonEric is open to AI Engineer and solutions architect roles. Connect on LinkedIn or email joneric11@gmail.com.' },
+        ];
+        this.addMessage(`Starting portfolio tour — ${stops.length} stops. Say "stop tour" at any time to exit.`, 'ai', false, true);
+        stops.forEach((stop, i) => {
+            setTimeout(() => {
+                if (!this.tourActive) return;
+                const el = document.getElementById(stop.id);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    el.classList.add('ai-action-highlight');
+                    setTimeout(() => el.classList.remove('ai-action-highlight'), 2200);
+                }
+                this.addMessage(stop.msg, 'ai', false, true);
+                this.conversationHistory.push({ role: 'assistant', content: stop.msg });
+            }, i * 4500 + 800);
+        });
+        setTimeout(() => { this.tourActive = false; }, stops.length * 4500 + 1200);
+    }
+
+    // ── Clipboard helper ──────────────────────────────────────────────────
+    _copyText(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).catch(() => this._copyFallback(text));
+        } else {
+            this._copyFallback(text);
+        }
+    }
+    _copyFallback(text) {
+        const el = Object.assign(document.createElement('textarea'), { value: text });
+        Object.assign(el.style, { position: 'fixed', opacity: '0' });
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
     }
     // ────────────────────────────────────────────────────────────────────────
 
@@ -878,26 +1078,44 @@ Q: Why trust his work?
         this.showTypingIndicator();
         
         try {
-            // ── Action detection: navigate / open / filter ─────────────────
+            // ── Action detection ──────────────────────────────────────────
             const action = this.detectAction(message);
             if (action) {
-                const executed = this.executeAction(action);
-                if (executed) {
+                const result = this.executeAction(action);
+                if (result !== false) {
+                    this.hideTypingIndicator();
+                    // guided_tour manages its own messages
+                    if (action.type === 'guided_tour') return;
                     let actionMsg;
-                    if (action.type === 'scroll_to_section') {
+                    if (action.type === 'stop_tour') {
+                        actionMsg = 'Tour stopped.';
+                    } else if (action.type === 'scroll_to_section') {
                         actionMsg = `Navigating to the **${action.label}** section...`;
                     } else if (action.type === 'open_project') {
                         actionMsg = `Opening **${action.title}** for you.`;
                     } else if (action.type === 'filter_blog') {
-                        actionMsg = `Filtered blog to **${action.label}** posts and scrolled to the blog.`;
+                        actionMsg = `Filtered blog to **${action.label}** posts.`;
+                    } else if (action.type === 'replay_counters') {
+                        actionMsg = `Replaying career metrics — counting up from zero.`;
+                    } else if (action.type === 'copy_email') {
+                        actionMsg = `Email copied to clipboard: joneric11@gmail.com`;
+                    } else if (action.type === 'share_link') {
+                        actionMsg = `Link copied to clipboard: ${location.origin}${location.pathname}#${action.sectionId}`;
+                    } else if (action.type === 'open_blog_post') {
+                        actionMsg = `Opening blog post: **${action.title}**`;
+                    } else if (action.type === 'spotlight_projects') {
+                        actionMsg = `Spotlighting **${result}** ${action.label} project${result !== 1 ? 's' : ''} on the page. Resets in 8 seconds.`;
+                    } else if (action.type === 'open_career_timeline') {
+                        actionMsg = `Opening career timeline in a new tab.`;
                     }
-                    this.hideTypingIndicator();
-                    this.addMessage(actionMsg, 'ai', false, true);
-                    this.conversationHistory.push({ role: 'assistant', content: actionMsg });
+                    if (actionMsg) {
+                        this.addMessage(actionMsg, 'ai', false, true);
+                        this.conversationHistory.push({ role: 'assistant', content: actionMsg });
+                    }
                     return;
                 }
             }
-            // ──────────────────────────────────────────────────────────────
+            // ─────────────────────────────────────────────────────────────
 
             // Analyze user intent with enhanced context
             const intent = this.analyzeUserIntent(message);
