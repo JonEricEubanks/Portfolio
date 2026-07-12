@@ -1,33 +1,42 @@
-// Azure Functions v4 - Handle post comments
+// Azure Functions v4 - Post comments via Azure Table Storage
 const { app } = require('@azure/functions');
+const { TableClient } = require('@azure/data-tables');
 
-function encodeBase64(str) {
-    return Buffer.from(str, 'utf8').toString('base64');
-}
+const CONN = process.env.AZURE_STORAGE_CONNECTION_STRING;
 
 app.http('comment', {
-    methods: ['POST', 'OPTIONS'],
+    methods: ['POST', 'GET', 'OPTIONS'],
     authLevel: 'anonymous',
     handler: async (request, context) => {
         const corsHeaders = {
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type, Accept'
         };
 
-        if (request.method === 'OPTIONS') {
-            return { status: 200, headers: corsHeaders };
+        if (request.method === 'OPTIONS') return { status: 200, headers: corsHeaders };
+        if (!CONN) return { status: 500, jsonBody: { error: 'AZURE_STORAGE_CONNECTION_STRING not set' }, headers: corsHeaders };
+
+        const client = TableClient.fromConnectionString(CONN, 'blogcomments');
+
+        // GET - Fetch comments for a post
+        if (request.method === 'GET') {
+            const postId = request.query.get('postId');
+            if (!postId) return { status: 400, jsonBody: { error: 'postId query param required' }, headers: corsHeaders };
+            try {
+                const comments = [];
+                for await (const entity of client.listEntities({ queryOptions: { filter: `PartitionKey eq '${postId}'` } })) {
+                    comments.push({ id: entity.rowKey, name: entity.name, content: entity.content, createdAt: entity.createdAt });
+                }
+                comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                return { status: 200, jsonBody: comments, headers: corsHeaders };
+            } catch (error) {
+                return { status: 200, jsonBody: [], headers: corsHeaders };
+            }
         }
 
+        // POST - Add a comment
         if (request.method === 'POST') {
-            const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-            const GITHUB_OWNER = process.env.GITHUB_OWNER;
-            const GITHUB_REPO = process.env.GITHUB_REPO;
-
-            if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-                return { status: 500, jsonBody: { error: 'Server configuration error' }, headers: corsHeaders };
-            }
-
             try {
                 const body = await request.json();
                 const postId = body?.postId;
@@ -37,234 +46,42 @@ app.http('comment', {
                 if (!postId || !name || !commentContent) {
                     return { status: 400, jsonBody: { error: 'Post ID, name, and comment content are required' }, headers: corsHeaders };
                 }
+                if (name.length > 50) return { status: 400, jsonBody: { error: 'Name must be 50 characters or less' }, headers: corsHeaders };
+                if (commentContent.length > 1000) return { status: 400, jsonBody: { error: 'Comment must be 1000 characters or less' }, headers: corsHeaders };
 
-                if (name.length > 50) {
-                    return { status: 400, jsonBody: { error: 'Name must be 50 characters or less' }, headers: corsHeaders };
-                }
-                if (commentContent.length > 1000) {
-                    return { status: 400, jsonBody: { error: 'Comment must be 1000 characters or less' }, headers: corsHeaders };
-                }
-
-                context.log('Comment request for post:', postId, 'by:', name);
-
-                const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`;
-                const shaResponse = await fetch(fileUrl, {
-                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
-                });
-
-                if (!shaResponse.ok) {
-                    return { status: 500, jsonBody: { error: 'Failed to get file info' }, headers: corsHeaders };
-                }
-
-                const shaData = await shaResponse.json();
-                const sha = shaData.sha;
-
-                const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`;
-                const postsResponse = await fetch(rawUrl, { cache: 'no-store' });
-
-                if (!postsResponse.ok) {
-                    return { status: 500, jsonBody: { error: 'Failed to fetch posts' }, headers: corsHeaders };
-                }
-
-                const posts = await postsResponse.json();
-                const postIndex = posts.findIndex(p => p.id === postId);
-
-                if (postIndex === -1) {
-                    return { status: 404, jsonBody: { error: 'Post not found' }, headers: corsHeaders };
-                }
-
-                if (!Array.isArray(posts[postIndex].comments)) {
-                    posts[postIndex].comments = [];
-                }
-
+                const commentId = 'comment-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
                 const newComment = {
-                    id: 'comment-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                    partitionKey: postId,
+                    rowKey: commentId,
                     name: name.trim(),
                     content: commentContent.trim(),
                     createdAt: new Date().toISOString()
                 };
 
-                posts[postIndex].comments.unshift(newComment);
+                await client.createEntity(newComment);
+                context.log(`Comment added to post ${postId} by ${name}`);
 
-                const content = encodeBase64(JSON.stringify(posts, null, 2));
-                const updateResponse = await fetch(fileUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: `Comment added to post ${postId} by ${name}`,
-                        content,
-                        sha,
-                        branch: 'main'
-                    })
-                });
-
-                if (!updateResponse.ok) {
-                    const errorData = await updateResponse.json();
-                    return { status: 500, jsonBody: { error: 'Failed to save comment', details: errorData.message }, headers: corsHeaders };
+                // Get total comment count for this post
+                let totalComments = 0;
+                for await (const _ of client.listEntities({ queryOptions: { filter: `PartitionKey eq '${postId}'` } })) {
+                    totalComments++;
                 }
 
                 return {
                     status: 200,
-                    jsonBody: { success: true, comment: newComment, totalComments: posts[postIndex].comments.length },
+                    jsonBody: {
+                        success: true,
+                        comment: { id: commentId, name: name.trim(), content: commentContent.trim(), createdAt: newComment.createdAt },
+                        totalComments
+                    },
                     headers: corsHeaders
                 };
             } catch (error) {
                 context.error('Comment exception:', error);
-                return { status: 500, jsonBody: { error: 'Exception caught', message: error.message }, headers: corsHeaders };
+                return { status: 500, jsonBody: { error: error.message }, headers: corsHeaders };
             }
         }
 
         return { status: 405, jsonBody: { error: 'Method not allowed' }, headers: corsHeaders };
     }
 });
-    // Enable CORS
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
-    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-
-    // POST - Add a comment to a post
-    if (req.method === 'POST') {
-        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-        const GITHUB_OWNER = process.env.GITHUB_OWNER;
-        const GITHUB_REPO = process.env.GITHUB_REPO;
-
-        if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
-            console.error('Missing env vars:', { 
-                hasToken: !!GITHUB_TOKEN, 
-                hasOwner: !!GITHUB_OWNER, 
-                hasRepo: !!GITHUB_REPO 
-            });
-            return res.status(500).json({ error: 'Server configuration error' });
-        }
-
-        try {
-            // Parse body if it's a string
-            let body = req.body;
-            if (typeof body === 'string') {
-                try {
-                    body = JSON.parse(body);
-                } catch (e) {
-                    return res.status(400).json({ error: 'Invalid JSON body' });
-                }
-            }
-            
-            const postId = body?.postId;
-            const name = body?.name;
-            const commentContent = body?.content;
-
-            if (!postId || !name || !commentContent) {
-                console.error('Missing fields in body:', body);
-                return res.status(400).json({ error: 'Post ID, name, and comment content are required' });
-            }
-
-            // Validate input lengths
-            if (name.length > 50) {
-                return res.status(400).json({ error: 'Name must be 50 characters or less' });
-            }
-            if (commentContent.length > 1000) {
-                return res.status(400).json({ error: 'Comment must be 1000 characters or less' });
-            }
-
-            console.log('Comment request for post:', postId, 'by:', name);
-
-            // Step 1: Get current SHA from GitHub API
-            const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`;
-            const shaResponse = await fetch(fileUrl, {
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-
-            if (!shaResponse.ok) {
-                const errText = await shaResponse.text();
-                console.error('GitHub SHA fetch failed:', shaResponse.status, errText);
-                return res.status(500).json({ error: 'Failed to get file info', status: shaResponse.status });
-            }
-
-            const shaData = await shaResponse.json();
-            const sha = shaData.sha;
-            
-            // Step 2: Fetch posts from raw URL (simpler, no base64)
-            const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`;
-            const postsResponse = await fetch(rawUrl, { cache: 'no-store' });
-            
-            if (!postsResponse.ok) {
-                console.error('GitHub raw fetch failed:', postsResponse.status);
-                return res.status(500).json({ error: 'Failed to fetch posts' });
-            }
-            
-            const posts = await postsResponse.json();
-
-            // Step 3: Find post and add comment
-            const postIndex = posts.findIndex(p => p.id === postId);
-            if (postIndex === -1) {
-                return res.status(404).json({ error: 'Post not found' });
-            }
-
-            // Initialize comments array if not present
-            if (!Array.isArray(posts[postIndex].comments)) {
-                posts[postIndex].comments = [];
-            }
-
-            // Create new comment (newest first)
-            const newComment = {
-                id: 'comment-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
-                name: name.trim(),
-                content: commentContent.trim(),
-                createdAt: new Date().toISOString()
-            };
-
-            // Add comment at the beginning (newest first)
-            posts[postIndex].comments.unshift(newComment);
-
-            // Step 3: Save updated posts
-            const content = encodeBase64(JSON.stringify(posts, null, 2));
-            
-            const updateResponse = await fetch(fileUrl, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `Comment added to post ${postId} by ${name}`,
-                    content: content,
-                    sha: sha,
-                    branch: 'main'
-                })
-            });
-
-            if (!updateResponse.ok) {
-                const errorData = await updateResponse.json();
-                console.error('GitHub update failed:', errorData);
-                return res.status(500).json({ error: 'Failed to save comment', details: errorData.message });
-            }
-
-            return res.status(200).json({ 
-                success: true, 
-                comment: newComment,
-                totalComments: posts[postIndex].comments.length
-            });
-        } catch (error) {
-            console.error('Comment exception:', error);
-            return res.status(500).json({ 
-                error: 'Exception caught', 
-                message: error.message
-            });
-        }
-    }
-
-    return res.status(405).json({ error: 'Method not allowed' });
-}

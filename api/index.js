@@ -5,3 +5,5 @@ require('./posts');
 require('./like');
 require('./comment');
 require('./version');
+require('./uploadImage');
+require('./migrate');
