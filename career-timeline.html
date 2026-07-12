@@ -7,486 +7,310 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css" />
-  <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --teal-950: #0a1f1e;
-      --teal-900: #134E4A;
-      --teal-800: #0F766E;
-      --teal-600: #0D9488;
-      --teal-400: #2DD4BF;
-      --navy:     #090e1b;
-      --gray-900: #111827;
-      --gray-700: #374151;
-      --gray-500: #6B7280;
-      --gray-200: #E5E7EB;
-      --gray-50:  #F9FAFB;
-      --white:    #ffffff;
-    }
-
+    :root { --teal:#0F766E; --teal-l:#2DD4BF; --dark:#090e1b; --gray:#374151; --muted:#6B7280; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--navy);
-      color: var(--gray-900);
-      -webkit-font-smoothing: antialiased;
-    }
+    body { font-family:'Inter',sans-serif; background:#fff; color:var(--gray); -webkit-font-smoothing:antialiased; }
 
     /* HEADER */
-    .site-header {
-      position: sticky; top: 0; z-index: 500;
-      background: rgba(9,14,27,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 0 2rem; height: 60px;
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    }
-    .back-btn {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      color: rgba(255,255,255,0.6); text-decoration: none;
-      font-size: 0.82rem; font-weight: 500; transition: color 0.2s; white-space: nowrap;
-    }
-    .back-btn:hover { color: var(--teal-400); }
-    .header-logo { font-size: 0.95rem; font-weight: 700; color: white; letter-spacing: -0.02em; }
-    .header-pill {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.25);
-      color: var(--teal-400); padding: 0.28rem 0.85rem; border-radius: 99px;
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; white-space: nowrap;
-    }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-400); animation: blink 2s infinite; }
-    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    .hdr { position:sticky; top:0; z-index:100; background:rgba(9,14,27,.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.07); padding:0 2rem; height:58px; display:flex; align-items:center; justify-content:space-between; }
+    .hdr-back { display:flex; align-items:center; gap:.4rem; color:rgba(255,255,255,.65); text-decoration:none; font-size:.82rem; font-weight:500; transition:color .2s; }
+    .hdr-back:hover { color:var(--teal-l); }
+    .hdr-logo { font-size:.9rem; font-weight:700; color:#fff; }
+    .hdr-pill { display:flex; align-items:center; gap:.35rem; background:rgba(45,212,191,.1); border:1px solid rgba(45,212,191,.25); color:var(--teal-l); padding:.25rem .75rem; border-radius:99px; font-size:.68rem; font-weight:700; }
+    .dot { width:6px; height:6px; border-radius:50%; background:var(--teal-l); animation:blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.35} }
 
     /* HERO */
-    .hero {
-      position: relative; overflow: hidden;
-      padding: 6rem 2rem 0;
-      background: linear-gradient(160deg, #090e1b 0%, #0a2020 55%, #090e1b 100%);
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background-image: linear-gradient(rgba(45,212,191,0.04) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(45,212,191,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-    .hero::after {
-      content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 420px; pointer-events: none;
-      background: radial-gradient(ellipse, rgba(13,148,136,0.16) 0%, transparent 70%);
-    }
-    .hero-inner {
-      position: relative; z-index: 1; max-width: 1040px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 220px; gap: 3rem; align-items: start;
-    }
-    .hero-label {
-      display: inline-block;
-      background: linear-gradient(90deg, rgba(45,212,191,0.14), transparent);
-      border: 1px solid rgba(45,212,191,0.2);
-      color: var(--teal-400); font-size: 0.68rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 0.28rem 0.9rem; border-radius: 99px; margin-bottom: 1.2rem;
-    }
-    .hero-title {
-      font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 900;
-      color: white; line-height: 1.06; letter-spacing: -0.04em; margin-bottom: 1.2rem;
-    }
-    .hero-title .accent {
-      background: linear-gradient(120deg, var(--teal-400), var(--teal-600));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .hero-desc { color: rgba(255,255,255,0.52); font-size: 1rem; line-height: 1.75; max-width: 480px; margin-bottom: 2.5rem; }
-    .stats-row {
-      display: flex; gap: 0; flex-wrap: wrap;
-      background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px; overflow: hidden; max-width: 500px;
-    }
-    .stat-item { flex: 1; min-width: 110px; padding: 1rem 1.1rem; border-right: 1px solid rgba(255,255,255,0.07); text-align: center; }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-size: 1.6rem; font-weight: 800; color: white; letter-spacing: -0.04em; line-height: 1; display: block; }
-    .stat-lbl { font-size: 0.62rem; color: rgba(255,255,255,0.38); font-weight: 500; margin-top: 0.28rem; text-transform: uppercase; letter-spacing: 0.08em; }
-    .profile-card {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px; overflow: hidden; text-align: center; flex-shrink: 0; margin-top: 0.5rem;
-    }
-    .profile-img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; display: block; }
-    .profile-info { padding: 1rem; }
-    .profile-name { font-size: 0.88rem; font-weight: 700; color: white; margin-bottom: 0.25rem; }
-    .profile-role { font-size: 0.7rem; color: var(--teal-400); font-weight: 500; }
-    .scroll-hint {
-      position: relative; z-index: 1; text-align: center; padding: 2.5rem 0 0;
-      max-width: 1040px; margin: 0 auto;
-    }
-    .scroll-hint span { color: rgba(255,255,255,0.28); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
-    .scroll-arrow { display: block; margin: 0.6rem auto 0; width: 1px; height: 44px; background: linear-gradient(to bottom, rgba(45,212,191,0.5), transparent); }
+    .hero { background:linear-gradient(160deg,#090e1b 0%,#0a2020 55%,#090e1b 100%); position:relative; overflow:hidden; padding:5rem 2rem 4rem; }
+    .hero::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(45,212,191,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(45,212,191,.04) 1px,transparent 1px); background-size:40px 40px; }
+    .hero-inner { max-width:920px; margin:0 auto; display:grid; grid-template-columns:1fr 200px; gap:3rem; align-items:center; position:relative; z-index:1; }
+    .hero-eyebrow { display:inline-block; color:var(--teal-l); font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:1rem; }
+    .hero-h1 { font-size:clamp(2.2rem,5vw,3.6rem); font-weight:900; color:#fff; line-height:1.07; letter-spacing:-.04em; margin-bottom:1rem; }
+    .acc { background:linear-gradient(120deg,var(--teal-l),var(--teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero-sub { color:rgba(255,255,255,.52); font-size:.98rem; line-height:1.75; max-width:480px; margin-bottom:2rem; }
+    .stats { display:flex; border:1px solid rgba(255,255,255,.07); border-radius:12px; overflow:hidden; max-width:460px; }
+    .stat { flex:1; padding:.9rem 1rem; text-align:center; border-right:1px solid rgba(255,255,255,.07); }
+    .stat:last-child { border-right:none; }
+    .stat-n { font-size:1.5rem; font-weight:800; color:#fff; letter-spacing:-.04em; line-height:1; display:block; }
+    .stat-l { font-size:.58rem; color:rgba(255,255,255,.38); font-weight:500; margin-top:.25rem; text-transform:uppercase; letter-spacing:.07em; }
+    .profile { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:18px; overflow:hidden; text-align:center; }
+    .profile img { width:100%; aspect-ratio:1; object-fit:cover; object-position:top; display:block; }
+    .profile-info { padding:.8rem; }
+    .profile-name { font-size:.82rem; font-weight:700; color:#fff; margin-bottom:.2rem; }
+    .profile-role { font-size:.65rem; color:var(--teal-l); font-weight:500; }
 
-    /* TIMELINE SECTION */
-    .tl-section { position: relative; }
-    .tl-section-header { background: var(--navy); padding: 3.5rem 2rem 2rem; text-align: center; }
-    .section-eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-400); margin-bottom: 0.5rem; }
-    .section-heading { font-size: 1.6rem; font-weight: 800; color: white; letter-spacing: -0.03em; }
-    .tl-card {
-      margin: 0 2rem;
-      border-radius: 20px; overflow: hidden;
-      box-shadow: 0 0 0 1px rgba(45,212,191,0.12), 0 24px 64px rgba(0,0,0,0.55), 0 4px 16px rgba(0,0,0,0.3);
-    }
-    #timeline-embed { width: 100%; height: 700px; }
+    /* PHASE NAV */
+    .phase-nav { background:#fff; border-bottom:2px solid #F0FDF9; padding:.65rem 2rem; display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; position:sticky; top:58px; z-index:99; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+    .phase-btn { background:#F3F4F6; border:none; border-radius:8px; padding:.38rem 1rem; font-family:inherit; font-size:.75rem; font-weight:600; color:#374151; cursor:pointer; transition:all .2s; }
+    .phase-btn:hover,.phase-btn.active { background:var(--teal); color:#fff; }
 
-    /* TIMELINEJS OVERRIDES — Light mode, works with TL.js defaults */
-    /* Story slider: clean white */
-    .tl-storyslider,.tl-slide-content-container,.tl-slide { background:#ffffff !important; }
-    /* Date label above headline */
-    .tl-headline-date,.tl-headline-date * {
-      font-family:'Inter',sans-serif !important; font-size:0.7rem !important;
-      font-weight:700 !important; letter-spacing:0.12em !important;
-      text-transform:uppercase !important; color:#0F766E !important;
-    }
-    /* Headline */
-    .tl-headline,.tl-headline a {
-      font-family:'Inter',sans-serif !important; color:#134E4A !important;
-      font-weight:800 !important; letter-spacing:-0.02em !important;
-      line-height:1.15 !important; text-transform:none !important;
-    }
-    /* Body text */
-    .tl-text p,.tl-text-content p {
-      font-family:'Inter',sans-serif !important; color:#374151 !important;
-      font-size:0.92rem !important; line-height:1.78 !important;
-    }
-    .tl-caption { font-family:'Inter',sans-serif !important; color:#6B7280 !important; font-size:0.7rem !important; }
-    .tl-credit  { font-family:'Inter',sans-serif !important; color:#9CA3AF !important; font-size:0.65rem !important; }
-    /* Slide nav arrows */
-    .tl-slidenav-next,.tl-slidenav-previous { color:#0F766E !important; }
-    .tl-slidenav-next:hover,.tl-slidenav-previous:hover { background:rgba(15,118,110,0.08) !important; }
-    .tl-slidenav-title       { font-family:'Inter',sans-serif !important; font-size:0.72rem !important; font-weight:600 !important; text-transform:none !important; color:#374151 !important; text-shadow:none !important; }
-    .tl-slidenav-description { color:#6B7280 !important; text-shadow:none !important; }
-    .tl-slidenav-icon        { color:#0F766E !important; text-shadow:none !important; }
-    /* Images */
-    .tl-media-image { border-radius:10px !important; box-shadow:0 4px 16px rgba(0,0,0,0.12) !important; }
+    /* TIMELINE */
+    .tl-section { background:#fff; padding:4rem 1.5rem 5rem; }
+    .tl-head { text-align:center; margin-bottom:3.5rem; }
+    .tl-eyebrow { font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--teal); margin-bottom:.4rem; }
+    .tl-heading { font-size:1.8rem; font-weight:800; color:#111827; letter-spacing:-.03em; }
+    .timeline { position:relative; max-width:860px; margin:0 auto; }
+    .timeline::before { content:''; position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%); width:3px; background:linear-gradient(to bottom,var(--teal),var(--teal-l)); border-radius:2px; }
 
-    /* ── TIMELINE NAV BAR — Light, high contrast ─────────────── */
-    .tl-timenav,.tl-timenav-background,.tl-timenav-slider-background { background:#f0fdf9 !important; }
-    .tl-timenav { border-top:3px solid #0F766E !important; }
+    .tl-item { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:0 3.5rem; margin-bottom:2.5rem; align-items:start; opacity:0; transform:translateY(20px); transition:opacity .5s,transform .5s; }
+    .tl-item.vis { opacity:1; transform:none; }
+    .tl-item:last-child { margin-bottom:0; }
 
-    /* Spine line */
-    .tl-timenav-line               { background:#0D9488 !important; border:none !important; }
-    .tl-timemarker-line-right,
-    .tl-timemarker-line-left       { background:#0D9488 !important; }
-    .tl-timemarker-timespan        { background:rgba(13,148,136,0.12) !important; }
+    /* Year badge on spine */
+    .tl-item::before { content:attr(data-year); position:absolute; left:50%; top:18px; transform:translateX(-50%); background:var(--teal); color:#fff; font-size:.62rem; font-weight:800; letter-spacing:.04em; padding:.22rem .55rem; border-radius:99px; border:3px solid #fff; box-shadow:0 0 0 2px var(--teal); z-index:2; white-space:nowrap; }
 
-    /* Dot markers */
-    .tl-timemarker-point { background:#0D9488 !important; border-color:#f0fdf9 !important; box-shadow:0 0 0 2px #0F766E !important; }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-point { background:#0F766E !important; border-color:#f0fdf9 !important; box-shadow:0 0 12px rgba(15,118,110,0.6) !important; }
+    .tl-item.tl-l .tl-card { grid-column:1; grid-row:1; }
+    .tl-item.tl-l .tl-void { grid-column:2; grid-row:1; }
+    .tl-item.tl-r .tl-void { grid-column:1; grid-row:1; }
+    .tl-item.tl-r .tl-card { grid-column:2; grid-row:1; }
 
-    /* Marker label cards — dark text on light bg */
-    .tl-timemarker-content {
-      background:#ffffff !important;
-      border:1px solid #CBD5E1 !important;
-      border-radius:5px !important;
-      box-shadow:0 1px 4px rgba(0,0,0,0.08) !important;
-    }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-content {
-      background:#0F766E !important;
-      border:2px solid #0F766E !important;
-    }
-    .tl-timemarker-text .tl-headline {
-      color:#1E3A38 !important;
-      font-family:'Inter',sans-serif !important;
-      font-size:0.62rem !important; font-weight:700 !important;
-      text-transform:none !important; text-shadow:none !important;
-    }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-text .tl-headline { color:#ffffff !important; }
+    /* connector dot */
+    .tl-item.tl-l .tl-card { margin-right:0; }
+    .tl-item.tl-l .tl-card::after { content:''; position:absolute; top:20px; right:-1.8rem; width:10px; height:10px; border-radius:50%; background:var(--teal); border:2px solid #fff; }
+    .tl-item.tl-r .tl-card::after { content:''; position:absolute; top:20px; left:-1.8rem; width:10px; height:10px; border-radius:50%; background:var(--teal); border:2px solid #fff; }
 
-    /* Icons */
-    .tl-icon-image,.tl-icon-video,.tl-icon-document,.tl-icon-map { color:#0D9488 !important; }
-    .tl-timemarker.tl-timemarker-active .tl-icon-image,
-    .tl-timemarker.tl-timemarker-active .tl-icon-video { color:#ffffff !important; }
+    .tl-card { position:relative; background:#fff; border:1px solid #E5E7EB; border-radius:14px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); transition:transform .25s,box-shadow .25s; }
+    .tl-card:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(15,118,110,.14); }
+    .tl-card-img { width:100%; height:155px; object-fit:cover; display:block; background:#F0FDF9; }
+    .tl-card-body { padding:1rem 1.1rem 1.1rem; }
+    .tl-card-noimg .tl-card-body { padding:1.2rem 1.1rem; }
+    .tl-bgyear { font-size:3.2rem; font-weight:900; color:rgba(15,118,110,.08); letter-spacing:-.08em; line-height:1; margin-bottom:.4rem; }
+    .tl-tag { display:inline-block; font-size:.58rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal); background:rgba(15,118,110,.08); padding:.16rem .55rem; border-radius:99px; margin-bottom:.45rem; }
+    .tl-tag.award { color:#B45309; background:rgba(180,83,9,.08); }
+    .tl-title { font-size:.9rem; font-weight:700; color:#111827; line-height:1.3; margin-bottom:.35rem; }
+    .tl-text { font-size:.76rem; color:#6B7280; line-height:1.65; }
 
-    /* Year tick labels — TL.js also sets inline styles so JS handles these too */
-    .tl-timeaxis-tick-text,.tl-timeaxis-major-tick-text,
-    .tl-timeaxis .tl-timeaxis-tick span { 
-      font-family:'Inter',sans-serif !important; color:#1E3A38 !important;
-      font-size:0.65rem !important; font-weight:600 !important; text-shadow:none !important;
-    }
-    .tl-timeaxis-tick { border-color:#94A3B8 !important; }
-    .tl-timeaxis { background:#e8faf5 !important; }
-
-    /* Menubar */
-    .tl-menubar { background:#e8faf6 !important; border-right:1px solid #CBD5E1 !important; }
-    .tl-menubar-button { color:#0F766E !important; }
-    .tl-menubar-button:hover { background:rgba(15,118,110,0.1) !important; }
-
-    /* CHAPTERS */
-    .chapters-section {
-      padding: 5rem 2rem;
-      background: linear-gradient(180deg, var(--navy) 0%, var(--teal-950) 100%);
-    }
-    .chapters-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1px; max-width: 960px; margin: 2.5rem auto 0;
-      background: rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden;
-    }
-    .chapter-card {
-      background: rgba(9,14,27,0.9); padding: 2rem;
-      position: relative; overflow: hidden; transition: background 0.3s;
-    }
-    .chapter-card:hover { background: rgba(15,118,110,0.09); }
-    .chapter-card::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-      background: linear-gradient(to bottom, var(--teal-400), var(--teal-800));
-    }
-    .chapter-era { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-400); margin-bottom: 0.6rem; }
-    .chapter-title { font-size: 1rem; font-weight: 700; color: white; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .chapter-desc { font-size: 0.78rem; color: rgba(255,255,255,0.42); line-height: 1.68; }
-    .chapter-badge {
-      display: inline-block; margin-top: 1rem;
-      background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.2);
-      color: var(--teal-400); font-size: 0.62rem; font-weight: 700;
-      padding: 0.18rem 0.65rem; border-radius: 99px; letter-spacing: 0.06em;
-    }
+    /* Phase labels */
+    .tl-phase { text-align:center; padding:1rem 0 .6rem; position:relative; z-index:1; margin-bottom:.5rem; }
+    .tl-phase-inner { display:inline-flex; align-items:center; gap:.5rem; background:var(--teal); color:#fff; font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.38rem 1.2rem; border-radius:99px; box-shadow:0 4px 12px rgba(15,118,110,.3); }
 
     /* AWARDS */
-    .awards-section { padding: 5rem 2rem; background: white; }
-    .section-label-dark { text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal-800); margin-bottom:0.5rem; }
-    .section-title-dark { text-align:center; font-size:1.8rem; font-weight:800; color:var(--gray-900); letter-spacing:-0.03em; margin-bottom:3rem; }
-    .awards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; max-width:960px; margin:0 auto 4rem; }
-    .award-card {
-      background: linear-gradient(135deg, #f0fdfa, #f8fafc);
-      border: 1px solid rgba(15,118,110,0.14); border-top: 3px solid var(--teal-800);
-      border-radius: 16px; padding: 1.5rem; transition: transform 0.25s, box-shadow 0.25s;
-    }
-    .award-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(15,118,110,0.15); }
-    .award-trophy { font-size: 1.4rem; margin-bottom: 0.75rem; display: block; }
-    .award-year { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-800); margin-bottom: 0.4rem; }
-    .award-name { font-size: 1rem; font-weight: 700; color: var(--teal-900); margin-bottom: 0.3rem; line-height: 1.3; }
-    .award-org { font-size: 0.76rem; color: var(--gray-500); line-height: 1.5; }
-    .milestones-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:1rem; max-width:960px; margin:0 auto; }
-    .milestone-card { background:var(--gray-50); border:1px solid var(--gray-200); border-radius:14px; padding:1.4rem; text-align:center; }
-    .milestone-num { font-size:2rem; font-weight:900; letter-spacing:-0.05em; color:var(--teal-800); line-height:1; margin-bottom:0.4rem; display:block; }
-    .milestone-lbl { font-size:0.72rem; color:var(--gray-500); font-weight:500; line-height:1.5; }
+    .awards { background:#F0FDF9; padding:4rem 2rem 5rem; }
+    .sec-ey { text-align:center; font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--teal); margin-bottom:.4rem; }
+    .sec-ttl { text-align:center; font-size:1.7rem; font-weight:800; color:#111827; letter-spacing:-.03em; margin-bottom:2.5rem; }
+    .awards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; max-width:880px; margin:0 auto 3.5rem; }
+    .aw-card { background:#fff; border:1px solid #E5E7EB; border-top:3px solid var(--teal); border-radius:14px; padding:1.4rem; transition:transform .2s,box-shadow .2s; }
+    .aw-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(15,118,110,.12); }
+    .aw-icon { font-size:1.4rem; margin-bottom:.6rem; }
+    .aw-yr { font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); margin-bottom:.35rem; }
+    .aw-name { font-size:.95rem; font-weight:700; color:#134E4A; margin-bottom:.3rem; line-height:1.3; }
+    .aw-org { font-size:.74rem; color:#6B7280; line-height:1.5; }
+    .ms-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:1rem; max-width:880px; margin:0 auto; }
+    .ms-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:1.2rem; text-align:center; }
+    .ms-n { font-size:1.9rem; font-weight:900; color:var(--teal); letter-spacing:-.05em; line-height:1; margin-bottom:.35rem; display:block; }
+    .ms-l { font-size:.72rem; color:#6B7280; font-weight:500; line-height:1.4; }
 
     /* FOOTER */
-    .site-footer { background:var(--navy); padding:3rem 2rem; border-top:1px solid rgba(255,255,255,0.06); text-align:center; }
-    .footer-links { display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; margin-bottom:1rem; }
-    .footer-link { color:rgba(255,255,255,0.42); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color 0.2s; }
-    .footer-link:hover { color:var(--teal-400); }
-    .footer-copy { color:rgba(255,255,255,0.2); font-size:0.72rem; }
+    .footer { background:var(--dark); padding:2.5rem 2rem; text-align:center; border-top:1px solid rgba(255,255,255,.06); }
+    .ftr-links { display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; margin-bottom:.8rem; }
+    .ftr-link { color:rgba(255,255,255,.42); text-decoration:none; font-size:.8rem; font-weight:500; transition:color .2s; }
+    .ftr-link:hover { color:var(--teal-l); }
+    .ftr-copy { color:rgba(255,255,255,.2); font-size:.7rem; }
 
     /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .hero { padding: 4rem 1.25rem 0; }
-      .hero-inner { grid-template-columns: 1fr; }
-      .profile-card { display: none; }
-      .hero-title { font-size: 2.2rem; }
-      #timeline-embed { height: 580px; }
-      .tl-card { margin: 0 1rem; }
-    }
-    @media (max-width: 480px) {
-      .site-header { padding: 0 1rem; }
-      .header-logo { display: none; }
-      .tl-card { margin: 0 0.5rem; }
-      #timeline-embed { height: 520px; }
+    @media (max-width:680px) {
+      .hero-inner { grid-template-columns:1fr; }
+      .profile { display:none; }
+      .hero-h1 { font-size:2.2rem; }
+      .timeline::before { left:20px; }
+      .tl-item { grid-template-columns:1fr; padding-left:48px; }
+      .tl-item::before { left:20px; top:14px; transform:none; }
+      .tl-item.tl-l .tl-card, .tl-item.tl-r .tl-card { grid-column:1; grid-row:1; }
+      .tl-item.tl-l .tl-void, .tl-item.tl-r .tl-void { display:none; }
+      .tl-item.tl-l .tl-card::after, .tl-item.tl-r .tl-card::after { right:auto; left:-1.6rem; top:16px; }
+      .hdr-logo { display:none; }
     }
   </style>
 </head>
 <body>
 
-  <header class="site-header">
-    <a href="index.html" class="back-btn">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
-      Back to Portfolio
-    </a>
-    <span class="header-logo">JonEric Eubanks</span>
-    <span class="header-pill"><span class="dot"></span>2000 – 2026</span>
-  </header>
+<header class="hdr">
+  <a href="index.html" class="hdr-back">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+    Back to Portfolio
+  </a>
+  <span class="hdr-logo">JonEric Eubanks</span>
+  <span class="hdr-pill"><span class="dot"></span>2000 – 2026</span>
+</header>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <span class="hero-label">Interactive Career Story</span>
-        <h1 class="hero-title">From Code<br>to <span class="accent">Award-Winning AI</span></h1>
-        <p class="hero-desc">Two decades of building technology that matters — from GIS mapping and municipal dashboards to Microsoft-recognized AI agents modernizing local government across 6+ cities.</p>
-        <div class="stats-row">
-          <div class="stat-item"><span class="stat-num" data-target="26">0</span><span class="stat-lbl">Years in Tech</span></div>
-          <div class="stat-item"><span class="stat-num" data-target="20" data-suffix="+">0</span><span class="stat-lbl">Certifications</span></div>
-          <div class="stat-item"><span class="stat-num" data-target="3">0</span><span class="stat-lbl">Awards</span></div>
-          <div class="stat-item"><span class="stat-num" data-prefix="$" data-target="195" data-suffix="M+">0</span><span class="stat-lbl">Funds Tracked</span></div>
-        </div>
-      </div>
-      <div class="profile-card">
-        <img src="https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg" alt="JonEric Eubanks" class="profile-img" />
-        <div class="profile-info">
-          <div class="profile-name">JonEric Eubanks, PMP</div>
-          <div class="profile-role">Microsoft Developer &amp; AI Engineer</div>
-        </div>
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-eyebrow">Interactive Career Story</span>
+      <h1 class="hero-h1">From Code<br>to <span class="acc">Award-Winning AI</span></h1>
+      <p class="hero-sub">Two decades building technology that matters — from GIS mapping and municipal dashboards to Microsoft-recognized AI agents across 6+ cities.</p>
+      <div class="stats">
+        <div class="stat"><span class="stat-n" data-target="26">0</span><span class="stat-l">Years</span></div>
+        <div class="stat"><span class="stat-n" data-target="20" data-suffix="+">0</span><span class="stat-l">Certs</span></div>
+        <div class="stat"><span class="stat-n" data-target="3">0</span><span class="stat-l">Awards</span></div>
+        <div class="stat"><span class="stat-n" data-prefix="$" data-target="195" data-suffix="M+">0</span><span class="stat-l">Tracked</span></div>
       </div>
     </div>
-    <div class="scroll-hint">
-      <span>Scroll to explore the timeline</span>
-      <i class="scroll-arrow"></i>
-    </div>
-  </section>
-
-  <div class="tl-section">
-    <div class="tl-section-header">
-      <p class="section-eyebrow">15 Milestones &middot; 2000 – 2026</p>
-      <h2 class="section-heading">The Journey, Mapped</h2>
-    </div>
-    <div class="tl-card">
-      <div id="timeline-embed"></div>
-    </div>
-  </div>
-
-  <div class="chapters-section">
-    <p class="section-eyebrow" style="text-align:center">Career Chapters</p>
-    <h2 class="section-heading" style="text-align:center;margin-top:0.4rem">Three Distinct Phases</h2>
-    <div class="chapters-grid">
-      <div class="chapter-card">
-        <div class="chapter-era">2010 – 2021</div>
-        <div class="chapter-title">GIS &amp; Government Foundations</div>
-        <div class="chapter-desc">Entered public-sector work through GIS mapping and spatial analysis. Built deep roots in local government workflows, then layered on PMP, Lean Six Sigma, and Google certifications.</div>
-        <span class="chapter-badge">Foundation Era</span>
-      </div>
-      <div class="chapter-card">
-        <div class="chapter-era">2021 – 2024</div>
-        <div class="chapter-title">Power Platform &amp; Municipal Innovation</div>
-        <div class="chapter-desc">Went deep on Microsoft's Power Platform — building Power Apps, Power BI dashboards, and automations saving 585+ staff hours annually across 6+ municipalities. Earned Microsoft certifications.</div>
-        <span class="chapter-badge">Builder Era</span>
-      </div>
-      <div class="chapter-card">
-        <div class="chapter-era">2024 – 2026</div>
-        <div class="chapter-title">AI Engineering &amp; Industry Recognition</div>
-        <div class="chapter-desc">Transitioned into AI-first development using Azure AI Foundry and Copilot Studio. Earned three industry awards in 18 months — Microsoft Best in Automation, AI Skills Fest, and JS AI Build-a-thon Grand Prize.</div>
-        <span class="chapter-badge">AI Era</span>
+    <div class="profile">
+      <img src="https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg" alt="JonEric Eubanks" />
+      <div class="profile-info">
+        <div class="profile-name">JonEric Eubanks, PMP</div>
+        <div class="profile-role">Microsoft Developer &amp; AI Engineer</div>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="awards-section">
-    <p class="section-label-dark">Recognition</p>
-    <h2 class="section-title-dark">Awards &amp; Highlights</h2>
-    <div class="awards-grid">
-      <div class="award-card">
-        <span class="award-trophy">&#127942;</span>
-        <div class="award-year">March 2025</div>
-        <div class="award-name">Microsoft Best in Automation</div>
-        <div class="award-org">ELM App — deployed across 6+ municipalities, saving 400+ hours annually. Official Microsoft case study published.</div>
-      </div>
-      <div class="award-card">
-        <span class="award-trophy">&#129351;</span>
-        <div class="award-year">May 2026</div>
-        <div class="award-name">Best IQ Agent — AI Skills Fest</div>
-        <div class="award-org">CivicGrant IQ — Microsoft Agents League 2026. Beat 500+ global participants with a multi-agent grant discovery system on Azure AI Foundry.</div>
-      </div>
-      <div class="award-card">
-        <span class="award-trophy">&#127919;</span>
-        <div class="award-year">June 2026</div>
-        <div class="award-name">Grand Prize — JS AI Build-a-thon</div>
-        <div class="award-org">CivicLens — AI-powered public record analysis with real-time GitHub JSON sync and dynamic visualizations.</div>
-      </div>
-    </div>
-    <p class="section-label-dark">Impact by the numbers</p>
-    <h2 class="section-title-dark" style="margin-bottom:1.5rem">Career Milestones</h2>
-    <div class="milestones-grid">
-      <div class="milestone-card"><span class="milestone-num">585+</span><div class="milestone-lbl">Staff hours saved annually through automation</div></div>
-      <div class="milestone-card"><span class="milestone-num">6+</span><div class="milestone-lbl">Cities using his solutions across Illinois &amp; Texas</div></div>
-      <div class="milestone-card"><span class="milestone-num">3,600+</span><div class="milestone-lbl">Queries automated by AI copilots</div></div>
-      <div class="milestone-card"><span class="milestone-num">99.8%</span><div class="milestone-lbl">Data accuracy across $195.9M in tracked funds</div></div>
-      <div class="milestone-card"><span class="milestone-num">100%</span><div class="milestone-lbl">HR compliance maintained across all ELM deployments</div></div>
-    </div>
+<nav class="phase-nav">
+  <button class="phase-btn active" onclick="goPhase('phase-1',this)">Foundation 2000–2021</button>
+  <button class="phase-btn" onclick="goPhase('phase-2',this)">Builder 2021–2024</button>
+  <button class="phase-btn" onclick="goPhase('phase-3',this)">AI Era 2024–2026</button>
+</nav>
+
+<section class="tl-section">
+  <div class="tl-head">
+    <p class="tl-eyebrow">15 milestones &middot; 2000 – 2026</p>
+    <h2 class="tl-heading">The Journey</h2>
   </div>
+  <div class="timeline">
 
-  <footer class="site-footer">
-    <div class="footer-links">
-      <a href="index.html" class="footer-link">Portfolio</a>
-      <a href="https://www.linkedin.com/in/joneric-eubanks-pmp-developer/" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/JonEricEubanks" class="footer-link" target="_blank" rel="noopener">GitHub</a>
-      <a href="mailto:joneric11@gmail.com" class="footer-link">joneric11@gmail.com</a>
+    <div class="tl-phase" id="phase-1"><span class="tl-phase-inner">Foundation Era &nbsp;&middot;&nbsp; 2000 – 2021</span></div>
+
+    <div class="tl-item tl-l" data-year="2000">
+      <div class="tl-card tl-card-noimg"><div class="tl-card-body"><div class="tl-bgyear">2000</div><span class="tl-tag">Origins</span><div class="tl-title">Beginnings in Technology</div><div class="tl-text">Grew up exploring computers and video games — developing early programming logic and a lifelong curiosity about how technology works.</div></div></div>
+      <div class="tl-void"></div>
     </div>
-    <p class="footer-copy">JonEric Eubanks &middot; Microsoft Developer &amp; AI Engineer &middot; Buffalo Grove, IL</p>
-  </footer>
 
-  <script>
-    function animateCounters() {
-      document.querySelectorAll('.stat-num[data-target]').forEach(el => {
-        const target = parseFloat(el.getAttribute('data-target'));
-        const prefix = el.getAttribute('data-prefix') || '';
-        const suffix = el.getAttribute('data-suffix') || '';
-        let start = null;
-        const tick = ts => {
-          if (!start) start = ts;
-          const p = Math.min((ts - start) / 1800, 1);
-          const ease = 1 - Math.pow(1 - p, 3);
-          el.textContent = prefix + Math.floor(ease * target) + suffix;
-          if (p < 1) requestAnimationFrame(tick);
-          else el.textContent = prefix + target + suffix;
-        };
-        requestAnimationFrame(tick);
-      });
-    }
+    <div class="tl-item tl-r" data-year="2010">
+      <div class="tl-void"></div>
+      <div class="tl-card tl-card-noimg"><div class="tl-card-body"><div class="tl-bgyear">2010</div><span class="tl-tag">GIS</span><div class="tl-title">GIS Career Start</div><div class="tl-text">Entered public-sector work focused on GIS mapping, spatial analysis, and community data — building deep roots in local government workflows.</div></div></div>
+    </div>
 
-    const BASE = 'https://happy-tree-026e2110f.7.azurestaticapps.net/Images/';
-    const timelineData = {
-      "title": {
-        "media": { "url": "https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg", "caption": "JonEric Eubanks — Microsoft Developer & AI Engineer", "credit": "MGP Inc." },
-        "text": { "headline": "JonEric Eubanks", "text": "<p>Microsoft Developer specializing in Power Platform, AI agents, and municipal automation. 3 industry awards &middot; 20+ certifications &middot; $195.9M+ in tracked municipal funds across 6+ cities.</p>" }
-      },
-      "events": [
-        { "start_date": { "year": "2000" }, "text": { "headline": "Beginnings in Technology", "text": "<p>Grew up exploring computers and video games — developing early programming logic and a lifelong curiosity about how technology works. These experiences laid the foundation for a career built on building things that matter.</p>" } },
-        { "start_date": { "year": "2010" }, "text": { "headline": "GIS Career Start", "text": "<p>Entered public-sector work focused on GIS mapping, spatial analysis, and community data. Built a strong foundation in local government workflows and geographic information systems — skills that later powered AI-driven location intelligence tools.</p>" } },
-        { "media": { "url": BASE + "Lean_Certi.png", "caption": "Lean Six Sigma Yellow Belt Certification", "credit": "LSS Institute" }, "start_date": { "year": "2016" }, "text": { "headline": "Lean Six Sigma Yellow Belt", "text": "<p>Completed Lean Six Sigma coursework, applying process efficiency and waste-reduction methods to city operations. This structured thinking approach now influences every automation and AI solution built for municipal clients.</p>" } },
-        { "start_date": { "year": "2020" }, "text": { "headline": "Google PM & Data Analytics", "text": "<p>Completed Google's Project Management and Data Analytics professional certifications. These credentials became the springboard toward advanced project execution and data-driven decision-making in local government roles.</p>" } },
-        { "start_date": { "year": "2021" }, "text": { "headline": "PMP Certification Earned", "text": "<p>Achieved PMP credential through city-sponsored training. Now the backbone of every technology initiative — from scoping and stakeholder management to delivery and retrospectives across municipal clients.</p>" } },
-        { "media": { "url": BASE + "p25.png", "caption": "Project 25 Power BI Dashboard — First major Power Platform build", "credit": "JonEric Eubanks / MGP" }, "start_date": { "year": "2021" }, "text": { "headline": "Entered the Power Platform World", "text": "<p>Began building Power BI dashboards for Fort Worth local government operations. Rapidly expanded into Power Apps, Power Automate, and Copilot Studio — becoming a recognized innovator across the entire Microsoft low-code ecosystem.</p>" } },
-        { "media": { "url": "https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg", "caption": "Municipal GIS Partners — Government technology specialists", "credit": "MGP Inc." }, "start_date": { "year": "2023" }, "text": { "headline": "Joined MGP — Municipal Operations & GIS", "text": "<p>Joined Municipal GIS Partners providing GIS support and technology consulting for municipal operations across Illinois and Texas. Built spatial data systems and workflows that established the client relationships shaping every major solution since.</p>" } },
-        { "media": { "url": BASE + "share.png", "caption": "SharePoint Intranet — Microsoft 365 consulting work", "credit": "JonEric Eubanks / MGP" }, "start_date": { "month": "2", "year": "2024" }, "text": { "headline": "Microsoft 365 Functional Consultant", "text": "<p>Worked as a Microsoft 365 Consultant supporting municipal clients with SharePoint architecture, Teams governance, process analysis, and cloud adoption. Delivered structured business solutions and standardized M365 adoption across multiple communities.</p>" } },
-        { "media": { "url": BASE + "ELM1.png", "caption": "ELM App — Employment Lifecycle Management", "credit": "JonEric Eubanks / MGP" }, "start_date": { "month": "12", "year": "2024" }, "text": { "headline": "Transition to Low-Code Developer", "text": "<p>Transitioned into a dedicated Low-Code Developer role specializing in Power Apps, Power Automate, SharePoint integration, and AI copilots. Led development of enterprise-grade municipal solutions — the award-winning ELM App being the flagship achievement.</p>" } },
-        { "media": { "url": "https://www.youtube.com/watch?v=Xo8JF_WUga0", "caption": "ELM App — Microsoft Best in Automation Award · Watch the demo", "credit": "JonEric Eubanks / MGP" }, "start_date": { "month": "3", "year": "2025" }, "text": { "headline": "ELM App Wins Microsoft Best in Automation", "text": "<p>The Employment Lifecycle Management App wins Microsoft's Best in Automation Award. Deployed across 6+ municipalities, it saves 400+ staff hours annually with 100% compliance. An official Microsoft case study was published.</p>" } },
-        { "media": { "url": BASE + "ms9001.png", "caption": "MS-900: Microsoft 365 Certified Fundamentals", "credit": "Microsoft" }, "start_date": { "month": "3", "day": "19", "year": "2025" }, "text": { "headline": "Microsoft 365 Certified: Fundamentals (MS-900)", "text": "<p>Completed MS-900 certification, establishing validated knowledge of Microsoft 365 cloud services, enterprise architecture, security, compliance, and licensing models.</p>" } },
-        { "media": { "url": BASE + "ms900.png", "caption": "PL-900: Power Platform Fundamentals", "credit": "Microsoft" }, "start_date": { "month": "8", "day": "23", "year": "2025" }, "text": { "headline": "Power Platform Fundamentals (PL-900)", "text": "<p>Achieved PL-900 certification — validating expertise in Power Apps, Power Automate, Power BI, and Power Virtual Agents. Confirms deep, structured knowledge of the platform powering every municipal solution in the portfolio.</p>" } },
-        { "media": { "url": BASE + "agent.png", "caption": "CivicGrant IQ — Microsoft Agents League 2026 Winner", "credit": "JonEric Eubanks" }, "start_date": { "month": "5", "year": "2026" }, "text": { "headline": "CivicGrant IQ Wins Best IQ Agent", "text": "<p>CivicGrant IQ — a multi-agent AI system on Azure AI Foundry — wins Best IQ Agent at Microsoft's AI Skills Fest 2026, beating 500+ global participants. Automates grant discovery, eligibility screening, and narrative generation for municipalities.</p>" } },
-        { "media": { "url": BASE + "agent1.png", "caption": "CivicLens — JavaScript AI Build-a-thon Grand Prize", "credit": "JonEric Eubanks" }, "start_date": { "month": "6", "year": "2026" }, "text": { "headline": "CivicLens Wins Grand Prize — JS AI Build-a-thon", "text": "<p>CivicLens wins the Grand Prize at the JavaScript AI Build-a-thon. Provides AI-powered public record analysis — surfacing patterns in government data, ordinances, and community reports — with real-time GitHub JSON sync and dynamic visualizations.</p>" } },
-        { "media": { "url": BASE + "agent2.png", "caption": "MAINTAIN AI & Kaizen AI — 2026 launches", "credit": "JonEric Eubanks" }, "start_date": { "month": "7", "year": "2026" }, "text": { "headline": "MAINTAIN AI & Kaizen AI Launched", "text": "<p><strong>MAINTAIN AI</strong> — a predictive infrastructure command center forecasting municipal maintenance needs via AI risk scoring. <strong>Kaizen AI</strong> — an AI-powered certification study coach built with Azure AI Foundry and Copilot Studio, personalizing learning paths for government tech professionals.</p>" } }
-      ]
-    };
+    <div class="tl-item tl-l" data-year="2016">
+      <div class="tl-card"><img class="tl-card-img" src="Images/Lean_Certi.png" alt="Lean Six Sigma" /><div class="tl-card-body"><span class="tl-tag">Certification</span><div class="tl-title">Lean Six Sigma Yellow Belt</div><div class="tl-text">Applied process efficiency and waste-reduction methods to city operations — thinking that now shapes every automation built for municipal clients.</div></div></div>
+      <div class="tl-void"></div>
+    </div>
 
-    window.addEventListener('DOMContentLoaded', () => {
-      window.timeline = new TL.Timeline('timeline-embed', timelineData, {
-        timenav_position: 'bottom',
-        optimal_tick_width: 120,
-        scale_factor: 2,
-        start_at_slide: 0,
-        default_bg_color: { r: 255, g: 255, b: 255 }
-      });
-      animateCounters();
+    <div class="tl-item tl-r" data-year="2020">
+      <div class="tl-void"></div>
+      <div class="tl-card tl-card-noimg"><div class="tl-card-body"><div class="tl-bgyear">2020</div><span class="tl-tag">Certification</span><div class="tl-title">Google PM &amp; Data Analytics</div><div class="tl-text">Completed Google's Project Management and Data Analytics professional certifications — springboard toward data-driven decision-making in government.</div></div></div>
+    </div>
 
-      const DARK = '#1E3A38';
+    <div class="tl-item tl-l" data-year="2021">
+      <div class="tl-card tl-card-noimg"><div class="tl-card-body"><div class="tl-bgyear">PMP</div><span class="tl-tag">Certification</span><div class="tl-title">PMP Certification Earned</div><div class="tl-text">Achieved PMP credential through city-sponsored training. Now the backbone of every technology initiative — from scoping to delivery.</div></div></div>
+      <div class="tl-void"></div>
+    </div>
 
-      const fixTimeline = () => {
-        // Force year tick labels dark — TL.js sets these inline
-        document.querySelectorAll('.tl-timenav span, .tl-timenav div').forEach(el => {
-          if (el.children.length === 0 && el.textContent.trim().length > 0) {
-            el.style.color = DARK;
-          }
-        });
-        // Remove ALL CAPS
-        document.querySelectorAll('.tl-headline').forEach(el => { el.style.textTransform = 'none'; });
-      };
+    <div class="tl-phase" id="phase-2"><span class="tl-phase-inner">Builder Era &nbsp;&middot;&nbsp; 2021 – 2024</span></div>
 
-      // Run immediately + after short delay + on every TL.js interaction
-      setTimeout(fixTimeline, 400);
-      setTimeout(fixTimeline, 1200);
-      document.getElementById('timeline-embed').addEventListener('mouseup', () => setTimeout(fixTimeline, 150));
-      window.timeline.on('change', () => setTimeout(fixTimeline, 150));
+    <div class="tl-item tl-r" data-year="2021">
+      <div class="tl-void"></div>
+      <div class="tl-card"><img class="tl-card-img" src="Images/p25.png" alt="Power BI Dashboard" /><div class="tl-card-body"><span class="tl-tag">Milestone</span><div class="tl-title">Entered the Power Platform World</div><div class="tl-text">Began building Power BI dashboards for Fort Worth government. Rapidly expanded into Power Apps, Automate, and Copilot Studio.</div></div></div>
+    </div>
 
-      // MutationObserver catches any inline style TL.js injects after load
-      const observer = new MutationObserver(() => fixTimeline());
-      const nav = document.querySelector('.tl-timenav');
-      if (nav) observer.observe(nav, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
-    });
-  </script>
+    <div class="tl-item tl-l" data-year="2023">
+      <div class="tl-card"><img class="tl-card-img" src="https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg" alt="MGP" /><div class="tl-card-body"><span class="tl-tag">Career</span><div class="tl-title">Joined MGP — Municipal Operations &amp; GIS</div><div class="tl-text">Joined Municipal GIS Partners providing GIS and technology consulting for municipalities across Illinois and Texas.</div></div></div>
+      <div class="tl-void"></div>
+    </div>
+
+    <div class="tl-item tl-r" data-year="Feb 2024">
+      <div class="tl-void"></div>
+      <div class="tl-card"><img class="tl-card-img" src="Images/share.png" alt="SharePoint" /><div class="tl-card-body"><span class="tl-tag">Career</span><div class="tl-title">Microsoft 365 Functional Consultant</div><div class="tl-text">Worked as an M365 Consultant supporting municipal clients with SharePoint architecture, Teams governance, and cloud adoption.</div></div></div>
+    </div>
+
+    <div class="tl-item tl-l" data-year="Dec 2024">
+      <div class="tl-card"><img class="tl-card-img" src="Images/ELM1.png" alt="ELM App" /><div class="tl-card-body"><span class="tl-tag">Career</span><div class="tl-title">Transition to Low-Code Developer</div><div class="tl-text">Dedicated Low-Code Developer role specializing in Power Apps, Power Automate, and AI copilots for enterprise municipal solutions.</div></div></div>
+      <div class="tl-void"></div>
+    </div>
+
+    <div class="tl-phase" id="phase-3"><span class="tl-phase-inner">AI Era &nbsp;&middot;&nbsp; 2024 – 2026</span></div>
+
+    <div class="tl-item tl-r" data-year="Mar 2025">
+      <div class="tl-void"></div>
+      <div class="tl-card"><img class="tl-card-img" src="Images/ELM1.png" alt="ELM Award" /><div class="tl-card-body"><span class="tl-tag award">&#127942; Microsoft Award</span><div class="tl-title">ELM App Wins Microsoft Best in Automation</div><div class="tl-text">Employment Lifecycle Management App wins Microsoft's Best in Automation Award. 6+ municipalities, 400+ hours saved annually. Official case study published.</div></div></div>
+    </div>
+
+    <div class="tl-item tl-l" data-year="Mar 2025">
+      <div class="tl-card"><img class="tl-card-img" src="Images/ms9001.png" alt="MS-900" /><div class="tl-card-body"><span class="tl-tag">Certification</span><div class="tl-title">Microsoft 365 Certified: Fundamentals (MS-900)</div><div class="tl-text">Validated knowledge of Microsoft 365 cloud services, enterprise architecture, and security.</div></div></div>
+      <div class="tl-void"></div>
+    </div>
+
+    <div class="tl-item tl-r" data-year="Aug 2025">
+      <div class="tl-void"></div>
+      <div class="tl-card"><img class="tl-card-img" src="Images/ms900.png" alt="PL-900" /><div class="tl-card-body"><span class="tl-tag">Certification</span><div class="tl-title">Power Platform Fundamentals (PL-900)</div><div class="tl-text">Validated expertise in Power Apps, Power Automate, Power BI, and Power Virtual Agents.</div></div></div>
+    </div>
+
+    <div class="tl-item tl-l" data-year="May 2026">
+      <div class="tl-card"><img class="tl-card-img" src="Images/agent.png" alt="CivicGrant IQ" /><div class="tl-card-body"><span class="tl-tag award">&#127942; Best IQ Agent</span><div class="tl-title">CivicGrant IQ — Microsoft Agents League 2026</div><div class="tl-text">Multi-agent AI system on Azure AI Foundry wins Best IQ Agent at Microsoft's AI Skills Fest 2026, beating 500+ global participants.</div></div></div>
+      <div class="tl-void"></div>
+    </div>
+
+    <div class="tl-item tl-r" data-year="Jun 2026">
+      <div class="tl-void"></div>
+      <div class="tl-card"><img class="tl-card-img" src="Images/agent1.png" alt="CivicLens" /><div class="tl-card-body"><span class="tl-tag award">&#127942; Grand Prize</span><div class="tl-title">CivicLens — JS AI Build-a-thon Grand Prize</div><div class="tl-text">AI-powered public record analysis with real-time GitHub JSON sync and dynamic visualizations wins the Grand Prize.</div></div></div>
+    </div>
+
+    <div class="tl-item tl-l" data-year="Jul 2026">
+      <div class="tl-card"><img class="tl-card-img" src="Images/agent2.png" alt="MAINTAIN AI" /><div class="tl-card-body"><span class="tl-tag">Launch</span><div class="tl-title">MAINTAIN AI &amp; Kaizen AI Launched</div><div class="tl-text">MAINTAIN AI predicts infrastructure maintenance needs. Kaizen AI is an AI-powered certification study coach. Both built on Azure AI Foundry.</div></div></div>
+      <div class="tl-void"></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="awards">
+  <p class="sec-ey">Recognition</p>
+  <h2 class="sec-ttl">Awards &amp; Highlights</h2>
+  <div class="awards-grid">
+    <div class="aw-card"><div class="aw-icon">&#127942;</div><div class="aw-yr">March 2025</div><div class="aw-name">Microsoft Best in Automation</div><div class="aw-org">ELM App — 6+ municipalities, 400+ hours saved annually. Official Microsoft case study published.</div></div>
+    <div class="aw-card"><div class="aw-icon">&#129351;</div><div class="aw-yr">May 2026</div><div class="aw-name">Best IQ Agent — AI Skills Fest</div><div class="aw-org">CivicGrant IQ — Microsoft Agents League 2026. Beat 500+ global participants.</div></div>
+    <div class="aw-card"><div class="aw-icon">&#127919;</div><div class="aw-yr">June 2026</div><div class="aw-name">Grand Prize — JS AI Build-a-thon</div><div class="aw-org">CivicLens — AI-powered public record analysis with real-time sync and visualizations.</div></div>
+  </div>
+  <p class="sec-ey">Impact</p>
+  <h2 class="sec-ttl" style="margin-bottom:1.5rem">Career Milestones</h2>
+  <div class="ms-grid">
+    <div class="ms-card"><span class="ms-n">585+</span><div class="ms-l">Staff hours saved annually</div></div>
+    <div class="ms-card"><span class="ms-n">6+</span><div class="ms-l">Cities using his solutions</div></div>
+    <div class="ms-card"><span class="ms-n">3,600+</span><div class="ms-l">Queries automated by AI</div></div>
+    <div class="ms-card"><span class="ms-n">$195.9M+</span><div class="ms-l">Municipal funds tracked</div></div>
+    <div class="ms-card"><span class="ms-n">20+</span><div class="ms-l">Certifications earned</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="ftr-links">
+    <a href="index.html" class="ftr-link">Portfolio</a>
+    <a href="https://www.linkedin.com/in/joneric-eubanks-pmp-developer/" class="ftr-link" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/JonEricEubanks" class="ftr-link" target="_blank" rel="noopener">GitHub</a>
+    <a href="mailto:joneric11@gmail.com" class="ftr-link">joneric11@gmail.com</a>
+  </div>
+  <p class="ftr-copy">JonEric Eubanks &middot; Microsoft Developer &amp; AI Engineer &middot; Buffalo Grove, IL</p>
+</footer>
+
+<script>
+  // Stats counters
+  document.querySelectorAll('.stat-n[data-target]').forEach(el => {
+    const t = parseFloat(el.getAttribute('data-target'));
+    const pre = el.getAttribute('data-prefix')||'', suf = el.getAttribute('data-suffix')||'';
+    let s = null;
+    const tick = ts => { if(!s)s=ts; const p=Math.min((ts-s)/1600,1), e=1-Math.pow(1-p,3); el.textContent=pre+Math.floor(e*t)+suf; if(p<1)requestAnimationFrame(tick); else el.textContent=pre+t+suf; };
+    requestAnimationFrame(tick);
+  });
+
+  // Scroll-in animation
+  const io = new IntersectionObserver(entries => entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('vis'),i*60); io.unobserve(e.target); } }),{threshold:.1});
+  document.querySelectorAll('.tl-item').forEach(el=>io.observe(el));
+
+  // Phase nav
+  function goPhase(id, btn) {
+    document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'center'});
+    document.querySelectorAll('.phase-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const phaseIds = ['phase-1','phase-2','phase-3'];
+  const phaseBtns = document.querySelectorAll('.phase-btn');
+  window.addEventListener('scroll',()=>{
+    let cur=0;
+    phaseIds.forEach((id,i)=>{ const el=document.getElementById(id); if(el&&el.getBoundingClientRect().top<window.innerHeight*.6)cur=i; });
+    phaseBtns.forEach((b,i)=>b.classList.toggle('active',i===cur));
+  });
+</script>
 </body>
 </html>
