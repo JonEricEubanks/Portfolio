@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Azure Functions API for JonEric Eubanks Portfolio",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "func start"
   },

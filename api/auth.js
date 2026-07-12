@@ -1,5 +1,5 @@
 // Azure Functions v4 - Blog admin authentication
-import { app } from '@azure/functions';
+const { app } = require('@azure/functions');
 
 app.http('auth', {
     methods: ['POST', 'OPTIONS'],

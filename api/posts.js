@@ -1,6 +1,6 @@
 // Azure Functions v4 - Save blog posts to GitHub
 // Uses Git Data API to support large files (>1MB)
-import { app } from '@azure/functions';
+const { app } = require('@azure/functions');
 
 app.http('posts', {
     methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],

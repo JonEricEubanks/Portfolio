@@ -1,5 +1,5 @@
 // Azure Functions v4 - Version check endpoint
-import { app } from '@azure/functions';
+const { app } = require('@azure/functions');
 
 app.http('version', {
     methods: ['GET'],

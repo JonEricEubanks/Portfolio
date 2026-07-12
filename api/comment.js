@@ -1,5 +1,5 @@
 // Azure Functions v4 - Handle post comments
-import { app } from '@azure/functions';
+const { app } = require('@azure/functions');
 
 function encodeBase64(str) {
     return Buffer.from(str, 'utf8').toString('base64');

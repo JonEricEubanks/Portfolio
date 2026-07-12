@@ -1,6 +1,6 @@
 // Azure Functions v4 - AI chat powered by GitHub Models
-import { app } from '@azure/functions';
-import OpenAI from 'openai';
+const { app } = require('@azure/functions');
+const { OpenAI } = require('openai');
 
 app.http('chat', {
     methods: ['POST', 'OPTIONS'],
