@@ -885,11 +885,11 @@ Q: Why trust his work?
                 if (executed) {
                     let actionMsg;
                     if (action.type === 'scroll_to_section') {
-                        actionMsg = `📍 Navigating to the **${action.label}** section...`;
+                        actionMsg = `Navigating to the **${action.label}** section...`;
                     } else if (action.type === 'open_project') {
-                        actionMsg = `🚀 Opening **${action.title}** for you!`;
+                        actionMsg = `Opening **${action.title}** for you.`;
                     } else if (action.type === 'filter_blog') {
-                        actionMsg = `🔍 Filtered blog to **${action.label}** posts and scrolled to the blog.`;
+                        actionMsg = `Filtered blog to **${action.label}** posts and scrolled to the blog.`;
                     }
                     this.hideTypingIndicator();
                     this.addMessage(actionMsg, 'ai', false, true);
@@ -1200,7 +1200,7 @@ While you wait — JonEric has built 8+ innovative solutions including Power App
         // Convert line breaks to <br> tags
         processedContent = processedContent.replace(/\n/g, '<br>');
 
-        const actionBadge = isAction ? '<span class="action-badge">⚡ Action</span>' : '';
+        const actionBadge = isAction ? '<span class="action-badge">Action</span>' : '';
         
         messageDiv.innerHTML = `
             <div class="message-avatar ${isAction ? 'action-avatar' : ''}">${avatar}</div>
