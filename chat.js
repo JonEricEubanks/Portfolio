@@ -764,7 +764,7 @@ Want to explore any specific aspect of this ${project.category} solution?`;
         }
 
         if (action.type === 'open_career_timeline') {
-            window.open('https://ml-for-beginners-seven.vercel.app/', '_blank');
+            window.open('career-timeline.html', '_blank');
             return true;
         }
 

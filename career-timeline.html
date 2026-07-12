@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Journey — JonEric Eubanks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css" />
+  <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal-900: #134E4A;
+      --teal-800: #0F766E;
+      --teal-500: #0D9488;
+      --teal-300: #2DD4BF;
+      --navy:     #0a1628;
+      --gray-900: #111827;
+      --gray-600: #4B5563;
+      --gray-300: #D1D5DB;
+      --white:    #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(160deg, var(--navy) 0%, #0d2b2b 60%, var(--navy) 100%);
+      min-height: 100vh;
+      color: var(--gray-900);
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(10, 22, 40, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--teal-300); }
+    .header-center {
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(45, 212, 191, 0.12);
+      border: 1px solid rgba(45, 212, 191, 0.28);
+      color: var(--teal-300);
+      padding: 0.28rem 0.75rem;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 5rem 1.5rem 3.5rem;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .hero-label {
+      display: inline-block;
+      color: var(--teal-300);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 800;
+      color: white;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title .accent {
+      background: linear-gradient(120deg, var(--teal-300), var(--teal-500));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      color: rgba(255,255,255,0.58);
+      font-size: 1.05rem;
+      line-height: 1.72;
+      max-width: 560px;
+      margin: 0 auto 3rem;
+    }
+
+    /* ── Stats strip ─────────────────────────────────────────────────── */
+    .stats-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 1.2rem 2rem;
+      max-width: 680px;
+      margin: 0 auto 4rem;
+    }
+    .stat {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+    .stat-num {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .stat-desc {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 500;
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .stat-sep {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
+
+    /* ── Timeline container ──────────────────────────────────────────── */
+    .timeline-container {
+      background: white;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      box-shadow: 0 -8px 48px rgba(0,0,0,0.3);
+    }
+    #timeline-embed {
+      width: 100%;
+      height: 680px;
+    }
+
+    /* TimelineJS brand overrides */
+    .tl-storyslider { background: #f9fafb !important; }
+    .tl-timenav { background: #f3f4f6 !important; }
+
+    /* ── Awards section ──────────────────────────────────────────────── */
+    .awards-section {
+      background: white;
+      padding: 4rem 2rem 5rem;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal-800);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      letter-spacing: -0.03em;
+      margin-bottom: 2.5rem;
+    }
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto 4rem;
+    }
+    .award-card {
+      background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+      border: 1px solid rgba(15, 118, 110, 0.18);
+      border-left: 3px solid var(--teal-800);
+      border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .award-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(15, 118, 110, 0.15);
+    }
+    .award-year {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal-800);
+      margin-bottom: 0.4rem;
+    }
+    .award-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--teal-900);
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+    .award-org {
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    /* ── Milestone strip ─────────────────────────────────────────────── */
+    .milestones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .milestone-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .milestone-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--teal-800);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .milestone-label {
+      font-size: 0.78rem;
+      color: var(--gray-600);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    .site-footer {
+      background: var(--navy);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .footer-link {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--teal-300); }
+    .footer-copy {
+      color: rgba(255,255,255,0.25);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .site-header { padding: 0.75rem 1rem; }
+      .header-center { display: none; }
+      .hero { padding: 3rem 1rem 2rem; }
+      #timeline-embed { height: 560px; }
+      .stat-sep { display: none; }
+      .stat { min-width: 90px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="back-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Portfolio
+    </a>
+    <span class="header-center">JonEric Eubanks — Career Journey</span>
+    <span class="header-pill">
+      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      2000 – 2026
+    </span>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-label">Interactive Career Story</span>
+    <h1 class="hero-title">
+      From Code to<br>
+      <span class="accent">Award-Winning AI</span>
+    </h1>
+    <p class="hero-sub">
+      Two decades of building technology that matters — from GIS mapping and municipal dashboards to Microsoft-recognized AI agents transforming local government across 6+ cities.
+    </p>
+
+    <div class="stats-strip">
+      <div class="stat">
+        <div class="stat-num">26</div>
+        <div class="stat-desc">Years in Tech</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <div class="stat-num">20+</div>
+        <div class="stat-desc">Certifications</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-desc">Industry Awards</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <div class="stat-num">$195.9M+</div>
+        <div class="stat-desc">Funds Tracked</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <div class="timeline-container">
+    <div id="timeline-embed"></div>
+  </div>
+
+  <!-- Awards & Milestones -->
+  <div class="awards-section">
+    <p class="section-label">Recognition</p>
+    <h2 class="section-title">Awards & Highlights</h2>
+
+    <div class="awards-grid">
+      <div class="award-card">
+        <div class="award-year">March 2025</div>
+        <div class="award-name">Microsoft Best in Automation</div>
+        <div class="award-org">ELM App — Employment Lifecycle Management deployed across 6+ municipalities</div>
+      </div>
+      <div class="award-card">
+        <div class="award-year">May 2026</div>
+        <div class="award-name">Best IQ Agent — AI Skills Fest</div>
+        <div class="award-org">CivicGrant IQ — Microsoft Agents League 2026 · Beat 500+ global participants</div>
+      </div>
+      <div class="award-card">
+        <div class="award-year">June 2026</div>
+        <div class="award-name">Grand Prize — JS AI Build-a-thon</div>
+        <div class="award-org">CivicLens — AI-powered public record analysis with real-time GitHub sync</div>
+      </div>
+    </div>
+
+    <p class="section-label">Impact by the numbers</p>
+    <h2 class="section-title" style="margin-bottom:1.5rem">Career Milestones</h2>
+
+    <div class="milestones-grid">
+      <div class="milestone-card">
+        <div class="milestone-value">585+</div>
+        <div class="milestone-label">Staff hours saved annually through automation</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-value">6+</div>
+        <div class="milestone-label">Cities using his solutions across Illinois & Texas</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-value">3,600+</div>
+        <div class="milestone-label">Queries automated by AI copilots</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-value">99.8%</div>
+        <div class="milestone-label">Data accuracy across $195.9M in tracked funds</div>
+      </div>
+      <div class="milestone-card">
+        <div class="milestone-value">100%</div>
+        <div class="milestone-label">HR compliance maintained across all ELM deployments</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Portfolio</a>
+      <a href="https://www.linkedin.com/in/joneric-eubanks-pmp-developer/" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/JonEricEubanks" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:joneric11@gmail.com" class="footer-link">joneric11@gmail.com</a>
+    </div>
+    <p class="footer-copy">JonEric Eubanks · Microsoft Developer & AI Engineer · Buffalo Grove, IL</p>
+  </footer>
+
+  <script>
+    const timelineData = {
+      "title": {
+        "media": {
+          "url": "https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg",
+          "caption": "JonEric Eubanks — Microsoft Developer & AI Engineer",
+          "credit": "MGP Inc."
+        },
+        "text": {
+          "headline": "JonEric Eubanks<br><small style='font-weight:400;font-size:0.6em;opacity:0.8'>2000 – Present</small>",
+          "text": "<p>Microsoft Developer specializing in Power Platform, AI agents, and municipal automation. Known for building high-impact applications, Power BI dashboards, and award-winning AI copilots that modernize local government — from Buffalo Grove to Fort Worth.</p>"
+        }
+      },
+      "events": [
+        {
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/330px-Image_created_with_a_mobile_phone.png",
+            "caption": "Early technology exploration",
+            "credit": ""
+          },
+          "start_date": { "month": "1", "year": "2000" },
+          "text": {
+            "headline": "Beginnings in Technology",
+            "text": "<p>Began exploring computers, video games, and early programming concepts — laying the foundation for a future career in tech, data, and government innovation.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://blink.ucsd.edu/_images/technology-tab/software/esri-logo.png",
+            "caption": "GIS & spatial analysis foundations",
+            "credit": "Esri"
+          },
+          "start_date": { "year": "2010" },
+          "text": {
+            "headline": "GIS Career Start",
+            "text": "<p>Entered public-sector work focused on GIS mapping, spatial analysis, and community data. Built a strong foundation in local government workflows, regulatory processes, and geographic information systems.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://github.com/JonEricEubanks/Portfolio/blob/main/Images/Lean_Certi.png?raw=true",
+            "caption": "Lean Six Sigma Yellow Belt",
+            "credit": "LSS Institute"
+          },
+          "start_date": { "year": "2016" },
+          "text": {
+            "headline": "Lean Six Sigma Yellow Belt",
+            "text": "<p>Completed Lean Six Sigma coursework, applying process efficiency and waste-reduction methods to city operations and community programs — sharpening analytical thinking for future tech roles.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~SEKPXH3H9E37/CERTIFICATE_LANDING_PAGE~SEKPXH3H9E37.jpeg",
+            "caption": "Google Professional Certificates",
+            "credit": "Coursera / Google"
+          },
+          "start_date": { "year": "2020" },
+          "text": {
+            "headline": "Google PM & Google Data Analytics",
+            "text": "<p>Completed Google's Project Management and Data Analytics professional certifications. These became a springboard toward advanced project execution and data-driven decision-making in local government roles.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://www.pmi.org/-/media/spx-headless/product-detail-page/hero-images/membership-badge.png",
+            "caption": "PMP Certification",
+            "credit": "PMI"
+          },
+          "start_date": { "year": "2021" },
+          "text": {
+            "headline": "PMP Certification Earned",
+            "text": "<p>Achieved PMP credential through city-sponsored training and external coaching. This became the cornerstone of project execution and leadership skills — now applied across every municipal technology initiative.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/New_Power_BI_Logo.svg/960px-New_Power_BI_Logo.svg.png",
+            "caption": "Power Platform entry point",
+            "credit": "Microsoft"
+          },
+          "start_date": { "year": "2021" },
+          "text": {
+            "headline": "Entered the Power Platform World",
+            "text": "<p>Began building Power BI dashboards for local government operations in Fort Worth. Rapidly became a recognized innovator, expanding into Power Apps, Power Automate, and eventually Copilot Studio.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg",
+            "caption": "Municipal GIS Partners — Government technology specialists",
+            "credit": "MGP Inc."
+          },
+          "start_date": { "year": "2023" },
+          "text": {
+            "headline": "Joined MGP — Municipal Operations & GIS",
+            "text": "<p>Joined Municipal GIS Partners providing GIS support and technology consulting for municipal operations. Built spatial data systems, community development workflows, and geographic information solutions for local government — laying the groundwork for full-stack municipal technology work.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/768px-Microsoft_logo.svg.png",
+            "caption": "Microsoft 365 Consulting",
+            "credit": "Microsoft"
+          },
+          "start_date": { "month": "2", "year": "2024" },
+          "text": {
+            "headline": "Microsoft 365 Functional Consultant",
+            "text": "<p>Worked as a Microsoft 365 Consultant supporting municipal clients with SharePoint architecture, Teams governance, process analysis, and cloud adoption. Delivered structured business solutions, improved operational workflows, and standardized M365 across multiple communities.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/New_Power_BI_Logo.svg/960px-New_Power_BI_Logo.svg.png",
+            "caption": "Low-Code Developer transition",
+            "credit": "Microsoft"
+          },
+          "start_date": { "month": "12", "year": "2024" },
+          "text": {
+            "headline": "Transition to Low-Code Developer",
+            "text": "<p>Transitioned into a dedicated Low-Code Developer role specializing in Power Apps, Power Automate, SharePoint integration, and AI copilots. Began leading development of enterprise-grade municipal solutions and automation frameworks across MGP's client communities.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://www.youtube.com/watch?v=Xo8JF_WUga0",
+            "caption": "ELM App — Microsoft Best in Automation Award",
+            "credit": "JonEric Eubanks / MGP"
+          },
+          "start_date": { "month": "3", "year": "2025" },
+          "text": {
+            "headline": "ELM App Wins Microsoft Best in Automation",
+            "text": "<p>The Employment Lifecycle Management (ELM) App — architected and built by JonEric — wins Microsoft's Best in Automation Award. Deployed across 6+ municipalities in Illinois and Texas, saving 400+ staff hours annually with 100% compliance. An official Microsoft case study was published.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://github.com/JonEricEubanks/Portfolio/blob/main/Images/ms9001.png?raw=true",
+            "caption": "MS-900: Microsoft 365 Certified Fundamentals",
+            "credit": "Microsoft"
+          },
+          "start_date": { "month": "3", "day": "19", "year": "2025" },
+          "text": {
+            "headline": "Microsoft 365 Certified: Fundamentals (MS-900)",
+            "text": "<p>Completed MS-900 certification, establishing validated knowledge of Microsoft 365 cloud services, enterprise architecture, security, compliance, and licensing models.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://github.com/JonEricEubanks/Portfolio/blob/main/Images/ms900.png?raw=true",
+            "caption": "PL-900: Power Platform Fundamentals",
+            "credit": "Microsoft"
+          },
+          "start_date": { "month": "8", "day": "23", "year": "2025" },
+          "text": {
+            "headline": "Microsoft Certified: Power Platform Fundamentals (PL-900)",
+            "text": "<p>Achieved PL-900 certification — validating expertise in Power Apps, Power Automate, Power BI, and Power Virtual Agents. Confirms deep, structured knowledge of the platform powering every municipal solution.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://github.com/JonEricEubanks/Portfolio/blob/main/Images/civicgrant.png?raw=true",
+            "caption": "CivicGrant IQ — Microsoft Agents League 2026",
+            "credit": "JonEric Eubanks"
+          },
+          "start_date": { "month": "5", "year": "2026" },
+          "text": {
+            "headline": "CivicGrant IQ Wins Best IQ Agent — Microsoft Agents League 2026",
+            "text": "<p>CivicGrant IQ — a multi-agent AI system built on Azure AI Foundry — wins the Best IQ Agent award at Microsoft's AI Skills Fest 2026 Agents League competition, beating 500+ global participants. The system automates grant discovery, eligibility screening, and narrative generation for municipalities.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://github.com/JonEricEubanks/Portfolio/blob/main/Images/civiclens.png?raw=true",
+            "caption": "CivicLens — JS AI Build-a-thon Grand Prize",
+            "credit": "JonEric Eubanks"
+          },
+          "start_date": { "month": "6", "year": "2026" },
+          "text": {
+            "headline": "CivicLens Wins Grand Prize — JavaScript AI Build-a-thon",
+            "text": "<p>CivicLens wins the Grand Prize at the JavaScript AI Build-a-thon. The application provides AI-powered public record analysis — surfacing patterns in government data, ordinances, and community reports — with real-time GitHub JSON sync and dynamic visualizations.</p>"
+          }
+        },
+        {
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/768px-Microsoft_logo.svg.png",
+            "caption": "MAINTAIN AI & Kaizen AI — 2026 launches",
+            "credit": "JonEric Eubanks"
+          },
+          "start_date": { "month": "7", "year": "2026" },
+          "text": {
+            "headline": "MAINTAIN AI & Kaizen AI Launched",
+            "text": "<p>Launched two new AI-powered solutions: <strong>MAINTAIN AI</strong> — a predictive infrastructure command center that forecasts maintenance needs across municipal assets — and <strong>Kaizen AI</strong> — an AI-powered certification study coach built with Azure AI Foundry and Copilot Studio.</p>"
+          }
+        }
+      ]
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      window.timeline = new TL.Timeline('timeline-embed', timelineData, {
+        timenav_position: 'bottom',
+        optimal_tick_width: 130,
+        scale_factor: 2,
+        start_at_slide: 0,
+        default_bg_color: { r: 249, g: 250, b: 251 }
+      });
+    });
+  </script>
+</body>
+</html>
