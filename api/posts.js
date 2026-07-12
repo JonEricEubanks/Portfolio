@@ -1,8 +1,11 @@
 // Azure Functions v4 - Blog posts via Azure Table Storage
+// Falls back to GitHub JSON if Azure Storage is not yet configured
 const { app } = require('@azure/functions');
 const { TableClient } = require('@azure/data-tables');
 
 const CONN = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const GITHUB_OWNER = process.env.GITHUB_OWNER;
+const GITHUB_REPO = process.env.GITHUB_REPO;
 const POSTS_TABLE = 'blogposts';
 const PART_KEY = 'blog';
 
@@ -57,7 +60,21 @@ app.http('posts', {
 
         if (request.method === 'OPTIONS') return { status: 200, headers: corsHeaders };
 
-        if (!CONN) return { status: 500, jsonBody: { error: 'AZURE_STORAGE_CONNECTION_STRING not set' }, headers: corsHeaders };
+        // If Azure Storage not configured yet, fall back to GitHub JSON (keeps images working)
+        if (!CONN && request.method === 'GET') {
+            try {
+                const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`;
+                const res = await fetch(rawUrl, { cache: 'no-store' });
+                if (!res.ok) return { status: 200, jsonBody: [], headers: corsHeaders };
+                const posts = await res.json();
+                const published = posts.filter(p => p.status === 'published');
+                return { status: 200, jsonBody: published, headers: corsHeaders };
+            } catch (e) {
+                return { status: 200, jsonBody: [], headers: corsHeaders };
+            }
+        }
+
+        if (!CONN) return { status: 503, jsonBody: { error: 'Azure Storage not configured. Add AZURE_STORAGE_CONNECTION_STRING.' }, headers: corsHeaders };
 
         if (request.method === 'GET' && request.query.get('version')) {
             return { status: 200, jsonBody: { version: 6, storage: 'azure-table' }, headers: corsHeaders };
