@@ -142,7 +142,7 @@
 .tech-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   background: var(--gray-50);
   border: 1px solid var(--gray-200);
   border-radius: 20px;
@@ -151,15 +151,20 @@
   font-weight: 500;
   color: var(--gray-700);
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 .tech-pill:hover {
   background: rgba(15, 118, 110, 0.07);
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
-.pill-icon {
-  font-size: 0.85rem;
-  line-height: 1;
+/* Logo image / inline SVG inside pill */
+.pill-logo {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
 }
 
 /* Contact / Hire Me Section */
