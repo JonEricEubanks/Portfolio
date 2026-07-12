@@ -463,19 +463,29 @@
       });
       animateCounters();
 
+      const DARK = '#1E3A38';
+
       const fixTimeline = () => {
-        // Force year tick labels to dark color (TL.js sets these via inline style)
-        document.querySelectorAll('.tl-timeaxis-tick-text, .tl-timeaxis-major-tick-text, [class*="tl-timeaxis"] span, .tl-timeaxis .tl-timeaxis-tick span').forEach(el => {
-          el.style.cssText += '; color: #1E3A38 !important; font-family: Inter, sans-serif !important; font-size: 11px !important; font-weight: 600 !important;';
+        // Force year tick labels dark — TL.js sets these inline
+        document.querySelectorAll('.tl-timenav span, .tl-timenav div').forEach(el => {
+          if (el.children.length === 0 && el.textContent.trim().length > 0) {
+            el.style.color = DARK;
+          }
         });
-        // Remove ALL CAPS on headlines
+        // Remove ALL CAPS
         document.querySelectorAll('.tl-headline').forEach(el => { el.style.textTransform = 'none'; });
       };
 
-      setTimeout(fixTimeline, 600);
-      // Re-run whenever user navigates slides (TL.js re-renders tick labels on scroll)
-      document.getElementById('timeline-embed').addEventListener('click', () => setTimeout(fixTimeline, 200));
+      // Run immediately + after short delay + on every TL.js interaction
+      setTimeout(fixTimeline, 400);
+      setTimeout(fixTimeline, 1200);
+      document.getElementById('timeline-embed').addEventListener('mouseup', () => setTimeout(fixTimeline, 150));
       window.timeline.on('change', () => setTimeout(fixTimeline, 150));
+
+      // MutationObserver catches any inline style TL.js injects after load
+      const observer = new MutationObserver(() => fixTimeline());
+      const nav = document.querySelector('.tl-timenav');
+      if (nav) observer.observe(nav, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
     });
   </script>
 </body>
