@@ -166,52 +166,53 @@
     .tl-media-image { border-radius:10px !important; box-shadow:0 4px 24px rgba(0,0,0,0.45) !important; }
 
     /* ── TIMELINE NAV BAR — HIGH CONTRAST ────────────────────── */
-    .tl-timenav,.tl-timenav-background,.tl-timenav-slider-background { background:#152322 !important; }
-    .tl-timenav { border-top:2px solid #2DD4BF !important; }
+    .tl-timenav,.tl-timenav-background,.tl-timenav-slider-background { background:#1d3532 !important; }
+    .tl-timenav { border-top:3px solid #2DD4BF !important; }
 
     /* Spine line */
-    .tl-timenav-line               { background:rgba(255,255,255,0.35) !important; border:none !important; }
+    .tl-timenav-line               { background:rgba(255,255,255,0.5) !important; border:none !important; }
     .tl-timemarker-line-right,
-    .tl-timemarker-line-left       { background:rgba(255,255,255,0.35) !important; }
-    .tl-timemarker-timespan        { background:rgba(255,255,255,0.06) !important; }
+    .tl-timemarker-line-left       { background:rgba(255,255,255,0.5) !important; }
+    .tl-timemarker-timespan        { background:rgba(255,255,255,0.08) !important; }
 
     /* Dot markers */
-    .tl-timemarker-point { background:rgba(255,255,255,0.55) !important; border-color:#152322 !important; box-shadow:none !important; }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-point { background:#2DD4BF !important; border-color:#152322 !important; box-shadow:0 0 14px rgba(45,212,191,0.9) !important; }
+    .tl-timemarker-point { background:rgba(255,255,255,0.7) !important; border-color:#1d3532 !important; box-shadow:none !important; }
+    .tl-timemarker.tl-timemarker-active .tl-timemarker-point { background:#2DD4BF !important; border-color:#1d3532 !important; box-shadow:0 0 14px rgba(45,212,191,0.9) !important; }
 
-    /* Marker label cards — WHITE on dark, not teal-on-dark */
+    /* Marker label cards */
     .tl-timemarker-content {
-      background:rgba(255,255,255,0.1) !important;
-      border:1px solid rgba(255,255,255,0.25) !important;
-      border-radius:6px !important;
+      background:rgba(255,255,255,0.22) !important;
+      border:1px solid rgba(255,255,255,0.45) !important;
+      border-radius:5px !important;
     }
     .tl-timemarker.tl-timemarker-active .tl-timemarker-content {
-      background:rgba(45,212,191,0.28) !important;
+      background:rgba(45,212,191,0.5) !important;
       border:2px solid #2DD4BF !important;
     }
     .tl-timemarker-text .tl-headline {
-      color:rgba(255,255,255,0.88) !important;
+      color:#ffffff !important;
       font-family:'Inter',sans-serif !important;
       font-size:0.62rem !important; font-weight:700 !important;
-      text-transform:none !important;
+      text-transform:none !important; text-shadow: 0 1px 2px rgba(0,0,0,0.6) !important;
     }
     .tl-timemarker.tl-timemarker-active .tl-timemarker-text .tl-headline { color:#ffffff !important; }
 
     /* Icons in markers */
-    .tl-icon-image,.tl-icon-video,.tl-icon-document,.tl-icon-map { color:rgba(255,255,255,0.55) !important; }
+    .tl-icon-image,.tl-icon-video,.tl-icon-document,.tl-icon-map { color:rgba(255,255,255,0.7) !important; }
     .tl-timemarker.tl-timemarker-active .tl-icon-image,
     .tl-timemarker.tl-timemarker-active .tl-icon-video { color:#ffffff !important; }
 
     /* Year tick labels */
     .tl-timeaxis-tick-text,.tl-timeaxis-major-tick-text {
-      font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.55) !important; font-size:0.65rem !important;
+      font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.7) !important; font-size:0.65rem !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
     }
-    .tl-timeaxis-tick { border-color:rgba(255,255,255,0.15) !important; }
+    .tl-timeaxis-tick { border-color:rgba(255,255,255,0.2) !important; }
 
     /* Menubar (zoom controls) */
-    .tl-menubar { background:#0e1c1b !important; border-right:1px solid rgba(255,255,255,0.1) !important; }
-    .tl-menubar-button { color:rgba(255,255,255,0.75) !important; font-size:1.1rem !important; }
-    .tl-menubar-button:hover { background:rgba(255,255,255,0.12) !important; color:white !important; }
+    .tl-menubar { background:#152e2b !important; border-right:1px solid rgba(255,255,255,0.15) !important; }
+    .tl-menubar-button { color:rgba(255,255,255,0.85) !important; font-size:1.1rem !important; }
+    .tl-menubar-button:hover { background:rgba(255,255,255,0.15) !important; color:white !important; }
 
     /* CHAPTERS */
     .chapters-section {
