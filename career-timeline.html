@@ -420,9 +420,24 @@
         optimal_tick_width: 120,
         scale_factor: 2,
         start_at_slide: 0,
-        default_bg_color: { r: 248, g: 250, b: 252 }
+        default_bg_color: { r: 15, g: 30, b: 29 }
       });
       animateCounters();
+
+      // Fix ALL CAPS headlines — TL.js forces uppercase via JS text transform
+      const fixHeadlines = () => {
+        document.querySelectorAll('.tl-headline').forEach(el => {
+          if (el.dataset.fixed) return;
+          el.dataset.fixed = '1';
+          // Restore original casing from the data (stored as title-case)
+          if (el.textContent === el.textContent.toUpperCase() && el.textContent.length > 3) {
+            el.style.textTransform = 'none';
+          }
+        });
+      };
+      // Run after slides render
+      setTimeout(fixHeadlines, 600);
+      document.getElementById('timeline-embed').addEventListener('click', () => setTimeout(fixHeadlines, 200));
     });
   </script>
 </body>
