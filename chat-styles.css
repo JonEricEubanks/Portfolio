@@ -379,6 +379,20 @@
     line-height: 1.2;
 }
 
+.suggestion-chip.action-chip {
+    border-color: rgba(16, 185, 129, 0.35);
+    color: #065f46;
+    background: rgba(16, 185, 129, 0.08);
+}
+
+.suggestion-chip.action-chip:hover {
+    background: #059669;
+    color: white;
+    border-color: #059669;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3);
+}
+
 .suggestion-chip:hover {
     background: #0F766E;
     color: white;
@@ -905,6 +919,43 @@ body.dashboard-mode .ai-message .message-content {
     padding: 0.75rem;
     gap: 0.5rem;
   }
+}
+
+/* ── AI Action Messages ──────────────────────────────────────────────────── */
+.action-avatar {
+    background: linear-gradient(135deg, #059669, #10b981) !important;
+    color: white !important;
+}
+
+.action-message {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.06)) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    border-left: 3px solid #10b981 !important;
+}
+
+.action-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #059669;
+    background: rgba(16, 185, 129, 0.15);
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin-bottom: 6px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+/* ── Section highlight when AI navigates to it ───────────────────────────── */
+@keyframes aiSectionPulse {
+    0%   { outline: 3px solid transparent; outline-offset: 4px; }
+    25%  { outline: 3px solid rgba(16, 185, 129, 0.7); outline-offset: 4px; border-radius: 12px; }
+    75%  { outline: 3px solid rgba(16, 185, 129, 0.5); outline-offset: 4px; border-radius: 12px; }
+    100% { outline: 3px solid transparent; outline-offset: 4px; }
+}
+
+.ai-action-highlight {
+    animation: aiSectionPulse 2.2s ease-in-out forwards;
 }
 
 /* Touch-friendly improvements */

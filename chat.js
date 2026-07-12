@@ -611,6 +611,107 @@ Want to explore any specific aspect of this ${project.category} solution?`;
         return selected;
     }
 
+    // ── Action Detection ────────────────────────────────────────────────────
+    detectAction(message) {
+        const lower = message.toLowerCase();
+
+        // Require an explicit action verb to avoid false positives on info queries
+        const navVerbs  = ['show me', 'take me to', 'go to', 'navigate to', 'scroll to', 'jump to', 'bring me to', 'bring up', 'open up'];
+        const openVerbs = ['open', 'demo', 'launch', 'pull up'];
+        const filterVerbs = ['filter', 'show only', 'only show'];
+
+        const hasNavVerb    = navVerbs.some(v => lower.includes(v));
+        const hasOpenVerb   = openVerbs.some(v => lower.includes(v));
+        const hasFilterVerb = filterVerbs.some(v => lower.includes(v));
+
+        if (!hasNavVerb && !hasOpenVerb && !hasFilterVerb) return null;
+
+        // ── Scroll to section ──────────────────────────────────────────────
+        if (hasNavVerb) {
+            const sections = [
+                { kw: ['ai agent', 'ai app', 'ai project'],                        id: 'ai-apps',        label: 'AI Agents' },
+                { kw: ['low code', 'lowcode', 'power app', 'all project', 'projects section', 'portfolio project'], id: 'lowcode', label: 'Projects' },
+                { kw: ['dashboard', 'power bi', 'visualization'],                  id: 'dashboards',     label: 'Dashboards' },
+                { kw: ['gis', 'map', 'spatial', 'arcgis'],                         id: 'GIS',            label: 'GIS' },
+                { kw: ['certif', 'credential'],                                    id: 'certifications', label: 'Certifications' },
+                { kw: ['tech stack', 'technology stack', 'tools i use'],           id: 'tech-stack',     label: 'Tech Stack' },
+                { kw: ['blog', 'article', 'writing'],                              id: 'blog',           label: 'Blog' },
+                { kw: ['contact', 'reach out', 'hire', 'email', 'connect'],       id: 'contact',        label: 'Contact' },
+            ];
+            for (const s of sections) {
+                if (s.kw.some(kw => lower.includes(kw))) {
+                    return { type: 'scroll_to_section', sectionId: s.id, label: s.label };
+                }
+            }
+        }
+
+        // ── Open project modal ─────────────────────────────────────────────
+        if (hasOpenVerb || hasNavVerb) {
+            const triggers = Array.from(document.querySelectorAll('.modal-trigger[data-modal-title]'));
+            let best = null, bestScore = 0;
+            for (const t of triggers) {
+                const title = t.getAttribute('data-modal-title').toLowerCase();
+                const words = title.split(/[\s\-\/\(\)·]+/).filter(w => w.length > 3);
+                const score = words.filter(w => lower.includes(w)).length;
+                if (score > bestScore) { bestScore = score; best = t; }
+            }
+            if (bestScore >= 2 && best) {
+                return { type: 'open_project', trigger: best, title: best.getAttribute('data-modal-title') };
+            }
+        }
+
+        // ── Filter blog posts ──────────────────────────────────────────────
+        if (hasNavVerb || hasFilterVerb) {
+            const blogCats = [
+                { kw: ['power platform', 'power app', 'power automate', 'power bi'], cat: 'power-platform', label: 'Power Platform' },
+                { kw: ['ai', 'copilot', 'agent', 'openai', 'azure ai'],             cat: 'ai-copilot',     label: 'AI & Copilot' },
+                { kw: ['dashboard', 'chart', 'visualization'],                       cat: 'dashboards',     label: 'Dashboards' },
+                { kw: ['gis', 'map', 'spatial'],                                     cat: 'gis',            label: 'GIS & Data' },
+                { kw: ['career', 'growth', 'professional'],                          cat: 'career',         label: 'Career' },
+            ];
+            for (const bc of blogCats) {
+                if (bc.kw.some(kw => lower.includes(kw))) {
+                    if (lower.includes('blog') || lower.includes('post') || lower.includes('article') || hasFilterVerb) {
+                        return { type: 'filter_blog', category: bc.cat, label: bc.label };
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    // ── Action Execution ─────────────────────────────────────────────────
+    executeAction(action) {
+        if (action.type === 'scroll_to_section') {
+            const el = document.getElementById(action.sectionId);
+            if (!el) return false;
+            setTimeout(() => {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                el.classList.add('ai-action-highlight');
+                setTimeout(() => el.classList.remove('ai-action-highlight'), 2200);
+            }, 350);
+            return true;
+        }
+
+        if (action.type === 'open_project') {
+            setTimeout(() => action.trigger.click(), 450);
+            return true;
+        }
+
+        if (action.type === 'filter_blog') {
+            if (!window.blogManager) return false;
+            setTimeout(() => {
+                window.blogManager.filterPosts(action.category);
+                document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 350);
+            return true;
+        }
+
+        return false;
+    }
+    // ────────────────────────────────────────────────────────────────────────
+
     initializeEventListeners() {
         // Send button click
         this.sendButton.addEventListener('click', () => this.sendMessage());
@@ -777,6 +878,27 @@ Q: Why trust his work?
         this.showTypingIndicator();
         
         try {
+            // ── Action detection: navigate / open / filter ─────────────────
+            const action = this.detectAction(message);
+            if (action) {
+                const executed = this.executeAction(action);
+                if (executed) {
+                    let actionMsg;
+                    if (action.type === 'scroll_to_section') {
+                        actionMsg = `📍 Navigating to the **${action.label}** section...`;
+                    } else if (action.type === 'open_project') {
+                        actionMsg = `🚀 Opening **${action.title}** for you!`;
+                    } else if (action.type === 'filter_blog') {
+                        actionMsg = `🔍 Filtered blog to **${action.label}** posts and scrolled to the blog.`;
+                    }
+                    this.hideTypingIndicator();
+                    this.addMessage(actionMsg, 'ai', false, true);
+                    this.conversationHistory.push({ role: 'assistant', content: actionMsg });
+                    return;
+                }
+            }
+            // ──────────────────────────────────────────────────────────────
+
             // Analyze user intent with enhanced context
             const intent = this.analyzeUserIntent(message);
             
@@ -1046,13 +1168,14 @@ While you wait — JonEric has built 8+ innovative solutions including Power App
         }
     }
 
-    addMessage(content, sender, isError = false) {
+    addMessage(content, sender, isError = false, isAction = false) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}-message`;
         
         const BOT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="10" x="3" y="11" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M8 16h.01"/><path d="M16 16h.01"/></svg>';
         const USER_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-        const avatar = sender === 'ai' ? BOT_SVG : USER_SVG;
+        const ACTION_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
+        const avatar = isAction ? ACTION_SVG : (sender === 'ai' ? BOT_SVG : USER_SVG);
         const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         
         // Ensure content is a string and handle undefined/null cases
@@ -1076,10 +1199,13 @@ While you wait — JonEric has built 8+ innovative solutions including Power App
         
         // Convert line breaks to <br> tags
         processedContent = processedContent.replace(/\n/g, '<br>');
+
+        const actionBadge = isAction ? '<span class="action-badge">⚡ Action</span>' : '';
         
         messageDiv.innerHTML = `
-            <div class="message-avatar">${avatar}</div>
-            <div class="message-content ${isError ? 'error-message' : ''}">
+            <div class="message-avatar ${isAction ? 'action-avatar' : ''}">${avatar}</div>
+            <div class="message-content ${isError ? 'error-message' : ''} ${isAction ? 'action-message' : ''}">
+                ${actionBadge}
                 <div>${processedContent}</div>
             </div>
             <div class="message-time">${time}</div>
