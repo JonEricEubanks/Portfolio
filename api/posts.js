@@ -89,6 +89,24 @@ app.http('posts', {
                     if (post.status === 'published') posts.push(post);
                 }
                 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                // If images are missing in Table Storage, enrich from GitHub JSON
+                const hasNoImages = posts.every(p => !p.image);
+                if (hasNoImages && GITHUB_OWNER && GITHUB_REPO) {
+                    try {
+                        const rawRes = await fetch(
+                            `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`,
+                            { cache: 'no-store' }
+                        );
+                        if (rawRes.ok) {
+                            const ghPosts = await rawRes.json();
+                            const ghMap = {};
+                            ghPosts.forEach(p => { if (p.image) ghMap[p.id] = p.image; });
+                            posts.forEach(p => { if (ghMap[p.id]) p.image = ghMap[p.id]; });
+                        }
+                    } catch (imgErr) { /* images stay empty if GitHub unreachable */ }
+                }
+
                 return { status: 200, jsonBody: posts, headers: corsHeaders };
             } catch (error) {
                 context.error('Error fetching posts:', error);
