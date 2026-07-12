@@ -137,48 +137,81 @@
     #timeline-embed { width: 100%; height: 700px; }
 
     /* TIMELINEJS OVERRIDES */
+    /* Slide content — dark bg, white text */
     .tl-storyslider,.tl-slide-content-container,.tl-slide { background: #0f1e1d !important; }
     .tl-headline-date,.tl-headline-date * {
-      font-family:'Inter',sans-serif !important; font-size:0.7rem !important;
-      font-weight:700 !important; letter-spacing:0.14em !important;
-      text-transform:uppercase !important; color:var(--teal-400) !important;
+      font-family:'Inter',sans-serif !important; font-size:0.72rem !important;
+      font-weight:700 !important; letter-spacing:0.12em !important;
+      text-transform:uppercase !important; color:#2DD4BF !important;
     }
     .tl-headline,.tl-headline a {
-      font-family:'Inter',sans-serif !important; color:#e2fdf9 !important;
+      font-family:'Inter',sans-serif !important; color:#ffffff !important;
       font-weight:800 !important; letter-spacing:-0.02em !important;
       line-height:1.15 !important; text-transform:none !important;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4) !important;
     }
     .tl-text p,.tl-text-content p {
-      font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.68) !important;
-      font-size:0.9rem !important; line-height:1.78 !important;
+      font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.82) !important;
+      font-size:0.92rem !important; line-height:1.78 !important;
     }
-    .tl-caption { font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.38) !important; font-size:0.7rem !important; }
-    .tl-credit { font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.28) !important; font-size:0.65rem !important; }
-    .tl-slidenav-next,.tl-slidenav-previous { color:var(--teal-400) !important; background:rgba(45,212,191,0.06) !important; }
-    .tl-slidenav-next:hover,.tl-slidenav-previous:hover { background:rgba(45,212,191,0.14) !important; }
-    .tl-slidenav-title { font-family:'Inter',sans-serif !important; font-size:0.72rem !important; font-weight:600 !important; text-transform:none !important; color:rgba(255,255,255,0.55) !important; text-shadow:none !important; }
-    .tl-slidenav-description { color:rgba(255,255,255,0.35) !important; text-shadow:none !important; }
-    .tl-slidenav-icon { color:var(--teal-400) !important; text-shadow:none !important; }
-    .tl-media-image { border-radius:10px !important; box-shadow:0 4px 24px rgba(0,0,0,0.4) !important; }
-    /* Nav bar */
-    .tl-timenav,.tl-timenav-background,.tl-timenav-slider-background { background:#061110 !important; }
-    .tl-timenav { border-top:2px solid var(--teal-700,#0f766e) !important; }
-    .tl-timenav-line { background:var(--teal-600) !important; border:none !important; }
-    .tl-timemarker-line-right,.tl-timemarker-line-left { background:var(--teal-600) !important; }
-    .tl-timemarker-timespan { background:rgba(13,148,136,0.18) !important; }
-    .tl-timemarker-point { background:var(--teal-600) !important; border-color:#061110 !important; box-shadow:0 0 0 2px var(--teal-800) !important; }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-point { background:var(--teal-400) !important; box-shadow:0 0 16px rgba(45,212,191,0.85) !important; }
-    .tl-timemarker-content { background:rgba(45,212,191,0.07) !important; border:1px solid rgba(45,212,191,0.22) !important; border-radius:6px !important; }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-content { background:rgba(45,212,191,0.18) !important; border:1px solid rgba(45,212,191,0.5) !important; }
-    .tl-timemarker-text .tl-headline { color:rgba(255,255,255,0.55) !important; font-family:'Inter',sans-serif !important; font-size:0.62rem !important; font-weight:600 !important; text-transform:none !important; }
-    .tl-timemarker.tl-timemarker-active .tl-timemarker-text .tl-headline { color:var(--teal-400) !important; }
-    .tl-icon-image,.tl-icon-video,.tl-icon-document,.tl-icon-map { color:rgba(45,212,191,0.5) !important; }
-    .tl-timemarker.tl-timemarker-active .tl-icon-image,.tl-timemarker.tl-timemarker-active .tl-icon-video { color:var(--teal-400) !important; }
-    .tl-timeaxis-tick-text,.tl-timeaxis-major-tick-text { font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.3) !important; font-size:0.62rem !important; }
-    .tl-timeaxis-tick { border-color:rgba(255,255,255,0.08) !important; }
-    .tl-menubar { background:var(--teal-900) !important; }
-    .tl-menubar-button { color:rgba(255,255,255,0.7) !important; }
-    .tl-menubar-button:hover { background:rgba(255,255,255,0.1) !important; color:white !important; }
+    .tl-caption { font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.45) !important; font-size:0.7rem !important; }
+    .tl-credit  { font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.35) !important; font-size:0.65rem !important; }
+    /* Slide nav arrows */
+    .tl-slidenav-next,.tl-slidenav-previous { color:#2DD4BF !important; background:rgba(255,255,255,0.05) !important; }
+    .tl-slidenav-next:hover,.tl-slidenav-previous:hover { background:rgba(45,212,191,0.15) !important; }
+    .tl-slidenav-title       { font-family:'Inter',sans-serif !important; font-size:0.72rem !important; font-weight:600 !important; text-transform:none !important; color:rgba(255,255,255,0.75) !important; text-shadow:none !important; }
+    .tl-slidenav-description { color:rgba(255,255,255,0.45) !important; text-shadow:none !important; }
+    .tl-slidenav-icon        { color:#2DD4BF !important; text-shadow:none !important; }
+    /* Images */
+    .tl-media-image { border-radius:10px !important; box-shadow:0 4px 24px rgba(0,0,0,0.45) !important; }
+
+    /* ── TIMELINE NAV BAR — HIGH CONTRAST ────────────────────── */
+    .tl-timenav,.tl-timenav-background,.tl-timenav-slider-background { background:#152322 !important; }
+    .tl-timenav { border-top:2px solid #2DD4BF !important; }
+
+    /* Spine line */
+    .tl-timenav-line               { background:rgba(255,255,255,0.35) !important; border:none !important; }
+    .tl-timemarker-line-right,
+    .tl-timemarker-line-left       { background:rgba(255,255,255,0.35) !important; }
+    .tl-timemarker-timespan        { background:rgba(255,255,255,0.06) !important; }
+
+    /* Dot markers */
+    .tl-timemarker-point { background:rgba(255,255,255,0.55) !important; border-color:#152322 !important; box-shadow:none !important; }
+    .tl-timemarker.tl-timemarker-active .tl-timemarker-point { background:#2DD4BF !important; border-color:#152322 !important; box-shadow:0 0 14px rgba(45,212,191,0.9) !important; }
+
+    /* Marker label cards — WHITE on dark, not teal-on-dark */
+    .tl-timemarker-content {
+      background:rgba(255,255,255,0.1) !important;
+      border:1px solid rgba(255,255,255,0.25) !important;
+      border-radius:6px !important;
+    }
+    .tl-timemarker.tl-timemarker-active .tl-timemarker-content {
+      background:rgba(45,212,191,0.28) !important;
+      border:2px solid #2DD4BF !important;
+    }
+    .tl-timemarker-text .tl-headline {
+      color:rgba(255,255,255,0.88) !important;
+      font-family:'Inter',sans-serif !important;
+      font-size:0.62rem !important; font-weight:700 !important;
+      text-transform:none !important;
+    }
+    .tl-timemarker.tl-timemarker-active .tl-timemarker-text .tl-headline { color:#ffffff !important; }
+
+    /* Icons in markers */
+    .tl-icon-image,.tl-icon-video,.tl-icon-document,.tl-icon-map { color:rgba(255,255,255,0.55) !important; }
+    .tl-timemarker.tl-timemarker-active .tl-icon-image,
+    .tl-timemarker.tl-timemarker-active .tl-icon-video { color:#ffffff !important; }
+
+    /* Year tick labels */
+    .tl-timeaxis-tick-text,.tl-timeaxis-major-tick-text {
+      font-family:'Inter',sans-serif !important; color:rgba(255,255,255,0.55) !important; font-size:0.65rem !important;
+    }
+    .tl-timeaxis-tick { border-color:rgba(255,255,255,0.15) !important; }
+
+    /* Menubar (zoom controls) */
+    .tl-menubar { background:#0e1c1b !important; border-right:1px solid rgba(255,255,255,0.1) !important; }
+    .tl-menubar-button { color:rgba(255,255,255,0.75) !important; font-size:1.1rem !important; }
+    .tl-menubar-button:hover { background:rgba(255,255,255,0.12) !important; color:white !important; }
 
     /* CHAPTERS */
     .chapters-section {
