@@ -294,9 +294,10 @@
     requestAnimationFrame(tick);
   });
 
-  // Scroll-in animation
-  const io = new IntersectionObserver(entries => entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('vis'),i*60); io.unobserve(e.target); } }),{threshold:.1});
-  document.querySelectorAll('.tl-item').forEach(el=>io.observe(el));
+  // Staggered load animation — all items visible on load, no scroll dependency
+  document.querySelectorAll('.tl-item').forEach((el, i) => {
+    setTimeout(() => el.classList.add('vis'), 200 + i * 100);
+  });
 
   // Phase nav
   function goPhase(id, btn) {
