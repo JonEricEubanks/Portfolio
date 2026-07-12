@@ -353,7 +353,7 @@
     flex-wrap: wrap;
     gap: 0.4rem;
     padding: 0.5rem 1rem 0.75rem 1rem;
-    max-height: 160px;
+    max-height: 400px;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }

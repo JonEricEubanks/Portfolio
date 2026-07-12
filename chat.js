@@ -651,11 +651,11 @@ Want to explore any specific aspect of this ${project.category} solution?`;
             let best = null, bestScore = 0;
             for (const t of triggers) {
                 const title = t.getAttribute('data-modal-title').toLowerCase();
-                const words = title.split(/[\s\-\/\(\)·]+/).filter(w => w.length > 3);
+                const words = title.split(/[\s\-\/\(\)·]+/).filter(w => w.length >= 3);
                 const score = words.filter(w => lower.includes(w)).length;
                 if (score > bestScore) { bestScore = score; best = t; }
             }
-            if (bestScore >= 2 && best) {
+            if (bestScore >= 1 && best) {
                 return { type: 'open_project', trigger: best, title: best.getAttribute('data-modal-title') };
             }
         }
