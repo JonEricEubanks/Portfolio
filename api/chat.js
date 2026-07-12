@@ -1,45 +1,40 @@
-// Vercel serverless function for AI chat
-// Powered by GitHub Models (Claude via GitHub Copilot subscription)
+// Azure Functions v4 - AI chat powered by GitHub Models
+import { app } from '@azure/functions';
 import OpenAI from 'openai';
 
-export default async function handler(req, res) {
-    // Enable CORS
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+app.http('chat', {
+    methods: ['POST', 'OPTIONS'],
+    authLevel: 'anonymous',
+    handler: async (request, context) => {
+        const corsHeaders = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Accept'
+        };
 
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
+        if (request.method === 'OPTIONS') {
+            return { status: 200, headers: corsHeaders };
+        }
 
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
+        if (!process.env.GITHUB_TOKEN) {
+            context.error('GITHUB_TOKEN environment variable is not set');
+            return { status: 500, jsonBody: { error: 'GitHub token not configured. Add GITHUB_TOKEN to your Azure SWA application settings.' }, headers: corsHeaders };
+        }
 
-    // Check if GitHub token is configured
-    if (!process.env.GITHUB_TOKEN) {
-        console.error('GITHUB_TOKEN environment variable is not set');
-        return res.status(500).json({ error: 'GitHub token not configured. Add GITHUB_TOKEN to your Vercel environment variables.' });
-    }
+        const openai = new OpenAI({
+            baseURL: 'https://models.inference.ai.azure.com',
+            apiKey: process.env.GITHUB_TOKEN
+        });
 
-    // GitHub Models endpoint — works with your existing GitHub Copilot subscription
-    // Supports Claude 3.5 Sonnet, GPT-4o, Llama 3.3, and more
-    const openai = new OpenAI({
-        baseURL: 'https://models.inference.ai.azure.com',
-        apiKey: process.env.GITHUB_TOKEN
-    });
-
-    try {
-        const { message, context, conversationHistory = [], portfolioData = {} } = req.body;
+        try {
+            const { message, context: chatContext, conversationHistory = [], portfolioData = {} } = await request.json();
 
         if (!message) {
-            return res.status(400).json({ error: 'Message is required' });
+            return { status: 400, jsonBody: { error: 'Message is required' }, headers: corsHeaders };
         }
 
         // Build enhanced system context
-        const systemContext = context || buildDefaultContext(portfolioData);
+        const systemContext = chatContext || buildDefaultContext(portfolioData);
         
         // Prepare conversation messages with context awareness
         const messages = [
@@ -80,16 +75,14 @@ export default async function handler(req, res) {
         });
 
         const reply = completion.choices[0].message.content;
-        res.status(200).json({ reply });
+        return { status: 200, jsonBody: { reply }, headers: corsHeaders };
 
     } catch (error) {
-        console.error('GitHub Models API error:', error);
-        res.status(500).json({ 
-            error: 'Failed to process chat request',
-            details: error.message 
-        });
+        context.error('GitHub Models API error:', error);
+        return { status: 500, jsonBody: { error: 'Failed to process chat request', details: error.message }, headers: corsHeaders };
     }
 }
+});
 
 // Helper function to build enhanced context
 function buildDefaultContext(portfolioData = {}) {

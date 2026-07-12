@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-api",
+  "version": "1.0.0",
+  "description": "Azure Functions API for JonEric Eubanks Portfolio",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "func start"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.5.0",
+    "openai": "^4.20.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,15 +1,126 @@
-// Vercel serverless function to handle post comments
-
-// Helper functions for base64 encoding/decoding (Node.js compatible)
-function decodeBase64(str) {
-    return Buffer.from(str, 'base64').toString('utf8');
-}
+// Azure Functions v4 - Handle post comments
+import { app } from '@azure/functions';
 
 function encodeBase64(str) {
     return Buffer.from(str, 'utf8').toString('base64');
 }
 
-export default async function handler(req, res) {
+app.http('comment', {
+    methods: ['POST', 'OPTIONS'],
+    authLevel: 'anonymous',
+    handler: async (request, context) => {
+        const corsHeaders = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Accept'
+        };
+
+        if (request.method === 'OPTIONS') {
+            return { status: 200, headers: corsHeaders };
+        }
+
+        if (request.method === 'POST') {
+            const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+            const GITHUB_OWNER = process.env.GITHUB_OWNER;
+            const GITHUB_REPO = process.env.GITHUB_REPO;
+
+            if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+                return { status: 500, jsonBody: { error: 'Server configuration error' }, headers: corsHeaders };
+            }
+
+            try {
+                const body = await request.json();
+                const postId = body?.postId;
+                const name = body?.name;
+                const commentContent = body?.content;
+
+                if (!postId || !name || !commentContent) {
+                    return { status: 400, jsonBody: { error: 'Post ID, name, and comment content are required' }, headers: corsHeaders };
+                }
+
+                if (name.length > 50) {
+                    return { status: 400, jsonBody: { error: 'Name must be 50 characters or less' }, headers: corsHeaders };
+                }
+                if (commentContent.length > 1000) {
+                    return { status: 400, jsonBody: { error: 'Comment must be 1000 characters or less' }, headers: corsHeaders };
+                }
+
+                context.log('Comment request for post:', postId, 'by:', name);
+
+                const fileUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/blog-data/posts.json`;
+                const shaResponse = await fetch(fileUrl, {
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+
+                if (!shaResponse.ok) {
+                    return { status: 500, jsonBody: { error: 'Failed to get file info' }, headers: corsHeaders };
+                }
+
+                const shaData = await shaResponse.json();
+                const sha = shaData.sha;
+
+                const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/blog-data/posts.json`;
+                const postsResponse = await fetch(rawUrl, { cache: 'no-store' });
+
+                if (!postsResponse.ok) {
+                    return { status: 500, jsonBody: { error: 'Failed to fetch posts' }, headers: corsHeaders };
+                }
+
+                const posts = await postsResponse.json();
+                const postIndex = posts.findIndex(p => p.id === postId);
+
+                if (postIndex === -1) {
+                    return { status: 404, jsonBody: { error: 'Post not found' }, headers: corsHeaders };
+                }
+
+                if (!Array.isArray(posts[postIndex].comments)) {
+                    posts[postIndex].comments = [];
+                }
+
+                const newComment = {
+                    id: 'comment-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                    name: name.trim(),
+                    content: commentContent.trim(),
+                    createdAt: new Date().toISOString()
+                };
+
+                posts[postIndex].comments.unshift(newComment);
+
+                const content = encodeBase64(JSON.stringify(posts, null, 2));
+                const updateResponse = await fetch(fileUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Comment added to post ${postId} by ${name}`,
+                        content,
+                        sha,
+                        branch: 'main'
+                    })
+                });
+
+                if (!updateResponse.ok) {
+                    const errorData = await updateResponse.json();
+                    return { status: 500, jsonBody: { error: 'Failed to save comment', details: errorData.message }, headers: corsHeaders };
+                }
+
+                return {
+                    status: 200,
+                    jsonBody: { success: true, comment: newComment, totalComments: posts[postIndex].comments.length },
+                    headers: corsHeaders
+                };
+            } catch (error) {
+                context.error('Comment exception:', error);
+                return { status: 500, jsonBody: { error: 'Exception caught', message: error.message }, headers: corsHeaders };
+            }
+        }
+
+        return { status: 405, jsonBody: { error: 'Method not allowed' }, headers: corsHeaders };
+    }
+});
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
