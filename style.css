@@ -98,7 +98,7 @@
 }
 .tech-stack-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
   gap: var(--space-6);
   margin-top: var(--space-8);
 }
@@ -113,6 +113,7 @@
   padding: var(--space-6);
   transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
+.tech-group.ai    { --tg-accent: #7C3AED; --tg-accent-soft: rgba(124, 58, 237, 0.08); }
 .tech-group.azure { --tg-accent: #0078D4; --tg-accent-soft: rgba(0, 120, 212, 0.08); }
 .tech-group.power { --tg-accent: #742774; --tg-accent-soft: rgba(116, 39, 116, 0.08); }
 .tech-group.dev   { --tg-accent: #CA8A04; --tg-accent-soft: rgba(202, 138, 4, 0.09); }
