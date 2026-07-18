@@ -4,14 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JonEric Eubanks Portfolio</title>
+  <script>
+    // Prevent the curtain intro from flashing when returning from the career timeline.
+    (function () {
+      try {
+        var ref = document.referrer || '';
+        var skip = ref.indexOf('career-timeline.html') !== -1 || window.sessionStorage.getItem('skipIntro') === '1';
+        if (skip) {
+          document.documentElement.setAttribute('data-skip-intro', '');
+          document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.remove('intro-active');
+            var intro = document.getElementById('page-intro');
+            if (intro) intro.style.display = 'none';
+          });
+          window.sessionStorage.setItem('skipIntro', '1');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    html[data-skip-intro] #page-intro,
+    html[data-skip-intro] .grain-overlay {
+      display: none !important;
+    }
+    html[data-skip-intro] body {
+      overflow: visible !important;
+    }
+  </style>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230F766E'><path d='M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2z'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Prism.js for code syntax highlighting -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260718e">
-  <link rel="stylesheet" href="intro-fix.css?v=20260717">
+  <link rel="stylesheet" href="style.css?v=20260719">
+  <link rel="stylesheet" href="intro-fix.css?v=20260718">
   <link rel="stylesheet" href="chat-styles.css?v=20241207">
   <link rel="stylesheet" href="blog-styles.css?v=20241207">
   <!-- AOS — Animate On Scroll -->
@@ -248,6 +275,7 @@
                   <span>Microsoft Best in Automation</span>
                   <span>Global Competition</span>
                 </div>
+                <a class="hero-award-case-link" href="#award-elm">Full case study ↓</a>
               </div>
               <div class="featured-build-visual hero-award-visual" aria-label="ELM app preview">
                 <div class="spotlight-device hero-award-device">
@@ -276,6 +304,7 @@
                   <span>Best IQ Agent</span>
                   <span>Global · Microsoft Agents League</span>
                 </div>
+                <a class="hero-award-case-link" href="#award-civicgrant">Full case study ↓</a>
               </div>
               <div class="featured-build-visual hero-award-visual" aria-label="CivicGrant IQ preview">
                 <div class="spotlight-device hero-award-device">
@@ -304,6 +333,7 @@
                   <span>Best Agent</span>
                   <span>Intent > Data > RAG > Report</span>
                 </div>
+                <a class="hero-award-case-link" href="#award-civiclens">Full case study ↓</a>
               </div>
               <div class="featured-build-visual hero-award-visual" aria-label="CivicLens preview">
                 <div class="spotlight-device hero-award-device">
@@ -492,6 +522,170 @@
             <div class="metric-label">Implementation ROI</div>
           </div>
         </div>
+      </section>
+
+      <!-- Award Cabinet — canonical case studies for the three global wins -->
+      <section id="awards" class="portfolio-section award-cabinet" aria-label="Award-winning case studies">
+        <div class="section-header">
+          <h2 class="section-title gradient-text">Award Cabinet</h2>
+          <p class="section-description">Three global Microsoft competition wins — each one a shipped product, not a prototype.</p>
+        </div>
+
+        <!-- CivicGrant IQ -->
+        <article class="award-case award-case--iq" id="award-civicgrant">
+          <header class="award-case-head">
+            <div class="award-medal" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v0A2.5 2.5 0 0 1 9.5 7v0A2.5 2.5 0 0 1 7 4.5v0A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 7A2.5 2.5 0 0 1 17 9.5v0A2.5 2.5 0 0 1 14.5 12v0A2.5 2.5 0 0 1 12 9.5v0A2.5 2.5 0 0 1 14.5 7Z"/><path d="M9.5 12A2.5 2.5 0 0 1 12 14.5v0A2.5 2.5 0 0 1 9.5 17v0A2.5 2.5 0 0 1 7 14.5v0A2.5 2.5 0 0 1 9.5 12Z"/><path d="M14.5 17A2.5 2.5 0 0 1 17 19.5v0A2.5 2.5 0 0 1 14.5 22v0A2.5 2.5 0 0 1 12 19.5v0A2.5 2.5 0 0 1 14.5 17Z"/><path d="M12 4.5v3"/><path d="M12 12v3"/><path d="M17 9.5H14"/><path d="M10 9.5H7"/></svg>
+            </div>
+            <div class="award-case-title">
+              <h3>CivicGrant IQ</h3>
+              <p class="award-case-sub">Best IQ Agent · Microsoft Agents League @ AI Skills Fest · June 2026</p>
+            </div>
+            <div class="award-case-chips">
+              <span>Global · ~5,000 contestants</span>
+              <span>$6,468 prize package</span>
+            </div>
+            <div class="award-case-thumb" aria-hidden="true">
+              <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg" alt="" loading="lazy">
+            </div>
+          </header>
+          <button class="award-toggle" type="button" aria-expanded="false" aria-controls="award-body-civicgrant">
+            <span>Case details</span>
+            <svg class="award-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="award-case-grid" id="award-body-civicgrant">
+            <div class="award-step">
+              <span class="award-step-label">Problem</span>
+              <p>Municipal grant teams decode 80-page federal NOFOs by hand — slow, error-prone, and blind to revenue fit.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Build</span>
+              <p>A 5-agent fleet — Main Analyst, Red Team GS-14 reviewer, Competitive Intel, Portfolio Scan, Narrative Refinement — running 6-step grounded GraphRAG reasoning, streamed live through 23 SSE event types.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Why it stands out</span>
+              <p>Integrates all three Microsoft IQ layers — Foundry IQ, Work IQ (4 live M365 signals), and Fabric IQ (live SQL analytics) — with every figure cited to a source document.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Outcome</span>
+              <p>Named Best IQ Agent from a worldwide field of nearly 5,000 contestants.</p>
+            </div>
+            <div class="award-step award-step-stack">
+              <span class="award-step-label">Stack</span>
+              <div class="award-stack-chips">
+                <span>Azure AI Foundry</span><span>GraphRAG</span><span>React 18</span><span>SSE</span><span>Fabric IQ</span><span>Work IQ</span>
+              </div>
+            </div>
+          </div>
+          <div class="award-case-links">
+            <a href="https://proud-field-00978990f.7.azurestaticapps.net/" target="_blank" rel="noopener">Live app ↗</a>
+            <a href="https://www.youtube.com/watch?v=dTRjA8eKwgQ" target="_blank" rel="noopener">Watch demo ↗</a>
+          </div>
+        </article>
+
+        <!-- CivicLens -->
+        <article class="award-case award-case--lens" id="award-civiclens">
+          <header class="award-case-head">
+            <div class="award-medal" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+            </div>
+            <div class="award-case-title">
+              <h3>CivicLens</h3>
+              <p class="award-case-sub">Best Agent · JavaScript AI Build-a-thon (Microsoft) · April 2026</p>
+            </div>
+            <div class="award-case-chips">
+              <span>Global · ~1,000 contestants</span>
+              <span>First place</span>
+            </div>
+            <div class="award-case-thumb" aria-hidden="true">
+              <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png" alt="" loading="lazy">
+            </div>
+          </header>
+          <button class="award-toggle" type="button" aria-expanded="false" aria-controls="award-body-civiclens">
+            <span>Case details</span>
+            <svg class="award-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="award-case-grid" id="award-body-civiclens">
+            <div class="award-step">
+              <span class="award-step-label">Problem</span>
+              <p>Municipal infrastructure data sits locked in GIS tables — invisible to residents and non-technical staff.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Build</span>
+              <p>A 5-stage agent pipeline — Intent → Data/ReAct → RAG → Synthesis → Report — wired to a JSON-RPC 2.0 MCP server exposing 16 tools, with Weibull decay scoring for real-time prioritization.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Why it stands out</span>
+              <p>A full MCP implementation turning live infrastructure data into plain-language intelligence — natural-language Q&amp;A, an interactive Leaflet hazard simulator, and crew dispatch.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Outcome</span>
+              <p>Best Agent — first in a worldwide field of just under 1,000 contestants.</p>
+            </div>
+            <div class="award-step award-step-stack">
+              <span class="award-step-label">Stack</span>
+              <div class="award-stack-chips">
+                <span>JavaScript</span><span>MCP · JSON-RPC 2.0</span><span>RAG</span><span>Leaflet</span><span>Azure</span>
+              </div>
+            </div>
+          </div>
+          <div class="award-case-links">
+            <a href="https://civiclens-app.azurewebsites.net/" target="_blank" rel="noopener">Live app ↗</a>
+            <a href="https://www.youtube.com/watch?v=rFCUO5acv5Q" target="_blank" rel="noopener">Watch demo ↗</a>
+          </div>
+        </article>
+
+        <!-- ELM -->
+        <article class="award-case award-case--elm" id="award-elm">
+          <header class="award-case-head">
+            <div class="award-medal" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="award-case-title">
+              <h3>Employment Lifecycle Management</h3>
+              <p class="award-case-sub">Best in Automation · Microsoft (global) · Official Microsoft case study</p>
+            </div>
+            <div class="award-case-chips">
+              <span>Global competition</span>
+              <span>400+ hrs saved / yr</span>
+            </div>
+            <div class="award-case-thumb" aria-hidden="true">
+              <img src="Images/ELM.png" alt="" loading="lazy">
+            </div>
+          </header>
+          <button class="award-toggle" type="button" aria-expanded="false" aria-controls="award-body-elm">
+            <span>Case details</span>
+            <svg class="award-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="award-case-grid" id="award-body-elm">
+            <div class="award-step">
+              <span class="award-step-label">Problem</span>
+              <p>Onboarding and offboarding fragmented across HR, IT, and managers — manual checklists, dropped tasks, zero visibility.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Build</span>
+              <p>One app unifying task routing, real-time progress dashboards, role-based SharePoint access, AI-enhanced notifications, and Copilot-driven task commands.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Why it stands out</span>
+              <p>Featured in Microsoft's official case study as a showcase of the Power Platform and intelligent automation in local government.</p>
+            </div>
+            <div class="award-step">
+              <span class="award-step-label">Outcome</span>
+              <p>Microsoft's global Best in Automation award — and 400+ staff hours saved every year in production.</p>
+            </div>
+            <div class="award-step award-step-stack">
+              <span class="award-step-label">Stack</span>
+              <div class="award-stack-chips">
+                <span>Power Apps</span><span>Power Automate</span><span>SharePoint</span><span>Copilot</span><span>Power BI</span>
+              </div>
+            </div>
+          </div>
+          <div class="award-case-links">
+            <a href="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1" target="_blank" rel="noopener">Case study ↗</a>
+            <a href="https://www.youtube.com/watch?v=Xo8JF_WUga0" target="_blank" rel="noopener">Watch demo ↗</a>
+          </div>
+        </article>
       </section>
 
       <!-- AI Agents & Applications Section -->
@@ -2758,6 +2952,16 @@
         }
       });
 
+      // Award Cabinet mobile accordion
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.award-toggle').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!expanded));
+          });
+        });
+      });
+
       // Back to top functionality
       var topButton = document.getElementById("topBtn");
       window.onscroll = function() {scrollFunction()};
@@ -2847,22 +3051,9 @@
         var left  = document.getElementById('curtain-left');
         var right = document.getElementById('curtain-right');
         var intro = document.getElementById('page-intro');
+        var openTimer, cleanupTimer, aosTimer;
 
-        // Logo shows for about one second, then the curtain opens.
-        window.setTimeout(function () {
-          if (left)  left.classList.add('open');
-          if (right) right.classList.add('open');
-          document.body.classList.add('ready'); // hero entrance fires simultaneously
-        }, 1000);
-
-        // Clean up after curtains fully slide off (1000 + 2000 + 300ms buffer)
-        window.setTimeout(function () {
-          if (intro) intro.style.display = 'none';
-          document.body.classList.remove('intro-active');
-        }, 3300);
-
-        // AOS
-        window.setTimeout(function () {
+        function initAOS () {
           if (typeof AOS !== 'undefined') {
             AOS.init({ duration: 750, once: true, easing: 'ease-out-cubic', offset: 60 });
           }
@@ -2882,7 +3073,62 @@
             el.setAttribute('data-aos-delay', String(i * 80));
           });
           if (typeof AOS !== 'undefined') AOS.refreshHard();
-        }, 100);
+        }
+
+        function finishIntro (skipAnimation) {
+          if (openTimer)  clearTimeout(openTimer);
+          if (cleanupTimer) clearTimeout(cleanupTimer);
+          if (aosTimer)   clearTimeout(aosTimer);
+
+          if (left)  left.classList.add('open');
+          if (right) right.classList.add('open');
+          document.body.classList.add('ready');
+
+          window.setTimeout(function () {
+            if (intro) intro.style.display = 'none';
+            document.body.classList.remove('intro-active');
+          }, skipAnimation ? 50 : 700);
+
+          window.setTimeout(initAOS, 100);
+        }
+
+        function isFromTimeline () {
+          try {
+            var ref = document.referrer || '';
+            if (ref.indexOf('career-timeline.html') !== -1) return true;
+            if (window.sessionStorage && sessionStorage.getItem('skipIntro') === '1') return true;
+          } catch (e) {}
+          return false;
+        }
+
+        if (isFromTimeline()) {
+          finishIntro(true);
+          try { sessionStorage.setItem('skipIntro', '1'); } catch (e) {}
+          return;
+        }
+
+        // Logo shows for about one second, then the curtain opens.
+        openTimer = window.setTimeout(function () {
+          if (left)  left.classList.add('open');
+          if (right) right.classList.add('open');
+          document.body.classList.add('ready'); // hero entrance fires simultaneously
+        }, 1000);
+
+        // Clean up after curtains fully slide off (1000 + 2000 + 300ms buffer)
+        cleanupTimer = window.setTimeout(function () {
+          if (intro) intro.style.display = 'none';
+          document.body.classList.remove('intro-active');
+        }, 3300);
+
+        // AOS
+        aosTimer = window.setTimeout(initAOS, 100);
+
+        // Click / tap anywhere on the intro to skip it
+        if (intro) {
+          intro.addEventListener('click', function () {
+            finishIntro(false);
+          });
+        }
       })();
     </script>
   </body>

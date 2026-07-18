@@ -5,6 +5,12 @@
 .env.test.local
 .env.production.local
 
+# Azure Functions local config (generated locally, do not commit)
+api/host.json
+
+# Local test screenshots
+test-screenshots/
+
 # Dependencies
 node_modules/
 npm-debug.log*

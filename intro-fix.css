@@ -3,7 +3,8 @@
   position: fixed;
   inset: 0;
   z-index: 9998;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 body.intro-active {
@@ -76,4 +77,5 @@ body.intro-active {
 
 body:not(.intro-active) #page-intro {
   display: none;
+  pointer-events: none;
 }

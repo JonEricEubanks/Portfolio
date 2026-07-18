@@ -959,6 +959,11 @@ html {
     justify-content: flex-start;
   }
 
+  /* Mobile nav matches desktop: text-only, no icons */
+  .modern-nav-item .nav-icon {
+    display: none;
+  }
+
   .action-btn .btn-text {
     display: none;
   }
@@ -1030,18 +1035,6 @@ html {
   .action-btn {
     padding: 0.5rem;
     min-width: 34px;
-  }
-}
-    display: none;
-  }
-  
-  .name-short {
-    display: inline;
-  }
-  
-  .portfolio-subtitle {
-    font-size: 0.6rem;
-    line-height: 1.2;
   }
 }
 
@@ -6139,3 +6132,587 @@ body.dashboard-mode .card-award-badge svg {
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   Award Cabinet — canonical case studies for the three global wins
+   ========================================================================== */
+#awards,
+.award-case {
+  scroll-margin-top: 96px;
+}
+
+.award-case {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto 1.75rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  border-left: 4px solid var(--primary-color);
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.86) 0%, rgba(236, 253, 245, 0.9) 46%, rgba(224, 242, 254, 0.82) 100%);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-lg);
+}
+
+.award-case::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 92% 8%, rgba(20, 184, 166, 0.12), transparent 34%),
+              radial-gradient(circle at 4% 96%, rgba(8, 145, 178, 0.08), transparent 30%);
+}
+
+/* ---- Theme variations ---- */
+.award-case--iq {
+  border-color: rgba(79, 70, 229, 0.18);
+  border-left-color: #4f46e5;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.88) 0%, rgba(238, 242, 255, 0.9) 46%, rgba(245, 243, 255, 0.84) 100%);
+}
+
+.award-case--iq::before {
+  background: radial-gradient(circle at 90% 10%, rgba(99, 102, 241, 0.14), transparent 34%),
+              radial-gradient(circle at 6% 94%, rgba(139, 92, 246, 0.1), transparent 30%);
+}
+
+.award-case--lens {
+  border-color: rgba(217, 119, 6, 0.18);
+  border-left-color: #d97706;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 251, 235, 0.9) 46%, rgba(255, 243, 230, 0.84) 100%);
+}
+
+.award-case--lens::before {
+  background: radial-gradient(circle at 90% 10%, rgba(245, 158, 11, 0.14), transparent 34%),
+              radial-gradient(circle at 6% 94%, rgba(249, 115, 22, 0.1), transparent 30%);
+}
+
+.award-case--elm {
+  border-color: rgba(15, 118, 110, 0.14);
+  border-left-color: var(--primary-color);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.86) 0%, rgba(236, 253, 245, 0.9) 46%, rgba(224, 242, 254, 0.82) 100%);
+}
+
+/* Theme-specific medals */
+.award-case--iq .award-medal {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(139, 92, 246, 0.22));
+  border-color: rgba(99, 102, 241, 0.38);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.18);
+  color: #4f46e5;
+}
+
+.award-case--lens .award-medal {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(249, 115, 22, 0.24));
+  border-color: rgba(217, 119, 6, 0.42);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.2);
+  color: #d97706;
+}
+
+.award-case--elm .award-medal {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(20, 184, 166, 0.22));
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.18);
+  color: #059669;
+}
+
+.award-medal svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Theme-specific labels & chips */
+.award-case--iq .award-step-label { color: #4f46e5; }
+.award-case--lens .award-step-label { color: #d97706; }
+.award-case--elm .award-step-label { color: var(--primary-color); }
+
+.award-case--iq .award-case-links a { color: #4f46e5; }
+.award-case--lens .award-case-links a { color: #d97706; }
+.award-case--elm .award-case-links a { color: var(--primary-color); }
+
+.award-case--iq .award-case-links a:hover,
+.award-case--iq .award-case-links a:focus-visible { color: #6366f1; }
+
+.award-case--lens .award-case-links a:hover,
+.award-case--lens .award-case-links a:focus-visible { color: #f59e0b; }
+
+.award-case--elm .award-case-links a:hover,
+.award-case--elm .award-case-links a:focus-visible { color: var(--primary-light); }
+
+/* App preview thumbnail sits in the header, never over content */
+.award-case-thumb {
+  position: relative;
+  width: clamp(64px, 7.5vw, 108px);
+  height: clamp(64px, 7.5vw, 108px);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-md);
+  opacity: 0.95;
+  flex-shrink: 0;
+}
+
+.award-case-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.award-case-head .award-case-thumb {
+  margin-left: 0.5rem;
+}
+
+/* Head */
+.award-case-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Toggle is for mobile accordion only */
+.award-toggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .award-case-head {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.9rem;
+  }
+  .award-case-head .award-case-thumb {
+    grid-column: 1 / -1;
+    justify-self: start;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin: 0;
+  }
+}
+
+.award-medal {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  font-size: 1.55rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(251, 191, 36, 0.22));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.16);
+}
+
+.award-case-title {
+  flex: 1 1 240px;
+  min-width: 0;
+  text-align: left;
+}
+
+.award-case-title h3 {
+  margin: 0;
+  color: var(--gray-900);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  line-height: 1.15;
+  text-align: left;
+}
+
+.award-case-sub {
+  margin: 0.3rem 0 0;
+  color: var(--gray-600);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.award-case-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.award-case-chips span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 12px;
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--primary-color);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* Case-study strip: Problem → Build → Why → Outcome → Stack */
+.award-case-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(150px, 0.75fr);
+  border-top: 1px solid rgba(15, 118, 110, 0.14);
+}
+
+.award-step {
+  padding: 1.1rem 1.2rem 0.4rem 0;
+  border-left: 1px solid rgba(15, 118, 110, 0.12);
+  padding-left: 1.2rem;
+}
+
+.award-step:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.award-step-label {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: var(--primary-color);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.award-step p {
+  margin: 0;
+  color: var(--gray-700);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.award-stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.award-stack-chips span {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--gray-700);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Links */
+.award-case-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(15, 118, 110, 0.12);
+}
+
+.award-case-links a {
+  color: var(--primary-color);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.award-case-links a:hover,
+.award-case-links a:focus-visible {
+  text-decoration: underline;
+  color: var(--primary-light);
+}
+
+/* Hero slide → cabinet link */
+.hero-award-case-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--primary-color);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(15, 118, 110, 0.35);
+  padding-bottom: 1px;
+}
+
+.hero-award-case-link:hover,
+.hero-award-case-link:focus-visible {
+  color: var(--primary-light);
+  border-bottom-color: currentColor;
+}
+
+/* Spotlight / dark mode */
+body.dashboard-mode .award-case {
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.92) 0%, rgba(19, 78, 74, 0.4) 46%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(45, 212, 191, 0.22);
+  border-left-color: #2dd4bf;
+}
+
+/* Mobile polish: tighter spacing + hidden scrollbars */
+@media (max-width: 768px) {
+  html, body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero-section {
+    padding: var(--space-6) var(--space-4) var(--space-4) !important;
+  }
+
+  .build-signal-section {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .build-signal-inner {
+    min-height: 58px;
+    padding: 0 14px;
+  }
+
+  .featured-build-section {
+    padding: var(--space-6) var(--space-4) var(--space-6);
+  }
+
+  .portfolio-section {
+    padding: var(--space-6) var(--space-4) !important;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-6) !important;
+  }
+}
+
+body.dashboard-mode .award-case--iq {
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.94) 0%, rgba(49, 46, 129, 0.45) 46%, rgba(15, 23, 42, 0.92) 100%);
+  border-color: rgba(129, 140, 248, 0.24);
+  border-left-color: #818cf8;
+}
+
+body.dashboard-mode .award-case--lens {
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.94) 0%, rgba(120, 53, 15, 0.42) 46%, rgba(15, 23, 42, 0.92) 100%);
+  border-color: rgba(251, 191, 36, 0.22);
+  border-left-color: #fbbf24;
+}
+
+body.dashboard-mode .award-case--elm {
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.92) 0%, rgba(19, 78, 74, 0.4) 46%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(45, 212, 191, 0.22);
+  border-left-color: #2dd4bf;
+}
+
+body.dashboard-mode .award-case-title h3 { color: #f1f5f9; }
+body.dashboard-mode .award-case-sub { color: #94a3b8; }
+body.dashboard-mode .award-step p { color: #cbd5e1; }
+body.dashboard-mode .award-step-label { color: #2dd4bf; }
+body.dashboard-mode .award-case--iq .award-step-label { color: #a5b4fc; }
+body.dashboard-mode .award-case--lens .award-step-label { color: #fcd34d; }
+body.dashboard-mode .award-case--elm .award-step-label { color: #2dd4bf; }
+
+body.dashboard-mode .award-case-chips span,
+body.dashboard-mode .award-stack-chips span {
+  background: rgba(45, 212, 191, 0.1);
+  border-color: rgba(45, 212, 191, 0.3);
+  color: #5eead4;
+}
+
+body.dashboard-mode .award-case--iq .award-case-chips span,
+body.dashboard-mode .award-case--iq .award-stack-chips span {
+  background: rgba(129, 140, 248, 0.12);
+  border-color: rgba(129, 140, 248, 0.32);
+  color: #c7d2fe;
+}
+
+body.dashboard-mode .award-case--lens .award-case-chips span,
+body.dashboard-mode .award-case--lens .award-stack-chips span {
+  background: rgba(251, 191, 36, 0.11);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #fde68a;
+}
+
+body.dashboard-mode .award-case-links a { color: #2dd4bf; }
+body.dashboard-mode .award-case--iq .award-case-links a { color: #a5b4fc; }
+body.dashboard-mode .award-case--lens .award-case-links a { color: #fcd34d; }
+body.dashboard-mode .award-case--elm .award-case-links a { color: #2dd4bf; }
+
+body.dashboard-mode .award-case-grid,
+body.dashboard-mode .award-step,
+body.dashboard-mode .award-case-links {
+  border-color: rgba(45, 212, 191, 0.16);
+}
+body.dashboard-mode .award-case--iq .award-step,
+body.dashboard-mode .award-case--iq .award-case-links,
+body.dashboard-mode .award-case--iq .award-case-grid {
+  border-color: rgba(129, 140, 248, 0.18);
+}
+body.dashboard-mode .award-case--lens .award-step,
+body.dashboard-mode .award-case--lens .award-case-links,
+body.dashboard-mode .award-case--lens .award-case-grid {
+  border-color: rgba(251, 191, 36, 0.16);
+}
+
+body.dashboard-mode .award-toggle {
+  background: rgba(15, 23, 42, 0.7);
+  color: #2dd4bf;
+  border-color: rgba(45, 212, 191, 0.25);
+}
+
+body.dashboard-mode .award-case--iq .award-toggle {
+  color: #a5b4fc;
+  border-color: rgba(129, 140, 248, 0.28);
+}
+
+body.dashboard-mode .award-case--lens .award-toggle {
+  color: #fcd34d;
+  border-color: rgba(251, 191, 36, 0.28);
+}
+
+body.dashboard-mode .award-toggle:hover,
+body.dashboard-mode .award-toggle:focus-visible {
+  background: rgba(15, 23, 42, 0.92);
+}
+
+/* Responsive: 2-up under 1100px, stacked under 680px */
+@media (max-width: 1100px) {
+  .award-case-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .award-step {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid rgba(15, 118, 110, 0.1);
+    padding-top: 1rem;
+  }
+  .award-step:first-child,
+  .award-step:nth-child(2) {
+    border-top: none;
+  }
+  .award-case-grid {
+    border-top: 1px solid rgba(15, 118, 110, 0.14);
+    padding-top: 0.4rem;
+  }
+  .award-case--iq .award-step,
+  .award-case--iq .award-case-grid { border-color: rgba(79, 70, 229, 0.12); }
+  .award-case--lens .award-step,
+  .award-case--lens .award-case-grid { border-color: rgba(217, 119, 6, 0.12); }
+}
+
+@media (max-width: 680px) {
+  .award-case {
+    padding: clamp(1.1rem, 5vw, 1.5rem);
+    border-radius: var(--radius-xl);
+  }
+  .award-case-head {
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+  }
+  .award-case-head .award-case-thumb {
+    grid-column: 1 / -1;
+    justify-self: start;
+    width: 100%;
+    max-width: none;
+    height: clamp(140px, 38vw, 200px);
+    margin: 0.2rem 0 0.2rem;
+    transform: none;
+    border-radius: var(--radius-lg);
+  }
+  .award-case-chips {
+    grid-column: 1 / -1;
+    margin-left: 0;
+  }
+  .award-case-chips span {
+    white-space: normal;
+  }
+
+  /* Mobile accordion: collapse case details */
+  .award-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    margin: 0.6rem 0 0;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid rgba(15, 118, 110, 0.16);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .award-case--iq .award-toggle {
+    color: #4f46e5;
+    border-color: rgba(79, 70, 229, 0.18);
+  }
+
+  .award-case--lens .award-toggle {
+    color: #d97706;
+    border-color: rgba(217, 119, 6, 0.18);
+  }
+
+  .award-toggle:hover,
+  .award-toggle:focus-visible {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .award-toggle-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .award-toggle[aria-expanded="true"] .award-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  .award-case-grid {
+    display: grid;
+    grid-template-rows: repeat(5, 0fr);
+    transition: grid-template-rows 0.35s ease;
+  }
+
+  .award-case-grid > .award-step {
+    overflow: hidden;
+  }
+
+  .award-toggle[aria-expanded="true"] + .award-case-grid,
+  .award-case-grid:target {
+    grid-template-rows: repeat(5, 1fr);
+  }
+
+  .award-case-grid {
+    grid-template-columns: 1fr;
+  }
+  .award-step {
+    padding: 0 0 0 1.2rem;
+  }
+  .award-step:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+  .award-step-label {
+    padding-top: 1.1rem;
+  }
+  .award-step p {
+    padding-bottom: 0.4rem;
+  }
+  .award-step:nth-child(2) {
+    border-top: 1px solid rgba(15, 118, 110, 0.1);
+  }
+  .award-case--iq .award-step:nth-child(2) { border-color: rgba(79, 70, 229, 0.12); }
+  .award-case--lens .award-step:nth-child(2) { border-color: rgba(217, 119, 6, 0.12); }
+}
+
