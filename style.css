@@ -103,15 +103,38 @@
   margin-top: var(--space-8);
 }
 .tech-group {
+  --tg-accent: var(--primary-color);
+  --tg-accent-soft: rgba(15, 118, 110, 0.08);
+  position: relative;
+  overflow: hidden;
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.tech-group.azure { --tg-accent: #0078D4; --tg-accent-soft: rgba(0, 120, 212, 0.08); }
+.tech-group.power { --tg-accent: #742774; --tg-accent-soft: rgba(116, 39, 116, 0.08); }
+.tech-group.dev   { --tg-accent: #CA8A04; --tg-accent-soft: rgba(202, 138, 4, 0.09); }
+.tech-group.gis   { --tg-accent: #2C7BB6; --tg-accent-soft: rgba(44, 123, 182, 0.09); }
+.tech-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--tg-accent) 0%, transparent 85%);
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
 }
 .tech-group:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-3px);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+.tech-group:hover::before {
+  opacity: 1;
 }
 .tech-group-title {
   display: flex;
@@ -123,17 +146,28 @@
   letter-spacing: 0.08em;
   color: var(--gray-600);
   margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--gray-100);
+}
+.tech-group-count {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--tg-accent);
+  background: var(--tg-accent-soft);
+  padding: 2px 9px;
+  border-radius: 999px;
+  line-height: 1.5;
 }
 .tech-group-dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
+  background: var(--tg-accent);
+  box-shadow: 0 0 0 3px var(--tg-accent-soft);
 }
-.tech-group-dot.azure  { background: #0078D4; }
-.tech-group-dot.power  { background: #742774; }
-.tech-group-dot.dev    { background: #F7DF1E; border: 1px solid #ccc; }
-.tech-group-dot.gis    { background: #2C7BB6; }
 .tech-pills {
   display: flex;
   flex-wrap: wrap;
@@ -146,7 +180,7 @@
   background: var(--gray-50);
   border: 1px solid var(--gray-200);
   border-radius: 20px;
-  padding: 4px 12px;
+  padding: 5px 12px;
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--gray-700);
@@ -154,9 +188,11 @@
   white-space: nowrap;
 }
 .tech-pill:hover {
-  background: rgba(15, 118, 110, 0.07);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  background: var(--tg-accent-soft);
+  border-color: var(--tg-accent);
+  color: var(--tg-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
 }
 /* Logo image / inline SVG inside pill */
 .pill-logo {
