@@ -1,527 +1,1621 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Career Journey — JonEric Eubanks</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --teal: #0F766E; --teal-l: #2DD4BF;
-      --amber: #D97706; --amber-l: #FEF3C7;
-      --indigo: #4F46E5; --indigo-l: #EEF2FF;
-      --purple: #7C3AED; --purple-l: #F5F3FF;
-      --dark: #090e1b; --gray: #374151; --muted: #6B7280;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: #fff; color: var(--gray); -webkit-font-smoothing: antialiased; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Career Journey — JonEric Eubanks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --teal: #0f766e;
+        --teal-l: #2dd4bf;
+        --amber: #d97706;
+        --amber-l: #fef3c7;
+        --indigo: #4f46e5;
+        --indigo-l: #eef2ff;
+        --purple: #7c3aed;
+        --purple-l: #f5f3ff;
+        --dark: #090e1b;
+        --gray: #374151;
+        --muted: #6b7280;
+      }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #fff;
+        color: var(--gray);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
 
-    /* PROGRESS BAR */
-    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--teal), var(--teal-l)); width: 0%; z-index: 999; transition: width .05s linear; border-radius: 0 2px 2px 0; }
+      /* PROGRESS BAR */
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--teal), var(--teal-l));
+        width: 0%;
+        z-index: 999;
+        transition: width 0.05s linear;
+        border-radius: 0 2px 2px 0;
+      }
 
-    /* HEADER */
-    .hdr { position: sticky; top: 0; z-index: 200; background: rgba(9,14,27,.96); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 2rem; height: 58px; display: flex; align-items: center; justify-content: space-between; }
-    .hdr-back { display: flex; align-items: center; gap: .4rem; color: rgba(255,255,255,.65); text-decoration: none; font-size: .82rem; font-weight: 500; transition: color .2s; }
-    .hdr-back:hover { color: var(--teal-l); }
-    .hdr-logo { font-size: .9rem; font-weight: 700; color: #fff; }
-    .hdr-pill { display: flex; align-items: center; gap: .35rem; background: rgba(45,212,191,.1); border: 1px solid rgba(45,212,191,.25); color: var(--teal-l); padding: .25rem .75rem; border-radius: 99px; font-size: .68rem; font-weight: 700; }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-l); animation: blink 2s infinite; }
-    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.35} }
+      /* HEADER */
+      .hdr {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-bottom: 1px solid rgba(15, 118, 110, 0.14);
+        padding: 0 2rem;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .hdr-back {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: #475569;
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .hdr-back:hover {
+        color: var(--teal);
+      }
+      .hdr-logo {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .hdr-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: rgba(15, 118, 110, 0.08);
+        border: 1px solid rgba(15, 118, 110, 0.25);
+        color: var(--teal);
+        padding: 0.25rem 0.75rem;
+        border-radius: 99px;
+        font-size: 0.68rem;
+        font-weight: 700;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--teal);
+        animation: blink 2s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
 
-    /* HERO */
-    .hero { background: linear-gradient(160deg, #090e1b 0%, #0a2020 55%, #090e1b 100%); position: relative; overflow: hidden; padding: 5.5rem 2rem 4.5rem; }
-    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(45,212,191,.04) 1px,transparent 1px), linear-gradient(90deg,rgba(45,212,191,.04) 1px,transparent 1px); background-size: 40px 40px; }
-    .hero::after { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(13,148,136,.18) 0%, transparent 70%); pointer-events: none; }
-    .hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 210px; gap: 3rem; align-items: center; position: relative; z-index: 1; }
-    .hero-status { display: inline-flex; align-items: center; gap: .45rem; background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.3); color: #6EE7B7; padding: .3rem .9rem; border-radius: 99px; font-size: .68rem; font-weight: 700; letter-spacing: .04em; margin-bottom: .9rem; }
-    .hero-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #34D399; animation: blink 1.5s infinite; }
-    .hero-eyebrow { display: block; color: var(--teal-l); font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .9rem; }
-    .hero-h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 900; color: #fff; line-height: 1.06; letter-spacing: -.04em; margin-bottom: 1.1rem; }
-    .acc { background: linear-gradient(120deg, var(--teal-l), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-sub { color: rgba(255,255,255,.5); font-size: .96rem; line-height: 1.75; max-width: 460px; margin-bottom: 2rem; }
-    .stats { display: flex; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; overflow: hidden; max-width: 460px; }
-    .stat { flex: 1; padding: 1rem; text-align: center; border-right: 1px solid rgba(255,255,255,.07); }
-    .stat:last-child { border-right: none; }
-    .stat-n { font-size: 1.55rem; font-weight: 800; color: #fff; letter-spacing: -.04em; line-height: 1; display: block; }
-    .stat-l { font-size: .57rem; color: rgba(255,255,255,.38); font-weight: 500; margin-top: .28rem; text-transform: uppercase; letter-spacing: .07em; }
-    .profile { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 18px; overflow: hidden; text-align: center; }
-    .profile img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; display: block; }
-    .profile-info { padding: .9rem; }
-    .profile-name { font-size: .84rem; font-weight: 700; color: #fff; margin-bottom: .25rem; }
-    .profile-role { font-size: .65rem; color: var(--teal-l); font-weight: 500; }
+      /* HERO */
+      .hero {
+        background: linear-gradient(
+          160deg,
+          rgba(255, 255, 255, 0.92) 0%,
+          rgba(236, 253, 245, 0.9) 55%,
+          rgba(224, 242, 254, 0.86) 100%
+        );
+        border-bottom: 1px solid rgba(15, 118, 110, 0.14);
+        position: relative;
+        overflow: hidden;
+        padding: 5.5rem 2rem 4.5rem;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(15, 118, 110, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(15, 118, 110, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 400px;
+        background: radial-gradient(
+          ellipse,
+          rgba(20, 184, 166, 0.14) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 210px;
+        gap: 3rem;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: #ecfdf5;
+        border: 1px solid #6ee7b7;
+        color: #059669;
+        padding: 0.3rem 0.9rem;
+        border-radius: 99px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.9rem;
+      }
+      .hero-status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #10b981;
+        animation: blink 1.5s infinite;
+      }
+      .hero-eyebrow {
+        display: block;
+        color: var(--teal);
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 0.9rem;
+      }
+      .hero-h1 {
+        font-size: clamp(2.4rem, 5vw, 3.8rem);
+        font-weight: 900;
+        color: #0f172a;
+        line-height: 1.06;
+        letter-spacing: -0.04em;
+        margin-bottom: 1.1rem;
+      }
+      .acc {
+        background: linear-gradient(120deg, var(--teal), #0891b2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero-sub {
+        color: #475569;
+        font-size: 0.96rem;
+        line-height: 1.75;
+        max-width: 460px;
+        margin-bottom: 2rem;
+      }
+      .stats {
+        display: flex;
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(15, 118, 110, 0.2);
+        border-radius: 14px;
+        overflow: hidden;
+        max-width: 460px;
+        box-shadow: 0 14px 34px rgba(15, 118, 110, 0.09);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        position: relative;
+        z-index: 1;
+      }
+      .stat {
+        flex: 1;
+        padding: 1rem;
+        text-align: center;
+        border-right: 1px solid rgba(15, 118, 110, 0.12);
+      }
+      .stat:last-child {
+        border-right: none;
+      }
+      .stat-n {
+        font-size: 1.55rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        display: block;
+      }
+      .stat-l {
+        font-size: 0.57rem;
+        color: #64748b;
+        font-weight: 500;
+        margin-top: 0.28rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+      .profile {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(15, 118, 110, 0.18);
+        border-radius: 18px;
+        overflow: hidden;
+        text-align: center;
+        box-shadow: 0 14px 34px rgba(15, 118, 110, 0.09);
+        position: relative;
+        z-index: 1;
+      }
+      .profile img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+      }
+      .profile-info {
+        padding: 0.9rem;
+      }
+      .profile-name {
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.25rem;
+      }
+      .profile-role {
+        font-size: 0.65rem;
+        color: var(--teal);
+        font-weight: 500;
+      }
 
-    /* PHASE NAV */
-    .phase-nav { background: #fff; border-bottom: 1px solid #E5E7EB; padding: .6rem 2rem; display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; position: sticky; top: 58px; z-index: 150; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
-    .phase-btn { background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; padding: .38rem 1rem; font-family: inherit; font-size: .75rem; font-weight: 600; color: #374151; cursor: pointer; transition: all .2s; }
-    .phase-btn:hover { border-color: var(--teal); color: var(--teal); background: #F0FDF9; }
-    .phase-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+      /* PHASE NAV */
+      .phase-nav {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0.6rem 2rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: sticky;
+        top: 58px;
+        z-index: 150;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+      }
+      .phase-btn {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 0.38rem 1rem;
+        font-family: inherit;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .phase-btn:hover {
+        border-color: var(--teal);
+        color: var(--teal);
+        background: #f0fdf9;
+      }
+      .phase-btn.active {
+        background: var(--teal);
+        color: #fff;
+        border-color: var(--teal);
+      }
 
-    /* TIMELINE */
-    .tl-section { background: #fff; padding: 0 1.5rem 5rem; }
-    .tl-head { text-align: center; padding: 4rem 0 3rem; }
-    .tl-eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); margin-bottom: .4rem; }
-    .tl-heading { font-size: 1.85rem; font-weight: 800; color: #111827; letter-spacing: -.03em; }
+      /* TIMELINE */
+      .tl-section {
+        background: #fff;
+        padding: 0 1.5rem 5rem;
+      }
+      .tl-head {
+        text-align: center;
+        padding: 4rem 0 3rem;
+      }
+      .tl-eyebrow {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--teal);
+        margin-bottom: 0.4rem;
+      }
+      .tl-heading {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: #111827;
+        letter-spacing: -0.03em;
+      }
 
-    /* Phase section divider */
-    .phase-section { background: linear-gradient(135deg, #0a1628 0%, #0d2520 100%); margin: 0 -1.5rem; padding: 2rem 2.5rem; display: flex; align-items: center; gap: 1.8rem; position: relative; overflow: hidden; border-left: 4px solid var(--teal); }
-    .phase-section::before { content: ''; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(45,212,191,.07) 0%, transparent 70%); }
-    .phase-section::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--teal), transparent); }
-    .phase-num { font-size: 4rem; font-weight: 900; color: rgba(45,212,191,.18); letter-spacing: -.1em; line-height: 1; flex-shrink: 0; font-variant-numeric: tabular-nums; }
-    .phase-text { flex: 1; }
-    .phase-title { font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -.02em; margin-bottom: .3rem; }
-    .phase-subtitle { font-size: .78rem; color: rgba(255,255,255,.48); line-height: 1.55; max-width: 480px; }
-    .phase-badge { flex-shrink: 0; background: rgba(45,212,191,.12); border: 1px solid rgba(45,212,191,.28); color: var(--teal-l); padding: .35rem 1rem; border-radius: 8px; font-size: .7rem; font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
+      /* Phase section divider */
+      .phase-section {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.72) 0%,
+          rgba(236, 253, 245, 0.9) 42%,
+          rgba(224, 242, 254, 0.86) 100%
+        );
+        border-top: 1px solid rgba(15, 118, 110, 0.12);
+        border-bottom: 1px solid rgba(15, 118, 110, 0.16);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        width: 100vw;
+        margin: 1.5rem calc(50% - 50vw) 3rem;
+        padding: 2rem max(2.5rem, calc(50vw - 430px));
+        display: flex;
+        align-items: center;
+        gap: 1.8rem;
+        position: relative;
+        overflow: hidden;
+        border-left: 4px solid var(--teal);
+      }
+      .phase-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            circle at 88% 50%,
+            rgba(20, 184, 166, 0.14),
+            transparent 40%
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(15, 118, 110, 0.055) 0 1px,
+            transparent 1px 92px
+          );
+      }
+      .phase-section::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, var(--teal), transparent);
+      }
+      .phase-num {
+        font-size: 4rem;
+        font-weight: 900;
+        color: rgba(15, 118, 110, 0.16);
+        letter-spacing: -0.1em;
+        line-height: 1;
+        flex-shrink: 0;
+        font-variant-numeric: tabular-nums;
+      }
+      .phase-text {
+        flex: 1;
+      }
+      .phase-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.3rem;
+      }
+      .phase-subtitle {
+        font-size: 0.78rem;
+        color: #475569;
+        line-height: 1.55;
+        max-width: 480px;
+      }
+      .phase-badge {
+        flex-shrink: 0;
+        background: rgba(15, 118, 110, 0.08);
+        border: 1px solid rgba(15, 118, 110, 0.25);
+        color: var(--teal);
+        padding: 0.35rem 1rem;
+        border-radius: 8px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
 
-    .timeline { position: relative; max-width: 860px; margin: 0 auto; }
-    .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 3px; background: linear-gradient(to bottom, #E5E7EB 0%, var(--teal) 8%, var(--teal-l) 100%); border-radius: 2px; }
+      .timeline {
+        position: relative;
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        background: linear-gradient(
+          to bottom,
+          #e5e7eb 0%,
+          var(--teal) 8%,
+          var(--teal-l) 100%
+        );
+        border-radius: 2px;
+      }
 
-    .tl-item { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0 3.5rem; margin-bottom: 2.5rem; align-items: start; opacity: 0; transform: translateY(20px); transition: opacity .5s, transform .5s; }
-    .tl-item.vis { opacity: 1; transform: none; }
-    .tl-item:last-child { margin-bottom: 0; }
+      .tl-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 3.5rem;
+        margin-bottom: 2.5rem;
+        align-items: start;
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.5s,
+          transform 0.5s;
+      }
+      .tl-item.vis {
+        opacity: 1;
+        transform: none;
+      }
+      .tl-item:last-child {
+        margin-bottom: 0;
+      }
 
-    /* Year badge */
-    .tl-item::before { content: attr(data-year); position: absolute; left: 50%; top: 18px; transform: translateX(-50%); background: var(--teal); color: #fff; font-size: .6rem; font-weight: 800; letter-spacing: .04em; padding: .22rem .58rem; border-radius: 99px; border: 3px solid #fff; box-shadow: 0 0 0 2px var(--teal), 0 4px 12px rgba(15,118,110,.3); z-index: 2; white-space: nowrap; }
+      /* Year badge */
+      .tl-item::before {
+        content: attr(data-year);
+        position: absolute;
+        left: 50%;
+        top: 18px;
+        transform: translateX(-50%);
+        background: var(--teal);
+        color: #fff;
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        padding: 0.22rem 0.58rem;
+        border-radius: 99px;
+        border: 3px solid #fff;
+        box-shadow:
+          0 0 0 2px var(--teal),
+          0 4px 12px rgba(15, 118, 110, 0.3);
+        z-index: 2;
+        white-space: nowrap;
+      }
 
-    .tl-item.tl-l .tl-card { grid-column: 1; grid-row: 1; }
-    .tl-item.tl-l .tl-void { grid-column: 2; grid-row: 1; }
-    .tl-item.tl-r .tl-void { grid-column: 1; grid-row: 1; }
-    .tl-item.tl-r .tl-card { grid-column: 2; grid-row: 1; }
+      .tl-item.tl-l .tl-card {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .tl-item.tl-l .tl-void {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      .tl-item.tl-r .tl-void {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .tl-item.tl-r .tl-card {
+        grid-column: 2;
+        grid-row: 1;
+      }
 
-    /* Connector dots */
-    .tl-item.tl-l .tl-card::after { content: ''; position: absolute; top: 20px; right: -1.82rem; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--teal); }
-    .tl-item.tl-r .tl-card::after { content: ''; position: absolute; top: 20px; left: -1.82rem; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--teal); }
+      /* Connector dots */
+      .tl-item.tl-l .tl-card::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: -1.82rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--teal);
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 1px var(--teal);
+      }
+      .tl-item.tl-r .tl-card::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: -1.82rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--teal);
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 1px var(--teal);
+      }
 
-    /* Base card */
-    .tl-card { position: relative; background: #fff; border: 1px solid #E5E7EB; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.06); transition: transform .25s, box-shadow .25s; border-left-width: 3px; border-left-style: solid; border-left-color: #D1D5DB; }
-    .tl-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+      /* Base card */
+      .tl-card {
+        position: relative;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s;
+        border-left-width: 3px;
+        border-left-style: solid;
+        border-left-color: #d1d5db;
+      }
+      .tl-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      }
 
-    /* Card type color codes */
-    .bc-teal   { border-left-color: var(--teal) !important; }
-    .bc-cert   { border-left-color: var(--indigo) !important; }
-    .bc-award  { border-left-color: var(--amber) !important; }
-    .bc-launch { border-left-color: var(--purple) !important; }
-    .bc-gray   { border-left-color: #9CA3AF !important; }
+      /* Card type color codes */
+      .bc-teal {
+        border-left-color: var(--teal) !important;
+      }
+      .bc-cert {
+        border-left-color: var(--indigo) !important;
+      }
+      .bc-award {
+        border-left-color: var(--amber) !important;
+      }
+      .bc-launch {
+        border-left-color: var(--purple) !important;
+      }
+      .bc-gray {
+        border-left-color: #9ca3af !important;
+      }
 
-    /* Award card gold banner */
-    .tl-card.bc-award .tl-award-banner { background: linear-gradient(135deg, #78350F, #B45309); padding: .5rem 1.1rem; display: flex; align-items: center; gap: .6rem; border-bottom: 1px solid rgba(251,191,36,.2); }
-    .tl-award-banner-star { display: inline-block; width: 14px; height: 14px; flex-shrink: 0; }
-    .tl-award-banner-txt { font-size: .62rem; font-weight: 800; color: #FDE68A; letter-spacing: .07em; text-transform: uppercase; }
+      /* Award card gold banner */
+      .tl-card.bc-award .tl-award-banner {
+        background: linear-gradient(135deg, #78350f, #b45309);
+        padding: 0.5rem 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+      }
+      .tl-award-banner-star {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
+      .tl-award-banner-txt {
+        font-size: 0.62rem;
+        font-weight: 800;
+        color: #fde68a;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
 
-    .tl-card-img { width: 100%; height: 155px; object-fit: cover; display: block; background: #F0FDF9; }
-    .tl-card-body { padding: 1rem 1.1rem 1.1rem; }
-    .tl-card-noimg .tl-card-body { padding: 1.25rem 1.1rem; }
-    .tl-bgyear { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: .45rem; letter-spacing: -.08em; }
-    .bc-gray .tl-bgyear   { color: rgba(156,163,175,.25); }
-    .bc-teal .tl-bgyear   { color: rgba(15,118,110,.1); }
-    .bc-cert .tl-bgyear   { color: rgba(79,70,229,.1); }
-    .bc-award .tl-bgyear  { color: rgba(217,119,6,.12); }
-    .bc-launch .tl-bgyear { color: rgba(124,58,237,.1); }
+      .tl-card-img {
+        width: 100%;
+        height: 155px;
+        object-fit: cover;
+        display: block;
+        background: #f0fdf9;
+      }
+      .tl-card-body {
+        padding: 1rem 1.1rem 1.1rem;
+      }
+      .tl-card-noimg .tl-card-body {
+        padding: 1.25rem 1.1rem;
+      }
+      .tl-bgyear {
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 0.45rem;
+        letter-spacing: -0.08em;
+      }
+      .bc-gray .tl-bgyear {
+        color: rgba(156, 163, 175, 0.25);
+      }
+      .bc-teal .tl-bgyear {
+        color: rgba(15, 118, 110, 0.1);
+      }
+      .bc-cert .tl-bgyear {
+        color: rgba(79, 70, 229, 0.1);
+      }
+      .bc-award .tl-bgyear {
+        color: rgba(217, 119, 6, 0.12);
+      }
+      .bc-launch .tl-bgyear {
+        color: rgba(124, 58, 237, 0.1);
+      }
 
-    .tl-tag { display: inline-block; font-size: .58rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .16rem .55rem; border-radius: 99px; margin-bottom: .45rem; }
-    .tag-gray   { color: #6B7280; background: #F3F4F6; }
-    .tag-teal   { color: var(--teal); background: rgba(15,118,110,.08); }
-    .tag-cert   { color: var(--indigo); background: var(--indigo-l); }
-    .tag-award  { color: var(--amber); background: var(--amber-l); }
-    .tag-launch { color: var(--purple); background: var(--purple-l); }
+      .tl-tag {
+        display: inline-block;
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.16rem 0.55rem;
+        border-radius: 99px;
+        margin-bottom: 0.45rem;
+      }
+      .tag-gray {
+        color: #6b7280;
+        background: #f3f4f6;
+      }
+      .tag-teal {
+        color: var(--teal);
+        background: rgba(15, 118, 110, 0.08);
+      }
+      .tag-cert {
+        color: var(--indigo);
+        background: var(--indigo-l);
+      }
+      .tag-award {
+        color: var(--amber);
+        background: var(--amber-l);
+      }
+      .tag-launch {
+        color: var(--purple);
+        background: var(--purple-l);
+      }
 
-    .tl-title { font-size: .92rem; font-weight: 700; color: #111827; line-height: 1.3; margin-bottom: .35rem; }
-    .tl-text { font-size: .76rem; color: #6B7280; line-height: 1.65; margin-bottom: .6rem; }
+      .tl-title {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: #111827;
+        line-height: 1.3;
+        margin-bottom: 0.35rem;
+      }
+      .tl-text {
+        font-size: 0.76rem;
+        color: #6b7280;
+        line-height: 1.65;
+        margin-bottom: 0.6rem;
+      }
 
-    /* KPI stat chips */
-    .card-kpis { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
-    .kpi { display: inline-flex; align-items: center; gap: .3rem; background: #F0FDF9; border: 1px solid #CCFBF1; border-radius: 6px; padding: .2rem .55rem; font-size: .65rem; font-weight: 700; color: var(--teal); }
-    .kpi.kpi-amber { background: #FFFBEB; border-color: #FDE68A; color: #92400E; }
-    .kpi.kpi-purple { background: #F5F3FF; border-color: #DDD6FE; color: #5B21B6; }
+      /* KPI stat chips */
+      .card-kpis {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-top: 0.5rem;
+      }
+      .kpi {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: #f0fdf9;
+        border: 1px solid #ccfbf1;
+        border-radius: 6px;
+        padding: 0.2rem 0.55rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: var(--teal);
+      }
+      .kpi.kpi-amber {
+        background: #fffbeb;
+        border-color: #fde68a;
+        color: #92400e;
+      }
+      .kpi.kpi-purple {
+        background: #f5f3ff;
+        border-color: #ddd6fe;
+        color: #5b21b6;
+      }
 
-    /* Tech pills */
-    .card-tech { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .55rem; padding-top: .55rem; border-top: 1px solid #F3F4F6; }
-    .tech { display: inline-block; background: #F9FAFB; border: 1px solid #E5E7EB; color: #4B5563; padding: .15rem .5rem; border-radius: 5px; font-size: .6rem; font-weight: 600; }
+      /* Tech pills */
+      .card-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 0.55rem;
+        padding-top: 0.55rem;
+        border-top: 1px solid #f3f4f6;
+      }
+      .tech {
+        display: inline-block;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        color: #4b5563;
+        padding: 0.15rem 0.5rem;
+        border-radius: 5px;
+        font-size: 0.6rem;
+        font-weight: 600;
+      }
 
-    /* "Now" active indicator */
-    .now-badge { position: absolute; top: 12px; right: 12px; background: #ECFDF5; border: 1px solid #6EE7B7; color: #059669; padding: .2rem .6rem; border-radius: 99px; font-size: .6rem; font-weight: 700; display: flex; align-items: center; gap: .3rem; z-index: 3; }
-    .now-dot { width: 5px; height: 5px; border-radius: 50%; background: #10B981; animation: blink 1.5s infinite; }
+      /* "Now" active indicator */
+      .now-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #ecfdf5;
+        border: 1px solid #6ee7b7;
+        color: #059669;
+        padding: 0.2rem 0.6rem;
+        border-radius: 99px;
+        font-size: 0.6rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        z-index: 3;
+      }
+      .now-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #10b981;
+        animation: blink 1.5s infinite;
+      }
 
-    /* Awards section */
-    .awards { background: #F0FDF9; padding: 4.5rem 2rem 5.5rem; }
-    .sec-ey { text-align: center; font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); margin-bottom: .4rem; }
-    .sec-ttl { text-align: center; font-size: 1.8rem; font-weight: 800; color: #111827; letter-spacing: -.03em; margin-bottom: 2.5rem; }
-    .awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; max-width: 880px; margin: 0 auto 4rem; }
-    .aw-card { background: #fff; border: 1px solid #E5E7EB; border-top: 3px solid var(--teal); border-radius: 14px; padding: 1.4rem; transition: transform .2s, box-shadow .2s; }
-    .aw-card.gold { border-top-color: var(--amber); }
-    .aw-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(15,118,110,.12); }
-    .aw-yr { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: .45rem; }
-    .aw-name { font-size: 1rem; font-weight: 800; color: #134E4A; margin-bottom: .35rem; line-height: 1.3; }
-    .aw-org { font-size: .74rem; color: #6B7280; line-height: 1.55; }
-    .ms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 1rem; max-width: 880px; margin: 0 auto; }
-    .ms-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1.3rem; text-align: center; }
-    .ms-n { font-size: 1.9rem; font-weight: 900; color: var(--teal); letter-spacing: -.05em; line-height: 1; margin-bottom: .35rem; display: block; }
-    .ms-l { font-size: .72rem; color: #6B7280; font-weight: 500; line-height: 1.4; }
+      /* Awards section */
+      .awards {
+        background: #f0fdf9;
+        padding: 4.5rem 2rem 5.5rem;
+      }
+      .sec-ey {
+        text-align: center;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--teal);
+        margin-bottom: 0.4rem;
+      }
+      .sec-ttl {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #111827;
+        letter-spacing: -0.03em;
+        margin-bottom: 2.5rem;
+      }
+      .awards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+        max-width: 880px;
+        margin: 0 auto 4rem;
+      }
+      .aw-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-top: 3px solid var(--teal);
+        border-radius: 14px;
+        padding: 1.4rem;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .aw-card.gold {
+        border-top-color: var(--amber);
+      }
+      .aw-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(15, 118, 110, 0.12);
+      }
+      .aw-yr {
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--amber);
+        margin-bottom: 0.45rem;
+      }
+      .aw-name {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #134e4a;
+        margin-bottom: 0.35rem;
+        line-height: 1.3;
+      }
+      .aw-org {
+        font-size: 0.74rem;
+        color: #6b7280;
+        line-height: 1.55;
+      }
+      .ms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+        gap: 1rem;
+        max-width: 880px;
+        margin: 0 auto;
+      }
+      .ms-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.3rem;
+        text-align: center;
+      }
+      .ms-n {
+        font-size: 1.9rem;
+        font-weight: 900;
+        color: var(--teal);
+        letter-spacing: -0.05em;
+        line-height: 1;
+        margin-bottom: 0.35rem;
+        display: block;
+      }
+      .ms-l {
+        font-size: 0.72rem;
+        color: #6b7280;
+        font-weight: 500;
+        line-height: 1.4;
+      }
 
-    /* Footer */
-    .footer { background: var(--dark); padding: 2.5rem 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,.06); }
-    .ftr-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: .8rem; }
-    .ftr-link { color: rgba(255,255,255,.42); text-decoration: none; font-size: .8rem; font-weight: 500; transition: color .2s; }
-    .ftr-link:hover { color: var(--teal-l); }
-    .ftr-copy { color: rgba(255,255,255,.2); font-size: .7rem; }
+      /* Footer */
+      .footer {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.72) 0%,
+          rgba(236, 253, 245, 0.9) 42%,
+          rgba(224, 242, 254, 0.86) 100%
+        );
+        padding: 2.5rem 2rem;
+        text-align: center;
+        border-top: 1px solid rgba(15, 118, 110, 0.14);
+      }
+      .ftr-links {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 0.8rem;
+      }
+      .ftr-link {
+        color: #475569;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .ftr-link:hover {
+        color: var(--teal);
+      }
+      .ftr-copy {
+        color: #94a3b8;
+        font-size: 0.7rem;
+      }
 
-    /* Responsive */
-    @media (max-width: 700px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .profile { display: none; }
-      .hero-h1 { font-size: 2.2rem; }
-      .timeline::before { left: 20px; }
-      .tl-item { grid-template-columns: 1fr; padding-left: 50px; }
-      .tl-item::before { left: 20px; top: 14px; transform: none; }
-      .tl-item.tl-l .tl-card, .tl-item.tl-r .tl-card { grid-column: 1; grid-row: 1; }
-      .tl-item.tl-l .tl-void, .tl-item.tl-r .tl-void { display: none; }
-      .tl-item.tl-l .tl-card::after, .tl-item.tl-r .tl-card::after { right: auto; left: -1.65rem; top: 16px; }
-      .hdr-logo { display: none; }
-      .phase-section { padding: 1.5rem 1.25rem; margin: 0 -1.5rem; }
-      .phase-num { font-size: 2.5rem; }
-    }
-  </style>
-</head>
-<body>
+      /* Responsive */
+      @media (max-width: 700px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+        .profile {
+          display: none;
+        }
+        .hero-h1 {
+          font-size: 2.2rem;
+        }
+        .timeline::before {
+          left: 20px;
+        }
+        .tl-item {
+          grid-template-columns: 1fr;
+          padding-left: 50px;
+        }
+        .tl-item::before {
+          left: 20px;
+          top: 14px;
+          transform: none;
+        }
+        .tl-item.tl-l .tl-card,
+        .tl-item.tl-r .tl-card {
+          grid-column: 1;
+          grid-row: 1;
+        }
+        .tl-item.tl-l .tl-void,
+        .tl-item.tl-r .tl-void {
+          display: none;
+        }
+        .tl-item.tl-l .tl-card::after,
+        .tl-item.tl-r .tl-card::after {
+          right: auto;
+          left: -1.65rem;
+          top: 16px;
+        }
+        .hdr-logo {
+          display: none;
+        }
+        .phase-section {
+          padding: 1.5rem 1.25rem;
+        }
+        .phase-num {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="progress-bar"></div>
 
-<div id="progress-bar"></div>
+    <header class="hdr">
+      <a href="index.html" class="hdr-back">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="15"
+          height="15"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          viewBox="0 0 24 24"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+        Back to Portfolio
+      </a>
+      <span class="hdr-logo">JonEric Eubanks</span>
+      <span class="hdr-pill"><span class="dot"></span>2000 – 2026</span>
+    </header>
 
-<header class="hdr">
-  <a href="index.html" class="hdr-back">
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
-    Back to Portfolio
-  </a>
-  <span class="hdr-logo">JonEric Eubanks</span>
-  <span class="hdr-pill"><span class="dot"></span>2000 – 2026</span>
-</header>
-
-<section class="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="hero-status"><span class="hero-status-dot"></span>Open to AI Engineer &amp; Solutions Architect roles</div>
-      <span class="hero-eyebrow">Interactive Career Story</span>
-      <h1 class="hero-h1">From Code<br>to <span class="acc">Award-Winning AI</span></h1>
-      <p class="hero-sub">Two decades building technology that matters — from GIS mapping and municipal dashboards to Microsoft-recognized AI agents across 6+ cities.</p>
-      <div class="stats">
-        <div class="stat"><span class="stat-n" data-target="26">0</span><span class="stat-l">Years</span></div>
-        <div class="stat"><span class="stat-n" data-target="20" data-suffix="+">0</span><span class="stat-l">Certs</span></div>
-        <div class="stat"><span class="stat-n" data-target="3">0</span><span class="stat-l">Awards</span></div>
-        <div class="stat"><span class="stat-n" data-prefix="$" data-target="195" data-suffix="M+">0</span><span class="stat-l">Tracked</span></div>
-      </div>
-    </div>
-    <div class="profile">
-      <img src="https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg" alt="JonEric Eubanks" />
-      <div class="profile-info">
-        <div class="profile-name">JonEric Eubanks, PMP</div>
-        <div class="profile-role">Microsoft Developer &amp; AI Engineer</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<nav class="phase-nav">
-  <button class="phase-btn active" onclick="goPhase('phase-1',this)">Foundation 2000–2021</button>
-  <button class="phase-btn" onclick="goPhase('phase-2',this)">Builder 2021–2024</button>
-  <button class="phase-btn" onclick="goPhase('phase-3',this)">AI Era 2024–2026</button>
-</nav>
-
-<section class="tl-section">
-  <div class="tl-head">
-    <p class="tl-eyebrow">15 milestones &middot; 2000 – 2026</p>
-    <h2 class="tl-heading">The Journey</h2>
-  </div>
-  <div class="timeline">
-
-    <!-- PHASE 1 -->
-    <div class="phase-section" id="phase-1">
-      <div class="phase-num">01</div>
-      <div class="phase-text">
-        <div class="phase-title">Foundation Era</div>
-        <div class="phase-subtitle">GIS roots, certifications, public-sector entry — the groundwork for everything that followed.</div>
-      </div>
-      <span class="phase-badge">2000 – 2021</span>
-    </div>
-
-    <div class="tl-item tl-l" data-year="2000">
-      <div class="tl-card bc-gray tl-card-noimg"><div class="tl-card-body">
-        <div class="tl-bgyear">2000</div>
-        <span class="tl-tag tag-gray">Origins</span>
-        <div class="tl-title">Beginnings in Technology</div>
-        <div class="tl-text">Grew up exploring computers and early programming — developing the curiosity and problem-solving instincts that drive every solution built today.</div>
-      </div></div>
-      <div class="tl-void"></div>
-    </div>
-
-    <div class="tl-item tl-r" data-year="2010">
-      <div class="tl-void"></div>
-      <div class="tl-card bc-teal tl-card-noimg"><div class="tl-card-body">
-        <div class="tl-bgyear">2010</div>
-        <span class="tl-tag tag-teal">GIS</span>
-        <div class="tl-title">GIS Career Start</div>
-        <div class="tl-text">Entered public-sector work in GIS mapping and spatial analysis — building deep roots in local government data workflows and geographic information systems.</div>
-        <div class="card-tech"><span class="tech">ArcGIS Pro</span><span class="tech">ArcGIS Online</span><span class="tech">ModelBuilder</span></div>
-      </div></div>
-    </div>
-
-    <div class="tl-item tl-l" data-year="2016">
-      <div class="tl-card bc-cert"><img class="tl-card-img" src="Images/Lean_Certi.png" alt="Lean Six Sigma" /><div class="tl-card-body">
-        <span class="tl-tag tag-cert">Certification</span>
-        <div class="tl-title">Lean Six Sigma Yellow Belt</div>
-        <div class="tl-text">Applied process efficiency and waste-reduction methods to city operations — a systems-thinking mindset now baked into every automation built.</div>
-        <div class="card-kpis"><span class="kpi">Process optimization</span><span class="kpi">Government workflows</span></div>
-      </div></div>
-      <div class="tl-void"></div>
-    </div>
-
-    <div class="tl-item tl-r" data-year="2020">
-      <div class="tl-void"></div>
-      <div class="tl-card bc-cert tl-card-noimg"><div class="tl-card-body">
-        <div class="tl-bgyear">2020</div>
-        <span class="tl-tag tag-cert">Certification</span>
-        <div class="tl-title">Google PM &amp; Data Analytics</div>
-        <div class="tl-text">Completed Google's Project Management and Data Analytics professional certifications — the springboard toward data-driven decision-making in municipal tech.</div>
-        <div class="card-tech"><span class="tech">BigQuery</span><span class="tech">Data Studio</span><span class="tech">Agile PM</span></div>
-      </div></div>
-    </div>
-
-    <div class="tl-item tl-l" data-year="2021">
-      <div class="tl-card bc-cert tl-card-noimg"><div class="tl-card-body">
-        <div class="tl-bgyear">PMP</div>
-        <span class="tl-tag tag-cert">Certification</span>
-        <div class="tl-title">PMP Certification Earned</div>
-        <div class="tl-text">Achieved PMP credential through city-sponsored training. Now the backbone of every technology initiative — from scoping and stakeholder management to delivery.</div>
-        <div class="card-kpis"><span class="kpi">PMI Certified</span><span class="kpi">Program management</span></div>
-      </div></div>
-      <div class="tl-void"></div>
-    </div>
-
-    <!-- PHASE 2 -->
-    <div class="phase-section" id="phase-2">
-      <div class="phase-num">02</div>
-      <div class="phase-text">
-        <div class="phase-title">Builder Era</div>
-        <div class="phase-subtitle">Power Platform mastery, municipal deployments, 585+ staff hours saved annually across 6+ cities.</div>
-      </div>
-      <span class="phase-badge">2021 – 2024</span>
-    </div>
-
-    <div class="tl-item tl-r" data-year="2021">
-      <div class="tl-void"></div>
-      <div class="tl-card bc-teal"><img class="tl-card-img" src="Images/p25.png" alt="Power BI Dashboard" /><div class="tl-card-body">
-        <span class="tl-tag tag-teal">Milestone</span>
-        <div class="tl-title">Entered the Power Platform World</div>
-        <div class="tl-text">Began building Power BI dashboards for Fort Worth government operations. Rapidly expanded into Power Apps, Power Automate, and Copilot Studio.</div>
-        <div class="card-kpis"><span class="kpi">$195.9M+ tracked</span><span class="kpi">6+ municipalities</span></div>
-        <div class="card-tech"><span class="tech">Power BI</span><span class="tech">Power Apps</span><span class="tech">Power Automate</span><span class="tech">SharePoint</span></div>
-      </div></div>
-    </div>
-
-    <div class="tl-item tl-l" data-year="2023">
-      <div class="tl-card bc-teal"><img class="tl-card-img" src="https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg" alt="MGP" /><div class="tl-card-body">
-        <span class="tl-tag tag-teal">Career</span>
-        <div class="tl-title">Joined MGP — Municipal Operations &amp; GIS</div>
-        <div class="tl-text">Joined Municipal GIS Partners providing GIS support and technology consulting for municipalities across Illinois and Texas.</div>
-        <div class="card-kpis"><span class="kpi">Illinois + Texas</span><span class="kpi">Multi-city deployment</span></div>
-      </div></div>
-      <div class="tl-void"></div>
-    </div>
-
-    <div class="tl-item tl-r" data-year="Feb 2024">
-      <div class="tl-void"></div>
-      <div class="tl-card bc-teal"><img class="tl-card-img" src="Images/share.png" alt="SharePoint" /><div class="tl-card-body">
-        <span class="tl-tag tag-teal">Career</span>
-        <div class="tl-title">Microsoft 365 Functional Consultant</div>
-        <div class="tl-text">Worked as an M365 Consultant supporting municipal clients with SharePoint architecture, Teams governance, and cloud adoption across multiple communities.</div>
-        <div class="card-tech"><span class="tech">SharePoint</span><span class="tech">Teams</span><span class="tech">Entra ID</span><span class="tech">Microsoft 365</span></div>
-      </div></div>
-    </div>
-
-    <div class="tl-item tl-l" data-year="Dec 2024">
-      <div class="tl-card bc-teal"><img class="tl-card-img" src="Images/ELM1.png" alt="ELM App" /><div class="tl-card-body">
-        <span class="tl-tag tag-teal">Career</span>
-        <div class="tl-title">Transition to Low-Code Developer</div>
-        <div class="tl-text">Dedicated Low-Code Developer role — leading Power Apps, Power Automate, and AI copilot development for enterprise municipal solutions.</div>
-        <div class="card-kpis"><span class="kpi">585+ hrs saved/yr</span><span class="kpi">95% satisfaction</span></div>
-        <div class="card-tech"><span class="tech">Power Apps</span><span class="tech">Copilot Studio</span><span class="tech">Azure AI</span></div>
-      </div></div>
-      <div class="tl-void"></div>
-    </div>
-
-    <!-- PHASE 3 -->
-    <div class="phase-section" id="phase-3">
-      <div class="phase-num">03</div>
-      <div class="phase-text">
-        <div class="phase-title">AI Era</div>
-        <div class="phase-subtitle">Three industry awards in 18 months. Multi-agent systems on Azure AI Foundry transforming local government.</div>
-      </div>
-      <span class="phase-badge">2024 – 2026</span>
-    </div>
-
-    <div class="tl-item tl-r" data-year="Mar 2025">
-      <div class="tl-void"></div>
-      <div class="tl-card bc-award">
-        <div class="tl-award-banner"><svg class="tl-award-banner-star" viewBox="0 0 24 24" fill="#FDE68A" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="tl-award-banner-txt">Microsoft Best in Automation Award</span></div>
-        <img class="tl-card-img" src="Images/ELM1.png" alt="ELM Award" />
-        <div class="tl-card-body">
-          <span class="tl-tag tag-award">Award</span>
-          <div class="tl-title">ELM App Wins Microsoft Best in Automation</div>
-          <div class="tl-text">Employment Lifecycle Management App earns Microsoft's top automation award. Official case study published — validating JonEric's approach to municipal digital transformation.</div>
-          <div class="card-kpis">
-            <span class="kpi kpi-amber">400+ hrs saved/yr</span>
-            <span class="kpi kpi-amber">6+ cities</span>
-            <span class="kpi kpi-amber">100% compliance</span>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-status">
+            <span class="hero-status-dot"></span>Open to AI Engineer &amp;
+            Solutions Architect roles
           </div>
-          <div class="card-tech"><span class="tech">Power Apps</span><span class="tech">SharePoint</span><span class="tech">Power Automate</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-item tl-l" data-year="Mar 2025">
-      <div class="tl-card bc-cert"><img class="tl-card-img" src="Images/ms9001.png" alt="MS-900" /><div class="tl-card-body">
-        <span class="tl-tag tag-cert">Certification</span>
-        <div class="tl-title">Microsoft 365 Certified: Fundamentals (MS-900)</div>
-        <div class="tl-text">Validated knowledge of Microsoft 365 cloud services, enterprise architecture, security, and compliance.</div>
-      </div></div>
-      <div class="tl-void"></div>
-    </div>
-
-    <div class="tl-item tl-r" data-year="Aug 2025">
-      <div class="tl-void"></div>
-      <div class="tl-card bc-cert"><img class="tl-card-img" src="Images/ms900.png" alt="PL-900" /><div class="tl-card-body">
-        <span class="tl-tag tag-cert">Certification</span>
-        <div class="tl-title">Power Platform Fundamentals (PL-900)</div>
-        <div class="tl-text">Validated expertise in Power Apps, Power Automate, Power BI, and Power Virtual Agents — formalizing years of hands-on delivery.</div>
-        <div class="card-tech"><span class="tech">Power Platform</span><span class="tech">Microsoft Certified</span></div>
-      </div></div>
-    </div>
-
-    <div class="tl-item tl-l" data-year="February 2026">
-      <div class="tl-card bc-launch">
-        <div class="now-badge"><span class="now-dot"></span>Active Now</div>
-        <img class="tl-card-img" src="Images/agent2.png" alt="MAINTAIN AI" />
-        <div class="tl-card-body">
-          <span class="tl-tag tag-launch">Launch</span>
-          <div class="tl-title">MAINTAIN AI &amp; Kaizen AI</div>
-          <div class="tl-text">Built in February 2026, MAINTAIN AI predicts infrastructure maintenance needs via AI risk scoring. Kaizen AI is an AI-powered certification study coach personalizing learning paths for government tech professionals.</div>
-          <div class="card-kpis">
-            <span class="kpi kpi-purple">Predictive AI</span>
-            <span class="kpi kpi-purple">Azure AI Foundry</span>
+          <span class="hero-eyebrow">Interactive Career Story</span>
+          <h1 class="hero-h1">
+            From Code<br />to <span class="acc">Award-Winning AI</span>
+          </h1>
+          <p class="hero-sub">
+            Two decades building technology that matters — from GIS mapping and
+            municipal dashboards to Microsoft-recognized AI agents across 6+
+            cities.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-n" data-target="26">0</span
+              ><span class="stat-l">Years</span>
+            </div>
+            <div class="stat">
+              <span class="stat-n" data-target="20" data-suffix="+">0</span
+              ><span class="stat-l">Certs</span>
+            </div>
+            <div class="stat">
+              <span class="stat-n" data-target="3">0</span
+              ><span class="stat-l">Awards</span>
+            </div>
+            <div class="stat">
+              <span
+                class="stat-n"
+                data-prefix="$"
+                data-target="195"
+                data-suffix="M+"
+                >0</span
+              ><span class="stat-l">Tracked</span>
+            </div>
           </div>
-          <div class="card-tech"><span class="tech">Azure AI Foundry</span><span class="tech">Copilot Studio</span><span class="tech">NLP</span></div>
         </div>
-      </div>
-      <div class="tl-void"></div>
-    </div>
-
-    <div class="tl-item tl-r" data-year="April 2026">
-      <div class="tl-void"></div>
-      <div class="tl-card bc-award">
-        <div class="tl-award-banner"><svg class="tl-award-banner-star" viewBox="0 0 24 24" fill="#FDE68A" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="tl-award-banner-txt">Grand Prize · JavaScript AI Build-a-thon</span></div>
-        <img class="tl-card-img" src="Images/agent1.png" alt="CivicLens" />
-        <div class="tl-card-body">
-          <span class="tl-tag tag-award">Award</span>
-          <div class="tl-title">CivicLens — JS AI Build-a-thon Grand Prize</div>
-          <div class="tl-text">AI-powered public record analysis with real-time GitHub JSON sync, dynamic visualizations, and natural language ordinance search wins the Grand Prize in a field just under 1,000 contestants.</div>
-          <div class="card-kpis"><span class="kpi kpi-amber">Under 1,000 contestants</span></div>
-          <div class="card-tech"><span class="tech">Azure OpenAI</span><span class="tech">JavaScript</span><span class="tech">GitHub API</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-item tl-l" data-year="June 2026">
-      <div class="tl-card bc-award">
-        <div class="tl-award-banner"><svg class="tl-award-banner-star" viewBox="0 0 24 24" fill="#FDE68A" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span class="tl-award-banner-txt">Best IQ Agent · Microsoft AI Skills Fest 2026</span></div>
-        <img class="tl-card-img" src="Images/agent.png" alt="CivicGrant IQ" />
-        <div class="tl-card-body">
-          <span class="tl-tag tag-award">Award</span>
-          <div class="tl-title">CivicGrant IQ — Microsoft Agents League 2026</div>
-          <div class="tl-text">Multi-agent AI system on Azure AI Foundry wins Best IQ Agent at Microsoft's AI Skills Fest 2026, rising from a field of nearly 5,000 contestants. Automates grant discovery for municipalities.</div>
-          <div class="card-kpis">
-            <span class="kpi kpi-amber">Nearly 5,000 contestants</span>
-            <span class="kpi kpi-amber">Global winner</span>
+        <div class="profile">
+          <img
+            src="https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg"
+            alt="JonEric Eubanks"
+          />
+          <div class="profile-info">
+            <div class="profile-name">JonEric Eubanks, PMP</div>
+            <div class="profile-role">
+              Microsoft Developer &amp; AI Engineer
+            </div>
           </div>
-          <div class="card-tech"><span class="tech">Azure AI Foundry</span><span class="tech">Multi-Agent</span><span class="tech">Copilot Studio</span></div>
         </div>
       </div>
-      <div class="tl-void"></div>
-    </div>
+    </section>
 
-  </div>
-</section>
+    <nav class="phase-nav">
+      <button class="phase-btn active" onclick="goPhase('phase-1', this)">
+        Foundation 2000–2021
+      </button>
+      <button class="phase-btn" onclick="goPhase('phase-2', this)">
+        Builder 2021–2024
+      </button>
+      <button class="phase-btn" onclick="goPhase('phase-3', this)">
+        AI Era 2024–2026
+      </button>
+    </nav>
 
-<section class="awards">
-  <p class="sec-ey">Recognition</p>
-  <h2 class="sec-ttl">Awards &amp; Highlights</h2>
-  <div class="awards-grid">
-    <div class="aw-card gold"><div class="aw-yr">March 2025</div><div class="aw-name">Microsoft Best in Automation</div><div class="aw-org">ELM App — 6+ municipalities, 400+ hrs saved annually. Official Microsoft case study published.</div></div>
-    <div class="aw-card gold"><div class="aw-yr">April 2026</div><div class="aw-name">Grand Prize — JS AI Build-a-thon</div><div class="aw-org">CivicLens — AI public record analysis winner from a field just under 1,000 contestants.</div></div>
-    <div class="aw-card gold"><div class="aw-yr">June 2026</div><div class="aw-name">Best IQ Agent — AI Skills Fest</div><div class="aw-org">CivicGrant IQ — Microsoft Agents League 2026. Rose from nearly 5,000 contestants with Azure AI Foundry.</div></div>
-  </div>
-  <p class="sec-ey">Impact</p>
-  <h2 class="sec-ttl" style="margin-bottom:1.5rem">Career Milestones</h2>
-  <div class="ms-grid">
-    <div class="ms-card"><span class="ms-n">585+</span><div class="ms-l">Staff hours saved annually</div></div>
-    <div class="ms-card"><span class="ms-n">6+</span><div class="ms-l">Cities using his solutions</div></div>
-    <div class="ms-card"><span class="ms-n">3,600+</span><div class="ms-l">Queries automated by AI</div></div>
-    <div class="ms-card"><span class="ms-n">$195.9M+</span><div class="ms-l">Municipal funds tracked</div></div>
-    <div class="ms-card"><span class="ms-n">20+</span><div class="ms-l">Certifications earned</div></div>
-  </div>
-</section>
+    <section class="tl-section">
+      <div class="tl-head">
+        <p class="tl-eyebrow">15 milestones &middot; 2000 – 2026</p>
+        <h2 class="tl-heading">The Journey</h2>
+      </div>
+      <div class="timeline">
+        <!-- PHASE 1 -->
+        <div class="phase-section" id="phase-1">
+          <div class="phase-num">01</div>
+          <div class="phase-text">
+            <div class="phase-title">Foundation Era</div>
+            <div class="phase-subtitle">
+              GIS roots, certifications, public-sector entry — the groundwork
+              for everything that followed.
+            </div>
+          </div>
+          <span class="phase-badge">2000 – 2021</span>
+        </div>
 
-<footer class="footer">
-  <div class="ftr-links">
-    <a href="index.html" class="ftr-link">Portfolio</a>
-    <a href="https://www.linkedin.com/in/joneric-eubanks-pmp-developer/" class="ftr-link" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://github.com/JonEricEubanks" class="ftr-link" target="_blank" rel="noopener">GitHub</a>
-    <a href="mailto:joneric11@gmail.com" class="ftr-link">joneric11@gmail.com</a>
-  </div>
-  <p class="ftr-copy">JonEric Eubanks &middot; Microsoft Developer &amp; AI Engineer &middot; Buffalo Grove, IL</p>
-</footer>
+        <div class="tl-item tl-l" data-year="2000">
+          <div class="tl-card bc-gray tl-card-noimg">
+            <div class="tl-card-body">
+              <div class="tl-bgyear">2000</div>
+              <span class="tl-tag tag-gray">Origins</span>
+              <div class="tl-title">Beginnings in Technology</div>
+              <div class="tl-text">
+                Grew up exploring computers and early programming — developing
+                the curiosity and problem-solving instincts that drive every
+                solution built today.
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
 
-<script>
-  // Reading progress bar
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement, b = document.body;
-    const st = h.scrollTop || b.scrollTop;
-    const sh = h.scrollHeight - h.clientHeight;
-    document.getElementById('progress-bar').style.width = (st / sh * 100) + '%';
-  });
+        <div class="tl-item tl-r" data-year="2010">
+          <div class="tl-void"></div>
+          <div class="tl-card bc-teal tl-card-noimg">
+            <div class="tl-card-body">
+              <div class="tl-bgyear">2010</div>
+              <span class="tl-tag tag-teal">GIS</span>
+              <div class="tl-title">GIS Career Start</div>
+              <div class="tl-text">
+                Entered public-sector work in GIS mapping and spatial analysis —
+                building deep roots in local government data workflows and
+                geographic information systems.
+              </div>
+              <div class="card-tech">
+                <span class="tech">ArcGIS Pro</span
+                ><span class="tech">ArcGIS Online</span
+                ><span class="tech">ModelBuilder</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  // Animated stats counters
-  document.querySelectorAll('.stat-n[data-target]').forEach(el => {
-    const t = parseFloat(el.getAttribute('data-target'));
-    const pre = el.getAttribute('data-prefix') || '', suf = el.getAttribute('data-suffix') || '';
-    let s = null;
-    const tick = ts => {
-      if (!s) s = ts;
-      const p = Math.min((ts - s) / 1800, 1), e = 1 - Math.pow(1 - p, 3);
-      el.textContent = pre + Math.floor(e * t) + suf;
-      if (p < 1) requestAnimationFrame(tick);
-      else el.textContent = pre + t + suf;
-    };
-    setTimeout(() => requestAnimationFrame(tick), 300);
-  });
+        <div class="tl-item tl-l" data-year="2016">
+          <div class="tl-card bc-cert">
+            <img
+              class="tl-card-img"
+              src="Images/Lean_Certi.png"
+              alt="Lean Six Sigma"
+            />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-cert">Certification</span>
+              <div class="tl-title">Lean Six Sigma Yellow Belt</div>
+              <div class="tl-text">
+                Applied process efficiency and waste-reduction methods to city
+                operations — a systems-thinking mindset now baked into every
+                automation built.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi">Process optimization</span
+                ><span class="kpi">Government workflows</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
 
-  // Staggered load animation — all cards visible on load
-  document.querySelectorAll('.tl-item').forEach((el, i) => {
-    setTimeout(() => el.classList.add('vis'), 200 + i * 90);
-  });
+        <div class="tl-item tl-r" data-year="2020">
+          <div class="tl-void"></div>
+          <div class="tl-card bc-cert tl-card-noimg">
+            <div class="tl-card-body">
+              <div class="tl-bgyear">2020</div>
+              <span class="tl-tag tag-cert">Certification</span>
+              <div class="tl-title">Google PM &amp; Data Analytics</div>
+              <div class="tl-text">
+                Completed Google's Project Management and Data Analytics
+                professional certifications — the springboard toward data-driven
+                decision-making in municipal tech.
+              </div>
+              <div class="card-tech">
+                <span class="tech">BigQuery</span
+                ><span class="tech">Data Studio</span
+                ><span class="tech">Agile PM</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  // Phase nav scroll highlight + button click
-  function goPhase(id, btn) {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  const phases = ['phase-1', 'phase-2', 'phase-3'];
-  const btns = document.querySelectorAll('.phase-btn');
-  window.addEventListener('scroll', () => {
-    let cur = 0;
-    phases.forEach((id, i) => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < window.innerHeight * 0.55) cur = i; });
-    btns.forEach((b, i) => b.classList.toggle('active', i === cur));
-  });
-</script>
-</body>
+        <div class="tl-item tl-l" data-year="2021">
+          <div class="tl-card bc-cert tl-card-noimg">
+            <div class="tl-card-body">
+              <div class="tl-bgyear">PMP</div>
+              <span class="tl-tag tag-cert">Certification</span>
+              <div class="tl-title">PMP Certification Earned</div>
+              <div class="tl-text">
+                Achieved PMP credential through city-sponsored training. Now the
+                backbone of every technology initiative — from scoping and
+                stakeholder management to delivery.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi">PMI Certified</span
+                ><span class="kpi">Program management</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
+
+        <!-- PHASE 2 -->
+        <div class="phase-section" id="phase-2">
+          <div class="phase-num">02</div>
+          <div class="phase-text">
+            <div class="phase-title">Builder Era</div>
+            <div class="phase-subtitle">
+              Power Platform mastery, municipal deployments, 585+ staff hours
+              saved annually across 6+ cities.
+            </div>
+          </div>
+          <span class="phase-badge">2021 – 2024</span>
+        </div>
+
+        <div class="tl-item tl-r" data-year="2021">
+          <div class="tl-void"></div>
+          <div class="tl-card bc-teal">
+            <img
+              class="tl-card-img"
+              src="Images/p25.png"
+              alt="Power BI Dashboard"
+            />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-teal">Milestone</span>
+              <div class="tl-title">Entered the Power Platform World</div>
+              <div class="tl-text">
+                Began building Power BI dashboards for Fort Worth government
+                operations. Rapidly expanded into Power Apps, Power Automate,
+                and Copilot Studio.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi">$195.9M+ tracked</span
+                ><span class="kpi">6+ municipalities</span>
+              </div>
+              <div class="card-tech">
+                <span class="tech">Power BI</span
+                ><span class="tech">Power Apps</span
+                ><span class="tech">Power Automate</span
+                ><span class="tech">SharePoint</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item tl-l" data-year="2023">
+          <div class="tl-card bc-teal">
+            <img
+              class="tl-card-img"
+              src="https://mgpinc.com/wp-content/uploads/2023/12/JonEricEubanks.jpg"
+              alt="MGP"
+            />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-teal">Career</span>
+              <div class="tl-title">
+                Joined MGP — Municipal Operations &amp; GIS
+              </div>
+              <div class="tl-text">
+                Joined Municipal GIS Partners providing GIS support and
+                technology consulting for municipalities across Illinois and
+                Texas.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi">Illinois + Texas</span
+                ><span class="kpi">Multi-city deployment</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
+
+        <div class="tl-item tl-r" data-year="Feb 2024">
+          <div class="tl-void"></div>
+          <div class="tl-card bc-teal">
+            <img class="tl-card-img" src="Images/share.png" alt="SharePoint" />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-teal">Career</span>
+              <div class="tl-title">Microsoft 365 Functional Consultant</div>
+              <div class="tl-text">
+                Worked as an M365 Consultant supporting municipal clients with
+                SharePoint architecture, Teams governance, and cloud adoption
+                across multiple communities.
+              </div>
+              <div class="card-tech">
+                <span class="tech">SharePoint</span
+                ><span class="tech">Teams</span
+                ><span class="tech">Entra ID</span
+                ><span class="tech">Microsoft 365</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item tl-l" data-year="Dec 2024">
+          <div class="tl-card bc-teal">
+            <img
+              class="tl-card-img"
+              src="Images/servicedesk.png"
+              alt="Service Desk Power App"
+            />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-teal">Career</span>
+              <div class="tl-title">Transition to Low-Code Developer</div>
+              <div class="tl-text">
+                Dedicated Low-Code Developer role — leading Power Apps, Power
+                Automate, and AI copilot development for enterprise municipal
+                solutions.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi">585+ hrs saved/yr</span
+                ><span class="kpi">95% satisfaction</span>
+              </div>
+              <div class="card-tech">
+                <span class="tech">Power Apps</span
+                ><span class="tech">Copilot Studio</span
+                ><span class="tech">Azure AI</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
+
+        <!-- PHASE 3 -->
+        <div class="phase-section" id="phase-3">
+          <div class="phase-num">03</div>
+          <div class="phase-text">
+            <div class="phase-title">AI Era</div>
+            <div class="phase-subtitle">
+              Three industry awards in 18 months. Multi-agent systems on Azure
+              AI Foundry transforming local government.
+            </div>
+          </div>
+          <span class="phase-badge">2024 – 2026</span>
+        </div>
+
+        <div class="tl-item tl-r" data-year="Mar 2025">
+          <div class="tl-void"></div>
+          <div class="tl-card bc-award">
+            <div class="tl-award-banner">
+              <svg
+                class="tl-award-banner-star"
+                viewBox="0 0 24 24"
+                fill="#FDE68A"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                /></svg
+              ><span class="tl-award-banner-txt"
+                >Microsoft Best in Automation Award</span
+              >
+            </div>
+            <img class="tl-card-img" src="Images/ELM1.png" alt="ELM Award" />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-award">Award</span>
+              <div class="tl-title">
+                ELM App Wins Microsoft Best in Automation
+              </div>
+              <div class="tl-text">
+                Employment Lifecycle Management App earns Microsoft's top
+                automation award. Official case study published — validating
+                JonEric's approach to municipal digital transformation.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi kpi-amber">400+ hrs saved/yr</span>
+                <span class="kpi kpi-amber">6+ cities</span>
+                <span class="kpi kpi-amber">100% compliance</span>
+              </div>
+              <div class="card-tech">
+                <span class="tech">Power Apps</span
+                ><span class="tech">SharePoint</span
+                ><span class="tech">Power Automate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item tl-l" data-year="Mar 2025">
+          <div class="tl-card bc-cert">
+            <img class="tl-card-img" src="Images/ms9001.png" alt="MS-900" />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-cert">Certification</span>
+              <div class="tl-title">
+                Microsoft 365 Certified: Fundamentals (MS-900)
+              </div>
+              <div class="tl-text">
+                Validated knowledge of Microsoft 365 cloud services, enterprise
+                architecture, security, and compliance.
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
+
+        <div class="tl-item tl-r" data-year="Aug 2025">
+          <div class="tl-void"></div>
+          <div class="tl-card bc-cert">
+            <img class="tl-card-img" src="Images/ms900.png" alt="PL-900" />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-cert">Certification</span>
+              <div class="tl-title">Power Platform Fundamentals (PL-900)</div>
+              <div class="tl-text">
+                Validated expertise in Power Apps, Power Automate, Power BI, and
+                Power Virtual Agents — formalizing years of hands-on delivery.
+              </div>
+              <div class="card-tech">
+                <span class="tech">Power Platform</span
+                ><span class="tech">Microsoft Certified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item tl-l" data-year="February 2026">
+          <div class="tl-card bc-launch">
+            <div class="now-badge"><span class="now-dot"></span>Active Now</div>
+            <img
+              class="tl-card-img"
+              src="Images/agent2.png"
+              alt="MAINTAIN AI"
+            />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-launch">Launch</span>
+              <div class="tl-title">MAINTAIN AI &amp; Kaizen AI</div>
+              <div class="tl-text">
+                Built in February 2026, MAINTAIN AI predicts infrastructure
+                maintenance needs via AI risk scoring. Kaizen AI is an
+                AI-powered certification study coach personalizing learning
+                paths for government tech professionals.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi kpi-purple">Predictive AI</span>
+                <span class="kpi kpi-purple">Azure AI Foundry</span>
+              </div>
+              <div class="card-tech">
+                <span class="tech">Azure AI Foundry</span
+                ><span class="tech">Copilot Studio</span
+                ><span class="tech">NLP</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
+
+        <div class="tl-item tl-r" data-year="April 2026">
+          <div class="tl-void"></div>
+          <div class="tl-card bc-award">
+            <div class="tl-award-banner">
+              <svg
+                class="tl-award-banner-star"
+                viewBox="0 0 24 24"
+                fill="#FDE68A"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                /></svg
+              ><span class="tl-award-banner-txt"
+                >Grand Prize · JavaScript AI Build-a-thon</span
+              >
+            </div>
+            <img class="tl-card-img" src="Images/agent1.png" alt="CivicLens" />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-award">Award</span>
+              <div class="tl-title">
+                CivicLens — JS AI Build-a-thon Grand Prize
+              </div>
+              <div class="tl-text">
+                AI-powered public record analysis with real-time GitHub JSON
+                sync, dynamic visualizations, and natural language ordinance
+                search wins the Grand Prize in a field just under 1,000
+                contestants.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi kpi-amber">Under 1,000 contestants</span>
+              </div>
+              <div class="card-tech">
+                <span class="tech">Azure OpenAI</span
+                ><span class="tech">JavaScript</span
+                ><span class="tech">GitHub API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item tl-l" data-year="June 2026">
+          <div class="tl-card bc-award">
+            <div class="tl-award-banner">
+              <svg
+                class="tl-award-banner-star"
+                viewBox="0 0 24 24"
+                fill="#FDE68A"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                /></svg
+              ><span class="tl-award-banner-txt"
+                >Best IQ Agent · Microsoft AI Skills Fest 2026</span
+              >
+            </div>
+            <img
+              class="tl-card-img"
+              src="Images/agent.png"
+              alt="CivicGrant IQ"
+            />
+            <div class="tl-card-body">
+              <span class="tl-tag tag-award">Award</span>
+              <div class="tl-title">
+                CivicGrant IQ — Microsoft Agents League 2026
+              </div>
+              <div class="tl-text">
+                Multi-agent AI system on Azure AI Foundry wins Best IQ Agent at
+                Microsoft's AI Skills Fest 2026, rising from a field of nearly
+                5,000 contestants. Automates grant discovery for municipalities.
+              </div>
+              <div class="card-kpis">
+                <span class="kpi kpi-amber">Nearly 5,000 contestants</span>
+                <span class="kpi kpi-amber">Global winner</span>
+              </div>
+              <div class="card-tech">
+                <span class="tech">Azure AI Foundry</span
+                ><span class="tech">Multi-Agent</span
+                ><span class="tech">Copilot Studio</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl-void"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="awards">
+      <p class="sec-ey">Recognition</p>
+      <h2 class="sec-ttl">Awards &amp; Highlights</h2>
+      <div class="awards-grid">
+        <div class="aw-card gold">
+          <div class="aw-yr">March 2025</div>
+          <div class="aw-name">Microsoft Best in Automation</div>
+          <div class="aw-org">
+            ELM App — 6+ municipalities, 400+ hrs saved annually. Official
+            Microsoft case study published.
+          </div>
+        </div>
+        <div class="aw-card gold">
+          <div class="aw-yr">April 2026</div>
+          <div class="aw-name">Grand Prize — JS AI Build-a-thon</div>
+          <div class="aw-org">
+            CivicLens — AI public record analysis winner from a field just under
+            1,000 contestants.
+          </div>
+        </div>
+        <div class="aw-card gold">
+          <div class="aw-yr">June 2026</div>
+          <div class="aw-name">Best IQ Agent — AI Skills Fest</div>
+          <div class="aw-org">
+            CivicGrant IQ — Microsoft Agents League 2026. Rose from nearly 5,000
+            contestants with Azure AI Foundry.
+          </div>
+        </div>
+      </div>
+      <p class="sec-ey">Impact</p>
+      <h2 class="sec-ttl" style="margin-bottom: 1.5rem">Career Milestones</h2>
+      <div class="ms-grid">
+        <div class="ms-card">
+          <span class="ms-n">585+</span>
+          <div class="ms-l">Staff hours saved annually</div>
+        </div>
+        <div class="ms-card">
+          <span class="ms-n">6+</span>
+          <div class="ms-l">Cities using his solutions</div>
+        </div>
+        <div class="ms-card">
+          <span class="ms-n">3,600+</span>
+          <div class="ms-l">Queries automated by AI</div>
+        </div>
+        <div class="ms-card">
+          <span class="ms-n">$195.9M+</span>
+          <div class="ms-l">Municipal funds tracked</div>
+        </div>
+        <div class="ms-card">
+          <span class="ms-n">20+</span>
+          <div class="ms-l">Certifications earned</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="ftr-links">
+        <a href="index.html" class="ftr-link">Portfolio</a>
+        <a
+          href="https://www.linkedin.com/in/joneric-eubanks-pmp-developer/"
+          class="ftr-link"
+          target="_blank"
+          rel="noopener"
+          >LinkedIn</a
+        >
+        <a
+          href="https://github.com/JonEricEubanks"
+          class="ftr-link"
+          target="_blank"
+          rel="noopener"
+          >GitHub</a
+        >
+        <a href="mailto:joneric11@gmail.com" class="ftr-link"
+          >joneric11@gmail.com</a
+        >
+      </div>
+      <p class="ftr-copy">
+        JonEric Eubanks &middot; Microsoft Developer &amp; AI Engineer &middot;
+        Buffalo Grove, IL
+      </p>
+    </footer>
+
+    <script>
+      // Reading progress bar
+      window.addEventListener("scroll", () => {
+        const h = document.documentElement,
+          b = document.body;
+        const st = h.scrollTop || b.scrollTop;
+        const sh = h.scrollHeight - h.clientHeight;
+        document.getElementById("progress-bar").style.width =
+          (st / sh) * 100 + "%";
+      });
+
+      // Animated stats counters
+      document.querySelectorAll(".stat-n[data-target]").forEach((el) => {
+        const t = parseFloat(el.getAttribute("data-target"));
+        const pre = el.getAttribute("data-prefix") || "",
+          suf = el.getAttribute("data-suffix") || "";
+        let s = null;
+        const tick = (ts) => {
+          if (!s) s = ts;
+          const p = Math.min((ts - s) / 1800, 1),
+            e = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + Math.floor(e * t) + suf;
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = pre + t + suf;
+        };
+        setTimeout(() => requestAnimationFrame(tick), 300);
+      });
+
+      // Staggered load animation — all cards visible on load
+      document.querySelectorAll(".tl-item").forEach((el, i) => {
+        setTimeout(() => el.classList.add("vis"), 200 + i * 90);
+      });
+
+      // Phase nav scroll highlight + button click
+      function goPhase(id, btn) {
+        document
+          .getElementById(id)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        document
+          .querySelectorAll(".phase-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+      const phases = ["phase-1", "phase-2", "phase-3"];
+      const btns = document.querySelectorAll(".phase-btn");
+      window.addEventListener("scroll", () => {
+        let cur = 0;
+        phases.forEach((id, i) => {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top < window.innerHeight * 0.55)
+            cur = i;
+        });
+        btns.forEach((b, i) => b.classList.toggle("active", i === cur));
+      });
+    </script>
+  </body>
 </html>
