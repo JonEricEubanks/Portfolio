@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Prism.js for code syntax highlighting -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260718d">
+  <link rel="stylesheet" href="style.css?v=20260718e">
   <link rel="stylesheet" href="intro-fix.css?v=20260717">
   <link rel="stylesheet" href="chat-styles.css?v=20241207">
   <link rel="stylesheet" href="blog-styles.css?v=20241207">
@@ -131,9 +131,17 @@
           <i data-lucide="graduation-cap" class="nav-icon"></i>
           <span class="nav-text">Certs</span>
         </a>
+        <a href="#journey" class="nav-link modern-nav-item">
+          <i data-lucide="route" class="nav-icon"></i>
+          <span class="nav-text">Journey</span>
+        </a>
         <a href="#blog" class="nav-link modern-nav-item">
           <i data-lucide="pen-line" class="nav-icon"></i>
           <span class="nav-text">Blog</span>
+        </a>
+        <a href="#contact" class="nav-link modern-nav-item">
+          <i data-lucide="mail" class="nav-icon"></i>
+          <span class="nav-text">Contact</span>
         </a>
       </nav>
 
@@ -977,12 +985,11 @@
 
       
       <div class="content-container">
-      <section id="dashboards">
-      </section>
 
       <section id="certifications" class="portfolio-section">
         <div class="section-header">
           <h2 class="section-title gradient-text">Certifications</h2>
+          <p class="section-description">Microsoft, Power Platform, project management, and GIS credentials</p>
         </div>
       <div class="certification-container">
        
@@ -1136,15 +1143,30 @@
         </section>
       </div>
 
-      <!-- Career Timeline Feature Card -->
-      <div class="career-timeline-card glass-morphism">
-        <div class="ctc-left">
-          <span class="ctc-label">Interactive</span>
-          <h3 class="ctc-title">Career Journey Timeline</h3>
-          <p class="ctc-desc">Explore JonEric's career milestones — from GIS origins and certifications to the Microsoft Award and AI agent work — in an interactive scrollable timeline.</p>
+      <!-- Career Journey Section -->
+      <section id="journey" class="portfolio-section journey-section">
+        <div class="section-header">
+          <h2 class="section-title gradient-text">Career Journey</h2>
+          <p class="section-description">From GIS origins to award-winning AI agents — the milestones behind the work</p>
         </div>
-        <a href="career-timeline.html" target="_blank" rel="noopener noreferrer" class="ctc-btn">View Timeline</a>
-      </div>
+        <div class="career-timeline-card glass-morphism">
+          <div class="ctc-left">
+            <span class="ctc-label">Interactive Timeline</span>
+            <h3 class="ctc-title">Explore the Full Journey</h3>
+            <p class="ctc-desc">Walk through JonEric's career milestones — GIS origins, certifications, the Microsoft Awards, and AI agent work — in an interactive scrollable timeline.</p>
+            <a href="career-timeline.html" class="ctc-btn">Open Interactive Timeline <span aria-hidden="true">&rarr;</span></a>
+          </div>
+          <div class="ctc-preview" aria-hidden="true">
+            <div class="ctc-milestones">
+              <div class="ctc-milestone"><span class="ctc-node"></span><span class="ctc-m-label">GIS Origins</span></div>
+              <div class="ctc-milestone"><span class="ctc-node"></span><span class="ctc-m-label">Dashboards</span></div>
+              <div class="ctc-milestone"><span class="ctc-node"></span><span class="ctc-m-label">Power Platform</span></div>
+              <div class="ctc-milestone award"><span class="ctc-node"></span><span class="ctc-m-label">Microsoft Awards</span></div>
+              <div class="ctc-milestone current"><span class="ctc-node"></span><span class="ctc-m-label">AI Agents</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Tech Stack Section -->
       <section id="tech-stack" class="portfolio-section tech-stack-section-wrap">
@@ -1362,7 +1384,7 @@
           </div>
 
         </div>
-      
+      </section>
 
       <!-- Blog Section -->
       <section id="blog" class="portfolio-section blog-section" aria-labelledby="blog-title">
@@ -1849,6 +1871,7 @@
           <a href="#dashboards" class="footer-link">Dashboards</a>
           <a href="#GIS" class="footer-link">GIS</a>
           <a href="#certifications" class="footer-link">Certs</a>
+          <a href="#journey" class="footer-link">Journey</a>
           <a href="#blog" class="footer-link">Blog</a>
           <a href="#contact" class="footer-link">Contact</a>
         </nav>
