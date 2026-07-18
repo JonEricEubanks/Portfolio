@@ -7,12 +7,14 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230F766E'><path d='M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2z'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Prism.js for code syntax highlighting -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20241207">
+  <link rel="stylesheet" href="style.css?v=20241251">
   <link rel="stylesheet" href="chat-styles.css?v=20241207">
   <link rel="stylesheet" href="blog-styles.css?v=20241207">
+  <!-- AOS — Animate On Scroll -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <!-- SEO Meta Tags -->
   <meta name="description" content="JonEric Eubanks — AI Solutions Architect & Power Platform Developer. 3x Microsoft Award Winner. Building AI agents, Power Apps, Power BI dashboards, and GIS solutions with measurable impact.">
   <meta property="og:title" content="JonEric Eubanks — AI Solutions Architect & Power Platform Developer">
@@ -25,7 +27,63 @@
   <meta name="author" content="JonEric Eubanks">
   <meta name="keywords" content="Power Platform, Power Apps, Power BI, Azure AI, AI Agent, GIS, ArcGIS, Low-Code, Microsoft Developer, Copilot Studio">
 </head>
-<body class="modern-portfolio">
+<body class="modern-portfolio intro-active">
+  <!-- Curtain Reveal Opening Animation -->
+  <div id="page-intro" aria-hidden="true">
+    <!-- Left curtain: shows left half of JE logo -->
+    <div class="curtain-panel left-panel" id="curtain-left">
+      <div class="logo-half logo-left">
+        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="jeRingOuterLeft" x1="18" y1="20" x2="140" y2="140" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#1F8A78"/>
+              <stop offset="0.48" stop-color="#165A55"/>
+              <stop offset="1" stop-color="#064E3B"/>
+            </linearGradient>
+            <linearGradient id="jeRingInnerLeft" x1="130" y1="24" x2="28" y2="132" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#2DD4BF"/>
+              <stop offset="0.55" stop-color="#165A55"/>
+              <stop offset="1" stop-color="#0F766E"/>
+            </linearGradient>
+          </defs>
+          <circle cx="80" cy="80" r="70" stroke="url(#jeRingOuterLeft)" stroke-width="4"/>
+          <circle cx="80" cy="80" r="62" stroke="url(#jeRingInnerLeft)" stroke-width="1.8"/>
+                  <text x="80" y="98" text-anchor="middle"
+                    font-family="'Cinzel', Georgia, serif"
+                    font-size="60" font-weight="600" letter-spacing="-7"
+                fill="#064E3B">JE</text>
+        </svg>
+      </div>
+    </div>
+    <!-- Right curtain: shows right half of JE logo -->
+    <div class="curtain-panel right-panel" id="curtain-right">
+      <div class="logo-half logo-right">
+        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="jeRingOuterRight" x1="18" y1="20" x2="140" y2="140" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#1F8A78"/>
+              <stop offset="0.48" stop-color="#165A55"/>
+              <stop offset="1" stop-color="#064E3B"/>
+            </linearGradient>
+            <linearGradient id="jeRingInnerRight" x1="130" y1="24" x2="28" y2="132" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#2DD4BF"/>
+              <stop offset="0.55" stop-color="#165A55"/>
+              <stop offset="1" stop-color="#0F766E"/>
+            </linearGradient>
+          </defs>
+          <circle cx="80" cy="80" r="70" stroke="url(#jeRingOuterRight)" stroke-width="4"/>
+          <circle cx="80" cy="80" r="62" stroke="url(#jeRingInnerRight)" stroke-width="1.8"/>
+                  <text x="80" y="98" text-anchor="middle"
+                    font-family="'Cinzel', Georgia, serif"
+                    font-size="60" font-weight="600" letter-spacing="-7"
+                fill="#064E3B">JE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <!-- Film Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress-track" aria-hidden="true"><div class="scroll-progress-fill" id="scroll-progress"></div></div>
 
@@ -106,9 +164,6 @@
   <section class="hero-section">
     <div class="hero-container">
       <div class="hero-content">
-        <div class="hero-badge">
-          <span class="badge-text">3× Microsoft Award Winner &nbsp;·&nbsp; <span id="hero-role-text">AI Solutions Architect</span></span>
-        </div>
         <h2 class="hero-title">
           Crafting <span class="gradient-text">data-driven solutions</span> 
           <br>& modern citizen services
@@ -168,20 +223,122 @@
       
       <div class="hero-visual">
         <div class="visual-container">
-          <div class="elm-transition-container">
-            <img src="Images/ELM.png" alt="ELM Application Preview" class="hero-image floating elm-image active" id="elm-image-1">
-            <img src="Images/ELM1.png" alt="ELM Application Preview" class="hero-image floating elm-image" id="elm-image-2">
-            <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg" alt="CivicGrant IQ — Best IQ Agent" class="hero-image floating elm-image" id="elm-image-3" loading="lazy">
-            <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png" alt="CivicLens — Grand Prize Winner" class="hero-image floating elm-image" id="elm-image-4" loading="lazy">
+          <div class="elm-transition-container hero-award-carousel" aria-live="polite">
+            <article class="featured-build-shell hero-award-shell hero-award-slide active"
+                     data-metric-1-value="95%" data-metric-1-label="Automation Efficiency Lift"
+                     data-metric-2-value="585+" data-metric-2-label="Process Hours Saved Annually"
+                     data-metric-3-value="2025" data-metric-3-label="Best Automation Winner">
+              <div class="featured-build-copy hero-award-copy">
+                <div class="featured-build-eyebrow">
+                  <span class="eyebrow-dot" aria-hidden="true"></span>
+                  <span>Award Winning App</span>
+                </div>
+                <h3>Employment Lifecycle Management App</h3>
+                <p>Microsoft Best in Automation winner built to streamline hiring workflows, task routing, and operational visibility for civic teams.</p>
+                <div class="hero-award-proof" aria-label="ELM award proof">
+                  <span>Microsoft Best in Automation</span>
+                  <span>Workflow intelligence</span>
+                </div>
+              </div>
+              <div class="featured-build-visual hero-award-visual" aria-label="ELM app preview">
+                <div class="spotlight-device hero-award-device">
+                  <img src="Images/ELM.png" alt="ELM Application Preview">
+                  <div class="reasoning-stream hero-award-stream" aria-hidden="true">
+                    <span>New hire</span>
+                    <span>Task routing</span>
+                    <span>Dashboards</span>
+                    <span>Automation</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="featured-build-shell hero-award-shell hero-award-slide"
+                     data-metric-1-value="5" data-metric-1-label="Specialist AI Agents"
+                     data-metric-2-value="~5,000" data-metric-2-label="Contestants"
+                     data-metric-3-value="2026" data-metric-3-label="Best IQ Agent Winner">
+              <div class="featured-build-copy hero-award-copy">
+                <div class="featured-build-eyebrow">
+                  <span class="eyebrow-dot" aria-hidden="true"></span>
+                  <span>Award Winning Agent</span>
+                </div>
+                <h3>CivicGrant IQ</h3>
+                <p>Best IQ Agent · Microsoft Agents League. A five-agent system that rose from a field of nearly 5,000 contestants and turns federal NOFOs into traceable municipal pursuit decisions.</p>
+                <div class="hero-award-proof" aria-label="CivicGrant IQ award proof">
+                  <span>Best IQ Agent</span>
+                  <span>Microsoft Agents League</span>
+                </div>
+              </div>
+              <div class="featured-build-visual hero-award-visual" aria-label="CivicGrant IQ preview">
+                <div class="spotlight-device hero-award-device">
+                  <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg" alt="CivicGrant IQ — Best IQ Agent" loading="lazy">
+                  <div class="reasoning-stream hero-award-stream" aria-hidden="true">
+                    <span>NOFO ingest</span>
+                    <span>Evidence graph</span>
+                    <span>Agent review</span>
+                    <span>Decision brief</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="featured-build-shell hero-award-shell hero-award-slide"
+                     data-metric-1-value="5" data-metric-1-label="Stage Agent Pipeline"
+                     data-metric-2-value="16" data-metric-2-label="MCP Tools"
+                     data-metric-3-value="<1,000" data-metric-3-label="Contestants">
+              <div class="featured-build-copy hero-award-copy">
+                <div class="featured-build-eyebrow">
+                  <span class="eyebrow-dot" aria-hidden="true"></span>
+                  <span>Award Winning Agent</span>
+                </div>
+                <h3>CivicLens</h3>
+                <p>Best Agent · JavaScript AI Build-a-thon. CivicLens placed first in a field just under 1,000 contestants with a 5-stage agent architecture wired to a JSON-RPC 2.0 MCP server.</p>
+                <div class="hero-award-proof" aria-label="CivicLens award proof">
+                  <span>Best Agent</span>
+                  <span>Intent > Data > RAG > Report</span>
+                </div>
+              </div>
+              <div class="featured-build-visual hero-award-visual" aria-label="CivicLens preview">
+                <div class="spotlight-device hero-award-device">
+                  <img src="https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png" alt="CivicLens — Best Agent Winner" loading="lazy">
+                  <div class="reasoning-stream hero-award-stream" aria-hidden="true">
+                    <span>Service data</span>
+                    <span>Plain language</span>
+                    <span>Issue reports</span>
+                    <span>Civic insight</span>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
-          <div class="elm-title-container">
-            <div class="elm-title-badge">
-              <span class="award-icon"><i data-lucide="trophy"></i></span>
-              <span class="elm-title-text">Award Winning ELM App</span>
-            </div>
-            <p class="elm-subtitle">Microsoft Best in Automation Winner</p>
-          </div>
-          <div class="image-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compact portfolio signal stream -->
+  <section class="build-signal-section" aria-label="Portfolio impact stream">
+    <div class="build-signal-inner">
+      <div class="signal-kicker">
+        <span class="signal-pulse" aria-hidden="true"></span>
+        <span>Impact Stream</span>
+      </div>
+      <div class="signal-marquee" aria-hidden="true">
+        <div class="signal-track">
+          <span class="signal-chip signal-award">3x Microsoft Award Winner</span>
+          <span class="signal-chip signal-metric">$195M+ Funds Tracked</span>
+          <span class="signal-chip signal-metric">585+ Hours Saved</span>
+          <span class="signal-chip signal-metric">95% Efficiency</span>
+          <span class="signal-chip">Azure AI Foundry</span>
+          <span class="signal-chip">Power Platform Apps</span>
+          <span class="signal-chip">Power BI Dashboards</span>
+          <span class="signal-chip">GIS StoryMaps</span>
+          <span class="signal-chip signal-award">3x Microsoft Award Winner</span>
+          <span class="signal-chip signal-metric">$195M+ Funds Tracked</span>
+          <span class="signal-chip signal-metric">585+ Hours Saved</span>
+          <span class="signal-chip signal-metric">95% Efficiency</span>
+          <span class="signal-chip">Azure AI Foundry</span>
+          <span class="signal-chip">Power Platform Apps</span>
+          <span class="signal-chip">Power BI Dashboards</span>
+          <span class="signal-chip">GIS StoryMaps</span>
         </div>
       </div>
     </div>
@@ -341,7 +498,7 @@
                data-modal-title="CivicGrant IQ — Best IQ Agent · Microsoft Agents League 2026"
                data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg"
                data-modal-slideshow="executive-summary-civicgrant,https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/app-current.jpeg,https://raw.githubusercontent.com/JonEricEubanks/CivicGrant-IQ/main/docs/architecture.svg,video:https://www.youtube.com/embed/dTRjA8eKwgQ?autoplay=1&start=15"
-               data-modal-descriptions="Best IQ Agent — Microsoft Agents League @ AI Skills Fest 2026 ($6,468 prize package). AI-powered municipal grant revenue intelligence that analyzes federal NOFOs in 6 grounded reasoning steps, every figure cited to a source document.||Grant Analysis Interface: The React 18 chat UI where users paste a federal NOFO. The agent streams 23 SSE event types — reasoning steps, GraphRAG evidence paths, agent handoffs, and guardrail verdicts — all in real time.||System Architecture: 5-agent fleet (Main Analyst, Red Team GS-14 reviewer, Competitive Intel, Portfolio Scan, Narrative Refinement) integrated with all 3 Microsoft IQ layers — Foundry IQ, Work IQ (4 live M365 signals), and Fabric IQ (live SQL analytics).||Demo Video: Full 5-minute walkthrough — paste a real NOFO, watch the 6-step GraphRAG reasoning chain, evidence paths panel, and 5-agent pressure test in action."
+            data-modal-descriptions="Best IQ Agent — Microsoft Agents League @ AI Skills Fest 2026, June 2026 ($6,468 prize package), selected from nearly 5,000 contestants. AI-powered municipal grant revenue intelligence that analyzes federal NOFOs in 6 grounded reasoning steps, every figure cited to a source document.||Grant Analysis Interface: The React 18 chat UI where users paste a federal NOFO. The agent streams 23 SSE event types — reasoning steps, GraphRAG evidence paths, agent handoffs, and guardrail verdicts — all in real time.||System Architecture: 5-agent fleet (Main Analyst, Red Team GS-14 reviewer, Competitive Intel, Portfolio Scan, Narrative Refinement) integrated with all 3 Microsoft IQ layers — Foundry IQ, Work IQ (4 live M365 signals), and Fabric IQ (live SQL analytics).||Demo Video: Full 5-minute walkthrough — paste a real NOFO, watch the 6-step GraphRAG reasoning chain, evidence paths panel, and 5-agent pressure test in action."
                data-modal-link="https://proud-field-00978990f.7.azurestaticapps.net/"
                data-kpi-icon=""
                data-kpi-value="5"
@@ -353,18 +510,18 @@
 
           <!-- CivicLens -->
           <div class="link-container modal-trigger"
-               data-modal-title="CivicLens — Grand Prize Winner · JavaScript AI Build-a-thon"
+            data-modal-title="CivicLens — Best Agent · JavaScript AI Build-a-thon"
                data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png"
                data-modal-slideshow="executive-summary-civiclens,https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png,video:https://www.youtube.com/embed/rFCUO5acv5Q?autoplay=1"
-               data-modal-descriptions="Grand Prize Winner — JavaScript AI Build-a-thon (Microsoft) · $1,000 Award. CivicLens transforms invisible municipal infrastructure data into plain-language intelligence reports, dispatches repair crews, and predicts infrastructure failures — all in JavaScript.||Home Dashboard: At-a-glance municipal overview showing active work orders, priority alerts, and AI-generated insights for Lake Forest, IL. The 5-stage multi-agent pipeline powers real-time infrastructure intelligence with Weibull decay priority scoring.||Demo Video: Full walkthrough — natural-language infrastructure Q&A, interactive Leaflet map with Weibull hazard simulator, MCP tool calls, AI-generated reports, and crew dispatch in action."
+               data-modal-descriptions="Best Agent — JavaScript AI Build-a-thon (Microsoft), April 2026, selected from a field just under 1,000 contestants. CivicLens transforms municipal infrastructure data into plain-language intelligence reports through a 5-stage agent architecture: Intent, Data/ReAct, RAG, Synthesis, and Report. It connects the app to a JSON-RPC 2.0 MCP server with 16 tools.||Home Dashboard: At-a-glance municipal overview showing active work orders, priority alerts, and AI-generated insights for Lake Forest, IL. Weibull decay scoring powers the real-time infrastructure prioritization.||Demo Video: Full walkthrough — natural-language infrastructure Q&A, interactive Leaflet map with Weibull hazard simulator, MCP tool calls, AI-generated reports, and crew dispatch in action."
                data-modal-link="https://civiclens-app.azurewebsites.net/"
                data-kpi-icon=""
-               data-kpi-value="1000"
-               data-kpi-title="Grand Prize · JS AI Build-a-thon"
-               data-kpi-prefix="$">
+            data-kpi-value="5"
+            data-kpi-title="Stage Agent Pipeline"
+            data-kpi-prefix="">
             <div class="image-container" style="background-image: url('https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png');">
             </div>
-            <p>CivicLens — Municipal Intelligence Reporter</p>
+            <p>CivicLens — 5-Stage Municipal Intelligence Agent</p>
           </div>
 
           <!-- MAINTAIN AI -->
@@ -372,7 +529,7 @@
                data-modal-title="MAINTAIN AI — Predictive Infrastructure Command Center"
                data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/debug-01-main.png"
                data-modal-slideshow="executive-summary-maintain,https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/debug-01-main.png,https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/src/assests/Chat%20Reasoning.png,https://raw.githubusercontent.com/JonEricEubanks/Maintain-/main/src/assests/NLP%20Dashboard%20Landing.png,video:https://www.youtube.com/embed/_cZO8YP-Kuw?autoplay=1"
-               data-modal-descriptions="Multi-agent reasoning system for municipal infrastructure management. 6 specialist agents across 7 orchestration pipelines analyze 1,281+ work orders, predict crew needs, and optimize dispatch. Built for the Microsoft AI Dev Days Hackathon 2026.||Command Center Dashboard: The main React 18 interface with immersive Leaflet map showing priority-coded pulsing markers, glassmorphism panels, and proactive AI companion notifications from the Analysis Agent.||AI Chat and Reasoning: Multi-step reasoning panel showing confidence scores, decision factors, and the Analysis Agent’s transparent breakdown of why each infrastructure repair recommendation was made.||NLP Dashboard Builder: Type any analytics question and the NLP Dashboard Agent (GPT-4o + Code Interpreter) builds a live visualization on demand using real work order data.||Demo Video: Full walkthrough — agent orchestration, AI dispatch wizard, what-if scenario simulator, observability traces, and Responsible AI panel in action."
+            data-modal-descriptions="Multi-agent reasoning system for municipal infrastructure management, built in February 2026. 6 specialist agents across 7 orchestration pipelines analyze 1,281+ work orders, predict crew needs, and optimize dispatch. Built for the Microsoft AI Dev Days Hackathon 2026.||Command Center Dashboard: The main React 18 interface with immersive Leaflet map showing priority-coded pulsing markers, glassmorphism panels, and proactive AI companion notifications from the Analysis Agent.||AI Chat and Reasoning: Multi-step reasoning panel showing confidence scores, decision factors, and the Analysis Agent’s transparent breakdown of why each infrastructure repair recommendation was made.||NLP Dashboard Builder: Type any analytics question and the NLP Dashboard Agent (GPT-4o + Code Interpreter) builds a live visualization on demand using real work order data.||Demo Video: Full walkthrough — agent orchestration, AI dispatch wizard, what-if scenario simulator, observability traces, and Responsible AI panel in action."
                data-modal-link="https://github.com/JonEricEubanks/Maintain-"
                data-kpi-icon=""
                data-kpi-value="6"
@@ -387,7 +544,7 @@
                data-modal-title="Kaizen AI — AI-Powered Certification Study Coach"
                data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/01-home-dashboard.png"
                data-modal-slideshow="executive-summary-kaizen,https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/01-home-dashboard.png,https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/03-quiz-question.png,https://raw.githubusercontent.com/JonEricEubanks/kaizen-ai/main/docs/key-features/11-donna-chat.png,video:https://www.youtube.com/embed/bXF_un5gaQQ?autoplay=1&start=47"
-               data-modal-descriptions="AI-powered Microsoft certification study coach featuring Donna AI companion. Built for the GitHub Copilot Creative Apps Hackathon using Power Apps Code Apps + Dataverse + Azure Functions. Supports any Microsoft exam with AI-generated content.||Home Dashboard: XP progress, level tracking, daily challenges, streak counter, and quick quiz modes. The gamification system awards XP for every activity with streak multipliers and 25+ achievements to unlock.||Quiz Interface: Clean quiz interface with 447+ real exam-style questions. Donna AI provides contextual hints, explanations, and power-ups. AI-predicted readiness gauge after each session.||Donna AI Chat: Full-screen conversational coaching with personalized study advice, exam-specific quick prompts, and context-aware actions on every screen based on your performance.||Demo Video: MCP exam discovery, 6-agent AI content generation, Donna AI hints, DALL-E 3 slide generator, gamification, and the multi-agent reasoning pipeline in action."
+            data-modal-descriptions="AI-powered Microsoft certification study coach featuring Donna AI companion. Built in February 2026 for the GitHub Copilot Creative Apps Hackathon using Power Apps Code Apps + Dataverse + Azure Functions. Supports any Microsoft exam with AI-generated content.||Home Dashboard: XP progress, level tracking, daily challenges, streak counter, and quick quiz modes. The gamification system awards XP for every activity with streak multipliers and 25+ achievements to unlock.||Quiz Interface: Clean quiz interface with 447+ real exam-style questions. Donna AI provides contextual hints, explanations, and power-ups. AI-predicted readiness gauge after each session.||Donna AI Chat: Full-screen conversational coaching with personalized study advice, exam-specific quick prompts, and context-aware actions on every screen based on your performance.||Demo Video: MCP exam discovery, 6-agent AI content generation, Donna AI hints, DALL-E 3 slide generator, gamification, and the multi-agent reasoning pipeline in action."
                data-modal-link="https://github.com/JonEricEubanks/kaizen-ai"
                data-kpi-icon=""
                data-kpi-value="447"
@@ -1223,9 +1380,9 @@
       <section id="contact" class="portfolio-section contact-section">
         <div class="contact-inner glass-morphism">
           <div class="contact-award-row">
-            <span class="contact-award-badge">&#127942; Microsoft Best in Automation</span>
-            <span class="contact-award-badge">&#127942; Best IQ Agent · AI Skills Fest 2026</span>
-            <span class="contact-award-badge">&#127942; Grand Prize · JS AI Build-a-thon</span>
+            <span class="contact-award-badge">&#127942; Microsoft Best in Automation 2025</span>
+            <span class="contact-award-badge">&#127942; Best IQ Agent · nearly 5,000 contestants</span>
+            <span class="contact-award-badge">&#127942; Best Agent · under 1,000 contestants</span>
           </div>
           <h2 class="contact-headline">
             Let’s Build Something <span class="gradient-text">Impactful</span> Together
@@ -2452,68 +2609,65 @@
         });
       });
 
-      // ELM Image Transition Effect - Enhanced
+      // Hero award card rotation
       document.addEventListener('DOMContentLoaded', function() {
-        const elmImages = document.querySelectorAll('.elm-image');
+        const awardSlides = document.querySelectorAll('.hero-award-slide');
         const container = document.querySelector('.elm-transition-container');
-        const titleEl  = document.querySelector('.elm-title-text');
-        const subtitleEl = document.querySelector('.elm-subtitle');
-        const badgeContainer = document.querySelector('.elm-title-container');
-
-        // Award label for each image slot (order must match the DOM order)
-        const awardData = [
-          { title: 'Award Winning ELM App',  subtitle: 'Microsoft Best in Automation Winner' },
-          { title: 'Award Winning ELM App',  subtitle: 'Microsoft Best in Automation Winner' },
-          { title: 'Award Winning Agent',    subtitle: 'Best IQ Agent \u00b7 Microsoft Agents League' },
-          { title: 'Award Winning Agent',    subtitle: 'Grand Prize \u00b7 JavaScript AI Build-a-thon' },
-        ];
+        const heroMetrics = document.querySelector('.hero-metrics');
+        const metricValues = document.querySelectorAll('.hero-metrics .metric-value');
+        const metricLabels = document.querySelectorAll('.hero-metrics .metric-label');
 
         let currentImageIndex = 0;
         let isTransitioning = false;
+
+        function syncHeroMetrics(slide, animate = true) {
+          if (!slide || metricValues.length < 3 || metricLabels.length < 3) return;
+
+          if (animate && heroMetrics) heroMetrics.classList.add('is-switching');
+
+          setTimeout(() => {
+            for (let index = 0; index < 3; index += 1) {
+              const metricNumber = index + 1;
+              metricValues[index].textContent = slide.getAttribute(`data-metric-${metricNumber}-value`) || metricValues[index].textContent;
+              metricLabels[index].textContent = slide.getAttribute(`data-metric-${metricNumber}-label`) || metricLabels[index].textContent;
+            }
+
+            if (heroMetrics) heroMetrics.classList.remove('is-switching');
+          }, animate ? 220 : 0);
+        }
+
+        syncHeroMetrics(awardSlides[currentImageIndex], false);
         
         function switchELMImage() {
-          if (isTransitioning || elmImages.length <= 1) return;
+          if (isTransitioning || awardSlides.length <= 1) return;
           
           isTransitioning = true;
-          
-          // Subtle glow during transition
-          container.style.boxShadow = '0 25px 80px rgba(15, 118, 110, 0.2), 0 10px 30px rgba(0, 0, 0, 0.1)';
-          
-          // Fade out current image AND badge
-          elmImages[currentImageIndex].classList.remove('active');
-          if (badgeContainer) badgeContainer.style.opacity = '0';
-          
-          // Advance, then fade in next image + update text
-          setTimeout(() => {
-            currentImageIndex = (currentImageIndex + 1) % elmImages.length;
-            elmImages[currentImageIndex].classList.add('active');
 
-            // Update award badge text to match the new image
-            const award = awardData[currentImageIndex];
-            if (award) {
-              if (titleEl)    titleEl.textContent    = award.title;
-              if (subtitleEl) subtitleEl.textContent = award.subtitle;
-            }
-            if (badgeContainer) badgeContainer.style.opacity = '1';
-            
-            // Reset container glow
+          setTimeout(() => {
+            const previousImageIndex = currentImageIndex;
+            currentImageIndex = (currentImageIndex + 1) % awardSlides.length;
+            awardSlides[currentImageIndex].classList.add('active');
+            syncHeroMetrics(awardSlides[currentImageIndex]);
+
             setTimeout(() => {
-              container.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.08)';
+              awardSlides[previousImageIndex].classList.remove('active');
               isTransitioning = false;
-            }, 1000);
-          }, 1000);
+            }, 900);
+          }, 450);
         }
         
-        // Start cycling: first switch after 4s, then every 5s
-        if (elmImages.length > 1) {
+        // Start cycling slowly enough for visitors to read each award and metric.
+        if (awardSlides.length > 1) {
           setTimeout(() => {
             switchELMImage();
-            setInterval(switchELMImage, 5000);
-          }, 4000);
+            setInterval(switchELMImage, 9000);
+          }, 6500);
         }
         
-        container.addEventListener('mouseenter', () => { container.style.animationPlayState = 'paused'; });
-        container.addEventListener('mouseleave', () => { container.style.animationPlayState = 'running'; });
+        if (container) {
+          container.addEventListener('mouseenter', () => { container.style.animationPlayState = 'paused'; });
+          container.addEventListener('mouseleave', () => { container.style.animationPlayState = 'running'; });
+        }
       });
 
       // Back to top functionality
@@ -2596,5 +2750,52 @@
       <div class="grid-lines"></div>
       <div class="data-particles"></div>
     </div>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Opening Animation + AOS Init -->
+    <script>
+      (function () {
+        var left  = document.getElementById('curtain-left');
+        var right = document.getElementById('curtain-right');
+        var intro = document.getElementById('page-intro');
+
+        // Logo shows for about one second, then the curtain opens.
+        window.setTimeout(function () {
+          if (left)  left.classList.add('open');
+          if (right) right.classList.add('open');
+          document.body.classList.add('ready'); // hero entrance fires simultaneously
+        }, 1000);
+
+        // Clean up after curtains fully slide off (1000 + 2000 + 300ms buffer)
+        window.setTimeout(function () {
+          if (intro) intro.style.display = 'none';
+          document.body.classList.remove('intro-active');
+        }, 3300);
+
+        // AOS
+        window.setTimeout(function () {
+          if (typeof AOS !== 'undefined') {
+            AOS.init({ duration: 750, once: true, easing: 'ease-out-cubic', offset: 60 });
+          }
+          document.querySelectorAll('.section-header').forEach(function (el) {
+            el.setAttribute('data-aos', 'fade-up');
+            el.setAttribute('data-aos-duration', '700');
+          });
+          ['#ai-apps','#lowcode','#dashboards','#GIS','#certifications'].forEach(function (sel) {
+            document.querySelectorAll(sel + ' .link-container, ' + sel + ' .cert-card').forEach(function (el, i) {
+              el.setAttribute('data-aos', 'fade-up');
+              el.setAttribute('data-aos-delay', String((i % 3) * 100));
+              el.setAttribute('data-aos-duration', '600');
+            });
+          });
+          document.querySelectorAll('.tech-group, .contact-inner').forEach(function (el, i) {
+            el.setAttribute('data-aos', 'fade-up');
+            el.setAttribute('data-aos-delay', String(i * 80));
+          });
+          if (typeof AOS !== 'undefined') AOS.refreshHard();
+        }, 100);
+      })();
+    </script>
   </body>
 </html>

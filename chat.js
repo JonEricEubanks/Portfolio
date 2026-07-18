@@ -870,7 +870,7 @@ Want to explore any specific aspect of this ${project.category} solution?`;
     startGuidedTour() {
         this.tourActive = true;
         const stops = [
-            { id: 'ai-apps',        msg: '**Stop 1 — AI Agents:** CivicGrant IQ (Microsoft Agents League 2026 winner) and CivicLens (JS AI Build-a-thon Grand Prize). Multi-agent systems built on Azure Foundry.' },
+            { id: 'ai-apps',        msg: '**Stop 1 — AI Agents:** CivicGrant IQ (Microsoft Agents League 2026 winner from nearly 5,000 contestants) and CivicLens (JS AI Build-a-thon Grand Prize from just under 1,000 contestants). Multi-agent systems built on Azure Foundry.' },
             { id: 'lowcode',        msg: '**Stop 2 — Low-Code Projects:** The award-winning ELM App deployed across 6+ municipalities, plus Power Apps solutions saving 585+ staff hours annually.' },
             { id: 'dashboards',     msg: '**Stop 3 — Dashboards:** Power BI solutions tracking $195.9M+ in municipal funds — construction oversight, rental aid, and neighborhood improvement.' },
             { id: 'GIS',            msg: '**Stop 4 — GIS Solutions:** ArcGIS-powered tools including LISA, an AI agent that automated 3,000+ land information searches with 75% time savings.' },
