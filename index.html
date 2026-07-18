@@ -240,13 +240,13 @@
               <div class="featured-build-copy hero-award-copy">
                 <div class="featured-build-eyebrow">
                   <span class="eyebrow-dot" aria-hidden="true"></span>
-                  <span>Award Winning App</span>
+                  <span>Global Award-Winning App</span>
                 </div>
                 <h3>Employment Lifecycle Management App</h3>
-                <p>Microsoft Best in Automation winner built to streamline hiring workflows, task routing, and operational visibility for civic teams.</p>
+                <p>Winner of Microsoft's global Best in Automation award — built to streamline hiring workflows, task routing, and operational visibility for civic teams.</p>
                 <div class="hero-award-proof" aria-label="ELM award proof">
                   <span>Microsoft Best in Automation</span>
-                  <span>Workflow intelligence</span>
+                  <span>Global Competition</span>
                 </div>
               </div>
               <div class="featured-build-visual hero-award-visual" aria-label="ELM app preview">
@@ -268,13 +268,13 @@
               <div class="featured-build-copy hero-award-copy">
                 <div class="featured-build-eyebrow">
                   <span class="eyebrow-dot" aria-hidden="true"></span>
-                  <span>Award Winning Agent</span>
+                  <span>Global Award-Winning Agent</span>
                 </div>
                 <h3>CivicGrant IQ</h3>
-                <p>Best IQ Agent · Microsoft Agents League. A five-agent system that rose from a field of nearly 5,000 contestants and turns federal NOFOs into traceable municipal pursuit decisions.</p>
+                <p>Best IQ Agent · Microsoft Agents League, a global hackathon. A five-agent system that rose from a worldwide field of nearly 5,000 contestants and turns federal NOFOs into traceable municipal pursuit decisions.</p>
                 <div class="hero-award-proof" aria-label="CivicGrant IQ award proof">
                   <span>Best IQ Agent</span>
-                  <span>Microsoft Agents League</span>
+                  <span>Global · Microsoft Agents League</span>
                 </div>
               </div>
               <div class="featured-build-visual hero-award-visual" aria-label="CivicGrant IQ preview">
@@ -296,10 +296,10 @@
               <div class="featured-build-copy hero-award-copy">
                 <div class="featured-build-eyebrow">
                   <span class="eyebrow-dot" aria-hidden="true"></span>
-                  <span>Award Winning Agent</span>
+                  <span>Global Award-Winning Agent</span>
                 </div>
                 <h3>CivicLens</h3>
-                <p>Best Agent · JavaScript AI Build-a-thon. CivicLens placed first in a field just under 1,000 contestants with a 5-stage agent architecture wired to a JSON-RPC 2.0 MCP server.</p>
+                <p>Best Agent · JavaScript AI Build-a-thon, a global hackathon. CivicLens placed first in a worldwide field of just under 1,000 contestants with a 5-stage agent architecture wired to a JSON-RPC 2.0 MCP server.</p>
                 <div class="hero-award-proof" aria-label="CivicLens award proof">
                   <span>Best Agent</span>
                   <span>Intent > Data > RAG > Report</span>
@@ -2679,12 +2679,30 @@
         let currentImageIndex = 0;
         let isTransitioning = false;
 
+        // On mobile the compact award card doesn't pair with per-slide metrics,
+        // so keep the static overall portfolio metrics from the HTML instead.
+        const mobileMetricsQuery = window.matchMedia('(max-width: 640px)');
+        const defaultMetrics = Array.from(metricValues, (value, index) => ({
+          value: value.textContent,
+          label: metricLabels[index] ? metricLabels[index].textContent : ''
+        }));
+
+        function restoreDefaultMetrics() {
+          defaultMetrics.forEach((metric, index) => {
+            if (metricValues[index]) metricValues[index].textContent = metric.value;
+            if (metricLabels[index]) metricLabels[index].textContent = metric.label;
+          });
+          if (heroMetrics) heroMetrics.classList.remove('is-switching');
+        }
+
         function syncHeroMetrics(slide, animate = true) {
+          if (mobileMetricsQuery.matches) return;
           if (!slide || metricValues.length < 3 || metricLabels.length < 3) return;
 
           if (animate && heroMetrics) heroMetrics.classList.add('is-switching');
 
           setTimeout(() => {
+            if (mobileMetricsQuery.matches) { restoreDefaultMetrics(); return; }
             for (let index = 0; index < 3; index += 1) {
               const metricNumber = index + 1;
               metricValues[index].textContent = slide.getAttribute(`data-metric-${metricNumber}-value`) || metricValues[index].textContent;
@@ -2693,6 +2711,17 @@
 
             if (heroMetrics) heroMetrics.classList.remove('is-switching');
           }, animate ? 220 : 0);
+        }
+
+        const handleMetricsModeChange = (event) => {
+          if (event.matches) {
+            restoreDefaultMetrics();
+          } else {
+            syncHeroMetrics(awardSlides[currentImageIndex], false);
+          }
+        };
+        if (typeof mobileMetricsQuery.addEventListener === 'function') {
+          mobileMetricsQuery.addEventListener('change', handleMetricsModeChange);
         }
 
         syncHeroMetrics(awardSlides[currentImageIndex], false);
