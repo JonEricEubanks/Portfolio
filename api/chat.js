@@ -1,29 +1,66 @@
-// Azure Functions v4 - AI chat powered by GitHub Models
+// Azure Functions v4 - AI chat powered by Anthropic Claude
 const { app } = require('@azure/functions');
-const { OpenAI } = require('openai');
+const Anthropic = require('@anthropic-ai/sdk');
+
+// Only these origins may read the response (browsers still send the request either way,
+// but without a matching Access-Control-Allow-Origin the page can't read the reply).
+const ALLOWED_ORIGINS = [
+    'https://happy-tree-026e2110f.7.azurestaticapps.net',
+    'http://localhost:3000',
+    'http://localhost:4280'
+];
+
+const MAX_MESSAGE_LENGTH = 1000;
+
+// Best-effort per-instance sliding-window limiter (resets on cold start / across instances,
+// but still blocks simple scripted abuse from burning through API credits).
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const requestLog = new Map();
+
+function isRateLimited(clientId) {
+    const now = Date.now();
+    const timestamps = (requestLog.get(clientId) || []).filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+    timestamps.push(now);
+    requestLog.set(clientId, timestamps);
+    return timestamps.length > RATE_LIMIT_MAX_REQUESTS;
+}
+
+function buildCorsHeaders(request) {
+    const origin = request.headers.get('origin');
+    const headers = {
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Accept',
+        'Vary': 'Origin'
+    };
+    if (origin && ALLOWED_ORIGINS.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin;
+    }
+    return headers;
+}
 
 app.http('chat', {
     methods: ['POST', 'OPTIONS'],
     authLevel: 'anonymous',
     handler: async (request, context) => {
-        const corsHeaders = {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Accept'
-        };
+        const corsHeaders = buildCorsHeaders(request);
 
         if (request.method === 'OPTIONS') {
             return { status: 200, headers: corsHeaders };
         }
 
-        if (!process.env.GITHUB_TOKEN) {
-            context.error('GITHUB_TOKEN environment variable is not set');
-            return { status: 500, jsonBody: { error: 'GitHub token not configured. Add GITHUB_TOKEN to your Azure SWA application settings.' }, headers: corsHeaders };
+        const clientId = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+        if (isRateLimited(clientId)) {
+            return { status: 429, jsonBody: { error: 'Too many requests. Please wait a minute and try again.' }, headers: corsHeaders };
         }
 
-        const openai = new OpenAI({
-            baseURL: 'https://models.inference.ai.azure.com',
-            apiKey: process.env.GITHUB_TOKEN
+        if (!process.env.ANTHROPIC_API_KEY) {
+            context.error('ANTHROPIC_API_KEY environment variable is not set');
+            return { status: 500, jsonBody: { error: 'Anthropic API key not configured. Add ANTHROPIC_API_KEY to your Azure SWA application settings.' }, headers: corsHeaders };
+        }
+
+        const anthropic = new Anthropic({
+            apiKey: process.env.ANTHROPIC_API_KEY
         });
 
         try {
@@ -33,16 +70,15 @@ app.http('chat', {
             return { status: 400, jsonBody: { error: 'Message is required' }, headers: corsHeaders };
         }
 
+        if (message.length > MAX_MESSAGE_LENGTH) {
+            return { status: 400, jsonBody: { error: `Message too long. Maximum ${MAX_MESSAGE_LENGTH} characters.` }, headers: corsHeaders };
+        }
+
         // Build enhanced system context
-        const systemContext = chatContext || buildDefaultContext(portfolioData);
-        
-        // Prepare conversation messages with context awareness
+        let systemContext = chatContext || buildDefaultContext(portfolioData);
+
+        // Prepare conversation messages with context awareness (Anthropic keeps system separate)
         const messages = [
-            {
-                role: "system",
-                content: systemContext
-            },
-            // Include recent conversation history for context
             ...conversationHistory.slice(-6).map(msg => ({
                 role: msg.role === 'user' ? 'user' : 'assistant',
                 content: msg.content
@@ -63,22 +99,23 @@ app.http('chat', {
         if (recentResponses.length > 1) {
             const repetitionCheck = checkForRepetition(recentResponses);
             if (repetitionCheck.isRepetitive) {
-                messages[0].content += `\n\n⚠️ ANTI-REPETITION NOTICE: Your recent responses contained similar content. Please provide a fresh perspective, use different examples, or explore a different angle of the topic. Recent response themes to avoid: ${repetitionCheck.themes.join(', ')}`;
+                systemContext += `\n\n⚠️ ANTI-REPETITION NOTICE: Your recent responses contained similar content. Please provide a fresh perspective, use different examples, or explore a different angle of the topic. Recent response themes to avoid: ${repetitionCheck.themes.join(', ')}`;
             }
         }
 
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4o", // GitHub Models — works with GitHub Copilot subscription
+        const completion = await anthropic.messages.create({
+            model: "claude-haiku-4-5-20251001",
+            system: systemContext,
             messages: messages,
             max_tokens: 400,
             temperature: 0.8
         });
 
-        const reply = completion.choices[0].message.content;
+        const reply = completion.content[0].text;
         return { status: 200, jsonBody: { reply }, headers: corsHeaders };
 
     } catch (error) {
-        context.error('GitHub Models API error:', error);
+        context.error('Anthropic API error:', error);
         return { status: 500, jsonBody: { error: 'Failed to process chat request', details: error.message }, headers: corsHeaders };
     }
 }
@@ -179,3 +216,6 @@ function checkForRepetition(recentResponses) {
     
     return { isRepetitive, themes };
 }
+
+// Exported for unit tests only — does not affect the Azure Functions runtime
+module.exports = { checkForRepetition, buildDefaultContext, isRateLimited, buildCorsHeaders, ALLOWED_ORIGINS, MAX_MESSAGE_LENGTH };

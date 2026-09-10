@@ -12,6 +12,7 @@ app.http('version', {
                 timestamp: new Date().toISOString(),
                 env: {
                     hasToken: !!process.env.GITHUB_TOKEN,
+                    hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
                     owner: process.env.GITHUB_OWNER || 'missing',
                     repo: process.env.GITHUB_REPO || 'missing'
                 }

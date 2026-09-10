@@ -1521,3 +1521,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Exported for unit tests only (Node/Jest) — `module` is undefined in browsers so this is a no-op there
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { JonEricChatBot };
+}

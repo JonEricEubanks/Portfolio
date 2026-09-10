@@ -85,20 +85,20 @@ app.use((error, req, res, next) => {
     next();
 });
 
-// OpenAI configuration (optional - server works without it for image uploads)
-const { OpenAI } = require('openai');
-let openai = null;
-if (process.env.OPENAI_API_KEY) {
-    openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY
+// Anthropic configuration (optional - server works without it for image uploads)
+const Anthropic = require('@anthropic-ai/sdk');
+let anthropic = null;
+if (process.env.ANTHROPIC_API_KEY) {
+    anthropic = new Anthropic({
+        apiKey: process.env.ANTHROPIC_API_KEY
     });
 }
 
 // Chat endpoint
 app.post('/api/chat', async (req, res) => {
     try {
-        if (!openai) {
-            return res.status(503).json({ error: 'OpenAI API key not configured' });
+        if (!anthropic) {
+            return res.status(503).json({ error: 'Anthropic API key not configured' });
         }
         
         const { message, context, conversationHistory = [], portfolioData = {} } = req.body;
@@ -107,16 +107,15 @@ app.post('/api/chat', async (req, res) => {
             return res.status(400).json({ error: 'Message is required' });
         }
 
+        if (message.length > 1000) {
+            return res.status(400).json({ error: 'Message too long. Maximum 1000 characters.' });
+        }
+
         // Build enhanced system context
-        const systemContext = context || buildDefaultContext(portfolioData);
+        let systemContext = context || buildDefaultContext(portfolioData);
         
-        // Prepare conversation messages with context awareness
+        // Prepare conversation messages with context awareness (Anthropic keeps system separate)
         const messages = [
-            {
-                role: "system",
-                content: systemContext
-            },
-            // Include recent conversation history for context
             ...conversationHistory.slice(-6).map(msg => ({
                 role: msg.role === 'user' ? 'user' : 'assistant',
                 content: msg.content
@@ -137,24 +136,23 @@ app.post('/api/chat', async (req, res) => {
         if (recentResponses.length > 1) {
             const repetitionCheck = checkForRepetition(recentResponses);
             if (repetitionCheck.isRepetitive) {
-                messages[0].content += `\n\n⚠️ ANTI-REPETITION NOTICE: Your recent responses contained similar content. Please provide a fresh perspective, use different examples, or explore a different angle of the topic. Recent response themes to avoid: ${repetitionCheck.themes.join(', ')}`;
+                systemContext += `\n\n⚠️ ANTI-REPETITION NOTICE: Your recent responses contained similar content. Please provide a fresh perspective, use different examples, or explore a different angle of the topic. Recent response themes to avoid: ${repetitionCheck.themes.join(', ')}`;
             }
         }
 
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4o-mini", // Updated to more capable model
+        const completion = await anthropic.messages.create({
+            model: "claude-haiku-4-5-20251001",
+            system: systemContext,
             messages: messages,
-            max_tokens: 400, // Increased for more detailed responses
-            temperature: 0.8, // Slightly increased for more variation
-            presence_penalty: 0.6, // Discourage repetition
-            frequency_penalty: 0.3 // Further discourage repetition
+            max_tokens: 400,
+            temperature: 0.8
         });
 
-        const response = completion.choices[0].message.content;
+        const response = completion.content[0].text;
         res.json({ reply: response });
 
     } catch (error) {
-        console.error('OpenAI API error:', error);
+        console.error('Anthropic API error:', error);
         res.status(500).json({ 
             error: 'Failed to generate response',
             details: error.message 
