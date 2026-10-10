@@ -1700,14 +1700,22 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         }
     }
 
+    // Every post shown on the blog: GitHub-hosted posts plus externally published ones
+    getAllPosts() {
+        return [...this.posts, ...this.externalPosts]
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
     // Get posts for AI chat context
     getPostsForContext() {
-        return this.posts.map(post => ({
+        return this.getAllPosts().map(post => ({
             title: post.title,
             category: post.category,
             excerpt: post.excerpt,
             date: this.formatDate(post.date),
-            tags: post.tags
+            tags: post.tags,
+            source: post.source || undefined,
+            url: post.externalUrl || undefined
         }));
     }
     

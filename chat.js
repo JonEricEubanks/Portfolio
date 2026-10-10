@@ -298,7 +298,7 @@ Response Strategy:
         // don't get intercepted by the municipal domain check below
         const blogKeywords = ['blog', 'post', 'article', 'wrote', 'writing', 'read', 'publish'];
         const hasBlogKeyword = blogKeywords.some(kw => lowMessage.includes(kw));
-        const livePosts = (window.blogManager && window.blogManager.posts) ? window.blogManager.posts : [];
+        const livePosts = (window.blogManager && window.blogManager.getAllPosts) ? window.blogManager.getAllPosts() : [];
         const mentionsPostTitle = livePosts.some(p => lowMessage.includes(p.title.toLowerCase().substring(0, 20)));
         if (hasBlogKeyword || mentionsPostTitle) {
             intent.type = 'blog';
@@ -1376,14 +1376,14 @@ Q: Why trust his work?
 
     async getAIResponse(userMessage) {
         // Fetch live blog posts at call-time so async loads are captured
-        const liveBlogPosts = (window.blogManager && window.blogManager.posts.length)
+        const liveBlogPosts = (window.blogManager && window.blogManager.getPostsForContext)
             ? window.blogManager.getPostsForContext()
             : this.portfolioData.blogPosts;
 
         const blogSection = liveBlogPosts.length
-            ? `\nBLOG POSTS (${liveBlogPosts.length} published):\n` +
-              liveBlogPosts.slice(0, 10).map(p =>
-                  `• [${p.date}] "${p.title}" (${p.category})${p.excerpt ? ' — ' + p.excerpt.substring(0, 80) : ''}`
+            ? `\nBLOG POSTS (${liveBlogPosts.length} published — list every one when asked what he has written):\n` +
+              liveBlogPosts.slice(0, 25).map(p =>
+                  `• [${p.date}] "${p.title}" (${p.category}${p.source ? ', published on ' + p.source : ''})${p.excerpt ? ' — ' + p.excerpt.substring(0, 140) : ''}`
               ).join('\n')
             : '';
 
@@ -1417,7 +1417,7 @@ RESPONSE INSTRUCTIONS:
 • Avoid repeating previous responses in conversation history
 • Be specific about JonEric's work and achievements
 • Use fresh examples and varied language
-• Keep response under 150 words
+• Keep response under 150 words, except when asked to list blog posts or projects — then include every item (title and date, one short line each)
 • Include relevant emojis and formatting`;
 
         try {
@@ -1441,7 +1441,7 @@ RESPONSE INSTRUCTIONS:
                         })),
                         achievements: this.portfolioData.achievements,
                         certificationCount: this.portfolioData.certifications.length,
-                        blogPosts: liveBlogPosts.slice(0, 10)
+                        blogPosts: liveBlogPosts.slice(0, 25)
                     }
                 })
             });

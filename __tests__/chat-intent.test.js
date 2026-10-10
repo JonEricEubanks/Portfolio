@@ -89,6 +89,12 @@ describe('analyzeUserIntent', () => {
         expect(intent.type).toBe('blog');
     });
 
+    test('recognises a blog question that names an external (Tech Community) post', () => {
+        window.blogManager.getAllPosts = () => [{ title: 'Understanding Harnesses: The Concept That Changes How You Build Agents' }];
+        const intent = bot.analyzeUserIntent('Summarize understanding harnesses: the concept');
+        expect(intent.type).toBe('blog');
+    });
+
     test('detects challenge/weakness questions', () => {
         const intent = bot.analyzeUserIntent('What are the cons of using low-code tools?');
         expect(intent.type).toBe('challenges');
