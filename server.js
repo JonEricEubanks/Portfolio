@@ -162,7 +162,7 @@ app.post('/api/chat', async (req, res) => {
 
 // Helper function to build enhanced context
 function buildDefaultContext(portfolioData = {}) {
-    const { projectCount = 8, recentProjects = [], achievements = [], certificationCount = 15 } = portfolioData;
+    const { projectCount = 8, projects = [], achievements = [], certificationCount = 15 } = portfolioData;
     
     return `🤖 JonEric Eubanks Portfolio Agent - Enhanced AI Assistant
 
@@ -189,8 +189,8 @@ CURRENT PORTFOLIO STATS:
 • Financial Oversight: $195.9M+ tracked across projects
 • Certifications: ${certificationCount}+ including PMP, Microsoft, ESRI
 
-RECENT KEY PROJECTS:
-${recentProjects.map(p => `• ${p.title} (${p.category}): ${p.description || 'Advanced low-code solution'}`).join('\n') || '• ELM App: Award-winning automation solution\n• Municipal Dashboards: Real-time government insights\n• AI Copilots: Automated property research and citizen services'}
+PORTFOLIO PROJECTS:
+${projects.map(p => `• ${p.title} (${p.sectionLabel || p.category}): ${p.description || 'Advanced low-code solution'}`).join('\n') || '• ELM App: Award-winning automation solution\n• Municipal Dashboards: Real-time government insights\n• AI Copilots: Automated property research and citizen services'}
 
 CORE EXPERTISE:
 🛠️ Microsoft Power Platform (Apps, Automate, BI, Pages, Copilot Studio)

@@ -243,6 +243,32 @@
 .category-gis-gov { background: linear-gradient(135deg, #059669, #10B981); }
 .category-career-tutorials { background: linear-gradient(135deg, #0891B2, #22D3EE); }
 
+/* Posts published on external sites (e.g. Microsoft Tech Community) */
+.blog-card-external .blog-card-image img {
+    object-fit: contain;
+}
+
+.blog-source-badge {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    z-index: 2;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #fff;
+    backdrop-filter: blur(6px);
+}
+
+.blog-card-external:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
 /* Date - Subtle */
 .blog-date {
     font-size: 0.75rem;

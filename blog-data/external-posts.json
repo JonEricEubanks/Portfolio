@@ -1,0 +1,46 @@
+[
+  {
+    "id": "ext-foundry-multi-agent-patterns",
+    "title": "Transforming Solo Agents to Collaborative Teams: Choosing Multi-Agent Patterns in Microsoft Foundry",
+    "category": "ai-copilot",
+    "excerpt": "Building an agent system that knows which agent should act, what context to share, when the work is done, and where a person must approve is the harder architectural problem. A guide to sequential, concurrent, handoff, group chat, and Magentic patterns.",
+    "tags": ["Microsoft Foundry", "Agent Framework", "Multi-Agent", "Orchestration", "AI Agents"],
+    "image": "Images/blog/foundry-multi-agent-cover.jpg",
+    "date": "2026-09-23T12:00:00.000Z",
+    "source": "Microsoft Tech Community",
+    "externalUrl": "https://techcommunity.microsoft.com/blog/educatordeveloperblog/transforming-solo-agents-to-collaborative-teams-choosing-multi-agent-patterns-in/4555465"
+  },
+  {
+    "id": "ext-ai-teammate-101",
+    "title": "AI Teammate 101 — A Hands-On Community Workshop for Working With AI Coding Agents",
+    "category": "ai-copilot",
+    "excerpt": "A free, MIT-licensed workshop on delegating work to GitHub Copilot's coding agent through well-scoped issues, session review, and specialist agent design.",
+    "tags": ["GitHub Copilot", "Coding Agent", "CodeQL", "Developer Education"],
+    "image": "Images/blog/ai-teammate-101-header.png",
+    "date": "2026-09-08T12:00:00.000Z",
+    "source": "Microsoft Tech Community",
+    "externalUrl": "https://techcommunity.microsoft.com/blog/educatordeveloperblog/a-hands-on-community-workshop-for-learning-to-work-with-ai-coding-agents/4553030"
+  },
+  {
+    "id": "ext-understanding-harnesses",
+    "title": "Understanding Harnesses: The Concept That Changes How You Build Agents in Copilot Studio",
+    "category": "ai-copilot",
+    "excerpt": "Explains the three Copilot Studio harnesses — Copilot Chat, Standard, and the model-agnostic GitHub Copilot harness — and how to choose between explicit construction and goal-directed reasoning.",
+    "tags": ["Copilot Studio", "Agent Architecture", "Harnesses"],
+    "image": "Images/blog-harnesses.png",
+    "date": "2026-08-24T12:00:00.000Z",
+    "source": "Microsoft Tech Community",
+    "externalUrl": "https://techcommunity.microsoft.com/blog/educatordeveloperblog/understanding-harnesses-the-concept-that-changes-how-you-build-agents-in-copilot/4545149"
+  },
+  {
+    "id": "ext-civicgrant-iq",
+    "title": "CivicGrant IQ: The Five-Agent AI That Reads Federal Grants So Cities Don't Have To",
+    "category": "ai-copilot",
+    "excerpt": "Guest post on CivicGrant IQ's five-agent architecture, GraphRAG reasoning, and the four Microsoft IQ layers (Foundry, Work, Fabric, Web) behind the Best IQ Agent win at Agents League 2026.",
+    "tags": ["Azure AI Foundry", "GraphRAG", "Agents League", "GovTech"],
+    "image": "Images/blog/civicgrant-iq-hero.svg",
+    "date": "2026-07-31T12:00:00.000Z",
+    "source": "Microsoft Tech Community",
+    "externalUrl": "https://techcommunity.microsoft.com/blog/educatordeveloperblog/civicgrant-iq-the-five-agent-ai-that-reads-federal-grants-so-cities-dont-have-to/4542419"
+  }
+]

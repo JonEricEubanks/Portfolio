@@ -37,25 +37,32 @@ class JonEricChatBot {
             blogPosts: []
         };
 
-        // Extract project data from modal triggers
-        document.querySelectorAll('.modal-trigger').forEach(trigger => {
-            const title = trigger.getAttribute('data-modal-title');
-            const descriptions = trigger.getAttribute('data-modal-descriptions');
-            const slideshow = trigger.getAttribute('data-modal-slideshow');
-            
-            if (title && descriptions) {
-                data.projects.push({
-                    title: title,
-                    descriptions: descriptions.split('||'),
-                    hasSlideshow: !!slideshow,
-                    category: this.categorizeProject(title)
-                });
-            }
+        // Extract project data only from the project sections — certifications and the
+        // recommendation letter are also .modal-trigger elements and must not count as projects
+        JonEricChatBot.PROJECT_SECTIONS.forEach(section => {
+            document.querySelectorAll(`#${section.id} .modal-trigger`).forEach(trigger => {
+                const title = trigger.getAttribute('data-modal-title');
+                const descriptions = trigger.getAttribute('data-modal-descriptions')
+                    || trigger.getAttribute('data-modal-description'); // dashboard/GIS cards use the singular form
+                const slideshow = trigger.getAttribute('data-modal-slideshow');
+
+                if (title && descriptions) {
+                    data.projects.push({
+                        title: title,
+                        shortTitle: this.shortProjectTitle(title),
+                        descriptions: descriptions.split('||'),
+                        hasSlideshow: !!slideshow,
+                        category: this.categorizeProject(title),
+                        section: section.id,
+                        sectionLabel: section.label
+                    });
+                }
+            });
         });
 
         // Extract certifications
         document.querySelectorAll('.certification-item').forEach(cert => {
-            const title = cert.querySelector('h3')?.textContent;
+            const title = cert.getAttribute('data-modal-title') || cert.textContent.trim();
             const org = cert.querySelector('.certification-org')?.textContent;
             if (title) {
                 data.certifications.push({ title, organization: org });
@@ -93,6 +100,42 @@ class JonEricChatBot {
         }
 
         return data;
+    }
+
+    shortProjectTitle(title) {
+        const short = title.split(/\s[—–·]\s/)[0].trim();
+        return short.length > 60 ? short.substring(0, 57) + '…' : short;
+    }
+
+    // Projects grouped by portfolio section, in page order; empty sections are dropped
+    getProjectGroups() {
+        return JonEricChatBot.PROJECT_SECTIONS
+            .map(section => ({
+                ...section,
+                projects: this.portfolioData.projects.filter(p => p.section === section.id)
+            }))
+            .filter(group => group.projects.length > 0);
+    }
+
+    // Answers "what projects has he worked on" from the live page data instead of canned text.
+    // `type` optionally narrows to one section ('ai', 'app', 'dashboard', 'gis').
+    getLiveProjectsResponse(type) {
+        const groups = this.getProjectGroups().filter(g => !type || g.type === type);
+        if (groups.length === 0) return null;
+
+        const MAX_NAMES = 6;
+        const total = groups.reduce((sum, g) => sum + g.projects.length, 0);
+        const lines = groups.map(g => {
+            const names = g.projects.slice(0, MAX_NAMES).map(p => p.shortTitle).join(', ');
+            const extra = g.projects.length - MAX_NAMES;
+            return `• **${g.label} (${g.projects.length})** → ${names}${extra > 0 ? ` and ${extra} more` : ''}`;
+        });
+
+        const intro = type
+            ? `🛠️ JonEric's ${groups[0].label} portfolio includes ${total} projects:`
+            : `🛠️ JonEric's portfolio showcases **${total} projects** across ${groups.length} areas:`;
+
+        return `${intro}\n\n${lines.join('\n')}\n\n🏆 Standout: the ELM App won Microsoft's Best in Automation award. Ask about any project by name, or say "open <project name>" to view it.`;
     }
 
     categorizeProject(title) {
@@ -264,9 +307,38 @@ Response Strategy:
         }
 
         // Specific question analysis for better categorization
-        if (lowMessage.includes('cons') || lowMessage.includes('disadvantage') || lowMessage.includes('weakness')) {
+        if (/\bcons\b/.test(lowMessage) || lowMessage.includes('disadvantage') || lowMessage.includes('weakness')) {
             intent.type = 'challenges';
             intent.confidence = 0.9;
+            return intent;
+        }
+
+        // "What projects has he worked on / built?" — answered from the live project list.
+        // Checked before the dashboard/Power Platform topics so a tech name inside the question
+        // narrows the list instead of hijacking it into a canned skills answer.
+        const asksForProjects = /\bprojects?\b|\b(worked|working|work) on\b|\bbuilt\b|\bportfolio\b/.test(lowMessage);
+        const asksForSkillsOrOther = /\b(experience|skills?|expertise|certif\w*|awards?|career)\b/.test(lowMessage);
+        if (asksForProjects && !asksForSkillsOrOther) {
+            intent.type = 'projects';
+            intent.confidence = 0.9;
+            intent.keywords = ['project'];
+            intent.context.listProjects = true;
+            if (/\belm\b|employment/.test(lowMessage)) {
+                intent.context.specificProject = 'elm';
+                intent.context.listProjects = false;
+            } else if (/\bdashboards?\b|power bi/.test(lowMessage)) {
+                intent.context.projectType = 'dashboard';
+            } else if (/\bgis\b|\bmaps?\b|\bmapping\b|spatial|arcgis/.test(lowMessage)) {
+                intent.context.projectType = 'gis';
+            } else if (/\bai\b|\bagents?\b|copilot/.test(lowMessage)) {
+                intent.context.projectType = 'ai';
+            }
+            if (/government|municipal|\bcity\b|\bpublic\b/.test(lowMessage)) {
+                intent.context.domain = 'government';
+            }
+            if (message.includes('?')) {
+                intent.context.isQuestion = true;
+            }
             return intent;
         }
         
@@ -300,7 +372,7 @@ Response Strategy:
                 intent.confidence = 0.9;
             } else if (lowMessage.includes('gis') || lowMessage.includes('map') || lowMessage.includes('spatial')) {
                 intent.context.projectType = 'gis';
-            } else if (lowMessage.includes('ai') || lowMessage.includes('copilot') || lowMessage.includes('agent')) {
+            } else if (/\bai\b|\bagents?\b|copilot/.test(lowMessage)) {
                 intent.context.projectType = 'ai';
             }
         }
@@ -404,7 +476,12 @@ Response Strategy:
             // Check for specific project context
             if (intent.context.specificProject === 'elm') {
                 return this.getELMProjectResponse();
-            } else if (intent.context.projectType) {
+            }
+            if (intent.context.listProjects) {
+                const liveList = this.getLiveProjectsResponse(intent.context.projectType);
+                if (liveList) return liveList;
+            }
+            if (intent.context.projectType) {
                 return this.getProjectTypeResponse(intent.context.projectType);
             } else {
                 // General projects overview with variation
@@ -1310,6 +1387,11 @@ Q: Why trust his work?
               ).join('\n')
             : '';
 
+        const projectsContext = this.getProjectGroups().map(g =>
+            `${g.label} (${g.projects.length}):\n` +
+            g.projects.map(p => `• ${p.shortTitle}: ${(p.descriptions[0] || '').substring(0, 140)}`).join('\n')
+        ).join('\n\n');
+
         // Enhanced context with conversation history and live portfolio data
         const enhancedContext = `${this.contextPrompt}
 
@@ -1325,9 +1407,9 @@ CURRENT PORTFOLIO STATS:
 • AI Solutions: ${this.getProjectsByCategory('ai').length}
 • GIS Projects: ${this.getProjectsByCategory('gis').length}
 ${blogSection}
-RECENT PROJECTS TO HIGHLIGHT:
-${this.portfolioData.projects.slice(0, 3).map(p => `• ${p.title}`).join('\n')}
 
+ALL PORTFOLIO PROJECTS (use these when asked what he has worked on):
+${projectsContext}
 USER QUERY: ${userMessage}
 
 RESPONSE INSTRUCTIONS:
@@ -1351,9 +1433,10 @@ RESPONSE INSTRUCTIONS:
                     conversationHistory: this.conversationHistory.slice(-6), // Send recent history
                     portfolioData: {
                         projectCount: this.portfolioData.projects.length,
-                        recentProjects: this.portfolioData.projects.slice(0, 5).map(p => ({
-                            title: p.title,
+                        projects: this.portfolioData.projects.map(p => ({
+                            title: p.shortTitle,
                             category: p.category,
+                            sectionLabel: p.sectionLabel,
                             description: p.descriptions[0]?.substring(0, 100)
                         })),
                         achievements: this.portfolioData.achievements,
@@ -1521,6 +1604,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Page sections that hold portfolio projects, in page order. `type` matches intent.context.projectType.
+JonEricChatBot.PROJECT_SECTIONS = [
+    { id: 'ai-apps', label: 'AI Agents & Applications', type: 'ai' },
+    { id: 'lowcode', label: 'Low-Code Apps', type: 'app' },
+    { id: 'dashboards', label: 'Dashboards', type: 'dashboard' },
+    { id: 'GIS', label: 'GIS Maps', type: 'gis' }
+];
 
 // Exported for unit tests only (Node/Jest) — `module` is undefined in browsers so this is a no-op there
 if (typeof module !== 'undefined' && module.exports) {

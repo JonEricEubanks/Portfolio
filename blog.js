@@ -6,6 +6,7 @@
 class BlogManager {
     constructor() {
         this.posts = [];
+        this.externalPosts = [];
         this.currentEditId = null;
         this.storageKey = 'portfolio-blog-posts';
         this.currentFilter = 'all';
@@ -30,6 +31,27 @@ class BlogManager {
         // Load posts asynchronously, render from localStorage first for speed
         this.loadPostsFromCache();
         this.loadPosts(); // Then fetch from GitHub
+        this.loadExternalPosts();
+    }
+
+    // Posts published elsewhere (e.g. Microsoft Tech Community) - cards link out
+    async loadExternalPosts() {
+        try {
+            const response = await fetch('blog-data/external-posts.json');
+            if (!response.ok) return;
+            const posts = await response.json();
+            this.externalPosts = Array.isArray(posts)
+                ? posts.filter(p => p && p.id && /^https:\/\//i.test(p.externalUrl || ''))
+                : [];
+            this.renderPosts();
+        } catch (error) {
+            console.error('Error loading external posts:', error);
+        }
+    }
+
+    openExternalPost(id) {
+        const post = this.externalPosts.find(p => p.id === id);
+        if (post) window.open(post.externalUrl, '_blank', 'noopener,noreferrer');
     }
     
     // Load from localStorage for instant display
@@ -981,20 +1003,33 @@ Respond with ONLY one sentence, no quotes, no explanation.`
                     this.posts = posts;
                     console.log('Loaded', posts.length, 'posts from GitHub');
                 } else {
-                    this.posts = [];
-                    console.log('Invalid API response, using empty array');
+                    this.posts = await this.loadStaticPosts();
+                    console.log('Invalid API response, using static posts');
                 }
             } else {
-                this.posts = [];
-                console.log('API failed, using empty array');
+                this.posts = await this.loadStaticPosts();
+                console.log('API failed, using static posts');
             }
             // Sort by date, newest first
             this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
             this.renderPosts();
         } catch (error) {
             console.error('Error loading posts:', error);
-            this.posts = [];
+            this.posts = await this.loadStaticPosts();
+            this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
             this.renderPosts();
+        }
+    }
+
+    // Fallback when /api/posts is unreachable (e.g. local preview)
+    async loadStaticPosts() {
+        try {
+            const response = await fetch('blog-data/posts.json');
+            if (!response.ok) return [];
+            const posts = await response.json();
+            return Array.isArray(posts) ? posts : [];
+        } catch (error) {
+            return [];
         }
     }
 
@@ -1219,6 +1254,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         
         // Filter posts - only show published posts to public
         let filteredPosts = this.posts.filter(p => p.status === 'published' || !p.status);
+        filteredPosts = filteredPosts.concat(this.externalPosts);
         
         // Apply category filter
         if (this.currentFilter !== 'all') {
@@ -1254,7 +1290,7 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         const endIndex = startIndex + this.postsPerPage;
         const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
         
-        this.postsContainer.innerHTML = paginatedPosts.map(post => `
+        this.postsContainer.innerHTML = paginatedPosts.map(post => post.externalUrl ? this.renderExternalCard(post) : `
             <div class="blog-card glass-morphism" data-post-id="${post.id}" data-category="${post.category}" onclick="blogManager.openPost('${post.id}')" style="cursor: pointer;">
                 <div class="blog-card-image ${post.image ? '' : 'no-image'}">
                     ${post.image 
@@ -1296,6 +1332,35 @@ Respond with ONLY one sentence, no quotes, no explanation.`
         this.renderPagination(totalPages, filteredPosts.length);
     }
     
+    renderExternalCard(post) {
+        const source = this.escapeHtml(post.source || 'External site');
+        return `
+            <div class="blog-card blog-card-external glass-morphism" data-post-id="${this.escapeHtml(post.id)}" data-category="${this.escapeHtml(post.category)}" role="link" tabindex="0" aria-label="${this.escapeHtml(post.title)} - opens on ${source}" onclick="blogManager.openExternalPost('${this.escapeHtml(post.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();blogManager.openExternalPost('${this.escapeHtml(post.id)}')}" style="cursor: pointer;">
+                <div class="blog-card-image ${post.image ? '' : 'no-image'}">
+                    ${post.image
+                        ? `<img src="${this.escapeHtml(post.image)}" alt="${this.escapeHtml(post.title)}" loading="lazy">
+                           <div class="image-overlay"></div>`
+                        : this.getCategoryIcon(post.category)
+                    }
+                    <span class="blog-source-badge">${source}</span>
+                </div>
+                <div class="blog-card-body">
+                    <div class="blog-card-header">
+                        <span class="blog-category category-${this.escapeHtml(post.category)}">${this.getCategoryLabel(post.category)}</span>
+                        <span class="blog-date">${this.formatDate(post.date)}</span>
+                    </div>
+                    <h3 class="blog-title">${this.escapeHtml(post.title)}</h3>
+                    ${post.excerpt ? `<p class="blog-excerpt">${this.escapeHtml(post.excerpt)}</p>` : ''}
+                    <div class="blog-footer">
+                        <span class="read-more-btn">
+                            Read on ${this.escapeHtml((post.source || 'External site').replace(/ Tech Community$/, ''))} <span class="arrow">↗</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     renderPagination(totalPages, totalPosts) {
         // Remove existing pagination
         const existingPagination = this.postsContainer.parentElement.querySelector('.blog-pagination');

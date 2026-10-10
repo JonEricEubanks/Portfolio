@@ -36,6 +36,28 @@ describe('analyzeUserIntent', () => {
         expect(intent.type).toBe('projects');
     });
 
+    test('routes "what projects has he worked on" to the project list, not Power Platform', () => {
+        const intent = bot.analyzeUserIntent('What projects has JonEric worked on with Power Apps and Power Automate?');
+        expect(intent.type).toBe('projects');
+        expect(intent.context.listProjects).toBe(true);
+    });
+
+    test('still routes Power Platform experience questions to the Power Platform answer', () => {
+        const intent = bot.analyzeUserIntent('Tell me about his Power Platform experience');
+        expect(intent.type).toBe('power_platform');
+    });
+
+    test('narrows project lists by technology', () => {
+        expect(bot.analyzeUserIntent('What dashboard projects has he built?').context.projectType).toBe('dashboard');
+        expect(bot.analyzeUserIntent('What GIS projects has he done?').context.projectType).toBe('gis');
+    });
+
+    test('keeps ELM questions on the ELM answer', () => {
+        const intent = bot.analyzeUserIntent('Tell me about the ELM project');
+        expect(intent.context.specificProject).toBe('elm');
+        expect(intent.context.listProjects).toBe(false);
+    });
+
     test('detects dashboard-specific questions', () => {
         const intent = bot.analyzeUserIntent('Tell me about your Power BI dashboards');
         expect(intent.type).toBe('dashboards');
