@@ -12,7 +12,6 @@ class JonEricChatBot {
         this.chatStatus = document.getElementById('chat-status');
         this.conversationHistory = [];
         this.responseVariations = new Map();
-        this.usedResponseSets = new Map(); // Track used responses to prevent repetition
         this.conversationContext = { // Track conversation themes and topics
             discussedTopics: new Set(),
             recentIntents: [],
@@ -60,12 +59,13 @@ class JonEricChatBot {
             });
         });
 
-        // Extract certifications
+        // Extract credentials, keeping their group (certification / applied-skill / course)
         document.querySelectorAll('.certification-item').forEach(cert => {
-            const title = cert.getAttribute('data-modal-title') || cert.textContent.trim();
+            const title = cert.getAttribute('data-modal-title') || cert.textContent.replace(/\s+/g, ' ').trim();
             const org = cert.querySelector('.certification-org')?.textContent;
+            const type = cert.closest('[data-credential-type]')?.getAttribute('data-credential-type') || 'certification';
             if (title) {
-                data.certifications.push({ title, organization: org });
+                data.certifications.push({ title, organization: org, type });
             }
         });
 
@@ -132,10 +132,58 @@ class JonEricChatBot {
         });
 
         const intro = type
-            ? `🛠️ JonEric's ${groups[0].label} portfolio includes ${total} projects:`
-            : `🛠️ JonEric's portfolio showcases **${total} projects** across ${groups.length} areas:`;
+            ? `JonEric's ${groups[0].label} portfolio includes ${total} projects:`
+            : `JonEric's portfolio showcases **${total} projects** across ${groups.length} areas:`;
+        const sources = ['[Featured Work](#awards)', ...groups.map(g => `[${g.label}](#${g.id})`)];
 
-        return `${intro}\n\n${lines.join('\n')}\n\n🏆 Standout: the ELM App won Microsoft's Best in Automation award. Ask about any project by name, or say "open <project name>" to view it.`;
+        return `${intro}\n\n${lines.join('\n')}\n\nHe led every one of them; the three award winners are written up in Featured Work. Say "open" plus a project name to view it.\n\nSources: ${sources.join(' · ')}`;
+    }
+
+    // Featured Work case studies, read from the rendered #awards section
+    getFeaturedCases() {
+        const clean = t => (t || '').replace(/\s+/g, ' ').trim();
+        return Array.from(document.querySelectorAll('#awards .award-case')).map(el => {
+            const outcome = Array.from(el.querySelectorAll('.award-step'))
+                .find(step => /outcome/i.test(step.querySelector('.award-step-label')?.textContent || ''));
+            return {
+                id: el.id,
+                title: clean(el.querySelector('h3')?.textContent),
+                award: clean(el.querySelector('.award-case-sub')?.textContent),
+                role: clean(el.querySelector('.award-case-role')?.textContent).replace(/^My role:\s*/i, ''),
+                outcome: clean(outcome?.querySelector('p')?.textContent),
+                links: Array.from(el.querySelectorAll('.award-case-links a'))
+                    .map(a => ({ label: clean(a.textContent).replace(/\s*↗$/, ''), href: a.href }))
+            };
+        });
+    }
+
+    getFeaturedWorkResponse() {
+        const cases = this.getFeaturedCases();
+        if (!cases.length) return null;
+        const lines = cases.map(c => `• **${c.title}** — ${c.award}${c.role ? `. Role: ${c.role}` : ''}`);
+        return `JonEric's award-winning work — each a project he led:\n\n${lines.join('\n')}\n\nSources: [Featured Work](#awards)`;
+    }
+
+    getFeaturedCaseResponse(id) {
+        const c = this.getFeaturedCases().find(x => x.id === id);
+        if (!c) return null;
+        const links = c.links.map(l => `[${l.label}](${l.href})`);
+        const details = [c.role && `• **Role:** ${c.role}`, c.outcome && `• **Outcome:** ${c.outcome}`].filter(Boolean);
+        return `**${c.title}** — ${c.award}\n\n${details.join('\n')}\n\nSources: ${[`[Featured Work](#${c.id})`, ...links].join(' · ')}`;
+    }
+
+    getCredentialsResponse() {
+        const creds = this.portfolioData.certifications;
+        if (!creds.length) return null;
+        const titles = type => creds.filter(c => c.type === type).map(c => c.title);
+        const certs = titles('certification');
+        const applied = titles('applied-skill');
+        const courses = titles('course');
+        const parts = [];
+        if (certs.length) parts.push(`**Certifications (${certs.length})**\n${certs.map(t => `• ${t}`).join('\n')}`);
+        if (applied.length) parts.push(`**Microsoft Applied Skills (${applied.length})**\n${applied.map(t => `• ${t}`).join('\n')}`);
+        if (courses.length) parts.push(`Plus ${courses.length} completed courses (Google project management and data analytics, Esri ArcGIS).`);
+        return `${parts.join('\n\n')}\n\nSources: [Certifications](#certifications)`;
     }
 
     categorizeProject(title) {
@@ -150,46 +198,8 @@ class JonEricChatBot {
 
     initializeResponseVariations() {
         this.responseVariations.set('greeting', [
-            "👋 Hi! I'm JonEric's AI assistant. I can tell you about his Microsoft Award-winning projects, Power Platform expertise, and municipal solutions. What interests you?",
-            "🤖 Hello! I specialize in JonEric's work - from the award-winning ELM app to Power BI dashboards and AI copilots. What would you like to explore?",
-            "👨‍💻 Welcome! Ask me about JonEric's 8+ innovative solutions, including his Microsoft-recognized automation work and $195.9M+ in tracked municipal funds!",
-            "🚀 Greetings! Ready to learn about JonEric's municipal technology innovations? I can share details about his Power Platform mastery and real-world impact!"
-        ]);
-
-        this.responseVariations.set('projects_overview', [
-            `🛠️ JonEric has built ${this.portfolioData.projects.length}+ award-winning solutions with measurable impact!\n\n**Project Highlights with KPIs:**\n• **ELM App** → Microsoft Award Winner | 400+ hours saved annually | 6+ cities deployed\n• **Project 25 Dashboard** → $7.2M construction oversight | 45+ change orders tracked\n• **Rental Aid Dashboard** → $53M aid distribution | 2,500+ applications processed | 85% approval rate\n• **AI Copilots** → 3,600+ automated queries | 50% faster response times\n• **Municipal Apps** → 585+ hours saved annually | 95% user satisfaction\n\n🏆 Total impact: $195.9M+ funds tracked across 6+ municipalities!`,
-            
-            `📊 His portfolio demonstrates real municipal impact with concrete metrics:\n\n**Key Projects with Performance Data:**\n• **Employment Lifecycle Management** → Microsoft Award Winner | 400+ hours saved | Zero compliance issues\n• **Project 25 Dashboard** → $7.2M construction oversight | 45+ change orders tracked | Real-time alerts\n• **Rental Aid Dashboard** → $53M community aid tracking | 2,500+ applications | 85% approval rate\n• **LISA AI Agent** → 3,000+ property searches automated | 75% time reduction\n\n⚡ Each solution delivers measurable efficiency gains with documented ROI!`,
-            
-            `🚀 JonEric's ${this.portfolioData.projects.length} projects span the complete government tech stack with proven results:\n\n**Platform Solutions with KPIs:**\n• **Power Apps** → 585+ hours saved annually | 6+ cities using solutions | 95% user satisfaction\n• **Power BI Dashboards** → $195.9M+ tracked | 45+ construction changes monitored | 99.8% accuracy\n• **AI Copilot Studio** → 3,600+ queries automated | 50% faster responses | 75% time reduction\n• **SharePoint Integration** → 100% workflow automation | Zero missed deadlines | 95% SLA compliance\n\n💡 Transforming how cities serve communities with measurable outcomes!`,
-            
-            `� Municipal technology excellence across multiple domains:\n\n**Impact Areas with Metrics:**\n• **Human Resources** → 400+ hours saved (ELM App) | 100% compliance maintained | 6+ cities deployed\n• **Financial Oversight** → $195.9M+ tracked accurately | 99.8% data accuracy | Real-time monitoring\n• **Citizen Services** → 30% faster response times | 95% satisfaction scores | 3,600+ queries automated\n• **Project Management** → 45+ change orders tracked | Real-time budget alerts | Zero missed deadlines\n\n🌟 Proven scalability from small towns to major cities!`
-        ]);
-
-        this.responseVariations.set('skills_overview', [
-            "🛠️ JonEric brings certified expertise across the Microsoft ecosystem!\n\n**Core Specializations:**\n• Power Platform (Apps, BI, Automate, Copilot Studio)\n• Microsoft 365 (SharePoint, Teams, Entra ID)\n• Azure AI Search & GIS (ArcGIS Pro/Online)\n• PMP Project Management\n\n📜 15+ certifications including Microsoft, ESRI, and Google credentials!",
-            
-            "⚡ Full-stack low-code development with government focus!\n\n**Technical Expertise:**\n• Power Apps → Municipal automation solutions\n• Power BI → Financial and operational dashboards  \n• Power Automate → Workflow optimization\n• Copilot Studio → AI agent development\n• ArcGIS → Spatial analysis and mapping\n\n🎯 Skills proven across 6+ municipalities with measurable ROI!",
-            
-            "🚀 Technology mastery spanning development to deployment!\n\n**Platform Proficiency:**\n• Microsoft Power Platform (certified)\n• Business Intelligence & Analytics\n• AI/Copilot Development\n• Geographic Information Systems\n• Agile Project Management (PMP)\n\n💼 Each skill directly contributes to government innovation and efficiency!"
-        ]);
-
-        this.responseVariations.set('achievements', [
-            `🏆 Recognition that speaks to real impact!\n\n**Top Achievements:**\n• Microsoft's Best in Automation Award (ELM App)\n• Official Microsoft case study published\n• $195.9M+ in municipal funds tracked and managed\n• 585+ staff hours saved annually through automation\n• 6+ cities using his solutions across multiple states`,
-            
-            `⭐ Awards backed by measurable municipal results!\n\n**Key Accomplishments:**\n• Microsoft Award Winner → ELM automation solution\n• Efficiency Expert → 30% faster municipal response times\n• Financial Steward → $195.9M+ in accurate fund tracking\n• Innovation Leader → AI copilots serving thousands of citizens`,
-            
-            `📈 Excellence recognized at the highest levels!\n\n**Impact Portfolio:**\n• Microsoft's Best in Automation (official case study)\n• Government Efficiency → 585+ hours saved per year\n• Financial Accuracy → $195.9M+ managed across programs\n• Scalable Solutions → Deployed in Illinois and Texas`,
-            
-            `🌟 Professional recognition meets community impact!\n\n**Achievement Highlights:**\n• Microsoft Award for ELM App innovation\n• Municipal Technology Leader (6+ city deployments)\n• Automation Expert (400+ hours saved in HR alone)\n• Data Steward ($195.9M+ tracked with 99%+ accuracy)`
-        ]);
-
-        this.responseVariations.set('career_growth', [
-            `🚀 **Strategic Career Development with Clear Goals:**\n\n**Short-term (1-2 Years):**\n• **Technical Leadership** → Lead larger municipal technology initiatives | Mentor junior developers\n• **Certification Expansion** → Azure AI Fundamentals | Advanced Power Platform Specialist | Salesforce Admin\n• **Industry Recognition** → Speaking at Microsoft/ESRI conferences | Thought leadership in municipal tech\n• **Skills Enhancement** → Advanced AI/ML integration | Enterprise-scale Power Platform architecture\n\n**Long-term (3-5 Years):**\n• **Solution Architecture** → Senior Technical Architect role | Design enterprise municipal systems\n• **Consulting Practice** → Independent municipal technology consultant | Multi-city implementations\n• **Innovation Hub** → Lead municipal AI/automation center of excellence\n• **Industry Impact** → Published author on government technology transformation\n\n🎯 This plan leverages his Microsoft award-winning track record to scale impact from single municipalities to transforming how government operates nationwide.`,
-            
-            `💡 **Professional Development Strategy with Measurable Objectives:**\n\n**Technical Growth:**\n• **Cloud Architecture** → Azure solution architect certification | Enterprise-scale implementations\n• **AI Leadership** → Advanced machine learning | Predictive analytics for government\n• **Platform Mastery** → Power Platform Center of Excellence leadership | Enterprise governance\n\n**Career Advancement:**\n• **Leadership Roles** → Technical team management | Strategic planning responsibilities\n• **Industry Influence** → Conference speaking | Thought leadership articles | Best practice development\n• **Business Impact** → Municipal consulting practice | Multi-city technology transformation\n\n**Innovation Focus:**\n• **Emerging Tech** → IoT integration | Blockchain for government | Advanced AI applications\n• **Research & Development** → Patent development | Municipal technology research | Academic partnerships\n\n🚀 Building on his Microsoft award foundation to become a recognized leader in government technology transformation!`,
-            
-            `🎯 **Career Trajectory Built on Proven Success:**\n\n**Key Growth Areas:**\n• **Technical** → Azure cloud architecture | Advanced AI integration | Enterprise Power Platform\n• **Leadership** → Team management | Strategic planning | Stakeholder engagement\n• **Business** → Municipal budgeting expertise | Grant writing | Contract negotiation\n• **Innovation** → Emerging tech evaluation | R&D leadership | Patent development\n\n**Strategic Milestones:**\n• **Year 1-2** → Senior developer role | Team leadership | Advanced certifications\n• **Year 3-5** → Solution architect | Consulting practice | Industry recognition\n• **Year 5+** → Technology executive | Innovation center leader | Published author\n\n**Impact Vision:**\nTransform from award-winning individual contributor to industry leader shaping how government leverages technology for citizen services. Each step builds on documented success with measurable outcomes.\n\n💼 The plan: Scale proven municipal impact to national government transformation leadership!`
+            "Hi! I'm JonEric's portfolio assistant. Ask about his award-winning AI agents, the projects he has led, his certifications, or his published writing — I'll link you to where it appears on this page.",
+            "Hello! I can walk you through JonEric's featured work, his AI and Power Platform projects, or his career history, with links to the source on this page."
         ]);
     }
 
@@ -220,67 +230,6 @@ class JonEricChatBot {
         this.usedVariations.set(key, used);
         
         return selectedVariation;
-    }
-
-    buildContextPrompt() {
-        const projectsData = this.portfolioData.projects.map(p => 
-            `${p.title}: ${p.descriptions[0]?.substring(0, 100)}...`
-        ).join('\n');
-
-        const certificationsData = this.portfolioData.certifications.map(c => 
-            `${c.title}${c.organization ? ` (${c.organization})` : ''}`
-        ).join('\n');
-
-        return `🤖 JonEric Eubanks Portfolio Agent - Enhanced with Live Data
-
-CURRENT PORTFOLIO PROJECTS:
-${projectsData}
-
-CERTIFICATIONS:
-${certificationsData}
-
-ACHIEVEMENTS FROM PORTFOLIO:
-${this.portfolioData.achievements.map(a => a.award || `${a.value} ${a.label}`).join('\n')}
-
-TESTIMONIAL:
-${this.portfolioData.testimonials[0] || 'Client testimonials available in portfolio'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-👨‍💻 Identity: JonEric Eubanks, PMP
-📍 Location: Buffalo Grove, IL  
-🏢 Role: Microsoft Developer at MGP
-🎯 Mission: Delivering low-code solutions that modernize local government
-
-📋 Response Guidelines:
-• Maximum 150 words per response
-• Use emojis for engagement (🛠️ 📊 🏆 💼 🚀)
-• Reference actual portfolio data when possible
-• Vary responses to avoid repetition
-• Keep tone professional yet conversational
-• Highlight measurable impact and real results
-
-🔍 Conversation Intelligence:
-• Analyze user intent and provide contextual responses
-• Reference specific projects when relevant
-• Use portfolio data to give accurate, current information
-• Avoid generic responses - personalize based on actual content
-
-🛠️ Core Expertise:
-• Microsoft Power Platform (Apps, Automate, BI, Pages, Copilot Studio)
-• Microsoft 365 ecosystem
-• AI/Copilot development with Azure AI Search
-• GIS solutions with ArcGIS
-• PMP-certified project management
-• Data analytics and visualization
-
-Response Strategy:
-1. Detect user intent (projects, skills, achievements, blog posts, specific questions)
-2. Use live portfolio data for accurate answers
-3. Vary response style to maintain engagement
-4. Reference specific examples when relevant
-5. Keep responses concise but informative
-6. When asked about a blog post by title, summarize that specific post using its excerpt and tags`;
     }
 
     analyzeUserIntent(message) {
@@ -448,244 +397,37 @@ Response Strategy:
     }
 
     generateContextualResponse(userMessage, intent) {
-        // Enhanced contextual response generation based on intent analysis
-        console.log('🔍 Generating contextual response for intent:', intent);
-        
         if (intent.type === 'greeting') {
             return this.getVariedResponse('greeting');
         }
-        
-        // Handle specific question types with dedicated responses
-        if (intent.type === 'challenges') {
-            console.log('🎯 Using challenges response');
-            return this.getChallengesResponse();
+
+        // "How/why" questions need explanation, not a list — let the grounded AI answer them
+        if (/^\s*(how|why|explain|describe)\b/i.test(userMessage)) {
+            return null;
         }
-        
-        if (intent.type === 'dashboards') {
-            console.log('🎯 Using dashboards response');
-            return this.getDashboardResponse();
-        }
-        
-        if (intent.type === 'power_platform') {
-            console.log('🎯 Using power platform response');
-            return this.getPowerPlatformResponse();
-        }
-        
+
         if (intent.type === 'projects') {
-            console.log('🎯 Using projects response');
-            // Check for specific project context
             if (intent.context.specificProject === 'elm') {
-                return this.getELMProjectResponse();
+                return this.getFeaturedCaseResponse('award-elm') || this.getLiveProjectsResponse('app');
             }
-            if (intent.context.listProjects) {
-                const liveList = this.getLiveProjectsResponse(intent.context.projectType);
-                if (liveList) return liveList;
-            }
-            if (intent.context.projectType) {
-                return this.getProjectTypeResponse(intent.context.projectType);
-            } else {
-                // General projects overview with variation
-                const variedResponse = this.getVariedResponse('projects_overview');
-                if (variedResponse) return variedResponse;
-            }
+            return this.getLiveProjectsResponse(intent.context.projectType);
         }
-        
-        if (intent.type === 'skills') {
-            console.log('🎯 Using skills response, skillArea:', intent.context?.skillArea);
-            if (intent.context.skillArea) {
-                const skillResponse = this.getSkillAreaResponse(intent.context.skillArea);
-                if (skillResponse) {
-                    console.log('✅ Got skill area response');
-                    return skillResponse;
-                } else {
-                    console.warn('❌ No skill area response found');
-                }
-            } else {
-                const skillsOverview = this.getVariedResponse('skills_overview');
-                if (skillsOverview) {
-                    console.log('✅ Got skills overview response');
-                    return skillsOverview;
-                } else {
-                    console.warn('❌ No skills overview response found');
-                }
-            }
+
+        if (intent.type === 'dashboards') {
+            return this.getLiveProjectsResponse('dashboard');
         }
-        
+
         if (intent.type === 'achievements') {
-            const variedResponse = this.getVariedResponse('achievements');
-            if (variedResponse) return variedResponse;
-        }
-        
-        if (intent.type === 'career_growth') {
-            console.log('🎯 Using career growth response');
-            const variedResponse = this.getVariedResponse('career_growth');
-            if (variedResponse) return variedResponse;
+            return this.getFeaturedWorkResponse();
         }
 
-        // Blog queries always go to AI so it can reference actual post content
-        if (intent.type === 'blog') {
-            console.log('📚 Blog intent — deferring to AI');
-            return null;
+        if (intent.type === 'skills' && /certif|credential/i.test(userMessage)) {
+            return this.getCredentialsResponse();
         }
-        
-        // Handle specific project queries with keyword matching
-        if (intent.type === 'specific_project' && intent.keyword) {
-            const relevantProjects = this.portfolioData.projects.filter(p => 
-                p.title.toLowerCase().includes(intent.keyword) ||
-                p.descriptions.some(d => d.toLowerCase().includes(intent.keyword))
-            );
-            
-            if (relevantProjects.length > 0) {
-                return this.generateProjectResponse(relevantProjects[0], intent.keyword);
-            }
-        }
-        
-        // Handle government/municipal context
-        if (intent.context.domain === 'government') {
-            return this.getMunicipalResponse();
-        }
-        
-        // Handle comparison queries
-        if (intent.context.isComparison) {
-            return this.getComparisonResponse(userMessage);
-        }
-        
-        console.log('⚠️ No contextual response found, falling back to AI API');
-        return null; // Fall back to AI API
-    }
 
-    getChallengesResponse() {
-        const responses = [
-            "💡 **JonEric's honest self-assessment:**\n\n\"Restless curiosity\" - I move fast with new tools and technologies, sometimes too fast! \n\n🚀 **But here's the flip side:**\n• That drive transforms experiments into full-scale solutions\n• It keeps me ahead of technology trends\n• It delivers cutting-edge results for clients\n\n⚡ This 'weakness' has led to the Microsoft Award and $195.9M+ in tracked funds!",
-            
-            "🎯 **The challenge that drives results:**\n\nJonEric's eagerness to explore new technology can sometimes outpace documentation. But this trait has:\n\n✅ Led to innovative solutions like AI copilots\n✅ Earned Microsoft recognition\n✅ Delivered measurable municipal impact\n\n💼 In government work, this forward-thinking approach is actually a huge asset!"
-        ];
-        
-        return this.selectUnusedResponse('challenges_responses', responses);
-    }
-
-    getDashboardResponse() {
-        const responses = [
-            "📊 **JonEric's dashboard portfolio delivers measurable government impact!**\n\n**Featured Dashboards with KPIs:**\n• **Project 25 Dashboard** → $7.2M construction oversight | 45+ change orders tracked | Real-time budget variance\n• **Rental Aid Dashboard** → $53M community aid tracking | 2,500+ applications processed | 85% approval rate\n• **Municipal KPI Dashboards** → 30% faster response times | 95% SLA compliance | Real-time citizen metrics\n• **Budget Tracking** → $195.9M+ total funds monitored | Monthly variance reports | Automated alerts\n\n⚡ These aren't just charts - they're decision-making tools that guide million-dollar municipal investments!",
-            
-            "🎯 **Power BI expertise that delivers measurable government results:**\n\n**Dashboard Categories with Performance Metrics:**\n• **Financial Oversight** → $195.9M+ tracked | 99.8% accuracy | Real-time budget alerts\n• **Project Management** → 45+ construction changes tracked | Timeline compliance monitoring\n• **Performance Metrics** → 30% improvement in response times | 95% citizen satisfaction\n• **Compliance Reporting** → 100% automated report generation | Zero missed deadlines\n\n📈 Each dashboard provides actionable insights backed by concrete performance data!"
-        ];
-        
-        return this.selectUnusedResponse('dashboard_responses', responses);
-    }
-
-    getPowerPlatformResponse() {
-        const responses = [
-            "⚡ **JonEric's Power Platform mastery is comprehensive!**\n\n**Platform Expertise:**\n• **Power Apps** → Municipal automation (ELM, licensing, HR)\n• **Power BI** → Financial dashboards ($195.9M+ tracked)\n• **Power Automate** → Workflow optimization (585+ hours saved)\n• **Copilot Studio** → AI agents (3,600+ queries automated)\n\n🏆 This expertise earned the Microsoft Best in Automation Award!",
-            
-            "🛠️ **Full Power Platform ecosystem integration:**\n\n**Real-World Applications:**\n• **Apps** → Employee lifecycle, block party requests, water services\n• **Dashboards** → Project oversight, aid tracking, performance metrics\n• **Automation** → Approval workflows, notifications, integrations\n• **AI** → Property research, ordinance lookup, citizen services\n\n🚀 Connected with SharePoint, Teams, and Azure for complete solutions!"
-        ];
-        
-        return this.selectUnusedResponse('power_platform_responses', responses);
-    }
-
-    getELMProjectResponse() {
-        const responses = [
-            "🏆 The ELM (Employment Lifecycle Management) App is JonEric's crown jewel with impressive KPIs! \n\n**Measurable Impact:**\n• **Microsoft Award Winner** → Best in Automation Award | Official case study published\n• **Time Savings** → 400+ hours saved annually in onboarding/offboarding\n• **Deployment Scale** → 6+ municipalities across Illinois and Texas\n• **Compliance** → 100% adherence to HR regulations | Zero compliance issues\n• **User Satisfaction** → 95% approval rating from municipal staff\n\n🛠️ Built with Power Apps, it unified HR workflows and became the gold standard for municipal automation.",
-            
-            "⭐ Great question about ELM! This award-winning solution revolutionized municipal HR with concrete results:\n\n**The Challenge:** Manual onboarding/offboarding across multiple departments\n**The Solution:** Unified Power Apps workflow with SharePoint integration\n**The Results:** \n  • 400+ hours saved annually\n  • 100% compliance maintained\n  • 6+ city deployments\n  • Microsoft recognition + case study\n  • 95% user satisfaction\n\n🚀 Perfect example of how low-code delivers enterprise-level impact with measurable ROI.",
-            
-            "💡 The ELM App showcases JonEric's municipal innovation expertise with proven metrics!\n\n**Technical Highlights with Performance:**\n• **Architecture** → Power Apps front-end with SharePoint backend | 99.9% uptime\n• **Automation** → Workflow automation | 85% reduction in manual tasks\n• **Integration** → Cross-department connectivity | Real-time status tracking\n• **Scalability** → 6+ cities deployed | Consistent 95% user satisfaction\n• **Recognition** → Microsoft case study | Industry best practice example\n\n🏛️ From Buffalo Grove to Fort Worth - proving scalable government solutions work!"
-        ];
-        
-        return this.selectUnusedResponse('elm_responses', responses);
-    }
-
-    getProjectTypeResponse(type) {
-        const responses = {
-            dashboard: [
-                "📊 JonEric's dashboard expertise delivers measurable government impact through Power BI!\n\n**Featured Dashboards with KPIs:**\n• **Project 25 Dashboard** → $7.2M construction oversight | 45+ change orders tracked | Real-time budget alerts\n• **Rental Aid Dashboard** → $53M community aid tracking | 2,500+ applications processed | 85% approval rate\n• **Municipal KPI Dashboards** → 30% improvement in response times | 95% SLA compliance | Real-time metrics\n• **Budget Tracking** → $195.9M+ total oversight | 99.8% accuracy | Automated variance reporting\n\n⚡ These decision-making tools guide million-dollar municipal investments with concrete ROI.",
-                
-                "🎯 His dashboard portfolio spans financial oversight to operational excellence with proven results:\n\n**Performance Categories with Metrics:**\n• **Budget Tracking** → $195.9M+ monitored | Monthly variance reports | Real-time fund allocation\n• **Project Management** → 45+ construction changes tracked | Timeline compliance | Cost variance alerts\n• **Community Services** → 2,500+ aid applications | 85% approval rate | Impact measurement\n• **Performance Analytics** → 30% faster services | 95% citizen satisfaction | Efficiency KPIs\n\n📈 Each dashboard delivers actionable insights that improve municipal decision-making with measurable outcomes."
-            ],
-            gis: [
-                "🗺️ JonEric's GIS expertise combines spatial analysis with municipal needs!\n\n**GIS Solutions:**\n• Property research automation with AI\n• Municipal asset mapping\n• Service area optimization\n• Land use analysis\n\n🛠️ Using ArcGIS Pro/Online, he creates solutions that help cities understand their geography and optimize services.",
-                
-                "📍 His spatial analytics work includes:\n\n• **LISA Agent:** AI-powered land information research\n• **Municipal Mapping:** Asset and infrastructure visualization\n• **Service Optimization:** Route planning and coverage analysis\n\n🚀 Combining GIS with Power Platform creates powerful municipal tools."
-            ],
-            ai: [
-                "🤖 JonEric's AI solutions are transforming municipal services with measurable impact!\n\n**AI Projects with Performance Metrics:**\n• **LISA (Land Info Service Agent)** → 3,000+ property searches automated | 75% time reduction | 95% accuracy\n• **Ordinance Research Copilots** → Instant policy lookup | 50% faster research | 100% compliance\n• **CRM Integration Agents** → 3,600+ automated queries | 30% response improvement | 95% satisfaction\n• **Citizen Service Bots** → 24/7 availability | 85% resolution rate | Multi-language support\n\n⚡ Built with Copilot Studio and Azure AI Search, these agents scale government capabilities with proven ROI.",
-                
-                "💡 His AI approach focuses on practical municipal applications with concrete results:\n\n**Impact Categories with KPIs:**\n• **Citizens** → 50% faster service through automation | 24/7 availability | 95% satisfaction\n• **Staff** → 75% reduction in research time | 3,600+ queries automated | Zero training required\n• **Government** → 30% efficiency improvement | 100% transparency | Real-time analytics\n\n🛠️ Each AI solution addresses real government pain points with measurable, documented results."
-            ]
-        };
-        
-        const typeResponses = responses[type] || [];
-        return this.selectUnusedResponse(`${type}_responses`, typeResponses);
-    }
-
-    getSkillAreaResponse(area) {
-        const responses = {
-            microsoft: [
-                "🛠️ JonEric's Microsoft expertise is comprehensive and certified!\n\n**Power Platform Mastery:**\n• Power Apps → Municipal automation solutions\n• Power BI → Financial and operational dashboards\n• Power Automate → Workflow optimization\n• Copilot Studio → AI agent development\n\n📜 Microsoft certified with hands-on experience across the entire ecosystem.",
-                
-                "⚡ His Microsoft 365 integration skills create seamless workflows:\n\n• **SharePoint:** Backend for municipal apps\n• **Teams:** Collaborative government workspace\n• **Entra ID:** Secure identity management\n• **Azure AI Search:** Intelligent content discovery\n\n🚀 This deep ecosystem knowledge enables end-to-end solutions."
-            ],
-            gis: [
-                "📍 ESRI-certified GIS expertise with municipal focus!\n\n**ArcGIS Capabilities:**\n• Pro → Advanced spatial analysis\n• Online → Web-based mapping solutions\n• ModelBuilder → Automated geoprocessing\n• LiDAR → Surface modeling and analysis\n\n🗺️ Multiple ESRI certifications back real-world municipal mapping projects.",
-                
-                "🛰️ His spatial analytics combine traditional GIS with modern integration:\n\n• **Data Integration:** Connecting GIS with Power Platform\n• **Automation:** ModelBuilder workflows for efficiency\n• **Visualization:** Maps that tell municipal stories\n• **Analysis:** Data-driven spatial decision making\n\n📊 Geography meets technology for smarter government."
-            ],
-            pm: [
-                "📋 PMP-certified project management with government expertise!\n\n**Methodologies:**\n• PMP → Traditional project management\n• Agile → Iterative development approach\n• Lean Six Sigma → Process optimization\n• Change Management → Stakeholder engagement\n\n🎯 Successfully managing complex municipal technology initiatives from concept to deployment."
-            ]
-        };
-        
-        const areaResponses = responses[area] || [];
-        return this.selectUnusedResponse(`${area}_skill_responses`, areaResponses);
-    }
-
-    getMunicipalResponse() {
-        const responses = [
-            "🏛️ JonEric specializes in municipal technology that delivers measurable government impact!\n\n**Cities Served with Proven Results:** Buffalo Grove, Glencoe, Brookfield, Lincolnshire, Fort Worth\n**Focus Areas with KPIs:**\n• **HR Automation** → 400+ hours saved annually | 100% compliance | 6+ deployments\n• **Financial Oversight** → $195.9M+ tracked | 99.8% accuracy | Real-time monitoring\n• **Citizen Services** → 30% faster response times | 95% satisfaction | 3,600+ queries automated\n• **Project Management** → 45+ change orders tracked | Zero missed deadlines | Real-time alerts\n\n💡 His solutions address unique local government challenges with documented ROI and scalable impact.",
-            
-            "🌟 Municipal technology with proven ROI across multiple cities!\n\n**Government Expertise:**\n• Employment lifecycle management\n• Budget and aid tracking\n• Citizen service automation\n• Compliance and reporting\n\n📈 Each solution improves efficiency, transparency, and service delivery for real communities."
-        ];
-        
-        return this.selectUnusedResponse('municipal_responses', responses);
-    }
-
-    generateProjectResponse(project, keyword) {
-        return `🎯 Great question about ${keyword}! 
-
-**${project.title}**
-${project.descriptions[0]?.substring(0, 150)}...
-
-${project.hasSlideshow ? '📷 This project includes detailed screenshots and walkthroughs in the portfolio.' : ''}
-${project.category === 'ai' ? '🤖 This AI solution demonstrates JonEric\'s innovative approach to automation.' : ''}
-${project.category === 'dashboard' ? '📊 This dashboard provides real-time insights for data-driven decisions.' : ''}
-
-Want to explore any specific aspect of this ${project.category} solution?`;
-    }
-
-    selectUnusedResponse(key, responses) {
-        if (!this.usedResponseSets) this.usedResponseSets = new Map();
-        
-        // Handle empty responses array
-        if (!responses || responses.length === 0) {
-            console.warn(`No responses available for key: ${key}`);
-            return null;
-        }
-        
-        const used = this.usedResponseSets.get(key) || [];
-        const unused = responses.filter((_, index) => !used.includes(index));
-        const available = unused.length > 0 ? unused : responses;
-        
-        const selectedIndex = Math.floor(Math.random() * available.length);
-        const selected = available[selectedIndex];
-        const originalIndex = responses.indexOf(selected);
-        
-        used.push(originalIndex);
-        if (used.length >= responses.length) used.shift();
-        this.usedResponseSets.set(key, used);
-        
-        console.log(`🎯 Selected response for ${key}:`, selected.substring(0, 50) + '...');
-        return selected;
+        // Everything else (Power Platform, skills, career, blog, comparisons, ...) goes to the
+        // AI, which is instructed to answer only from the page data it is given and cite sources.
+        return null;
     }
 
     // ── Action Detection ────────────────────────────────────────────────────
@@ -905,7 +647,10 @@ Want to explore any specific aspect of this ${project.category} solution?`;
                 const text = ((card.getAttribute('data-modal-title') || '') + ' ' + (card.getAttribute('data-modal-descriptions') || '')).toLowerCase();
                 const match = kws.some(kw => text.includes(kw));
                 card.classList.add(match ? 'spotlight-match' : 'spotlight-dim');
-                if (match) count++;
+                if (match) {
+                    count++;
+                    if (window.revealProjectCard) window.revealProjectCard(card);
+                }
             });
             // Scroll to first matching card
             const first = document.querySelector('.spotlight-match');
@@ -947,12 +692,13 @@ Want to explore any specific aspect of this ${project.category} solution?`;
     startGuidedTour() {
         this.tourActive = true;
         const stops = [
-            { id: 'ai-apps',        msg: '**Stop 1 — AI Agents:** CivicGrant IQ (Microsoft Agents League 2026 winner from nearly 31,000 contestants) and CivicLens (JS AI Build-a-thon Grand Prize from just under 1,000 contestants). Multi-agent systems built on Azure Foundry.' },
-            { id: 'lowcode',        msg: '**Stop 2 — Low-Code Projects:** The award-winning ELM App deployed across 6+ municipalities, plus Power Apps solutions saving 585+ staff hours annually.' },
-            { id: 'dashboards',     msg: '**Stop 3 — Dashboards:** Power BI solutions tracking $195.9M+ in municipal funds — construction oversight, rental aid, and neighborhood improvement.' },
-            { id: 'GIS',            msg: '**Stop 4 — GIS Solutions:** ArcGIS-powered tools including LISA, an AI agent that automated 3,000+ land information searches with 75% time savings.' },
-            { id: 'certifications', msg: '**Stop 5 — Certifications:** 20+ credentials from Microsoft, ESRI, Google, and PMI covering Power Platform, GIS, data analytics, and project management.' },
-            { id: 'contact',        msg: '**Stop 6 — Contact:** Tour complete. JonEric is open to AI Engineer and solutions architect roles. Connect on LinkedIn or email joneric11@gmail.com.' },
+            { id: 'awards',         msg: '**Stop 1 — Featured Work:** Three projects JonEric led that won global Microsoft competitions: CivicGrant IQ (Best IQ Agent, ~31,000 contestants), CivicLens (Best Agent, ~1,000 contestants), and the ELM app (Best in Automation, live in 6 municipalities).' },
+            { id: 'writing',        msg: '**Stop 2 — Published Writing:** His Microsoft Tech Community articles on multi-agent patterns in Microsoft Foundry, Copilot Studio harnesses, and CivicGrant IQ.' },
+            { id: 'ai-apps',        msg: '**Stop 3 — AI Agents:** CivicGrant IQ, CivicLens, MAINTAIN AI, and Kaizen AI — multi-agent systems he built solo.' },
+            { id: 'lowcode',        msg: '**Stop 4 — Low-Code Apps:** Power Platform apps for municipal clients, including ELM and LISA, a GIS agent that automates 3,600+ property lookups a year.' },
+            { id: 'dashboards',     msg: '**Stop 5 — Dashboards:** Power BI and Smartsheet dashboards, including oversight of a $7.2M capital project and $53M in rental assistance.' },
+            { id: 'certifications', msg: '**Stop 6 — Certifications:** GitHub Certified: Agentic AI Developer, Azure AI Fundamentals, two Microsoft Applied Skills, PMP, and more.' },
+            { id: 'contact',        msg: '**Stop 7 — Contact:** Tour complete. JonEric is open to AI Engineer roles — connect on LinkedIn, email joneric11@gmail.com, or download the résumé.' },
         ];
         this.addMessage(`Starting portfolio tour — ${stops.length} stops. Say "stop tour" at any time to exit.`, 'ai', false, true);
         stops.forEach((stop, i) => {
@@ -1004,133 +750,40 @@ Want to explore any specific aspect of this ${project.category} solution?`;
         this.chatInput.addEventListener('input', () => {
             this.sendButton.disabled = !this.chatInput.value.trim();
         });
+
+        // "Sources:" links to page sections: scroll there, closing the chat on small screens
+        this.messagesContainer.addEventListener('click', (e) => {
+            const link = e.target.closest('a[data-section]');
+            const target = link && document.getElementById(link.dataset.section);
+            if (!target) return;
+            e.preventDefault();
+            if (window.innerWidth <= 768) {
+                document.getElementById('chat-sidebar')?.classList.remove('open');
+            }
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.add('ai-action-highlight');
+            setTimeout(() => target.classList.remove('ai-action-highlight'), 2200);
+        });
     }
 
     buildContextPrompt() {
-        return `🤖 JonEric Eubanks Portfolio Agent Instructions
+        return `You are the portfolio assistant on JonEric Eubanks' website. Recruiters and hiring managers use you to learn about his work.
 
-Identity
-👨‍💻 Name: JonEric Eubanks, PMP
-📍 Location: Buffalo Grove, IL
-🏢 Role: Microsoft Developer at MGP
-🎯 Focus: Delivering low-code apps, AI copilots, dashboards, and GIS solutions that improve efficiency, transparency, and service delivery for local government.
+ABOUT JONERIC (verified)
+• JonEric Eubanks, PMP — AI engineer and Power Platform developer in Buffalo Grove, IL; open to AI Engineer roles.
+• MGP (Municipal GIS Partners), 2023–present: Low-Code Developer (Dec 2024–present), Microsoft 365 Functional Consultant (Feb–Dec 2024), GIS Specialist (2023–Feb 2024).
+• City of Fort Worth, 2014–2023: Development Project Coordinator (2022–2023), Neighborhood Program Coordinator (2017–2022), Neighborhood Services Liaison (2014–2017).
+• He was the lead on every project in this portfolio. CivicGrant IQ, CivicLens, MAINTAIN AI, and Kaizen AI were solo builds.
 
-📋 Response Rules
+RULES
+1. Answer only with facts from this prompt and the PORTFOLIO DATA. Never invent numbers, clients, dates, employers, awards, or future plans.
+2. If the answer is not in the data, say so plainly and point to the résumé or the Contact section.
+3. Professional, concise tone: under 150 words unless asked to list items (then list every item). Short bullets and **bold** names are fine; at most one emoji.
+4. End every answer with a line starting "Sources:" followed by 1–3 markdown links chosen only from SOURCE LINKS, e.g. Sources: [Featured Work](#awards)
+5. Link to an external article, demo, or case study only with a URL that appears in the PORTFOLIO DATA.
 
-Maximum 150 words per response
-
-Always use emojis for clarity + engagement (🛠️ 📊 🏆 💼 🚀)
-
-Format with bullets when listing
-
-Keep tone friendly, professional, and impactful
-
-Highlight numbers, awards, and measurable results (time saved, funds tracked, service improvements)
-
-Use visual separators (━━━━━━━━━━) for readability
-
-🛠️ Skills & Expertise
-
-Microsoft Power Platform
-• Power Apps • Power Automate • Power BI • Power Pages • Copilot Studio
-
-Microsoft 365 Ecosystem
-• SharePoint • Teams • Entra ID • Office Suite (Excel, Word, PPT, Outlook, OneNote)
-
-Data & Programming
-• SQL • HTML • CSS • Python • C++ • G-Code • BigQuery
-
-GIS Tools
-• ArcGIS Pro • ArcGIS Online • ModelBuilder
-
-Methodologies
-• PMP-certified project management • Lean Six Sigma • Agile
-
-Other Tools
-• Smartsheet dashboards • Azure AI Search
-
-🏆 Career Highlights
-
-• Employment Lifecycle Management (ELM) App → Won Microsoft’s Best in Automation award; official case study published.
-• Municipal apps + dashboards for Buffalo Grove, Glencoe, Brookfield, Lincolnshire, Fort Worth.
-• Efficiency gains: 400+ hrs saved with onboarding automation, 60+ hrs with water service tracking, 55 hrs with block party workflows.
-• Financial oversight: $195.9M+ tracked across aid, rental programs, repairs, construction oversight.
-• AI Leadership: Built Copilot Studio agents like LISA (Land Info Service Agent), ordinance research copilots, CRM dashboards, and RAG-powered property insights.
-
-📜 Certifications
-
-Microsoft
-• Microsoft 365 Certified: Fundamentals
-• Microsoft Certified: Power Platform Fundamentals
-
-Project Management & Data
-• PMP
-• Lean Six Sigma
-• Agile Project Management
-• Google Project Management Professional
-• Google Data Analytics Professional
-• Project Execution: Running the Project
-• Project Initiation: Starting a Successful Project
-• Foundations of Project Management
-• Foundations: Data, Data, Everywhere
-• Prepare Data for Exploration
-• Crash Course on Python
-
-ESRI (ArcGIS / Spatial Data)
-• Basics of Raster Data
-• Displaying Raster Data Using ArcGIS
-• Using Raster Data for Site Selection
-• Processing Raster Data Using ArcGIS
-• Introduction to Surface Modeling Using ArcGIS
-• Using LiDAR Data in ArcGIS
-• Going Places with Spatial Data
-• Organizing Raster Data Using ArcGIS
-
-❓ Typical Q&A
-
-Q: Who is JonEric?
-👨‍💻 JonEric Eubanks is a Microsoft Developer + PMP, building low-code apps, dashboards, and AI copilots that help municipalities modernize services. His expertise spans Power Platform, Microsoft 365, GIS, and data analytics.
-
-Q: What’s his biggest project?
-🏆 JonEric created the Employment Lifecycle Management (ELM) App → automating onboarding/offboarding, unifying workflows across departments, and saving hundreds of staff hours. Deployed in 6+ municipalities and awarded Microsoft’s Best in Automation.
-
-Q: What measurable impact has he delivered?
-⚡ Efficiency: 585+ staff hours saved annually
-💵 Financial Oversight: $195.9M+ tracked in aid, budgets, and construction projects
-🚀 Service Delivery: 30%+ faster municipal response times
-📊 Adoption: Used by multiple municipalities across Illinois + Fort Worth
-
-Q: What other projects has he built?
-• Project 25 Dashboard → Oversight of $7.2M in construction change orders
-• Block Party Request Workflow → Saved 55+ hrs annually
-• Water Service Records App → 3,200+ records managed
-• Rental Aid Dashboard → $53M tracked in community aid
-• CRM + AI Agents → 3,600+ property queries automated with Copilot
-
-Q: What awards has he earned?
-🏆 Microsoft’s Best in Automation for the ELM App — official case study published by Microsoft.
-🏛️ Recognized for municipal technology impact across Illinois and Texas.
-
-Q: What skills does he bring?
-🛠️ Power Platform, Microsoft 365, SQL, GIS (ArcGIS Pro/Online), PMP project management, Lean Six Sigma, Agile.
-🤖 AI copilots with Copilot Studio + Azure AI Search.
-📊 Dashboards and apps that turn complex data into actionable insights.
-
-Q: What certifications back him up?
-📜 Microsoft: M365 Fundamentals, Power Platform Fundamentals
-📜 Project Management: PMP, Lean Six Sigma, Agile, Google PM
-📜 Data: Google Data Analytics, SQL, Python
-📜 GIS: ESRI certifications in LiDAR, raster, and surface modeling
-
-Q: What are his cons?
-💡 “Restless curiosity.” JonEric moves fast with new tools—sometimes too fast. But that drive transforms experiments into full-scale solutions that deliver real community results.
-
-Q: Why trust his work?
-📊 Results speak:
-• Dashboards guiding policy + budgets
-• Apps streamlining onboarding, licensing, and service delivery
-• AI copilots scaling local government capabilities
-• Recognized by Microsoft, trusted by municipalities, and backed by measurable impact`;
+SOURCE LINKS
+[Featured Work](#awards) · [Published Writing](#writing) · [AI Agents](#ai-apps) · [Low-Code Apps](#lowcode) · [Dashboards](#dashboards) · [GIS Maps](#GIS) · [Certifications](#certifications) · [Career Journey](#journey) · [Blog](#blog) · [Contact](#contact) · [Résumé (PDF)](resume/JonEric-Eubanks-Resume.pdf)`;
     }
 
     async sendMessage() {
@@ -1374,54 +1027,75 @@ Q: Why trust his work?
         return hash;
     }
 
-    async getAIResponse(userMessage) {
-        // Fetch live blog posts at call-time so async loads are captured
-        const liveBlogPosts = (window.blogManager && window.blogManager.getPostsForContext)
-            ? window.blogManager.getPostsForContext()
-            : this.portfolioData.blogPosts;
+    // Everything the AI may cite, read from the rendered page at question time
+    buildPortfolioDataContext() {
+        const clean = t => (t || '').replace(/\s+/g, ' ').trim();
 
-        const blogSection = liveBlogPosts.length
-            ? `\nBLOG POSTS (${liveBlogPosts.length} published — list every one when asked what he has written):\n` +
-              liveBlogPosts.slice(0, 25).map(p =>
-                  `• [${p.date}] "${p.title}" (${p.category}${p.source ? ', published on ' + p.source : ''})${p.excerpt ? ' — ' + p.excerpt.substring(0, 140) : ''}`
-              ).join('\n')
-            : '';
+        const featured = this.getFeaturedCases().map(c =>
+            `• ${c.title} — ${c.award}. Role: ${c.role}. Outcome: ${c.outcome}` +
+            (c.links.length ? ` Links: ${c.links.map(l => `${l.label} ${l.href}`).join(', ')}` : '')
+        ).join('\n');
 
-        const projectsContext = this.getProjectGroups().map(g =>
-            `${g.label} (${g.projects.length}):\n` +
-            g.projects.map(p => `• ${p.shortTitle}: ${(p.descriptions[0] || '').substring(0, 140)}`).join('\n')
+        const projects = this.getProjectGroups().map(g =>
+            `${g.label} (${g.projects.length}) [#${g.id}]:\n` +
+            g.projects.map(p => `• ${p.shortTitle}: ${clean(p.descriptions[0]).substring(0, 220)}`).join('\n')
         ).join('\n\n');
 
-        // Enhanced context with conversation history and live portfolio data
+        const credentials = [['certification', 'Certifications'], ['applied-skill', 'Microsoft Applied Skills'], ['course', 'Courses & training']]
+            .map(([type, label]) => {
+                const items = this.portfolioData.certifications.filter(c => c.type === type).map(c => c.title);
+                return items.length ? `${label} (${items.length}): ${items.join('; ')}` : '';
+            })
+            .filter(Boolean)
+            .join('\n');
+
+        const writing = Array.from(document.querySelectorAll('#writing .writing-card')).map(a =>
+            `• ${clean(a.querySelector('h3')?.textContent)} — ${clean(a.querySelector('.writing-card-meta')?.textContent)} — ${a.href}`
+        ).join('\n');
+
+        const blogPosts = (window.blogManager && window.blogManager.getPostsForContext)
+            ? window.blogManager.getPostsForContext()
+            : this.portfolioData.blogPosts;
+        const blog = blogPosts.slice(0, 25).map(p =>
+            `• [${p.date}] "${p.title}"${p.source ? ` (published on ${p.source}${p.url ? ', ' + p.url : ''})` : ''}` +
+            (p.excerpt ? ` — ${p.excerpt.substring(0, 140)}` : '')
+        ).join('\n');
+
+        const metrics = Array.from(document.querySelectorAll('.hero-metrics .metric-item')).map(m =>
+            `${clean(m.querySelector('.metric-value')?.textContent)} ${clean(m.querySelector('.metric-label')?.textContent)}`
+        ).join('; ');
+
+        return { featured, projects, credentials, writing, blog, blogPosts, metrics };
+    }
+
+    async getAIResponse(userMessage) {
+        const ctx = this.buildPortfolioDataContext();
+        const testimonial = (this.portfolioData.testimonials[0] || '').replace(/\s+/g, ' ').trim();
+
         const enhancedContext = `${this.contextPrompt}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PORTFOLIO DATA (live from the page)
 
-CONVERSATION HISTORY (Last ${this.conversationHistory.length} messages):
-${this.conversationHistory.slice(-6).map(msg => `${msg.role}: ${msg.content}`).join('\n')}
+FEATURED WORK [#awards]:
+${ctx.featured || '• (not available)'}
 
-CURRENT PORTFOLIO STATS:
-• Total Projects: ${this.portfolioData.projects.length}
-• Power Apps: ${this.getProjectsByCategory('app').length}
-• Dashboards: ${this.getProjectsByCategory('dashboard').length}  
-• AI Solutions: ${this.getProjectsByCategory('ai').length}
-• GIS Projects: ${this.getProjectsByCategory('gis').length}
-${blogSection}
+ALL PROJECTS (${this.portfolioData.projects.length}):
+${ctx.projects}
 
-ALL PORTFOLIO PROJECTS (use these when asked what he has worked on):
-${projectsContext}
-USER QUERY: ${userMessage}
+CREDENTIALS [#certifications]:
+${ctx.credentials}
 
-RESPONSE INSTRUCTIONS:
-• Reference actual portfolio data when relevant
-• Avoid repeating previous responses in conversation history
-• Be specific about JonEric's work and achievements
-• Use fresh examples and varied language
-• Keep response under 150 words, except when asked to list blog posts or projects — then include every item (title and date, one short line each)
-• Include relevant emojis and formatting`;
+PUBLISHED TECHNICAL WRITING [#writing]:
+${ctx.writing || '• (not available)'}
+
+BLOG POSTS (${ctx.blogPosts.length}) [#blog] — list every one when asked what he has written:
+${ctx.blog || '• (none loaded)'}
+
+HEADLINE METRICS SHOWN ON THE SITE: ${ctx.metrics || 'n/a'}
+
+TESTIMONIAL: ${testimonial || 'n/a'}`;
 
         try {
-            console.log('🚀 Attempting API call to /api/chat');
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -1430,7 +1104,7 @@ RESPONSE INSTRUCTIONS:
                 body: JSON.stringify({
                     message: userMessage,
                     context: enhancedContext,
-                    conversationHistory: this.conversationHistory.slice(-6), // Send recent history
+                    conversationHistory: this.conversationHistory.slice(-6),
                     portfolioData: {
                         projectCount: this.portfolioData.projects.length,
                         projects: this.portfolioData.projects.map(p => ({
@@ -1440,33 +1114,47 @@ RESPONSE INSTRUCTIONS:
                             description: p.descriptions[0]?.substring(0, 100)
                         })),
                         achievements: this.portfolioData.achievements,
-                        certificationCount: this.portfolioData.certifications.length,
-                        blogPosts: liveBlogPosts.slice(0, 25)
+                        certificationCount: this.portfolioData.certifications.filter(c => c.type === 'certification').length,
+                        blogPosts: ctx.blogPosts.slice(0, 25)
                     }
                 })
             });
 
-            console.log('📡 API Response Status:', response.status);
-
             if (!response.ok) {
-                console.error('❌ API Error:', response.status, response.statusText);
                 const errorText = await response.text();
-                console.error('❌ Error Details:', errorText);
                 throw new Error(`API Error: ${response.status} - ${errorText}`);
             }
 
             const data = await response.json();
-            console.log('✅ API Success:', data);
             return data.reply;
         } catch (error) {
-            console.error('💥 API Call Failed:', error);
-            // Return a fallback response that indicates the issue
-            return `🔧 **AI Assistant Temporarily Unavailable**
-
-I'm having trouble reaching the backend right now. Please try again in a moment!
-
-While you wait — JonEric has built 8+ innovative solutions including Power Apps, dashboards, AI agents, and GIS solutions. His ELM App won Microsoft's Best in Automation award! 🏆`;
+            console.error('Chat API call failed:', error);
+            return `I can't reach the AI service right now, so here are the essentials:\n\n• **Featured work:** three projects JonEric led that won global Microsoft competitions — CivicGrant IQ, CivicLens, and the ELM app.\n• **Résumé:** his full work history as a PDF.\n\nSources: [Featured Work](#awards) · [Résumé (PDF)](resume/JonEric-Eubanks-Resume.pdf) · [Contact](#contact)`;
         }
+    }
+
+    // Escapes text, then applies the small markdown subset the bot uses: **bold**, bullets
+    // (•, *, -), line breaks, and [label](href) links limited to page anchors, site files,
+    // https URLs, and mailto. Anything else renders as plain text.
+    formatMessage(text) {
+        const escape = str => str
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        let html = escape(String(text));
+        html = html.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (match, label, href) => {
+            const raw = href.replace(/&amp;/g, '&');
+            if (/^#[A-Za-z][\w-]*$/.test(raw)) {
+                return `<a href="${href}" class="chat-source-link" data-section="${raw.slice(1)}">${label}</a>`;
+            }
+            if (/^(https:\/\/|mailto:)/i.test(raw) || /^[\w-]+(\/[\w.-]+)*\.(pdf|html)$/i.test(raw)) {
+                return `<a href="${href}" class="chat-source-link" target="_blank" rel="noopener noreferrer">${label}</a>`;
+            }
+            return label;
+        });
+        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/^\s*[•*-]\s+(.+)$/gm, '<li>$1</li>');
+        html = html.replace(/<li>.*?<\/li>(?:\n<li>.*?<\/li>)*/g, list => `<ul>${list.replace(/\n/g, '')}</ul>`);
+        return html.replace(/\n/g, '<br>');
     }
 
     addMessage(content, sender, isError = false, isAction = false) {
@@ -1479,27 +1167,8 @@ While you wait — JonEric has built 8+ innovative solutions including Power App
         const avatar = isAction ? ACTION_SVG : (sender === 'ai' ? BOT_SVG : USER_SVG);
         const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         
-        // Ensure content is a string and handle undefined/null cases
         const safeContent = content || 'Sorry, I encountered an error. Please try again later.';
-        
-        // Process content for basic markdown-like formatting
-        let processedContent = safeContent
-            // Convert **text** to <strong>text</strong>
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            // Convert bullet points (• or *) to proper list items
-            .replace(/^[•*]\s(.+)$/gm, '<li>$1</li>')
-            // Wrap consecutive <li> items in <ul>
-            .replace(/(<li>.*<\/li>)/gm, function(match) {
-                return match;
-            });
-        
-        // If we have list items, wrap them in ul tags
-        if (processedContent.includes('<li>')) {
-            processedContent = processedContent.replace(/(<li>.*?<\/li>(?:\s*<li>.*?<\/li>)*)/gs, '<ul>$1</ul>');
-        }
-        
-        // Convert line breaks to <br> tags
-        processedContent = processedContent.replace(/\n/g, '<br>');
+        const processedContent = this.formatMessage(safeContent);
 
         const actionBadge = isAction ? '<span class="action-badge">Action</span>' : '';
         

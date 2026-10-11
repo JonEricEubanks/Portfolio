@@ -583,6 +583,21 @@
     font-size: 0.8rem;
 }
 
+.message-content .chat-source-link {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.user-message .message-content .chat-source-link {
+    color: inherit;
+}
+
+body.dashboard-mode .message-content .chat-source-link {
+    color: #5eead4;
+}
+
 .message-content h1, .message-content h2, .message-content h3 {
     color: var(--primary-color);
     margin: 0.6rem 0 0.4rem 0;

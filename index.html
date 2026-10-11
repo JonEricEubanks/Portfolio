@@ -181,6 +181,10 @@
         <a href="https://github.com/JonEricEubanks" class="social-icon-btn header-social-btn" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
           <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
         </a>
+        <a href="resume/JonEric-Eubanks-Resume.pdf" class="action-btn resume-btn" target="_blank" rel="noopener" aria-label="Open résumé (PDF)">
+          <span class="btn-icon"><i data-lucide="file-text"></i></span>
+          <span class="btn-text">Résumé</span>
+        </a>
         <button id="dashboard-toggle" class="action-btn spotlight-btn" aria-label="Toggle spotlight mode">
           <span class="btn-icon"><i data-lucide="zap"></i></span>
           <span class="btn-text">Spotlight</span>
@@ -209,9 +213,13 @@
           that save time, surface insights, and deliver measurable impact for governments and organizations.
         </p>
         <div class="hero-cta">
-          <a href="#ai-apps" class="cta-button primary">
-            <span>View AI Projects</span>
+          <a href="#awards" class="cta-button primary">
+            <span>View Featured Work</span>
             <i data-lucide="arrow-right" class="cta-icon"></i>
+          </a>
+          <a href="resume/JonEric-Eubanks-Resume.pdf" class="cta-button secondary" download="JonEric-Eubanks-Resume.pdf">
+            <span>Download Résumé</span>
+            <i data-lucide="download" class="cta-icon"></i>
           </a>
           <button onclick="toggleChat()" class="cta-button secondary">
             <span>Ask the AI</span>
@@ -527,8 +535,8 @@
       <!-- Award Cabinet — canonical case studies for the three global wins -->
       <section id="awards" class="portfolio-section award-cabinet" aria-label="Award-winning case studies">
         <div class="section-header">
-          <h2 class="section-title gradient-text">Award Cabinet</h2>
-          <p class="section-description">Three global Microsoft competition wins — each one a shipped product, not a prototype.</p>
+          <h2 class="section-title gradient-text">Featured Work</h2>
+          <p class="section-description">Start here — three projects I led end to end, each recognized in a global Microsoft competition.</p>
         </div>
 
         <!-- CivicGrant IQ -->
@@ -540,6 +548,7 @@
             <div class="award-case-title">
               <h3>CivicGrant IQ</h3>
               <p class="award-case-sub">Best IQ Agent · Microsoft Agents League @ AI Skills Fest · June 2026</p>
+              <p class="award-case-role"><strong>My role:</strong> Solo build — architecture, agent design, full-stack code, and deployment · <strong>2–3 weeks</strong></p>
             </div>
             <div class="award-case-chips">
               <span>Global · ~31,000 contestants</span>
@@ -592,6 +601,7 @@
             <div class="award-case-title">
               <h3>CivicLens</h3>
               <p class="award-case-sub">Best Agent · JavaScript AI Build-a-thon (Microsoft) · April 2026</p>
+              <p class="award-case-role"><strong>My role:</strong> Solo build — agent pipeline, MCP server, UI, and deployment · <strong>~1 month</strong></p>
             </div>
             <div class="award-case-chips">
               <span>Global · ~1,000 contestants</span>
@@ -644,9 +654,10 @@
             <div class="award-case-title">
               <h3>Employment Lifecycle Management</h3>
               <p class="award-case-sub">Best in Automation · Microsoft (global) · Official Microsoft case study</p>
+              <p class="award-case-role"><strong>My role:</strong> Project lead — discovery with Brookfield’s HR manager and 7 department heads, process mapping, build, and rollout to <strong>6 municipalities</strong></p>
             </div>
             <div class="award-case-chips">
-              <span>Global competition</span>
+              <span>Live in 6 municipalities</span>
               <span>400+ hrs saved / yr</span>
             </div>
             <div class="award-case-thumb" aria-hidden="true">
@@ -672,7 +683,7 @@
             </div>
             <div class="award-step">
               <span class="award-step-label">Outcome</span>
-              <p>Microsoft's global Best in Automation award — and 400+ staff hours saved every year in production.</p>
+              <p>Microsoft's global Best in Automation award, 400+ staff hours saved every year, and a rollout to Brookfield, Buffalo Grove, Riverside, Glencoe, Lincolnshire, and Hanover Park.</p>
             </div>
             <div class="award-step award-step-stack">
               <span class="award-step-label">Stack</span>
@@ -686,6 +697,44 @@
             <a href="https://www.youtube.com/watch?v=Xo8JF_WUga0" target="_blank" rel="noopener">Watch demo ↗</a>
           </div>
         </article>
+      </section>
+
+      <!-- Published Technical Writing -->
+      <section id="writing" class="portfolio-section writing-section" aria-labelledby="writing-title">
+        <div class="section-header">
+          <h2 id="writing-title" class="section-title gradient-text">Published Technical Writing</h2>
+          <p class="section-description">Articles published on Microsoft Tech Community’s Educator Developer Blog</p>
+        </div>
+        <div class="writing-grid">
+          <a class="writing-card glass-morphism" href="https://techcommunity.microsoft.com/blog/educatordeveloperblog/transforming-solo-agents-to-collaborative-teams-choosing-multi-agent-patterns-in/4555465" target="_blank" rel="noopener">
+            <img class="writing-card-img" src="Images/blog/foundry-multi-agent-cover.jpg" alt="" loading="lazy">
+            <div class="writing-card-body">
+              <span class="writing-card-meta">Microsoft Tech Community · Sep 2026</span>
+              <h3>Transforming Solo Agents to Collaborative Teams: Choosing Multi-Agent Patterns in Microsoft Foundry</h3>
+              <p>When to use sequential, concurrent, handoff, group chat, and Magentic orchestration — and where a person must approve.</p>
+              <span class="writing-card-cta">Read on Tech Community ↗</span>
+            </div>
+          </a>
+          <a class="writing-card glass-morphism" href="https://techcommunity.microsoft.com/blog/educatordeveloperblog/understanding-harnesses-the-concept-that-changes-how-you-build-agents-in-copilot/4545149" target="_blank" rel="noopener">
+            <img class="writing-card-img" src="Images/blog-harnesses.png" alt="" loading="lazy">
+            <div class="writing-card-body">
+              <span class="writing-card-meta">Microsoft Tech Community · Aug 2026</span>
+              <h3>Understanding Harnesses: The Concept That Changes How You Build Agents in Copilot Studio</h3>
+              <p>The three Copilot Studio harnesses and how to choose between explicit construction and goal-directed reasoning.</p>
+              <span class="writing-card-cta">Read on Tech Community ↗</span>
+            </div>
+          </a>
+          <a class="writing-card glass-morphism" href="https://techcommunity.microsoft.com/blog/educatordeveloperblog/civicgrant-iq-the-five-agent-ai-that-reads-federal-grants-so-cities-dont-have-to/4542419" target="_blank" rel="noopener">
+            <img class="writing-card-img" src="Images/blog/civicgrant-iq-hero.svg" alt="" loading="lazy">
+            <div class="writing-card-body">
+              <span class="writing-card-meta">Microsoft Tech Community · Jul 2026</span>
+              <h3>CivicGrant IQ: The Five-Agent AI That Reads Federal Grants So Cities Don’t Have To</h3>
+              <p>The architecture behind the Best IQ Agent win — five agents, GraphRAG reasoning, and the Microsoft IQ layers.</p>
+              <span class="writing-card-cta">Read on Tech Community ↗</span>
+            </div>
+          </a>
+        </div>
+        <p class="writing-more">Also published: <a href="https://techcommunity.microsoft.com/blog/educatordeveloperblog/a-hands-on-community-workshop-for-learning-to-work-with-ai-coding-agents/4553030" target="_blank" rel="noopener">AI Teammate 101, a free hands-on workshop for working with AI coding agents ↗</a> · <a href="#blog">All posts ↓</a></p>
       </section>
 
       <!-- AI Agents & Applications Section -->
@@ -725,6 +774,20 @@
             <div class="image-container" style="background-image: url('https://raw.githubusercontent.com/JonEricEubanks/CivicLens/main/src/Assets/Homescreen%20(3).png');">
             </div>
             <p>CivicLens — 5-Stage Municipal Intelligence Agent</p>
+          </div>
+
+          <!-- Sewer CCTV AI Review (MGP proof of concept) -->
+          <div class="link-container modal-trigger"
+               data-modal-title="Sewer CCTV AI Review — Azure AI Content Understanding"
+               data-modal-image="https://raw.githubusercontent.com/JonEricEubanks/public-assets/main/images/sewer-cctv-header.svg"
+               data-modal-slideshow="executive-summary-sewercctv,https://raw.githubusercontent.com/JonEricEubanks/public-assets/main/images/sewer-cctv-header.svg,https://raw.githubusercontent.com/JonEricEubanks/public-assets/main/images/sewer-cctv-pipeline.svg,https://raw.githubusercontent.com/JonEricEubanks/public-assets/main/images/sewer-cctv-review-loop.svg,https://raw.githubusercontent.com/JonEricEubanks/public-assets/main/images/sewer-cctv-cost-receipt.svg"
+               data-modal-descriptions="Proof of concept built at MGP: an AI model watches sewer inspection video first and proposes findings, then an inspector confirms, corrects, or rejects each one with the video cued to the exact timestamp. Built with Azure AI Content Understanding, a Python Azure Function, Power Automate, SharePoint, and a canvas app, at about $3.54 per video-hour.||🎥 AI First Pass: A custom Content Understanding analyzer returns structured observations (condition type, pipe clock position, footage counter, start and end timestamps, and confidence) plus a keyframe thumbnail for each finding, so reviewers see the exact frame the model saw.||🔄 Pipeline: Video is staged in Blob Storage, analyzed asynchronously using the 202 Accepted polling pattern that Power Automate follows natively, normalized into findings, and written to SharePoint. A managed identity mints short-lived, read-only SAS URLs, so no storage keys are stored anywhere.||✅ Human Review Loop: Inspectors review every finding with the video cued to its timestamp and record one of five dispositions (Confirmed, Corrected, Rejected, Duplicate, or Unable to Verify), creating an audit trail and a calibration signal for the model.||💵 Measured Cost: Priced from a real run at about $0.059 per minute of footage, roughly 18 cents for a three-minute clip and $2.65 for a 45-minute inspection."
+               data-kpi-icon=""
+               data-kpi-value="5"
+               data-kpi-title="Review Dispositions Tracked">
+            <div class="image-container" style="background-image: url('https://raw.githubusercontent.com/JonEricEubanks/public-assets/main/images/sewer-cctv-header.svg');">
+            </div>
+            <p>Sewer CCTV AI Review — Proof of Concept</p>
           </div>
 
           <!-- MAINTAIN AI -->
@@ -767,6 +830,53 @@
           <p class="section-description">Building powerful applications with minimal code</p>
         </div>
         <div class="grid-container modern-portfolio-grid">
+          <div class="link-container modal-trigger" 
+               data-modal-title="Microsofts Best in Automation ELM App"
+               data-modal-image="Images/ELM.png"
+               data-modal-slideshow="executive-summary-elm,Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0?autoplay=1"
+               data-modal-descriptions="Unified onboarding and offboarding workflows across HR, IT, and management, saving 400+ hours annually and recognized by Microsoft as Best in Automation.||📊 New Hire & Task Overview: Provides a live look at the Employment Lifecycle Management (ELM) app interface. Shows realtime tracking of onboarding/offboarding tasks, dynamic progress charts, supervisor assignments, and department level task automation.||🏆 Recognized by Microsoft: Highlights Microsoft's official case study featuring the ELM app as a showcase of Power Platform and intelligent automation. Demonstrates impact in unifying workflows across HR, IT, and managers while reducing manual effort.||🎬 Video Walkthrough: Demo video covers task automation with Power Automate, AI-enhanced email notifications, role-based access in SharePoint, and Copilot driven task commands showing why it won Best in Automation."
+               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1"
+               data-kpi-icon="⏱️"
+               data-kpi-value="400"
+               data-kpi-title="Hours Saved on Hiring"
+               data-kpi-suffix="+">
+            <div class="image-container" 
+                 style="background-image: url('Images/ELM.png');">
+            </div>
+            <p>Microsofts Best in Automation ELM App</p>
+          </div>
+
+          <div class="link-container modal-trigger" 
+               data-modal-title="(LISA) Land Info Service Agent on GIS Data"
+               data-modal-image="Images/agent.png"
+               data-modal-slideshow="executive-summary-agent,Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
+               data-modal-descriptions="Automated more than 3,600 property lookups annually, providing immediate zoning, utility, and ownership details while eliminating manual GIS research.||🗂️ Azure AI Search Indexing: Displays the underlying Azure AI Search index connected to municipal GIS and SQL data. Shows semantic search, enrichment, and vector search powering the assistant's accuracy.||⚙️ Azure Portal Integration: Illustrates the Azure setup for the agent, including search service quotas, skillsets, and indexing pipelines. Emphasizes the technical foundation of how municipal data is connected securely.||Highlights how the agent was designed and orchestrated in Copilot Studio. Demonstrates structuring intents, knowledge sources, and orchestration logic for municipal use cases.||Showcases the LISA agent embedded directly in Microsoft Teams with a clean, branded UI. Residents and staff can query property details, zoning, utilities, and services in natural language.||✨ Results in Action: Demonstrates real output from the agent providing zoning, property ownership, and service information for a given address delivering instant, actionable insights to residents and staff."
+               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71"
+               data-kpi-icon="🤖"
+               data-kpi-value="3600"
+               data-kpi-title="Property Records Indexed"
+               data-kpi-suffix="+">
+            <div class="image-container" 
+                 style="background-image: url('Images/agent.png');">
+            </div>
+            <p>(LISA) Land Info Service Agent on GIS Data</p>
+          </div>
+
+          <div class="link-container modal-trigger"
+               data-modal-title="Glencoe Early Check Request App"
+               data-modal-image="Images/covers/glencoe-early-check.svg"
+               data-modal-slideshow="executive-summary-earlycheck,video:https://www.youtube.com/embed/r90UMj-M_Cw?autoplay=1,Images/covers/glencoe-early-check.svg"
+               data-modal-descriptions="Replaced Glencoe's email-based early check approvals with a tracked Power Platform workflow. Built in three months, it eliminated 3 to 4 hours of manual follow-up per week and delivers $7,000 to $10,000 in annual value.||🎬 Demo Video: Full walkthrough of the approval dashboard, request detail and approval trail, Microsoft Forms intake, the Power Automate routing and weekly reminder flows, and the SharePoint audit library.||📋 How it works: Staff submit requests through a validated Microsoft Forms intake. Power Automate routes each one through Dept Head, Executive, and Finance approval, sends a personalized reminder to each approver every Wednesday, and attaches an immutable approval-trail document to the SharePoint record. A Power Apps dashboard gives Finance and leadership live status, a stage tracker on every request, delegate reassignment, in-app attachments, and one-click approval on mobile."
+               data-kpi-icon="💰"
+               data-kpi-value="7"
+               data-kpi-title="Annual Value"
+               data-kpi-prefix="$"
+               data-kpi-suffix="K+">
+            <div class="image-container" style="background-image: url('Images/covers/glencoe-early-check.svg');">
+            </div>
+            <p>Glencoe Early Check Request App</p>
+          </div>
+
           <div class="link-container modal-trigger" 
               data-modal-title="Brookfield Block Party Request Process"
               data-modal-image="Images/block1.png"
@@ -837,6 +947,33 @@
             <p>Glencoe Water Service Record Inventory App</p>
           </div>
 
+          <div class="link-container modal-trigger"
+               data-modal-title="Brookfield Raffle Permit Automation"
+               data-modal-image="Images/covers/brookfield-raffle-permits.svg"
+               data-modal-slideshow="executive-summary-raffle,video:https://www.youtube.com/embed/YQxdmd-Spag?autoplay=1,Images/covers/brookfield-raffle-permits.svg"
+               data-modal-descriptions="Automated Brookfield's raffle permits end to end: a Survey123 application, a secure $50 online payment, automatic payment verification, and one-click staff approval, with no manual data entry from application to approval.||🎬 Demo Video: Follow one application from the Survey123 form through the payment email and checkout, automatic payment verification, and one-click staff approval.||📋 How it works: A Power Automate flow creates the permit record, notifies staff, and emails the applicant a secure payment link with their email prefilled. After checkout, a second flow validates the application, marks it Paid with the amount, date, and transaction ID, and emails a payment confirmation. Staff approve with one click from the list, which triggers the decision email to the applicant."
+               data-kpi-icon="💳"
+               data-kpi-value="50"
+               data-kpi-title="Permit Fee Paid Online"
+               data-kpi-prefix="$">
+            <div class="image-container" style="background-image: url('Images/covers/brookfield-raffle-permits.svg');">
+            </div>
+            <p>Brookfield Raffle Permit Automation</p>
+          </div>
+
+          <div class="link-container modal-trigger"
+               data-modal-title="Lincolnshire Employment Application Workflow"
+               data-modal-image="Images/covers/lincolnshire-employment-app.svg"
+               data-modal-slideshow="executive-summary-employment,video:https://www.youtube.com/embed/SifYvOKRS68?autoplay=1,Images/covers/lincolnshire-employment-app.svg"
+               data-modal-descriptions="Built Lincolnshire's end-to-end employment application: a mobile-friendly Survey123 form feeds an automated workflow that assembles a branded application packet, delivers it to HR, and confirms receipt to the applicant within about 30 seconds.||🎬 Demo Video: Walkthrough of the Survey123 application, the Power Automate flow that builds the Word packet and files every document, and the SharePoint applicant hub HR works from.||📋 How it works: Power Automate creates a SharePoint list item, fills a branded Word template with every field, and saves the resume, signature, and attachments to a document library tied to the application. HR works from one SharePoint site with color-coded applicant cards showing each stage and fit-score eligibility flags, plus a custom branded form for updating any applicant."
+               data-kpi-icon="⏱️"
+               data-kpi-value="30"
+               data-kpi-title="Seconds to a Complete HR Packet">
+            <div class="image-container" style="background-image: url('Images/covers/lincolnshire-employment-app.svg');">
+            </div>
+            <p>Lincolnshire Employment Application Workflow</p>
+          </div>
+
           <div class="link-container modal-trigger" 
                data-modal-title="Demo MGP Service Desk Ticket App"
                data-modal-image="Images/servicedesk.png"
@@ -869,37 +1006,6 @@
             <p>Sharepoint Intranet Design Development</p>
           </div>
 
-          <div class="link-container modal-trigger" 
-               data-modal-title="(LISA) Land Info Service Agent on GIS Data"
-               data-modal-image="Images/agent.png"
-               data-modal-slideshow="executive-summary-agent,Images/agent4.png,Images/agent2.png,Images/agent3.png,Images/agent.png,Images/agent1.png"
-               data-modal-descriptions="Automated more than 3,600 property lookups annually, providing immediate zoning, utility, and ownership details while eliminating manual GIS research.||🗂️ Azure AI Search Indexing: Displays the underlying Azure AI Search index connected to municipal GIS and SQL data. Shows semantic search, enrichment, and vector search powering the assistant's accuracy.||⚙️ Azure Portal Integration: Illustrates the Azure setup for the agent, including search service quotas, skillsets, and indexing pipelines. Emphasizes the technical foundation of how municipal data is connected securely.||Highlights how the agent was designed and orchestrated in Copilot Studio. Demonstrates structuring intents, knowledge sources, and orchestration logic for municipal use cases.||Showcases the LISA agent embedded directly in Microsoft Teams with a clean, branded UI. Residents and staff can query property details, zoning, utilities, and services in natural language.||✨ Results in Action: Demonstrates real output from the agent providing zoning, property ownership, and service information for a given address delivering instant, actionable insights to residents and staff."
-               data-modal-link="https://app.smartsheet.com/b/publish?EQBCT=edd00b56c041484f8629984d37536d71"
-               data-kpi-icon="🤖"
-               data-kpi-value="3600"
-               data-kpi-title="Property Records Indexed"
-               data-kpi-suffix="+">
-            <div class="image-container" 
-                 style="background-image: url('Images/agent.png');">
-            </div>
-            <p>(LISA) Land Info Service Agent on GIS Data</p>
-          </div>
-
-          <div class="link-container modal-trigger" 
-               data-modal-title="Microsofts Best in Automation ELM App"
-               data-modal-image="Images/ELM.png"
-               data-modal-slideshow="executive-summary-elm,Images/ELM.png,Images/ELM1.png,video:https://www.youtube.com/embed/Xo8JF_WUga0?autoplay=1"
-               data-modal-descriptions="Unified onboarding and offboarding workflows across HR, IT, and management, saving 400+ hours annually and recognized by Microsoft as Best in Automation.||📊 New Hire & Task Overview: Provides a live look at the Employment Lifecycle Management (ELM) app interface. Shows realtime tracking of onboarding/offboarding tasks, dynamic progress charts, supervisor assignments, and department level task automation.||🏆 Recognized by Microsoft: Highlights Microsoft's official case study featuring the ELM app as a showcase of Power Platform and intelligent automation. Demonstrates impact in unifying workflows across HR, IT, and managers while reducing manual effort.||🎬 Video Walkthrough: Demo video covers task automation with Power Automate, AI-enhanced email notifications, role-based access in SharePoint, and Copilot driven task commands showing why it won Best in Automation."
-               data-modal-link="https://www.canva.com/design/DAFdGkgARbg/PgV53kbV5vRqLqUgWJKLuQ/view?utm_content=DAFdGkgARbg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink#1"
-               data-kpi-icon="⏱️"
-               data-kpi-value="400"
-               data-kpi-title="Hours Saved on Hiring"
-               data-kpi-suffix="+">
-            <div class="image-container" 
-                 style="background-image: url('Images/ELM.png');">
-            </div>
-            <p>Microsofts Best in Automation ELM App</p>
-          </div>
         </div>
       </section>
       
@@ -1183,190 +1289,216 @@
       <section id="certifications" class="portfolio-section">
         <div class="section-header">
           <h2 class="section-title gradient-text">Certifications</h2>
-          <p class="section-description">Microsoft, GitHub, Azure AI, Power Platform, project management, and GIS credentials</p>
+          <p class="section-description">Industry certifications first, then hands-on Microsoft Applied Skills and completed training</p>
         </div>
-      <div class="certification-container">
-       
-        <ul>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="GitHub Certified: Agentic AI Developer"
-                 data-modal-image="Images/github-agentic-ai-developer.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/210BA96388C5B3F2?sharingId=A81001FBB40B8274">
-              GitHub Certified: Agentic AI Developer
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft Certified: Azure AI Fundamentals"
-                 data-modal-image="Images/azure-ai-fundamentals.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/3D064FD80E1A2312?sharingId=A81001FBB40B8274">
-              Microsoft Certified: Azure AI Fundamentals
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft Applied Skills: Get started developing agents in Microsoft Foundry"
-                 data-modal-image="Images/applied-skills-foundry-agents.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/88257A140014E20A?sharingId=A81001FBB40B8274">
-              Microsoft Applied Skills: Get started developing agents in Microsoft Foundry
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft Applied Skills: Resolve GitHub issues by using GitHub Copilot"
-                 data-modal-image="Images/applied-skills-github-copilot-issues.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/5898BBAFB65A7455?sharingId=A81001FBB40B8274">
-              Microsoft Applied Skills: Resolve GitHub issues by using GitHub Copilot
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft 365 Certified: Fundamentals"
-                 data-modal-image="Images/ms900.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/F9B37924E55CFF7A?sharingId=A81001FBB40B8274">
-              Microsoft 365 Certified: Fundamentals
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft Certified: Power Platform Fundamentals"
-                 data-modal-image="Images/ms9001.png"
-                 data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/1985EFEF69A71E1C?sharingId=A81001FBB40B8274">
-              Microsoft Certified: Power Platform Fundamentals
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Microsoft Transcript"
-                 data-modal-image="Images/tran.png"
-                 data-modal-link="https://learn.microsoft.com/en-us/users/jonericeubanks/transcript/76yr8te21jqj0mj">
-              Microsoft Transcript
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Crash Course on Python"
-                 data-modal-image="Images/2.png"
-                 data-modal-link="https://coursera.org/share/959f9ea4ad9a070fbe08aaa698c7bcc6">
-              Crash Course on Python
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Agile Project Management"
-                 data-modal-image="Images/7.png"
-                 data-modal-link="https://coursera.org/share/ab23d04652aa03a60a73e2fc741de08a">
-              Agile Project Management
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Project Execution: Running the Project"
-                 data-modal-image="Images/3.png"
-                 data-modal-link="https://coursera.org/share/ab23d04652aa03a60a73e2fc741de08a">
-              Project Execution: Running the Project
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Foundations of Project Management"
-                 data-modal-image="Images/4.png"
-                 data-modal-link="https://coursera.org/share/f8e1360a9219a252e0e5bb0567615c25">
-              Foundations of Project Management
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Foundations: Data, Data, Everywhere"
-                 data-modal-image="Images/5.png"
-                 data-modal-link="https://coursera.org/share/3a4d3e7f58e2fb6fcab6d13bc561c9ab">
-              Foundations: Data, Data, Everywhere
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Prepare Data for Exploration"
-                 data-modal-image="Images/6.png"
-                 data-modal-link="https://coursera.org/share/8993175083f3e0055df3bcb9aa9e8056">
-              Prepare Data for Exploration
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Project Initiation: Starting a Successful Project"
-                 data-modal-image="Images/1.png"
-                 data-modal-link="https://coursera.org/share/d36872927d4ea0dfe844dc97732aba92">
-              Project Initiation: Starting a Successful Project
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Basics of Raster Data"
-                 data-modal-image="Images/rast.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a487afcdf72906c84e6af/360">
-              Basics of Raster Data
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Displaying Raster Data Using ArcGIS"
-                 data-modal-image="Images/dis.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fc04/360">
-              Displaying Raster Data Using ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Using Raster Data for Site Selection"
-                 data-modal-image="Images/use.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5566fcdf72906c8578e6/300">
-              Using Raster Data for Site Selection
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Processing Raster Data Using ArcGIS"
-                 data-modal-image="Images/proc.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5048fcdf72906c8520a9/300">
-              Processing Raster Data Using ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Introduction to Surface Modeling Using ArcGIS"
-                 data-modal-image="Images/int.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a54fcfcdf72906c857105/300">
-              Introduction to Surface Modeling Using ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Using Lidar Data in ArcGIS"
-                 data-modal-image="Images/lid.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fb6b/300">
-              Using Lidar Data in ArcGIS
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Going Places with Spatial Data"
-                 data-modal-image="Images/go.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/6130f011e0aa8c0b7d52174c/300">
-              Going Places with Spatial Data
-            </div>
-          </li>
-          <li>
-            <div class="certification-item modal-trigger"
-                 data-modal-title="Organizing Raster Data Using ArcGIS"
-                 data-modal-image="Images/org.png"
-                 data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a50c1fcdf72906c85296c/300">
-              Organizing Raster Data Using ArcGIS
-            </div>
-          </li>
-        </ul>
-      </div>
-        </section>
+        <div class="credential-group" data-credential-type="certification">
+          <h3 class="credential-group-title">Certifications <span class="credential-count">7</span></h3>
+          <div class="certification-container">
+            <ul>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="GitHub Certified: Agentic AI Developer"
+                     data-modal-image="Images/github-agentic-ai-developer.png"
+                     data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/210BA96388C5B3F2?sharingId=A81001FBB40B8274">
+                  GitHub Certified: Agentic AI Developer
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Microsoft Certified: Azure AI Fundamentals"
+                     data-modal-image="Images/azure-ai-fundamentals.png"
+                     data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/3D064FD80E1A2312?sharingId=A81001FBB40B8274">
+                  Microsoft Certified: Azure AI Fundamentals
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Microsoft Certified: Power Platform Fundamentals"
+                     data-modal-image="Images/ms9001.png"
+                     data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/1985EFEF69A71E1C?sharingId=A81001FBB40B8274">
+                  Microsoft Certified: Power Platform Fundamentals
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Microsoft 365 Certified: Fundamentals"
+                     data-modal-image="Images/ms900.png"
+                     data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/F9B37924E55CFF7A?sharingId=A81001FBB40B8274">
+                  Microsoft 365 Certified: Fundamentals
+                </div>
+              </li>
+              <li>
+                <div class="certification-item certification-item--static">
+                  Project Management Professional (PMP) <span class="credential-issuer">· PMI</span>
+                </div>
+              </li>
+              <li>
+                <div class="certification-item certification-item--static">
+                  Google Project Management Professional Certificate <span class="credential-issuer">· Google</span>
+                </div>
+              </li>
+              <li>
+                <div class="certification-item certification-item--static">
+                  Google Data Analytics Professional Certificate <span class="credential-issuer">· Google</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="credential-group" data-credential-type="applied-skill">
+          <h3 class="credential-group-title">Microsoft Applied Skills <span class="credential-count">2</span></h3>
+          <p class="credential-group-note">Lab-based assessments of real tasks, verified by Microsoft Learn.</p>
+          <div class="certification-container">
+            <ul>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Microsoft Applied Skills: Get started developing agents in Microsoft Foundry"
+                     data-modal-image="Images/applied-skills-foundry-agents.png"
+                     data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/88257A140014E20A?sharingId=A81001FBB40B8274">
+                  Microsoft Applied Skills: Get started developing agents in Microsoft Foundry
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Microsoft Applied Skills: Resolve GitHub issues by using GitHub Copilot"
+                     data-modal-image="Images/applied-skills-github-copilot-issues.png"
+                     data-modal-link="https://learn.microsoft.com/api/credentials/share/en-us/JonEricEubanks/5898BBAFB65A7455?sharingId=A81001FBB40B8274">
+                  Microsoft Applied Skills: Resolve GitHub issues by using GitHub Copilot
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <details class="credential-group credential-group--courses" data-credential-type="course">
+          <summary class="credential-group-title">Courses &amp; Training <span class="credential-count">15</span></summary>
+          <p class="credential-group-note">Google (Coursera) project management and data analytics courses, plus Esri ArcGIS training.</p>
+          <div class="certification-container">
+            <ul>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Crash Course on Python"
+                     data-modal-image="Images/2.png"
+                     data-modal-link="https://coursera.org/share/959f9ea4ad9a070fbe08aaa698c7bcc6">
+                  Crash Course on Python
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Agile Project Management"
+                     data-modal-image="Images/7.png"
+                     data-modal-link="https://coursera.org/share/ab23d04652aa03a60a73e2fc741de08a">
+                  Agile Project Management
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Project Execution: Running the Project"
+                     data-modal-image="Images/3.png"
+                     data-modal-link="https://coursera.org/share/ab23d04652aa03a60a73e2fc741de08a">
+                  Project Execution: Running the Project
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Foundations of Project Management"
+                     data-modal-image="Images/4.png"
+                     data-modal-link="https://coursera.org/share/f8e1360a9219a252e0e5bb0567615c25">
+                  Foundations of Project Management
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Foundations: Data, Data, Everywhere"
+                     data-modal-image="Images/5.png"
+                     data-modal-link="https://coursera.org/share/3a4d3e7f58e2fb6fcab6d13bc561c9ab">
+                  Foundations: Data, Data, Everywhere
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Prepare Data for Exploration"
+                     data-modal-image="Images/6.png"
+                     data-modal-link="https://coursera.org/share/8993175083f3e0055df3bcb9aa9e8056">
+                  Prepare Data for Exploration
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Project Initiation: Starting a Successful Project"
+                     data-modal-image="Images/1.png"
+                     data-modal-link="https://coursera.org/share/d36872927d4ea0dfe844dc97732aba92">
+                  Project Initiation: Starting a Successful Project
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Basics of Raster Data"
+                     data-modal-image="Images/rast.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a487afcdf72906c84e6af/360">
+                  Basics of Raster Data
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Displaying Raster Data Using ArcGIS"
+                     data-modal-image="Images/dis.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fc04/360">
+                  Displaying Raster Data Using ArcGIS
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Using Raster Data for Site Selection"
+                     data-modal-image="Images/use.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5566fcdf72906c8578e6/300">
+                  Using Raster Data for Site Selection
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Processing Raster Data Using ArcGIS"
+                     data-modal-image="Images/proc.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a5048fcdf72906c8520a9/300">
+                  Processing Raster Data Using ArcGIS
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Introduction to Surface Modeling Using ArcGIS"
+                     data-modal-image="Images/int.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a54fcfcdf72906c857105/300">
+                  Introduction to Surface Modeling Using ArcGIS
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Using Lidar Data in ArcGIS"
+                     data-modal-image="Images/lid.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a496afcdf72906c84fb6b/300">
+                  Using Lidar Data in ArcGIS
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Going Places with Spatial Data"
+                     data-modal-image="Images/go.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/6130f011e0aa8c0b7d52174c/300">
+                  Going Places with Spatial Data
+                </div>
+              </li>
+              <li>
+                <div class="certification-item modal-trigger"
+                     data-modal-title="Organizing Raster Data Using ArcGIS"
+                     data-modal-image="Images/org.png"
+                     data-modal-link="https://www.esri.com/training/TrainingRecord/Certificate/joneric/571a50c1fcdf72906c85296c/300">
+                  Organizing Raster Data Using ArcGIS
+                </div>
+              </li>
+            </ul>
+          </div>
+        </details>
+        <p class="credential-transcript"><a href="https://learn.microsoft.com/en-us/users/jonericeubanks/transcript/76yr8te21jqj0mj" target="_blank" rel="noopener">View full Microsoft Learn transcript ↗</a></p>
+      </section>
       </div>
 
       <!-- Career Journey Section -->
@@ -1683,6 +1815,12 @@
                target="_blank" rel="noopener noreferrer">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               Connect on LinkedIn
+            </a>
+            <a href="resume/JonEric-Eubanks-Resume.pdf"
+               class="contact-btn contact-btn-secondary"
+               download="JonEric-Eubanks-Resume.pdf">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Résumé
             </a>
             <a href="mailto:joneric11@gmail.com"
                class="contact-btn contact-btn-secondary">
@@ -3014,6 +3152,7 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <!-- Add dashboard.js script before the closing body tag -->
     <script src="dashboard.js"></script>
+    <script src="project-collapse.js"></script>
     <!-- Add chat functionality -->
     <script src="chat.js"></script>
     <!-- Prism.js for code syntax highlighting -->

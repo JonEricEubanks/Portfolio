@@ -14,21 +14,26 @@ This is a personal portfolio website for JonEric Eubanks showcasing low-code dev
 ### Frontend Structure
 - **Single-page application** with vanilla JS (no framework)
 - `index.html`: Monolithic 1876-line file containing all content (hero, projects, certifications, blog section)
-- Four main JS modules:
-  - `chat.js`: AI chatbot with conversation history, intent detection, anti-repetition
+- Main JS modules:
+  - `chat.js`: AI chatbot with conversation history, intent detection, grounded/source-linked answers
   - `dashboard.js`: "Spotlight mode" toggle with KPI indicators and counter animations
   - `blog.js`: Blog management system with localStorage-based CMS
+  - `project-collapse.js`: Shows the first 4 cards per project grid with a "Show all" toggle (`window.revealProjectCard()` expands a hidden card)
   - `slideshow-kpi.js`: Currently empty, reserved for modal slideshow enhancements
 
 ### AI Chat System
 The AI chatbot uses **dual-layer intelligence**:
-1. **Frontend** (`chat.js` lines 176-606): Intent detection, response variations, conversation tracking
-2. **Backend** (both `server.js` and `api/chat.js`): OpenAI GPT-4o-mini with dynamic context
+1. **Frontend** (`chat.js`): Intent detection plus deterministic answers built from the live page (project lists, Featured Work case studies, credentials), each ending in a `Sources:` line of section links
+2. **Backend** (both `server.js` and `api/chat.js`): Anthropic Claude with the page data sent as context
 
-**Key anti-repetition mechanisms**:
-- Backend: `presence_penalty: 0.6`, `frequency_penalty: 0.3`, conversation history (last 6 messages)
-- Frontend: `conversationContext` tracks discussed topics, `usedResponseSets` prevents identical responses
-- System prompt includes recent response themes to force variety
+**Grounding rules** (in `buildContextPrompt()` and the backends' `buildDefaultContext()`):
+- Answer only from the provided portfolio data; never invent numbers, clients, dates, or awards
+- End every answer with `Sources:` and 1–3 markdown links to page sections (`#awards`, `#writing`, `#certifications`, ...) or the résumé PDF
+- `formatMessage()` escapes all HTML before rendering markdown; links are limited to page anchors, site files, https, and mailto
+
+**Anti-repetition**:
+- Backend: conversation history (last 6 messages) and `checkForRepetition()` themes added to the system prompt
+- Frontend: `conversationContext` tracks discussed topics; `isRepetitiveRequest()` catches near-duplicate questions
 
 ### Modal System (`index.html`)
 Project cards use data attributes to populate modals:
@@ -103,11 +108,16 @@ git push origin main  # Auto-deploys to Vercel (GitHub connection active)
 5. Optional: Click "Export All Posts" to download JSON backup for version control
 
 ### Modifying AI Behavior
-1. **System prompt**: Edit `buildDefaultContext()` in BOTH `server.js` and `api/chat.js`
-2. **Intent detection**: Modify `analyzeIntent()` in `chat.js` (lines ~850-1000)
-3. **Response variations**: Update `initializeResponseVariations()` in `chat.js` (lines ~100-500)
-4. **Model parameters**: Adjust `temperature`, `max_tokens`, penalties in chat endpoints
-5. **Blog context**: Blog posts automatically included via `extractPortfolioData()` — no manual updates needed
+1. **System prompt**: Edit `buildContextPrompt()` in `chat.js` (sent with every request) and `buildDefaultContext()` in BOTH `server.js` and `api/chat.js` (fallback)
+2. **Intent detection**: Modify `analyzeUserIntent()` in `chat.js`
+3. **Local answers**: `generateContextualResponse()` routes to page-driven builders (`getLiveProjectsResponse`, `getFeaturedWorkResponse`, `getFeaturedCaseResponse`, `getCredentialsResponse`); everything else goes to the AI
+4. **Model parameters**: Adjust `temperature`, `max_tokens` in chat endpoints
+5. **Page data for the AI**: `buildPortfolioDataContext()` reads Featured Work, projects, credentials, writing, and blog posts at question time — no manual updates needed
+
+### Résumé
+- Source of truth: `build-resume.py` one folder above this repo (python-docx) — edit the content there, then run `python build-resume.py` to regenerate `Resume.docx`, and `.\export-resume-pdf.ps1` (Word COM) to export `resume/JonEric-Eubanks-Resume.pdf` and print the page count (must stay `PAGES=1`)
+- Format is intentionally one page, single-column, Calibri 10pt, standard section headers, real hyperlinks (ATS-safe); don't add tables, columns, icons, or header/footer content
+- Previous two-page version is kept as `Resume-2026-10-two-page-backup.docx` beside the source
 
 ### Updating Spotlight Dashboard Mode
 **Purpose**: Demonstrates dashboard development skills by transforming the portfolio into an interactive data visualization—showcasing the same KPI presentation techniques used in client projects.
