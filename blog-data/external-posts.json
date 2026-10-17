@@ -1,5 +1,16 @@
 [
   {
+    "id": "ext-traffic-engineering-azure-app",
+    "title": "What Traffic Engineering Taught Us About Building an Azure App",
+    "category": "gis-gov",
+    "excerpt": "How traffic engineering and wayfinding principles shaped the user experience, serverless architecture, and data design of a digital passport app built with Azure Static Web Apps, Azure Functions, and Cosmos DB.",
+    "tags": ["Azure", "Azure Static Web Apps", "Azure Functions", "Cosmos DB", "UX Design"],
+    "image": "Images/blog/traffic-engineering-azure-app.jpg",
+    "date": "2026-10-15T12:00:00.000Z",
+    "source": "Microsoft Tech Community",
+    "externalUrl": "https://techcommunity.microsoft.com/blog/educatordeveloperblog/what-traffic-engineering-taught-us-about-building-an-azure-app/4561848"
+  },
+  {
     "id": "ext-foundry-multi-agent-patterns",
     "title": "Transforming Solo Agents to Collaborative Teams: Choosing Multi-Agent Patterns in Microsoft Foundry",
     "category": "ai-copilot",
