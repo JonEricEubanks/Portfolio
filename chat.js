@@ -325,7 +325,7 @@ Response Strategy:
         // Notification queries - detect when users ask about notification features
         const notificationKeywords = ['notification', 'notifications', 'alert', 'alerts', 'notify', 'bell icon'];
         const notificationMatches = notificationKeywords.filter(keyword => lowMessage.includes(keyword));
-        if (notificationMatches.length > 0 && (lowMessage.includes('find') || lowMessage.includes('where') || lowMessage.includes('how') || lowMessage.includes('get'))) {
+if (notificationMatches.length > 0 && (lowMessage.includes('find') || lowMessage.includes('where') || lowMessage.includes('how') || lowMessage.includes('get') || lowMessage.includes('tell'))) {
             intent.type = 'notifications';
             intent.confidence = 0.95;
             intent.keywords = notificationMatches;
