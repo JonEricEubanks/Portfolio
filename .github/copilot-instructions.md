@@ -7,7 +7,7 @@ This is a personal portfolio website for JonEric Eubanks showcasing low-code dev
 
 ### Deployment Pattern: Dual Environment
 - **Local Dev**: Express.js server (`server.js`) on port 3000
-- **Production**: Vercel serverless (`api/chat.js`) with edge functions
+- **Production**: Azure Static Web Apps and Azure Functions, deployed from the separate `JonEricEubanks/Portfolio-SWA` repository
 - Both environments share identical AI chat logic but differ in CORS and initialization
 - Always update BOTH `server.js` AND `api/chat.js` when modifying chat backend
 
@@ -80,17 +80,10 @@ The `chat.js` extracts this data via `extractPortfolioData()` to provide the AI 
 4. **Conversation state**: Maintained in `JonEricChatBot.conversationHistory` array (user/assistant messages)
 
 ### Deployment Workflow
-```powershell
-# Local testing
-npm install
-npm start  # Runs on localhost:3000
-
-# Production deployment (Vercel)
-# Requires OPENAI_API_KEY environment variable in Vercel dashboard
-git add .
-git commit -m "Your commit message"
-git push origin main  # Auto-deploys to Vercel (GitHub connection active)
-```
+- Run `npm test -- --runInBand`; a clean checkout also needs `npm ci` and `npm ci --prefix api`.
+- Open a pull request in `Portfolio` and verify the `Portfolio checks` workflow before merging.
+- The source and deployment repositories do not automatically sync. Promote reviewed changes to `Portfolio-SWA` separately; its existing GitHub Actions workflow deploys its `main` branch to Azure.
+- See `README.md` for the update and deployment process. Do not force-push over the deployment repository's workflow.
 
 ## Common Tasks
 
@@ -128,7 +121,7 @@ git push origin main  # Auto-deploys to Vercel (GitHub connection active)
 - Mobile behavior changes via `setupMobileKpiObserver()` (intersection observer)
 
 ## Debugging Tips
-- **Chat not responding**: Check `OPENAI_API_KEY` in `.env` (local) or Vercel dashboard (production)
+- **Chat not responding**: Check `ANTHROPIC_API_KEY` in `.env` (local) or the Azure Static Web Apps application settings (production)
 - **Repetitive AI responses**: Verify `conversationHistory` is passed to backend in `sendMessage()`
 - **Modal not opening**: Ensure ALL `data-modal-*` attributes are present and `data-modal-descriptions` uses `||` separator
 - **Metrics not animating**: Confirm elements have `counter` class and `data-target` attribute
@@ -145,14 +138,14 @@ git push origin main  # Auto-deploys to Vercel (GitHub connection active)
 - `chat-styles.css`: AI chat UI styles
 - `blog-styles.css` (440 lines): Blog-specific styles with glass-morphism
 - `dashboard.js` (608 lines): Spotlight mode logic
-- `vercel.json`: Serverless function config (30s timeout)
+- `.github/workflows/portfolio-checks.yml`: GitHub Actions tests for portfolio changes
 
 ## Don't
 - Don't split `index.html` into components — it's intentionally monolithic for performance (single HTTP request, no framework overhead)
 - Don't add a frontend framework — vanilla JS by design keeps it fast and maintainable
 - Don't forget to update BOTH chat backend files (`server.js` AND `api/chat.js`)
 - Don't hardcode colors — use CSS variables from `:root`
-- Don't deploy manually — just commit and push to trigger Vercel auto-deploy
+- Don't assume a push to `Portfolio` automatically deploys the separate `Portfolio-SWA` repository
 
 ## Planned Features
 
